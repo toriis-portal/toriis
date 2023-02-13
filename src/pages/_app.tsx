@@ -1,5 +1,6 @@
 import { type AppType } from 'next/app'
 import { type Session } from 'next-auth'
+import Head from 'next/head'
 import { SessionProvider } from 'next-auth/react'
 
 import { api } from '../utils/api'
@@ -11,9 +12,19 @@ const MyApp: AppType<{ session: Session | null }> = ({
   pageProps: { session, ...pageProps },
 }) => {
   return (
-    <SessionProvider session={session}>
-      <Component {...pageProps} />
-    </SessionProvider>
+    <>
+      <Head>
+        <title>TORIIS</title>
+        <meta
+          name="description"
+          content="Transparent and Open Resource for Institutional Investments"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <SessionProvider session={session}>
+        <Component {...pageProps} />
+      </SessionProvider>
+    </>
   )
 }
 

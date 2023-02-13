@@ -7,11 +7,11 @@ export const exampleRouter = createTRPCRouter({
     .input(z.object({ text: z.string() }))
     .query(({ input }) => {
       return {
-        greeting: `Hello ${input.text}`,
+        greeting: `Welcome to ${input.text}`,
       }
     }),
 
   getSecretMessage: protectedProcedure.query(() => {
-    return 'you can now see this secret message!'
+    return 'Secret message: SECS is the best team!'
   }),
 })
