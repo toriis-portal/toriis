@@ -32,9 +32,9 @@ This application is built with the [T3 Stack](https://create.t3.gg/): React, Nex
 
 <table align="center">
   <tr>
-    <td align="center"><a href="https://neeraj.lol"><img src="https://stickershop.line-scdn.net/stickershop/v1/product/1014241/LINEStorePC/main.png" width="75px;" alt="Pusheen"/><br /><b>Pusheen</b></a><br /><sub>Product Manager</sub></td>
-    <td align="center"><a href="https://neeraj.lol"><img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/637244/android/sticker.png" width="75px;" alt="Unicorn Pusheen"/><br /><b>Unicorn Pusheen</b></a><br /><sub>Technical Lead</sub></td>
-    <td align="center"><a href="https://neeraj.lol"><img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/637275/android/sticker.png" width="75px;" alt="Pilot Pusheen"/><br /><b>Pilot Pusheen</b></a><br /><sub>Product Designer</sub></td>
+    <td align="center"><a href="https://www.linkedin.com/in/jocelyn-xu-a931511b3/"><img src="./photos/jocelyn-xu.jpg" width="75px;" alt="Pusheen"/><br /><b>Jocelyn Xu</b></a><br /><sub>Product Manager</sub></td>
+    <td align="center"><a href="https://www.linkedin.com/in/zorazhang28/"><img src="./photos/zora-zhang.jpg" width="75px;" alt="Unicorn Pusheen"/><br /><b>Zora Zhang</b></a><br /><sub>Technical Lead</sub></td>
+    <td align="center"><a href="https://www.linkedin.com/in/miranda-ma-270839231/"><img src="./photos/miranda-ma.jpg" width="75px;" alt="Pilot Pusheen"/><br /><b>Miranda Ma</b></a><br /><sub>Product Designer</sub></td>
     <td align="center"><a href="https://neeraj.lol"><img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/637273/android/sticker.png" width="75px;" alt="Angry Pusheen"/><br /><b>Angry Pusheen</b></a><br /><sub>Product Researcher</sub></td>
     <td align="center"><a href="https://neeraj.lol"><img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/637255/android/sticker.png" width="75px;" alt="Chef Pusheen"/><br /><b>Chef Pusheen</b></a><br /><sub>Software Developer</sub></td>
   </tr>
@@ -43,7 +43,6 @@ This application is built with the [T3 Stack](https://create.t3.gg/): React, Nex
     <td align="center"><a href="https://neeraj.lol"><img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/637258/android/sticker.png" width="75px;" alt="Silly Pusheen"/><br /><b>Silly Pusheen</b></a><br /><sub>Software Developer</sub></td>
     <td align="center"><a href="https://neeraj.lol"><img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/637256/android/sticker.png" width="75px;" alt="Coffee Pusheen"/><br /><b>Coffee Pusheen</b></a><br /><sub>Software Developer</sub></td>
     <td align="center"><a href="https://neeraj.lol"><img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/637246/android/sticker.png" width="75px;" alt="Chatty Pusheen"/><br /><b>Chatty Pusheen</b></a><br /><sub>Software Developer</sub></td>
-    <td align="center"><a href="https://neeraj.lol"><img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/637251/android/sticker.png" width="75px;" alt="Cookie Pusheen"/><br /><b>Cookie Pusheen</b></a><br /><sub>Software Developer</sub></td>
 
   </tr>
 </table>
