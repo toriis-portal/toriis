@@ -5,7 +5,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "postinstall": "prisma generate",
+    "postinstall": "prisma generate; husky install",
     "lint": "next lint",
     "start": "next start",
     "format": "yarn prettier --write . --plugin=prettier-plugin-tailwindcss"
@@ -35,6 +35,7 @@
     "autoprefixer": "^10.4.7",
     "eslint": "^8.30.0",
     "eslint-config-next": "13.1.6",
+    "husky": "^8.0.3",
     "postcss": "^8.4.14",
     "prettier": "^2.8.4",
     "prettier-plugin-tailwindcss": "^0.2.2",
