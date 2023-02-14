@@ -1,15 +1,26 @@
+---
+name: Developer Issue
+about: Issue ticket template for developers
+title: ''
+labels: ''
+assignees: ''
+
+---
+
 ## Description
 
-## Learning objectives
+Description goes here, insert Figma if necessary 
 
-- Objective
+## Learning Objectives 
+
+- Objective 1
 
 ## Todo
 
-These points are a rough guideline. **Please** feel free to discuss with others on the team about the best way to design this component!
+These points are a rough guideline. Please feel free to discuss with others on the team about the best way to design this component!
 
-- Todo
+- [ ] Todo 1
 
-## Useful links
+## Useful Links
 
-- Useful link
+- Link 1
