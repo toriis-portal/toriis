@@ -7,24 +7,43 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+enum Sector {
+    FINANCIAL_SERVICES
+    INDUSTRIALS
+    TECHNOLOGY
+    UTILITIES
+    HEALTHCARE
+    CONSUMER_CYCLICAL
+    COMMUNICATION_SERVICES
+    ENERGY
+    CONSUMER_DEFENSIVE
+    REAL_ESTATE
+    BASIC_MATERIALS
+}
+
 model Investment {
-    id        String   @id @map("_id") @db.ObjectId
-    company   Company  @relation(fields: [companyId], references: [id])
-    companyId String   @db.ObjectId
-    rawName   String
-    coupon    String
-    maturity  DateTime
-    quantity  Float
-    costVal   Float
-    marketVal Float
-    year      Int
+    id              String   @id @default(auto()) @map("_id") @db.ObjectId
+    company         Company  @relation(fields: [companyId], references: [id])
+    companyId       String   @db.ObjectId
+    rawName         String
+    coupon          String
+    maturityDate    DateTime
+    quantity        Float
+    costVal         Float
+    marketVal       Float
+    year            Int
 }
 
 model Company {
-    id     String  @id @map("_id") @db.ObjectId
+    id          String  @id @default(auto()) @map("_id") @db.ObjectId
+    name        String 
+    ticker      String 
+    sector      Sector?
+    industry    String?
     investment  Investment[]
-    name   String 
-    ticker String 
+    description String?
+    envGrade    String?
+    envScore    Int?
 }
 
 model Account {
