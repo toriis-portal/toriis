@@ -4,14 +4,13 @@ about: Issue ticket template for developers
 title: ''
 labels: ''
 assignees: ''
-
 ---
 
 ## Description
 
-Description goes here, insert Figma if necessary 
+Description goes here, insert Figma if necessary
 
-## Learning Objectives 
+## Learning Objectives
 
 - Objective 1
 
