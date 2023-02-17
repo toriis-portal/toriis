@@ -1,72 +1,91 @@
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "mongodb"
-    url      = env("DATABASE_URL")
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum Sector {
+  FINANCIAL_SERVICES
+  INDUSTRIALS
+  TECHNOLOGY
+  UTILITIES
+  HEALTHCARE
+  CONSUMER_CYCLICAL
+  COMMUNICATION_SERVICES
+  ENERGY
+  CONSUMER_DEFENSIVE
+  REAL_ESTATE
+  BASIC_MATERIALS
 }
 
 model Investment {
-    id        String   @id @map("_id") @db.ObjectId
-    company   Company  @relation(fields: [companyId], references: [id])
-    companyId String   @db.ObjectId
-    rawName   String
-    coupon    String
-    maturity  DateTime
-    quantity  Float
-    costVal   Float
-    marketVal Float
-    year      Int
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  company      Company  @relation(fields: [companyId], references: [id])
+  companyId    String   @db.ObjectId
+  rawName      String
+  coupon       String
+  maturityDate DateTime
+  quantity     Float
+  costVal      Float
+  marketVal    Float
+  year         Int
 }
 
 model Company {
-    id     String  @id @map("_id") @db.ObjectId
-    investment  Investment[]
-    name   String 
-    ticker String 
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  ticker      String
+  sector      Sector?
+  industry    String?
+  investment  Investment[]
+  description String?
+  envGrade    String?
+  envScore    Int?
 }
 
 model Account {
-    id                String  @id @default(auto()) @map("_id") @db.ObjectId
-    userId            String  @db.ObjectId
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String? @map(name: "refresh_token")
-    access_token      String? @map(name: "access_token")
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String? @db.String
-    session_state     String?
-    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @map(name: "refresh_token")
+  access_token      String? @map(name: "access_token")
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@unique([provider, providerAccountId])
+  @@unique([provider, providerAccountId])
 }
 
 model Session {
-    id           String   @id @default(auto()) @map("_id") @db.ObjectId
-    sessionToken String   @unique @map(name: "session_token")
-    userId       String   @db.ObjectId
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique @map(name: "session_token")
+  userId       String   @db.ObjectId
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
-    id            String    @id @default(auto()) @map("_id") @db.ObjectId
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
 }
 
 model VerificationToken {
-    identifier String   @id @default(auto()) @map("_id") @db.ObjectId
-    token      String   @unique
-    expires    DateTime
+  identifier String   @id @default(auto()) @map("_id") @db.ObjectId
+  token      String   @unique
+  expires    DateTime
 
-    @@unique([identifier, token])
+  @@unique([identifier, token])
 }
