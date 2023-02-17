@@ -6,7 +6,7 @@ const AuthButton: FC = () => {
 
   return (
     <button
-      className="rounded-full bg-gray-100/50 px-4 py-2 hover:bg-gray-200"
+      className="bg-gray-100/50 hover:bg-gray-200 rounded-full px-4 py-2"
       onClick={sessionData ? () => void signOut() : () => void signIn()}
     >
       {sessionData ? 'Sign out' : 'Sign in'}
