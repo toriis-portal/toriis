@@ -42,7 +42,7 @@ This application is built with the [T3 Stack](https://create.t3.gg/): React, Nex
     <td align="center"><a href="https://www.linkedin.com/in/acruzmacedo/"><img src="./photos/anthony-cruz-macedo.jpg" width="75px;" alt="Anthony Cruz Macedo"/><br /><b>Anthony Cruz Macedo</b></a><br /><sub>Software Developer</sub></td>
     <td align="center"><a href="https://www.linkedin.com/in/alex-masgras/"><img src="./photos/alex-masgras.jpg" width="75px;" alt="Alex Masgras"/><br /><b>Alex Masgras</b></a><br /><sub>Software Developer</sub></td>
     <td align="center"><a href="https://www.linkedin.com/in/eesha-barua/"><img src="./photos/eesha-barua.jpg" width="75px;" alt="Eesha Barua"/><br /><b>Eesha Barua</b></a><br /><sub>Software Developer</sub></td>
-    <td align="center"><a href="https://neeraj.lol"><img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/637246/android/sticker.png" width="75px;" alt="Chatty Pusheen"/><br /><b>Chatty Pusheen</b></a><br /><sub>Software Developer</sub></td>
+    <td align="center"><a href="https://www.linkedin.com/in/xiaofan-li/"><img src="./photos/xiaofan-li.jpeg" width="75px;" alt="Chatty Pusheen"/><br /><b>Xiaofan Li</b></a><br /><sub>Software Developer</sub></td>
 
   </tr>
 </table>
