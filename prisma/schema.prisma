@@ -44,6 +44,7 @@ model Company {
   description String?
   envGrade    String?
   envScore    Int?
+  ESG         ESG[]
 }
 
 model Account {
@@ -88,4 +89,12 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model ESG {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  company           Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId         String  @db.ObjectId
+  environment_score Int
+  environment_grade String
 }

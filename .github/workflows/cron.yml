@@ -1,0 +1,14 @@
+name: esg_pull
+on:
+  schedule:
+    - cron: 0 8 * * *
+
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call API service to pull down from esg
+        run: |
+          curl --request POST \
+          --url 'https://toriis.vercel.app/api/cron' \
+          --header 'Authorization: Bearer ${{ secrets.ESG_API_TOKEN }}'
