@@ -3,6 +3,7 @@ import { useSession } from 'next-auth/react'
 
 import { AuthButton } from '../components'
 import { api } from '../utils/api'
+import LinkDisplay from '../components/LinkDisplay'
 
 const Main: FC = () => {
   const { data, isLoading, error } = api.example.hello.useQuery({
@@ -29,6 +30,8 @@ const Main: FC = () => {
         {secretMessage && <span> {secretMessage}</span>}
       </p>
       <AuthButton />
+
+      <LinkDisplay />
     </div>
   )
 }
