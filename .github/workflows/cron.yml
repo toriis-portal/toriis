@@ -2,7 +2,14 @@ name: esg_pull
 on:
   schedule:
     - cron: 0 8 * * *
-
+  push:
+    branches:
+      - 'dm/get-environment-cron'
+  pull_request:
+    branches:
+      - 'main'
+    paths:
+      - '.github/workflows/cron.yaml'
 jobs:
   cron:
     runs-on: ubuntu-latest

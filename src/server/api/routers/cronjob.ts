@@ -8,6 +8,7 @@ export const ESGCronJobProcedure = createTRPCRouter({
       take: 50,
     })
 
+    console.log(companies)
     // companies.forEach(async (company) => {
     //   const { data } = await fetch(`https://esgapiservice.com/api/authorization/search?q=msft,v,intc&token=${secrets.ESG_API_KEY}$`)
 
