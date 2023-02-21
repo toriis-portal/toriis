@@ -1,9 +1,15 @@
 import type { FC } from 'react'
 
-import HomeData from '../info/home.json'
+import SecondaryNavBar from '../components/SecondaryNavBar'
+import SampleText from '../components/SampleText'
 
 const Landing: FC = () => {
-  return <section id="Landing">This is an {HomeData.example}</section>
+  return (
+    <>
+      <SecondaryNavBar />
+      <SampleText />
+    </>
+  )
 }
 
 export default Landing
