@@ -7,7 +7,7 @@ interface Pair {
   text: string
   link: string
 }
-const links: Pair[] = data.links as Pair[]
+const links = data.links as Pair[]
 
 const LinkDisplay: FC = () => {
   return (
