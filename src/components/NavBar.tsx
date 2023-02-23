@@ -1,18 +1,20 @@
 import type { FC } from 'react'
 import React from 'react'
 import Image from 'next/image'
+import type { StaticImageData } from 'next/image'
 
 import { NavButton } from '../components'
 
 import toriisimg from './/../img/toriis.png'
 
 const NavBar: FC = () => {
+  const img: StaticImageData = toriisimg
   return (
     <nav className="bg-white">
       <div className="flex flex-row items-center justify-between px-12">
         <a href="link to main page" className="justify-start">
           <Image
-            src={toriisimg}
+            src={img}
             className=""
             alt="Toriis Logo"
             height="120"

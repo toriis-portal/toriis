@@ -1,7 +1,6 @@
 import type { FC } from 'react'
 import { useSession } from 'next-auth/react'
 
-import { NavButton } from '../components'
 import { NavBar } from '../components'
 import { AuthButton } from '../components'
 import { api } from '../utils/api'
