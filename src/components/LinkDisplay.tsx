@@ -15,7 +15,13 @@ const LinkDisplay: FC = () => {
 
       <div className="flex flex-wrap justify-center  text-sm leading-loose underline ">
         {links.map((pair: Pair, index: number) => (
-          <a href={pair.link} key={index} className="mx-2">
+          <a
+            href={pair.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            key={index}
+            className="mx-2"
+          >
             {pair.text}
           </a>
         ))}
