@@ -6,18 +6,6 @@ const SampleText: FC = () => {
   return (
     <>
       <p>{HomeData.sampleText}</p>
-      <p>{HomeData.sampleText}</p>
-      <p>{HomeData.sampleText}</p>
-      <p>{HomeData.sampleText}</p>
-      <p>{HomeData.sampleText}</p>
-      <p>{HomeData.sampleText}</p>
-      <p>{HomeData.sampleText}</p>
-      <p>{HomeData.sampleText}</p>
-      <p>{HomeData.sampleText}</p>
-      <p>{HomeData.sampleText}</p>
-      <p>{HomeData.sampleText}</p>
-      <p>{HomeData.sampleText}</p>
-      <p>{HomeData.sampleText}</p>
     </>
   )
 }

@@ -6,6 +6,7 @@ const Home: FC = () => {
   return (
     <div>
       <Landing />
+      {/* <SampleSection /> */}
     </div>
   )
 }
