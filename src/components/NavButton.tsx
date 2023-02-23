@@ -8,25 +8,24 @@ interface Nav {
 }
 
 const NavButton: FC<Nav> = ({ title, onPage, link }) => {
-  return (
+  return onPage ? (
     <div className="flex flex-col gap-1 bg-white">
-      <li className="">
-        <a
-          href={link}
-          className="m-0 py-2 pl-3 pr-4 font-klima font-extralight text-black"
-        >
-          {title}
-        </a>
-      </li>
-      <li className="">
-        <a
-          href={link}
-          className="m-0 py-2 pl-3 pr-4 font-klima font-light text-black"
-        >
-          {title}
-        </a>
-      </li>
+      <a
+        href={link}
+        className="m-0 pl-3 pr-4 text-center font-klima font-medium text-black"
+      >
+        {title}
+      </a>
       <div className=" border-2 border-colbalt" />
+    </div>
+  ) : (
+    <div className="flex flex-col gap-1 bg-white">
+      <a
+        href={link}
+        className="m-0 pl-3 pr-4 text-center font-klima font-medium text-black"
+      >
+        {title}
+      </a>
     </div>
   )
 }
