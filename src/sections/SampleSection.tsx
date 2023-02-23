@@ -1,7 +1,5 @@
 import type { FC } from 'react'
 
-import SampleText from '../components/SampleText'
-
 interface InputProps {
   text: string
 }
