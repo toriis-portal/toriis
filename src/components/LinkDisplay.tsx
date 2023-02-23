@@ -1,13 +1,13 @@
 import type { FC } from 'react'
 import Link from 'next/link'
 
-import data from '../info/instDivestment.json'
+import data from '../info/home.json'
 
 interface Pair {
   text: string
   link: string
 }
-const links = data.links as Pair[]
+const links = (data.instDivestment as { links: Pair[] }).links
 
 const LinkDisplay: FC = () => {
   return (
