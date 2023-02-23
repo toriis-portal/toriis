@@ -24,14 +24,13 @@ const InstitutionalDivestments: FC<DivestmentListProps> = ({ title }) => {
               <HighlightedTitle title={title} />
             </th>
           </tr>
-          {strings &&
-            Object.keys(strings)?.map((k) => (
-              <ListItem
-                key={k}
-                listVal={k}
-                listContent={(strings as JSONData)[k] ?? ''}
-              />
-            ))}
+          {Object.keys(strings)?.map((k) => (
+            <ListItem
+              key={k}
+              listVal={k}
+              listContent={(strings as JSONData)[k] ?? ''}
+            />
+          ))}
         </tbody>
       </table>
     </>
