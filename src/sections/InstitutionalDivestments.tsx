@@ -4,7 +4,7 @@ import HomeData from '../info/home.json'
 import HighlightedTitle from '../components/HighlightedTitle'
 import ListItem from '../components/ListItem'
 
-interface props {
+interface DivestmentListProps {
   title: string
 }
 
@@ -12,7 +12,7 @@ interface JSONData {
   [x: string]: string
 }
 
-const InstitutionalDivestments: FC<props> = ({ title }) => {
+const InstitutionalDivestments: FC<DivestmentListProps> = ({ title }) => {
   const strings: object = HomeData['divestment-strings'] as object
 
   return (

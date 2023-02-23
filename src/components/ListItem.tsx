@@ -2,14 +2,14 @@ import type { FC } from 'react'
 
 import NumberCircle from './NumberCircle'
 
-interface props {
+interface ListItemProps {
   listVal: string
   listContent: string
 }
 
 // ListItem should be placed inside of a <table> element,
 // no need to wrap ListItem in a <tr> element, as the component wraps the data automatically
-const ListItem: FC<props> = ({ listVal, listContent }) => {
+const ListItem: FC<ListItemProps> = ({ listVal, listContent }) => {
   return (
     <>
       <tr className="my-3 flex items-center">

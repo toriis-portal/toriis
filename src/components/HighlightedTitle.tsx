@@ -1,10 +1,10 @@
 import type { FC } from 'react'
 
-interface props {
+interface TitleProps {
   title: string
 }
 
-const HighlightedTitle: FC<props> = ({ title }) => {
+const HighlightedTitle: FC<TitleProps> = ({ title }) => {
   return (
     <>
       <div className="absolute">
