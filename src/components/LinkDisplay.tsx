@@ -1,4 +1,5 @@
 import type { FC } from 'react'
+import Link from 'next/link'
 
 import data from '../info/instDivestment.json'
 
@@ -18,7 +19,7 @@ const LinkDisplay: FC = () => {
       </div>
       <div className="flex flex-wrap justify-center text-sm leading-loose underline">
         {links.map((pair: Pair, index: number) => (
-          <a
+          <Link
             href={pair.link}
             key={index}
             // to open link in new tab:
@@ -27,7 +28,7 @@ const LinkDisplay: FC = () => {
             className="mx-2"
           >
             {pair.text}
-          </a>
+          </Link>
         ))}
       </div>
     </div>
