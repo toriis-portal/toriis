@@ -2,7 +2,12 @@
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      spacing: {
+        22: '88px',
+        76: '314px',
+      },
+    },
     colors: {
       colbalt: '#0F81E8',
       lightBlue: '#E6F0FA',
