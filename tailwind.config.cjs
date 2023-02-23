@@ -2,15 +2,19 @@
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    extend: {},
-    colors: {
-      colbalt: '#0F81E8',
-      lightBlue: '#E6F0FA',
-      darkTeal: '#17292E',
-      brightTeal: '#40D7D4',
-      orange: '#FF6112',
-      clementine: '#FFA902',
-      white: '#FFFFFF',
+    extend: {
+      colors: {
+        colbalt: '#0F81E8',
+        lightBlue: '#E6F0FA',
+        darkTeal: '#17292E',
+        brightTeal: '#40D7D4',
+        orange: '#FF6112',
+        clementine: '#FFA902',
+        white: '#FFFFFF',
+      },
+      boxShadow: {
+        colbalt: '-8 8 0 0px rgba(66, 153, 225, 0.5)',
+      },
     },
   },
   plugins: [],

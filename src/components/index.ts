@@ -1,3 +1,3 @@
 import AuthButton from './AuthButton'
-
-export { AuthButton }
+import PrimaryButton from './PrimaryButton'
+export { AuthButton, PrimaryButton }

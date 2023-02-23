@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import { useSession } from 'next-auth/react'
 
-import { AuthButton } from '../components'
+import { AuthButton, PrimaryButton } from '../components'
 import { api } from '../utils/api'
 
 const Main: FC = () => {
@@ -29,6 +29,7 @@ const Main: FC = () => {
         {secretMessage && <span> {secretMessage}</span>}
       </p>
       <AuthButton />
+      <PrimaryButton />
     </div>
   )
 }

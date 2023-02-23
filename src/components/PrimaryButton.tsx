@@ -6,8 +6,8 @@ const PrimaryButton: FC = () => {
 
   return (
     <button
-      className="order-solid rounded border-2 border-colbalt bg-lightBlue px-5 py-1 shadow-[-8px_8px_0px_0px_colbalt]"
-      //   onClick={sessionData ? () => void signOut() : () => void signIn()}
+      className="rounded border-2 border-solid border-colbalt bg-lightBlue px-5 py-1 shadow-[-8px_8px_0px_0px_lightBlue]"
+      //   shadow-[-8px_8px_0px_0px_colbalt]
     >
       <b className="font-semibold">
         {1 ? 'More About Fossil Fuel' : 'Learn About Investments'}{' '}
