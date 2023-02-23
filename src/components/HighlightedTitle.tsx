@@ -1,18 +1,18 @@
-import type {FC} from 'react'
+import type { FC } from 'react'
 
 interface props {
-    title: string
+  title: string
 }
 
-const HighlightedTitle: FC<props> = ({title}) => {
-    return (
-        <>
-        <text className='absolute'>
-            <div className='absolute z-0 inset-y-5 -inset-x-4 bg-orange bg-opacity-60 h-2 w-full'/>
-            <p className='relative z-10'>{title}</p>
-        </text>
-        </>
-    )
+const HighlightedTitle: FC<props> = ({ title }) => {
+  return (
+    <>
+      <div className="absolute">
+        <div className="absolute inset-y-5 -inset-x-4 z-0 h-2 w-full bg-orange bg-opacity-60" />
+        <p className="relative z-10">{title}</p>
+      </div>
+    </>
+  )
 }
 
 export default HighlightedTitle
