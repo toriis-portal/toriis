@@ -10,14 +10,9 @@ const links: Pair[] = data.links as Pair[]
 
 const LinkDisplay: FC = () => {
   return (
-    <div className="mt-8 flex w-full flex-col items-center justify-center rounded-md bg-darkTeal px-10 pt-8 pb-16 text-white">
-      <div className="z-10 -mt-14 rounded-full border-2 border-colbalt bg-white px-8 py-2">
-        <h1 className="text-lg font-semibold text-darkTeal">
-          Institutional Divestment Links
-        </h1>
-      </div>
-      <div className="relative -top-10 -left-2 rounded-full border-2 border-colbalt bg-colbalt px-8 py-2">
-        <h1 className="text-lg font-semibold text-colbalt">
+    <div className="mt-8 flex w-full flex-col items-center justify-center rounded-md bg-darkTeal px-10 pt-6 pb-16 text-white">
+      <div className="relative -top-12 z-10 rounded-full border-2 border-colbalt bg-white px-8 py-2 shadow-cobalt">
+        <h1 className="text-lg font-semibold text-darkTeal ">
           Institutional Divestment Links
         </h1>
       </div>
