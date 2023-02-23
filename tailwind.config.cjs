@@ -12,9 +12,6 @@ module.exports = {
         clementine: '#FFA902',
         white: '#FFFFFF',
       },
-      boxShadow: {
-        colbalt: '-8 8 0 0px rgba(66, 153, 225, 0.5)',
-      },
     },
   },
   plugins: [],
