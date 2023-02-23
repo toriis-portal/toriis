@@ -31,7 +31,9 @@ const Main: FC = () => {
       </p>
       <AuthButton />
 
-      <LinkDisplay />
+      <LinkDisplay
+      // Temporary placement until merged with section PR
+      />
     </div>
   )
 }
