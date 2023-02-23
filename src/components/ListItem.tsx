@@ -12,8 +12,8 @@ interface props {
 const ListItem: FC<props> = ({ listVal, listContent }) => {
   return (
     <>
-      <tr className="mt-4 ml-6 flex items-center">
-        <td className="h-16">
+      <tr className="my-3 flex items-center">
+        <td className="flex h-16 items-center">
           <NumberCircle val={listVal} />
         </td>
 

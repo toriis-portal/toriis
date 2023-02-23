@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react'
 
 import { AuthButton } from '../components'
 import { api } from '../utils/api'
-import DivestmentList from '../components/DivestmentList'
+import InstitutionalDivestments from '../sections/InstitutionalDivestments'
 
 const Main: FC = () => {
   const { data, isLoading, error } = api.example.hello.useQuery({
@@ -30,7 +30,7 @@ const Main: FC = () => {
         {secretMessage && <span> {secretMessage}</span>}
       </p>
       <AuthButton />
-      <DivestmentList title="Institutional Divestment" />
+      <InstitutionalDivestments title="Institutional Divestment" />
     </div>
   )
 }

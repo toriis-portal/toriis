@@ -13,6 +13,10 @@ module.exports = {
         clementine: '#FFA902',
         white: '#FFFFFF',
       },
+      boxShadow: {
+        cobalt: '-8px 8px 0px 0px rgba(15, 129, 232, 1)',
+        circleCobalt: '-6px 6px #0F81E8',
+      },
     },
   },
   plugins: [],
