@@ -19,6 +19,7 @@ enum Sector {
   CONSUMER_DEFENSIVE
   REAL_ESTATE
   BASIC_MATERIALS
+  NONE                   @map("") // This is workaround for string mapping in enums in prisma
 }
 
 model Investment {
@@ -97,4 +98,5 @@ model ESG {
   companyId         String  @db.ObjectId
   environment_score Int
   environment_grade String
+  environment_level String
 }
