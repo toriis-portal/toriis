@@ -13,7 +13,7 @@ const links = (data.instDivestment as { links: Pair[] }).links
 const LinkDisplay: FC = () => {
   return (
     <div className="mt-12 flex w-full flex-col items-center rounded-md bg-darkTeal px-6 pt-6 pb-16 text-white">
-      <div className="relative -top-12 z-10 rounded-full border-2 border-colbalt bg-white px-16 py-2 shadow-cobalt">
+      <div className="border-colbalt relative -top-12 z-10 rounded-full border-2 bg-white px-16 py-2 shadow-cobalt">
         <p className="text-3xl text-darkTeal ">
           Institutional Divestment Links
         </p>
