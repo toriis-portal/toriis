@@ -19,8 +19,6 @@ module.exports = {
     },
     fontFamily: {
       klima: ['Klima', 'Arial', 'Roboto'],
-      //Arial and Roboto are there to be other sans-serif
-      //fonts to fall back on if Klima fails to load
     },
   },
   plugins: [],
