@@ -7,20 +7,18 @@ interface ListItemProps {
   listContent: string
 }
 
-// ListItem should be placed inside of a <table> element,
-// no need to wrap ListItem in a <tr> element, as the component wraps the data automatically
 const ListItem: FC<ListItemProps> = ({ listVal, listContent }) => {
   return (
     <>
-      <tr className="my-3 ml-6 flex items-center">
-        <td className="flex h-16 items-center">
+      <div className="my-3 ml-6 flex items-center">
+        <div className="flex h-16 items-center">
           <NumberCircle val={listVal} />
-        </td>
+        </div>
 
-        <td className="ml-10 font-klima text-xl font-bold text-black">
+        <div className="ml-10 font-klima text-xl font-bold text-black">
           <p>{listContent}</p>
-        </td>
-      </tr>
+        </div>
+      </div>
     </>
   )
 }

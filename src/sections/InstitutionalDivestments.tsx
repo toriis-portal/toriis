@@ -13,14 +13,11 @@ const InstitutionalDivestments: FC<DivestmentListProps> = ({ title }) => {
 
   return (
     <>
-      <table className="flex-column items-start">
-        <tbody>
-          <tr>
-            <th className="pb-10 text-left text-2xl font-bold">
-              <HighlightedTitle title={title} />
-            </th>
-          </tr>
-
+      <div className="flex-column items-start">
+        <div className="pb-10 text-left text-2xl font-bold">
+          <HighlightedTitle title={title} />
+        </div>
+        <div>
           {strings.map((curString, curIndex) => (
             <ListItem
               key={curIndex + 1}
@@ -28,8 +25,8 @@ const InstitutionalDivestments: FC<DivestmentListProps> = ({ title }) => {
               listContent={curString}
             />
           ))}
-        </tbody>
-      </table>
+        </div>
+      </div>
     </>
   )
 }

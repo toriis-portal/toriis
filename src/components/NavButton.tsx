@@ -16,7 +16,7 @@ const NavButton: FC<Nav> = ({ title, onPage, link }) => {
       >
         {title}
       </a>
-      <div className=" border-2 border-colbalt" />
+      <div className=" border-2 border-cobalt" />
     </div>
   ) : (
     <div className="flex flex-col gap-1 bg-white">
