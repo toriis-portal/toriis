@@ -22,7 +22,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <SessionProvider session={session}>
-        <Component {...pageProps} />
+        <div className="text-lg">
+          <Component {...pageProps} />
+        </div>
       </SessionProvider>
     </>
   )

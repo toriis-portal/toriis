@@ -17,7 +17,7 @@ const LinkDisplay: FC = () => {
           Institutional Divestment Links
         </h1>
       </div>
-      <div className="text-lg flex flex-wrap justify-center leading-loose underline">
+      <div className="flex flex-wrap justify-center leading-loose underline">
         {links.map((pair: Pair, index: number) => (
           <Link
             href={pair.link}

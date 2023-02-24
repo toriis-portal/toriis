@@ -23,7 +23,7 @@ const Main: FC = () => {
 
   return (
     <div className="flex h-screen flex-col items-center justify-center">
-      <p className="text-4xl m-2">{data?.greeting}</p>
+      <p className="m-2 text-4xl">{data?.greeting}</p>
       <p className="m-4 text-center">
         {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
         <br />

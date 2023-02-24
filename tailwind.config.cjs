@@ -15,9 +15,9 @@ module.exports = {
         clementine: '#FFA902',
         white: '#FFFFFF',
       },
-    },
-    fontSize: {
-      '3xl': '28px',
+      fontSize: {
+        '3xl': '28px',
+      },
     },
   },
   plugins: [],
