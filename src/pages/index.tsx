@@ -1,7 +1,6 @@
 import type { FC } from 'react'
 import { useSession } from 'next-auth/react'
 
-import { NavBar } from '../components'
 import { AuthButton } from '../components'
 import { api } from '../utils/api'
 import InstitutionalDivestments from '../sections/InstitutionalDivestments'
@@ -24,9 +23,6 @@ const Main: FC = () => {
 
   return (
     <div className="flex h-screen flex-col items-center justify-center">
-      <div className="fixed top-0 min-w-full bg-white">
-        <NavBar />
-      </div>
       <p className="m-2 text-4xl">{data?.greeting}</p>
       <p className="m-4 text-center">
         {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
