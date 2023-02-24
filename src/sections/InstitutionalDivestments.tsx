@@ -13,7 +13,7 @@ interface JSONData {
 }
 
 const InstitutionalDivestments: FC<DivestmentListProps> = ({ title }) => {
-  const strings: object = HomeData['divestment-strings'] as object
+  const strings: Array<string> = HomeData['divestment-strings']
 
   return (
     <>
@@ -24,11 +24,12 @@ const InstitutionalDivestments: FC<DivestmentListProps> = ({ title }) => {
               <HighlightedTitle title={title} />
             </th>
           </tr>
-          {Object.keys(strings)?.map((k) => (
+
+          {strings.map((curString, curIndex) => (
             <ListItem
-              key={Number(k) + 1}
-              listVal={(Number(k) + 1).toString()}
-              listContent={(strings as JSONData)[k] ?? ''}
+              key={curIndex + 1}
+              listVal={(curIndex + 1).toString()}
+              listContent={curString}
             />
           ))}
         </tbody>
