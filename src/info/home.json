@@ -1,8 +1,8 @@
 {
   "example": "an awesome example",
-  "divestment-strings": {
-    "1": "Reducing exposure to financial risks from the decline of the fossil fuel industry and the carbon bubble;",
-    "2": "Being responsible financial stewards for the long-term health of both portfolios and the planet;",
-    "3": "and, revoking support from fossil fuel companies and promoting a transition to a green energy future."
-  }
+  "divestment-strings": [
+    "Reducing exposure to financial risks from the decline of the fossil fuel industry and the carbon bubble;",
+    "Being responsible financial stewards for the long-term health of both portfolios and the planet;",
+    "and, revoking support from fossil fuel companies and promoting a transition to a green energy future."
+  ]
 }

@@ -26,8 +26,8 @@ const InstitutionalDivestments: FC<DivestmentListProps> = ({ title }) => {
           </tr>
           {Object.keys(strings)?.map((k) => (
             <ListItem
-              key={k}
-              listVal={k}
+              key={Number(k) + 1}
+              listVal={(Number(k) + 1).toString()}
               listContent={(strings as JSONData)[k] ?? ''}
             />
           ))}

@@ -12,7 +12,7 @@ interface ListItemProps {
 const ListItem: FC<ListItemProps> = ({ listVal, listContent }) => {
   return (
     <>
-      <tr className="my-3 flex items-center">
+      <tr className="my-3 ml-6 flex items-center">
         <td className="flex h-16 items-center">
           <NumberCircle val={listVal} />
         </td>
