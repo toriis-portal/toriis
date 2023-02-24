@@ -1,14 +1,18 @@
-import type { FC } from 'react'
 import { ArrowRightIcon } from '@heroicons/react/24/solid'
+import Link from 'next/link'
 
-const PrimaryButton: FC = () => {
+const PrimaryButton: React.FC<{ text: string; link: string }> = ({
+  text,
+  link,
+}) => {
   return (
-    <button className="rounded border-2 border-solid border-colbalt bg-lightBlue px-5 py-1 shadow-[-8px_8px_0px_0px_rgba(15,129,232,1)]">
-      <b className="font-semibold">
-        {1 ? 'More About Fossil Fuel' : 'Learn About Investments'}{' '}
-        <ArrowRightIcon className="bold inline h-9 w-5" />{' '}
-      </b>
-    </button>
+    <Link href={link}>
+      <button className="rounded border-2 border-solid border-cobalt bg-lightBlue px-5 py-1 shadow-[-8px_8px_0px_0px] shadow-cobalt hover:shadow-[-5px_5px_0px_0px] hover:shadow-cobalt ">
+        <b className="font-semibold">
+          {text} <ArrowRightIcon className="bold inline h-9 w-5" />{' '}
+        </b>
+      </button>
+    </Link>
   )
 }
 
