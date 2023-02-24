@@ -8,10 +8,6 @@ interface DivestmentListProps {
   title: string
 }
 
-interface JSONData {
-  [x: string]: string
-}
-
 const InstitutionalDivestments: FC<DivestmentListProps> = ({ title }) => {
   const strings: Array<string> = HomeData['divestment-strings']
 
