@@ -1,3 +1,5 @@
 import AuthButton from './AuthButton'
+import NavButton from './NavButton'
+import NavBar from './NavBar'
 
-export { AuthButton }
+export { AuthButton, NavButton, NavBar }
