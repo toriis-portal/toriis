@@ -4,10 +4,6 @@ import { z } from 'zod'
 import type { Context } from '../trpc'
 import { createTRPCRouter, publicProcedure } from '../trpc'
 
-interface companyIndexType {
-  id: string
-  companyId: string
-}
 const MAX_API_CALLS = 50
 const consumeExternalApi = async <T>(url: string): Promise<T> => {
   const res = await fetch(url, { method: 'GET' })
@@ -16,7 +12,7 @@ const consumeExternalApi = async <T>(url: string): Promise<T> => {
 
 const updateESGIndex = async (
   ctx: Context,
-  companyIndex: companyIndexType,
+  companyIndex: ESGIndex,
   company: Company,
 ): Promise<ESGIndex> => {
   return await ctx.prisma.eSGIndex.update({
@@ -29,7 +25,7 @@ const updateESGIndex = async (
   })
 }
 
-export const esg = createTRPCRouter({
+export const esgRouter = createTRPCRouter({
   esgpull: publicProcedure.input(z.string()).query(async ({ input, ctx }) => {
     if (input !== process.env.CRONJOB_KEY) {
       return 'Not Authorized'
@@ -106,7 +102,7 @@ export const esg = createTRPCRouter({
         if (!res) {
           await updateESGIndex(
             ctx,
-            companyIndex as companyIndexType,
+            companyIndex as ESGIndex,
             company as Company,
           )
           return 'Error creating ESG'
@@ -116,7 +112,7 @@ export const esg = createTRPCRouter({
         if (index === MAX_API_CALLS - 1) {
           await updateESGIndex(
             ctx,
-            companyIndex as companyIndexType,
+            companyIndex as ESGIndex,
             company as Company,
           )
         }

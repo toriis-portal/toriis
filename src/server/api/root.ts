@@ -1,6 +1,6 @@
 import { createTRPCRouter } from './trpc'
 import { exampleRouter } from './routers/example'
-import { esg } from './routers/esg'
+import { esgRouter } from './routers/esg'
 
 /**
  * This is the primary router for your server.
@@ -9,7 +9,7 @@ import { esg } from './routers/esg'
  */
 export const appRouter = createTRPCRouter({
   example: exampleRouter,
-  cronjob: esg,
+  cronjob: esgRouter,
 })
 
 // export type definition of API

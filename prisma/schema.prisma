@@ -24,7 +24,7 @@ enum Sector {
 
 model Investment {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  company      Company  @relation(fields: [companyId], references: [id])
+  company      Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId    String   @db.ObjectId
   rawName      String
   coupon       String
@@ -43,8 +43,6 @@ model Company {
   industry    String?
   investment  Investment[]
   description String?
-  envGrade    String?
-  envScore    Int?
   ESG         ESG[]
 }
 

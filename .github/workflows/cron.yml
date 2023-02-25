@@ -19,4 +19,4 @@ jobs:
           curl --request GET \
           --data-urlencode "batch=1" \
           --data-urlencode "input=${{ secrets.CRONJOB_KEY }}" \
-          --url 'https://toriis.vercel.app/api/cron'
+          --url 'https://toriis.vercel.app/api/cronjob.esgpull'
