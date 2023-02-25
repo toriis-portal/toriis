@@ -14,7 +14,7 @@ const InstitutionalDivestments: FC<DivestmentListProps> = ({ title }) => {
   return (
     <>
       <div className="flex-column items-start">
-        <div className="pb-10 text-left text-2xl font-bold">
+        <div className="pb-10">
           <HighlightedTitle title={title} />
         </div>
         <div>

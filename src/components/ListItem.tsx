@@ -15,8 +15,10 @@ const ListItem: FC<ListItemProps> = ({ listVal, listContent }) => {
           <NumberCircle val={listVal} />
         </div>
 
-        <div className="ml-10 font-klima text-xl font-bold text-black">
-          <p>{listContent}</p>
+        <div className="ml-10">
+          <p className="font-klima text-xl font-bold text-black">
+            {listContent}
+          </p>
         </div>
       </div>
     </>
