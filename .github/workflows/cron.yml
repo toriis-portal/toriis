@@ -17,5 +17,6 @@ jobs:
       - name: Call API service to pull down from esg
         run: |
           curl --request GET \
-          --url 'https://toriis.vercel.app/api/cron' \
-          --header 'Authorization: Bearer ${{ secrets.ESG_API_TOKEN }}'
+          --data-urlencode "batch=1" \
+          --data-urlencode "input=${{ secrets.CRONJOB_KEY }}" \
+          --url 'https://toriis.vercel.app/api/cron'
