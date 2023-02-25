@@ -19,7 +19,6 @@ const NavBar: FC = () => {
             width="100"
           />
         </a>
-        <div className="flex" />
         <div className="justify-end">
           <div className="flex flex-row pb-1">
             <NavButton title="Home" link="/" />
