@@ -2,12 +2,12 @@ import { ArrowRightIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 import clsx from 'clsx'
 
-interface Props {
+interface ButtonProps {
   text: string
   link: string
 }
 
-const PrimaryButton = ({ text, link }: Props) => {
+const PrimaryButton = ({ text, link }: ButtonProps) => {
   return (
     <div>
       <Link href={link}>
