@@ -10,16 +10,9 @@ interface ListItemProps {
 const ListItem: FC<ListItemProps> = ({ listVal, listContent }) => {
   return (
     <>
-      <div className="my-3 ml-6 flex items-center">
-        <div className="flex h-16 items-center">
-          <NumberCircle val={listVal} />
-        </div>
-
-        <div className="ml-10">
-          <p className="font-klima text-xl font-bold text-black">
-            {listContent}
-          </p>
-        </div>
+      <div className="ml-4 flex items-center space-x-4">
+        <NumberCircle val={listVal} />
+        <p className="font-klima text-xl font-bold text-black">{listContent}</p>
       </div>
     </>
   )

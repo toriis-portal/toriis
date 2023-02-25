@@ -13,11 +13,11 @@ const InstitutionalDivestments: FC<DivestmentListProps> = ({ title }) => {
 
   return (
     <>
-      <div className="flex-column items-start">
-        <div className="pb-10">
+      <div className="mx-12 pb-12">
+        <div className="mb-6 pb-10">
           <HighlightedTitle title={title} />
         </div>
-        <div>
+        <div className="space-y-10">
           {strings.map((curString, curIndex) => (
             <ListItem
               key={curIndex + 1}

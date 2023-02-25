@@ -3,6 +3,12 @@ module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      minHeight: {
+        12: '3rem',
+      },
+      minWidth: {
+        12: '3rem',
+      },
       colors: {
         cobalt: '#0F81E8',
         lightBlue: '#E6F0FA',
@@ -13,7 +19,6 @@ module.exports = {
         white: '#FFFFFF',
       },
       boxShadow: {
-        cobalt: '-8px 8px 0px 0px rgba(15, 129, 232, 1)',
         circleCobalt: '-6px 6px #0F81E8',
       },
     },
