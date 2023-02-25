@@ -8,7 +8,7 @@ interface companyIndexType {
   id: string
   companyId: string
 }
-const MAX_API_CALLS = 3
+const MAX_API_CALLS = 50
 const consumeExternalApi = async <T>(url: string): Promise<T> => {
   const res = await fetch(url, { method: 'GET' })
   return (await res.json()) as T
@@ -36,7 +36,6 @@ export const esg = createTRPCRouter({
     }
 
     let companyIndex = await ctx.prisma.eSGIndex.findFirst({
-      take: 1,
       select: {
         id: true,
         companyId: true,
