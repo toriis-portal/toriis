@@ -11,21 +11,19 @@ interface NavButtonProps {
 
 const NavButton: FC<NavButtonProps> = ({ title, link }) => {
   const isActive = useRouter().pathname === link
-
   return (
-    <div className="flex flex-col gap-1 bg-white">
-      <Link
-        href={link}
-        className={clsx(
-          'm-0 px-4 text-center font-klima font-medium text-black',
-          {
-            'border-b-4 border-cobalt': isActive,
-          },
-        )}
-      >
-        {title}
-      </Link>
-    </div>
+    <Link
+      href={link}
+      className={clsx(
+        'm-0 border-b-4 bg-white px-4 py-1 text-center font-klima text-[20px] font-medium text-black',
+        {
+          'border-cobalt': isActive,
+          'border-white': !isActive,
+        },
+      )}
+    >
+      {title}
+    </Link>
   )
 }
 
