@@ -1,12 +1,32 @@
-import type { ESG } from '@prisma/client'
+import type { ESG, Company, ESGIndex } from '@prisma/client'
 
+import type { Context } from '../trpc'
 import { createTRPCRouter, publicProcedure } from '../trpc'
 
+interface companyIndexType {
+  id: string
+  companyId: string
+}
 const MAX_API_CALLS = 3
-
 const consumeExternalApi = async <T>(url: string): Promise<T> => {
   const res = await fetch(url, { method: 'GET' })
   return (await res.json()) as T
+}
+
+const updateESGIndex = async (
+  ctx: Context,
+  id: string,
+  companyIndex: companyIndexType,
+  company: Company,
+): Promise<ESGIndex> => {
+  return await ctx.prisma.eSGIndex.update({
+    where: {
+      id: companyIndex?.id ?? '1',
+    },
+    data: {
+      companyId: company?.id ?? '1',
+    },
+  })
 }
 
 export const esg = createTRPCRouter({
@@ -66,7 +86,7 @@ export const esg = createTRPCRouter({
 
     companies.map(async (company, index) => {
       if (company.ticker !== 'NO_TICKER_FOUND') {
-        await ctx.prisma.eSG.create({
+        const res = await ctx.prisma.eSG.create({
           data: {
             environment_grade: api_res[index]?.environment_grade ?? '',
             environment_score: api_res[index]?.environment_score ?? 0,
@@ -79,15 +99,25 @@ export const esg = createTRPCRouter({
           },
         })
 
+        // Handle error creating ESG
+        if (!res) {
+          await updateESGIndex(
+            ctx,
+            companyIndex?.id ?? '1',
+            companyIndex as companyIndexType,
+            company as Company,
+          )
+          return 'Error creating ESG'
+        }
+
+        // Update index if last call
         if (index === MAX_API_CALLS - 1) {
-          await ctx.prisma.eSGIndex.update({
-            where: {
-              id: companyIndex?.id ?? '1',
-            },
-            data: {
-              companyId: companies[index]?.id ?? '1',
-            },
-          })
+          await updateESGIndex(
+            ctx,
+            companyIndex?.id ?? '1',
+            companyIndex as companyIndexType,
+            company as Company,
+          )
         }
       }
     })
