@@ -100,3 +100,8 @@ model ESG {
   environment_grade String
   environment_level String
 }
+
+model ESGIndex {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  companyId String @db.ObjectId
+}
