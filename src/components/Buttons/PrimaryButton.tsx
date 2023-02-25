@@ -14,6 +14,7 @@ const PrimaryButton = ({ text, link }: Props) => {
         <div>
           <button
             className={clsx(
+              'font-klima text-[18px] font-semibold',
               'rounded border-2 border-solid border-cobalt',
               'rounded bg-lightBlue px-5 py-1 font-semibold',
               'shadow-[-8px_8px_0px_0px] shadow-cobalt',

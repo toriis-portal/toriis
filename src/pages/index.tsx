@@ -1,7 +1,7 @@
 import { useSession } from 'next-auth/react'
 import type { FC } from 'react'
 
-import { AuthButton } from '../components'
+import { AuthButton, PrimaryButton } from '../components'
 import { api } from '../utils/api'
 
 const Main: FC = () => {
