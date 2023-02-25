@@ -29,7 +29,7 @@ const Main: FC = () => {
         {secretMessage && <span> {secretMessage}</span>}
       </p>
       <AuthButton />
-      <PrimaryButton text="Learn morea bout" link="" />
+      <PrimaryButton text="More About Fossil Fuel" link="/example" />
     </div>
   )
 }
