@@ -9,7 +9,6 @@ interface NavButtonProps {
 }
 
 const NavButton: FC<NavButtonProps> = ({ title, link }) => {
-  const router = useRouter()
   return (
     <div className="flex flex-col gap-1 bg-white">
       <Link
@@ -18,10 +17,10 @@ const NavButton: FC<NavButtonProps> = ({ title, link }) => {
       >
         {title}
       </Link>
-      {router.pathname === link ? (
-        <div className=" border-2 border-colbalt" />
+      {useRouter().pathname === link ? (
+        <div className=" border-2 border-cobalt" />
       ) : (
-        <></>
+        <div className=" border-2 border-white" />
       )}
     </div>
   )

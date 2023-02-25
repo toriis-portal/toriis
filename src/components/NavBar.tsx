@@ -12,7 +12,7 @@ const NavBar: FC = () => {
       <div className="flex flex-row items-center justify-between px-10">
         <a href="link to main page" className="justify-start">
           <Image
-            src={toriisimg}
+            src={toriisimg as HTMLImageElement}
             className=""
             alt="Toriis Logo"
             height="100"
@@ -23,7 +23,7 @@ const NavBar: FC = () => {
           <div className="flex flex-row pb-1">
             <NavButton title="Home" link="/" />
             <NavButton title="Fossil Fuel" link="/fossil-fuel" />
-            <NavButton title="Learn about Investments" link="/learn" />
+            <NavButton title="Learn about Investments" link="/investments" />
           </div>
         </div>
       </div>

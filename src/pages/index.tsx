@@ -21,7 +21,7 @@ const Main: FC = () => {
   if (error) return <div>Error: {error.message}</div>
 
   return (
-    <div className="flex h-screen flex-col items-center justify-center bg-pumpkin">
+    <div className="flex h-screen flex-col items-center justify-center">
       <p className="m-2 text-4xl">{data?.greeting}</p>
       <p className="m-4 text-center">
         {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
