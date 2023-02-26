@@ -23,7 +23,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
       </Head>
       <SessionProvider session={session}>
         <NavBar />
-        <Component {...pageProps} />
+        <main className="font-klima">
+          <Component {...pageProps} />
+        </main>
       </SessionProvider>
     </>
   )
