@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: Call API service to pull down from esg
         run: |
-          curl --request GET \
+          curl -G --request GET \
           --data-urlencode "batch=1" \
           --data-urlencode "input=${{ secrets.CRONJOB_KEY }}" \
           --url 'https://toriis.vercel.app/api/trpc/cronjob.esgpull'
