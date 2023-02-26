@@ -13,6 +13,9 @@ module.exports = {
         white: '#FFFFFF',
       },
     },
+    fontFamily: {
+      klima: ['Klima', 'Arial', 'Roboto'],
+    },
   },
   plugins: [],
 }
