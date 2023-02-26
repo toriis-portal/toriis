@@ -1,3 +1,4 @@
+import type { FC } from 'react'
 import { ArrowRightIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 import clsx from 'clsx'
@@ -7,7 +8,7 @@ interface ButtonProps {
   link: string
 }
 
-const PrimaryButton = ({ text, link }: ButtonProps) => {
+const PrimaryButton: FC<ButtonProps> = ({ text, link }) => {
   return (
     <div>
       <Link href={link}>
