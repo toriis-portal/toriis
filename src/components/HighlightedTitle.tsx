@@ -7,9 +7,11 @@ interface TitleProps {
 const HighlightedTitle: FC<TitleProps> = ({ title }) => {
   return (
     <>
-      <div className="absolute">
-        <div className="absolute -inset-x-4 inset-y-4 z-0 h-2.5 w-full bg-clementine" />
-        <p className="relative z-10 font-klima text-2xl font-bold">{title}</p>
+      <div className="w-fit">
+        <div className="relative right-[1.4rem] -bottom-[2.4rem] z-0 h-3.5 bg-clementine" />
+        <p className="relative z-10 font-klima text-[32px] font-[559]">
+          {title}
+        </p>
       </div>
     </>
   )

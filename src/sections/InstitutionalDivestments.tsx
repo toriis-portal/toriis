@@ -13,11 +13,9 @@ const InstitutionalDivestments: FC<DivestmentListProps> = ({ title }) => {
 
   return (
     <>
-      <div className="mx-12 pb-12">
-        <div className="mb-6 pb-10">
-          <HighlightedTitle title={title} />
-        </div>
-        <div className="space-y-10">
+      <div className="my-6 w-full space-y-6 px-12">
+        <HighlightedTitle title={title} />
+        <div className="ml-[3%] space-y-9">
           {strings.map((curString, curIndex) => (
             <ListItem
               key={curIndex + 1}

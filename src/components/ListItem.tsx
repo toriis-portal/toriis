@@ -10,9 +10,11 @@ interface ListItemProps {
 const ListItem: FC<ListItemProps> = ({ listVal, listContent }) => {
   return (
     <>
-      <div className="ml-4 flex items-center space-x-4">
+      <div className="flex w-full items-center space-x-8">
         <NumberCircle val={listVal} />
-        <p className="font-klima text-xl font-bold text-black">{listContent}</p>
+        <p className="font-klima text-[22px] font-[559] text-black">
+          {listContent}
+        </p>
       </div>
     </>
   )
