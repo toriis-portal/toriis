@@ -3,9 +3,9 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import toriisimg from './/../img/toriis.png'
+import { NavButton } from '../components'
 
-import { NavButton } from '.'
+import toriisimg from './/../img/toriis.png'
 
 const NavBar: FC = () => {
   return (
