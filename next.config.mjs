@@ -16,9 +16,19 @@ const config = {
    *
    * @see https://github.com/vercel/next.js/issues/41980
    */
-  i18n: {
-    locales: ['en'],
-    defaultLocale: 'en',
+  // i18n: {
+  //   localeDetection: false,
+  //   locales: ['en'],
+  //   defaultLocale: 'en',
+  // },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/home',
+        permanent: true,
+      },
+    ]
   },
 }
 export default config
