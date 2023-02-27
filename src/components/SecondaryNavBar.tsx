@@ -9,28 +9,26 @@ const SecondaryNavBar: FC = () => {
   return (
     <>
       <nav className="sticky top-0 justify-evenly bg-darkTeal py-2.5">
-        <div className="container mx-auto">
-          <div className="md:flex">
-            <ul className="flex space-x-8 p-4 text-sm text-white ">
-              {data.secondaryNavText?.map((item: string, i: number) => (
-                <li key={i}>
-                  <Link
-                    key={i}
-                    activeClass="active"
-                    to="container1"
-                    spy={true}
-                    smooth={true}
-                    duration={500}
-                    className={clsx(
-                      'no-underline hover:text-[#FFA902] hover:underline hover:underline-offset-8',
-                    )}
-                  >
-                    {item}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className="container mx-auto md:flex">
+          <ul className="flex cursor-pointer space-x-8 p-4 text-white">
+            {data.secondaryNavText?.map((item: string, i: number) => (
+              <li key={i}>
+                <Link
+                  key={i}
+                  activeClass="active"
+                  to="container1"
+                  spy={true}
+                  smooth={true}
+                  duration={500}
+                  className={clsx(
+                    'no-underline hover:text-[#FFA902] hover:underline hover:underline-offset-8',
+                  )}
+                >
+                  {item}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </nav>
       <div id="container1" className="pt-16">
