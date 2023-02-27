@@ -3,8 +3,8 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { NavButton } from '../components'
-import toriisimg from '../../public/toriis.png'
+import { NavButton } from '../index'
+import toriisimg from '../../../public/toriis.png'
 
 const NavBar: FC = () => {
   return (

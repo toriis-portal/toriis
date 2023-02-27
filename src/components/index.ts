@@ -1,9 +1,9 @@
 import AuthButton from './Buttons/AuthButton'
-import ListItem from './ListItem'
-import NumberCircle from './NumberCircle'
-import HighlightedTitle from './HighlightedTitle'
+import ListItem from './Displays/ListItem'
+import NumberCircle from './Text/NumberCircle'
+import HighlightedTitle from './Text/HighlightedTitle'
 import NavButton from './Buttons/NavButton'
-import NavBar from './NavBar'
+import NavBar from './Nav/NavBar'
 import PrimaryButton from './Buttons/PrimaryButton'
 
 export {

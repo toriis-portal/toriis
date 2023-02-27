@@ -1,8 +1,32 @@
 {
   "example": "an awesome example",
-  "divestment-strings": [
-    "Reducing exposure to financial risks from the decline of the fossil fuel industry and the carbon bubble;",
-    "Being responsible financial stewards for the long-term health of both portfolios and the planet;",
-    "and, revoking support from fossil fuel companies and promoting a transition to a green energy future."
-  ]
+  "instDivestment": {
+    "links": [
+      {
+        "text": "What is Fossil Fuel Divestment",
+        "link": "https://gofossilfree.org/divestment/what-is-fossil-fuel-divestment/"
+      },
+      {
+        "text": "Two economies collide: Competition, conflict, and the financial case for fossil fuel divestment",
+        "link": "https://ieefa.org/resources/two-economies-collide-competition-conflict-and-financial-case-fossil-fuel-divestment"
+      },
+      {
+        "text": "1000 Divestment commitments and counting",
+        "link": "https://gofossilfree.org/wp-content/uploads/2018/12/1000divest-WEB-.pdf"
+      },
+      {
+        "text": "Unburnable Carbon – Are the world’s financial markets carrying a carbon bubble?",
+        "link": "http://carbontracker.live.kiln.digital/Unburnable-Carbon-2-Web-Version.pdf"
+      },
+      {
+        "text": "Unburnable Carbon 2013: Wasted capital and stranded assets",
+        "link": "http://carbontracker.org/wp-content/uploads/2014/09/Unburnable-Carbon-Full-rev2-1.pdf"
+      }
+    ],
+    "listItems": [
+      "Reducing exposure to financial risks from the decline of the fossil fuel industry and the carbon bubble;",
+      "Being responsible financial stewards for the long-term health of both portfolios and the planet;",
+      "and, revoking support from fossil fuel companies and promoting a transition to a green energy future."
+    ]
+  }
 }

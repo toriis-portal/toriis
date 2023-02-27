@@ -1,17 +1,18 @@
 import type { FC } from 'react'
 
 import HomeData from '../info/home.json'
-import HighlightedTitle from '../components/HighlightedTitle'
-import ListItem from '../components/ListItem'
+import HighlightedTitle from '../components/Text/HighlightedTitle'
+import ListItem from '../components/Displays/ListItem'
+import LinkDisplay from '../components/Displays/LinkDisplay'
 
 const InstitutionalDivestments: FC = () => {
-  const strings: string[] = HomeData['divestment-strings']
+  const strings: string[] = HomeData.instDivestment.listItems
 
   return (
     <>
-      <div className="my-6 w-full space-y-6 px-12">
-        <HighlightedTitle title="Institutional Divestment" />
-        <div className="ml-[3%] space-y-9">
+      <HighlightedTitle title="Institutional Divestment" />
+      <div className="my-6 w-full px-12">
+        <div className="ml-[3%] space-y-6">
           {strings.map((string, index) => (
             <ListItem
               key={index + 1}
@@ -21,6 +22,7 @@ const InstitutionalDivestments: FC = () => {
           ))}
         </div>
       </div>
+      <LinkDisplay />
     </>
   )
 }
