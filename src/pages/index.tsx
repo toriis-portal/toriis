@@ -3,7 +3,6 @@ import type { FC } from 'react'
 
 import { AuthButton } from '../components'
 import { api } from '../utils/api'
-import InstitutionalDivestments from '../sections/InstitutionalDivestments'
 
 const Main: FC = () => {
   const { data, isLoading, error } = api.example.hello.useQuery({
@@ -22,7 +21,6 @@ const Main: FC = () => {
   if (error) return <div>Error: {error.message}</div>
 
   return (
-    // option 1
     <div className="flex h-screen flex-col items-center justify-center">
       <p className="m-2 text-4xl">{data?.greeting}</p>
       <p className="m-4 text-center">
@@ -31,38 +29,7 @@ const Main: FC = () => {
         {secretMessage && <span> {secretMessage}</span>}
       </p>
       <AuthButton />
-      <InstitutionalDivestments title="Institutional Divestment" />
     </div>
-
-    // option 2
-    // <div className="flex flex-col items-center justify-center">
-    // <p className="m-2 text-4xl">{data?.greeting}</p>
-    // <p className="m-4 text-center">
-    //   {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
-    //   <br />
-    //   {secretMessage && <span> {secretMessage}</span>}
-    // </p>
-    // <AuthButton />
-    // <InstitutionalDivestments title="Institutional Divestment" />
-    // </div>
-    
-    // option 3
-    // <>
-    // <div className="flex h-screen flex-col items-center justify-center">
-    // <p className="m-2 text-4xl">{data?.greeting}</p>
-    // <p className="m-4 text-center">
-    //   {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
-    //   <br />
-    //   {secretMessage && <span> {secretMessage}</span>}
-    // </p>
-    // <AuthButton />
-    // </div>
-    // <InstitutionalDivestments title="Institutional Divestment" />
-    // </>
-
-
-
-
   )
 }
 export default Main
