@@ -5,7 +5,7 @@ import { SessionProvider } from 'next-auth/react'
 
 import { api } from '../utils/api'
 import '../styles/globals.css'
-import NavBar from '../components/NavBar'
+import NavBar from '../components/Nav/NavBar'
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,

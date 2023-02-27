@@ -2,19 +2,18 @@ import type { FC } from 'react'
 import Link from 'next/link'
 import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
 
-import data from '../info/home.json'
-
-import ShadowTitle from './Text/ShadowTitle'
+import HomeData from '../../info/home.json'
+import ShadowTitle from '../Text/ShadowTitle'
 
 interface LinkTextPair {
   text: string
   link: string
 }
-const links = (data.instDivestment as { links: LinkTextPair[] }).links
+const links = (HomeData.instDivestment as { links: LinkTextPair[] }).links
 
 const LinkDisplay: FC = () => {
   return (
-    <div className="mt-12 flex w-full flex-col items-center rounded-md bg-darkTeal px-6 pt-6 pb-16 text-white">
+    <div className="mt-14 flex w-full flex-col items-center rounded-xl bg-darkTeal px-6 pt-6 pb-16 text-white">
       <div className="relative -top-12 ">
         <ShadowTitle text="Institutional Divestment Links" />
       </div>
