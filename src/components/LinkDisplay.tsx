@@ -4,11 +4,11 @@ import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
 
 import data from '../info/home.json'
 
-interface Pair {
+interface LinkTextPair {
   text: string
   link: string
 }
-const links = (data.instDivestment as { links: Pair[] }).links
+const links = (data.instDivestment as { links: LinkTextPair[] }).links
 
 const LinkDisplay: FC = () => {
   return (
@@ -19,7 +19,7 @@ const LinkDisplay: FC = () => {
         </p>
       </div>
       <div className="flex flex-wrap justify-center leading-loose underline">
-        {links.map((pair: Pair, index: number) => (
+        {links.map((pair: LinkTextPair, index: number) => (
           <div key={index} className="mx-2 inline-block">
             <Link href={pair.link} target="_blank" rel="noopener noreferrer">
               {pair.text}
