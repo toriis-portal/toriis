@@ -1,0 +1,23 @@
+name: ESG pull
+on:
+  schedule:
+    - cron: 0 8 * * *
+  push:
+    branches:
+      - 'dm/get-environment-cron'
+      - 'zz/workflow-fix'
+  pull_request:
+    branches:
+      - 'main'
+    paths:
+      - '.github/workflows/cron.yaml'
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call API service to pull down from esg
+        run: |
+          curl -G \
+          --data-urlencode "batch=1" \
+          --data-urlencode 'input=${{ secrets.CRONJOB_KEY }}' \
+          --url 'https://toriis.vercel.app/api/trpc/cronjob.esgpull'
