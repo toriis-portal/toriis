@@ -6,4 +6,12 @@ import NavButton from './Buttons/NavButton'
 import NavBar from './NavBar'
 import PrimaryButton from './Buttons/PrimaryButton'
 
-export { AuthButton, ListItem, NumberCircle, HighlightedTitle, NavButton, NavBar, PrimaryButton }
+export {
+  AuthButton,
+  ListItem,
+  NumberCircle,
+  HighlightedTitle,
+  NavButton,
+  NavBar,
+  PrimaryButton,
+}
