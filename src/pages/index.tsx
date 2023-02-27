@@ -1,9 +1,8 @@
-import type { FC } from 'react'
 import { useSession } from 'next-auth/react'
+import type { FC } from 'react'
 
 import { AuthButton } from '../components'
 import { api } from '../utils/api'
-import LinkDisplay from '../components/LinkDisplay'
 
 const Main: FC = () => {
   const { data, isLoading, error } = api.example.hello.useQuery({
@@ -30,12 +29,7 @@ const Main: FC = () => {
         {secretMessage && <span> {secretMessage}</span>}
       </p>
       <AuthButton />
-
-      <LinkDisplay
-      // Temporary placement until merged with section PR
-      />
     </div>
   )
 }
-
 export default Main

@@ -19,6 +19,9 @@ module.exports = {
         '3xl': '28px',
       },
     },
+    fontFamily: {
+      klima: ['Klima', 'Arial', 'Roboto'],
+    },
   },
   plugins: [],
 }
