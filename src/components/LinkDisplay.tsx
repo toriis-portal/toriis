@@ -4,6 +4,8 @@ import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
 
 import data from '../info/home.json'
 
+import ShadowTitle from './ShadowTitle'
+
 interface LinkTextPair {
   text: string
   link: string
@@ -13,11 +15,7 @@ const links = (data.instDivestment as { links: LinkTextPair[] }).links
 const LinkDisplay: FC = () => {
   return (
     <div className="mt-12 flex w-full flex-col items-center rounded-md bg-darkTeal px-6 pt-6 pb-16 text-white">
-      <div className="relative -top-12 z-10 rounded-full border-4 border-cobalt bg-white px-14 py-4 font-semibold shadow-cobalt">
-        <p className="text-3xl text-darkTeal ">
-          Institutional Divestment Links
-        </p>
-      </div>
+      <ShadowTitle text="Institutional Divestment Links" />
       <div className="flex flex-wrap justify-center leading-loose underline">
         {links.map((pair: LinkTextPair, index: number) => (
           <div key={index} className="mx-2 inline-block">
