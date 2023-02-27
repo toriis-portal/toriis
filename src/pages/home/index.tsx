@@ -1,11 +1,13 @@
 import type { FC } from 'react'
 
-import Landing from '../../sections/Landing'
+import LinkDisplay from '../../components/LinkDisplay'
+import InstitutionalDivestments from '../../sections/InstitutionalDivestments'
 
 const Home: FC = () => {
   return (
     <div>
-      <Landing />
+      <InstitutionalDivestments />
+      <LinkDisplay />
     </div>
   )
 }

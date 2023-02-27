@@ -6,7 +6,6 @@ import { SessionProvider } from 'next-auth/react'
 import { api } from '../utils/api'
 import '../styles/globals.css'
 import NavBar from '../components/NavBar'
-import LinkDisplay from '../components/LinkDisplay'
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -24,11 +23,8 @@ const MyApp: AppType<{ session: Session | null }> = ({
       </Head>
       <SessionProvider session={session}>
         <NavBar />
-        <main className="font-klima text-lg">
+        <main className="flex flex-col px-12 font-klima text-lg">
           <Component {...pageProps} />
-          <LinkDisplay
-          // Temporary placement until merged with section PR
-          />
         </main>
       </SessionProvider>
     </>
