@@ -10,9 +10,9 @@ const InstitutionalDivestments: FC = () => {
 
   return (
     <>
+      <HighlightedTitle title="Institutional Divestment" />
       <div className="my-6 w-full px-12">
-        <HighlightedTitle title="Institutional Divestment" />
-        <div className="ml-[3%] space-y-9">
+        <div className="ml-[3%] space-y-6">
           {strings.map((string, index) => (
             <ListItem
               key={index + 1}
