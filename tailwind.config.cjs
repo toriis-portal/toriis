@@ -12,6 +12,9 @@ module.exports = {
         clementine: '#FFA902',
         white: '#FFFFFF',
       },
+      fontSize: {
+        '2.5xl': '28px',
+      },
     },
     fontFamily: {
       klima: ['Klima', 'Arial', 'Roboto'],
