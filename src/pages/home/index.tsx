@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 
 import InstitutionalDivestments from '../../sections/InstitutionalDivestments'
-import SecondaryNavBar from '../../components/SecondaryNavBar'
+import SecondaryNavBar from '../../components/Nav/SecondaryNavBar'
 import SampleSection from '../../sections/SampleSection'
 
 const Home: FC = () => {
@@ -24,6 +24,7 @@ const Home: FC = () => {
         <div id="divestmentHistory" className="pt-20">
           <SampleSection text="Divestment History" />
         </div>
+        <SampleSection text="" />
         <SampleSection text="" />
       </main>
     </>
