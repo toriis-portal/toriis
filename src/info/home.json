@@ -1,14 +1,5 @@
 {
   "example": "an awesome example",
-  "secondaryNavText": {
-    "data": [
-      { "path": "ourRequests", "text": "Our Requests" },
-      { "path": "institutionalDivestment", "text": "Institutional Divestment" },
-      { "path": "refuteUISReponse", "text": "Refute UIS Response" },
-      { "path": "UIUCSystem", "text": "UIUC System" },
-      { "path": "divestmentHistory", "text": "Divestment History" }
-    ]
-  },
   "instDivestment": {
     "links": [
       {

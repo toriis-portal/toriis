@@ -5,9 +5,18 @@ import SecondaryNavBar from '../../components/Nav/SecondaryNavBar'
 import SampleSection from '../../sections/SampleSection'
 
 const Home: FC = () => {
+  const data = {
+    text: [
+      { path: 'ourRequests', text: 'Our Requests' },
+      { path: 'institutionalDivestment', text: 'Institutional Divestment' },
+      { path: 'refuteUISReponse', text: 'Refute UIS Response' },
+      { path: 'UIUCSystem', text: 'UIUC System' },
+      { path: 'divestmentHistory', text: 'Divestment History' },
+    ],
+  }
   return (
     <>
-      <SecondaryNavBar />
+      <SecondaryNavBar data={data} />
       <main className="px-12">
         <div id="ourRequests" className="pt-20">
           <SampleSection text="Our Requests" />
