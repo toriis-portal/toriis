@@ -2,6 +2,7 @@ import type { FC } from 'react'
 
 import HomeData from '../info/home.json'
 import HighlightedTitle from '../components/Text/HighlightedTitle'
+import Carousel from '../components/Displays/Carousel'
 
 const RefuteUISResponse: FC = () => {
   const leftText: string = HomeData.refuteResponse.leftText
@@ -13,7 +14,11 @@ const RefuteUISResponse: FC = () => {
         <p className="basis-1/2 px-20 py-8 text-2.5xl leading-tight">
           {leftText}
         </p>
-        <div className="basis-1/2 bg-clementine">carousel!</div>
+        <div className="basis-1/2 bg-clementine">
+          <Carousel
+            carouselChildrenData={HomeData.refuteResponse.carouselItems}
+          />
+        </div>
       </div>
     </div>
   )
