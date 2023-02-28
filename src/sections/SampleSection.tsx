@@ -1,5 +1,7 @@
 import type { FC } from 'react'
 
+import { HighlightedTitle } from '../components'
+
 interface InputProps {
   text: string
 }
@@ -7,8 +9,8 @@ interface InputProps {
 const SampleSection: FC<InputProps> = ({ text }) => {
   return (
     <>
-      <div className="h-screen border-spacing-1 bg-slate-200 text-6xl">
-        {text}
+      <div className="h-[400px] border-spacing-1 text-6xl">
+        <HighlightedTitle title={text} />
       </div>
     </>
   )

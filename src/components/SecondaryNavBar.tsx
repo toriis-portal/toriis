@@ -4,12 +4,12 @@ import clsx from 'clsx'
 
 const SecondaryNavBar: FC = () => {
   const navStyle = clsx(
-    'no-underline hover:text-clementine hover:underline hover:underline-offset-8',
+    'no-underline hover:decoration-clementine hover:underline hover:underline-offset-8 hover:decoration-[0.2rem]',
   )
   return (
     <>
-      <nav className="center sticky top-0 bg-darkTeal py-2.5">
-        <ul className="flex flex-row items-center justify-center space-x-8 p-4 text-white">
+      <nav className="center sticky top-0 z-50 bg-darkTeal py-2.5">
+        <ul className="flex cursor-pointer flex-row items-center justify-center space-x-8 p-4 text-white">
           <li>
             <Link
               activeClass="active"
