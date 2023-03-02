@@ -14,7 +14,7 @@ const RefuteUISResponse: FC = () => {
         <p className="basis-1/2 px-20 py-8 text-2.5xl leading-tight">
           {leftText}
         </p>
-        <div className="basis-1/2 bg-clementine">
+        <div className="basis-1/2 pr-8">
           <Carousel
             carouselChildrenData={HomeData.refuteResponse.carouselItems}
           />
