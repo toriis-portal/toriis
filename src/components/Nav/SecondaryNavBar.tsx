@@ -21,6 +21,7 @@ const SecondaryNavBar: FC<InputProps> = ({ data }) => {
                 to={dataKey.path}
                 spy={true}
                 smooth={true}
+                offset={-35}
                 duration={500}
                 className={navStyle}
               >
