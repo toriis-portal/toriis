@@ -23,7 +23,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
       </Head>
       <SessionProvider session={session}>
         <NavBar />
-        <main className="flex flex-col px-12 font-klima text-lg">
+        <main className="flex flex-col font-klima text-lg">
           <Component {...pageProps} />
         </main>
       </SessionProvider>
