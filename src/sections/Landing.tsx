@@ -15,9 +15,11 @@ const Landing: FC = () => {
 
   return (
     <>
-      <text>
-        {hello.data?.greeting ? hello.data.greeting : 'No investment'}
-      </text>
+      <div>
+        <text>
+          {hello.data?.greeting ? hello.data.greeting : 'No investment'}
+        </text>
+      </div>
     </>
   )
 }
