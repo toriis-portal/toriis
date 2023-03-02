@@ -1,5 +1,5 @@
-import type { FC } from 'react'
 import { useSession } from 'next-auth/react'
+import type { FC } from 'react'
 
 import { AuthButton } from '../components'
 import { api } from '../utils/api'
@@ -32,5 +32,4 @@ const Main: FC = () => {
     </div>
   )
 }
-
 export default Main

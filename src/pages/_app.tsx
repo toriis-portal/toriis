@@ -4,8 +4,8 @@ import Head from 'next/head'
 import { SessionProvider } from 'next-auth/react'
 
 import { api } from '../utils/api'
-
 import '../styles/globals.css'
+import NavBar from '../components/Nav/NavBar'
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -22,7 +22,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <SessionProvider session={session}>
-        <Component {...pageProps} />
+        <NavBar />
+        <main className="flex flex-col px-12 font-klima text-lg">
+          <Component {...pageProps} />
+        </main>
       </SessionProvider>
     </>
   )
