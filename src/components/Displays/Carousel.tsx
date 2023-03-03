@@ -31,7 +31,7 @@ const CarouselChild: FC<CarouselChildProps> = ({ childData, width }) => {
 
     <p
       // className="flex inline-flex w-1/2 break-normal text-black"
-      className="inline-flex h-52	w-10"
+      className="inline-flex"
       style={{ width: width }}
     >
       {childData.text}
