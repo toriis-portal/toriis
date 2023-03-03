@@ -21,11 +21,10 @@ const Home: FC = () => {
       <SecondaryNavBar data={data} />
       <main className="px-12">
         <div id="ourRequests" className="pt-20">
-          <SampleSection text="Our Requests" />
+          <OurRequest data={ourRequests.ourRequests} />
         </div>
         <div id="institutionalDivestment" className="pt-20">
           <InstitutionalDivestments />
-          <OurRequest data={ourRequests.ourRequests} />
         </div>
         <div id="refuteUISReponse" className="pt-20">
           <SampleSection text="Refute UIS Response" />

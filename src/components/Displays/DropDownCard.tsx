@@ -12,31 +12,37 @@ const DropDownCard: FC<{ item: Props; index: number }> = ({ item, index }) => {
   const handleOpen = () => {
     setOpen(!open)
   }
-  // <div className="flex w-full items-center space-x-8">
 
   return (
-    <div className=" font-Inter items-center">
+    <div className=" font-klima text-sm font-[400]">
       <div
         className={clsx(
-          'content-center rounded-xl bg-white shadow-lg md:w-[1250px]',
+          'w-10/12 content-center rounded-xl bg-white shadow-lg',
           { 'border-4 border-cobalt': open },
         )}
       >
-        <div className="flex w-full items-center space-x-8 pr-24 pl-24  pt-6 ">
-          <NumberCircle val={index} />
+        <div
+          className={clsx(
+            'flex w-full items-center space-x-8 pr-20 pl-24 pt-6',
+            { 'pb-8': open },
+          )}
+        >
+          <div className="">
+            <NumberCircle val={index} />
+          </div>
           <p className="mb-4 inline pt-6 text-base  font-[560]">
             {item.header}
           </p>
         </div>
         {open ? (
-          <div className="border-t-2 border-cobalt p-6 font-[400] text-neutral-600 ">
+          <div className="border-t-2 border-cobalt pl-20 pr-20 pt-6 font-[400] text-neutral-600">
             {item.body}
-            <ol className="list-[lower-alpha] pl-12 pr-4">
+            <ol className="list-[lower-alpha] pl-12 pr-8 ">
               {item.list.map((bullet) => (
                 <li key={index}> {bullet} </li>
               ))}
             </ol>
-            <ol className="list-[lower-roman] pl-24 pr-4">
+            <ol className="list-[lower-roman] pl-24 pr-8">
               {item.sublist.map((bullet) => (
                 <li key={index}> {bullet} </li>
               ))}
