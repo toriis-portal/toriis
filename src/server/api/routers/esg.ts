@@ -1,5 +1,4 @@
-import type { ESG } from '@prisma/client'
-import type { Company, ESGIndex } from '@prisma/client'
+import type { Company, ESG, ESGIndex } from '@prisma/client'
 import { z } from 'zod'
 
 import type { Context } from '../trpc'
@@ -10,7 +9,7 @@ interface errorMessage {
   message?: string
 }
 
-const MAX_API_CALLS = 50
+const MAX_API_CALLS = 10
 const consumeExternalApi = async <T>(
   url: string,
 ): Promise<T | errorMessage> => {
@@ -21,6 +20,16 @@ const consumeExternalApi = async <T>(
 // Typeguard for error messages
 const isErrorMessage = (res: errorMessage | ESG[]): res is errorMessage => {
   return 'error' in res || 'message' in res
+}
+
+const getFirstCompany = async (
+  ctx: Context,
+): Promise<{ id: string } | null> => {
+  return await ctx.prisma.company.findFirst({
+    select: {
+      id: true,
+    },
+  })
 }
 
 const updateESGIndex = async (
@@ -53,12 +62,7 @@ export const esgRouter = createTRPCRouter({
 
     // Handle first time running or when index does not exist
     if (!companyIndex) {
-      const startIndexCompany = await ctx.prisma.company.findFirst({
-        select: {
-          id: true,
-        },
-      })
-
+      const startIndexCompany = await getFirstCompany(ctx)
       if (startIndexCompany) {
         companyIndex = await ctx.prisma.eSGIndex.create({
           data: {
@@ -72,33 +76,63 @@ export const esgRouter = createTRPCRouter({
       }
     }
 
-    const companies = await ctx.prisma.company.findMany({
-      take: MAX_API_CALLS,
-      where: {
-        id: {
-          gt: companyIndex?.companyId ?? '1',
+    // Get companies and handles wraparound
+    const companiesRaw = await ctx.prisma.eSGIndex.aggregateRaw({
+      pipeline: [
+        { $project: { _id: 0, companyId: '$companyId' } },
+        { $group: { _id: null, companyId: { $first: '$companyId' } } },
+        { $project: { _id: 0, companyId: '$companyId' } },
+        {
+          $lookup: {
+            from: 'Company',
+            let: { companyId: '$companyId' },
+            pipeline: [
+              { $match: { $expr: { $gt: ['$_id', '$$companyId'] } } },
+              { $project: { _id: 1, ticker: 1 } },
+            ],
+            as: 'companyIds',
+          },
         },
-      },
-      select: {
-        ticker: true,
-        id: true,
-      },
+        { $project: { _id: 0, companyIds: '$companyIds' } },
+        { $unwind: '$companyIds' },
+        { $project: { _id: '$companyIds._id', ticker: '$companyIds.ticker' } },
+        {
+          $unionWith: {
+            coll: 'Company',
+            pipeline: [{ $limit: 50 }, { $project: { _id: 1, ticker: 1 } }],
+          },
+        },
+        { $limit: 50 },
+      ],
     })
 
-    companies.map(
+    if (!Array.isArray(companiesRaw) || companiesRaw.length === 0) {
+      return 'Error getting companies'
+    }
+
+    const cleanedCompanies = companiesRaw.map(
+      (company: { _id: { $oid: string }; ticker: string }) => {
+        return {
+          id: company._id.$oid,
+          ticker: company.ticker,
+        }
+      },
+    )
+
+    cleanedCompanies.map(
       async (company: { ticker: string; id: string }, index: number) => {
         if (company.ticker !== 'NO_TICKER_FOUND') {
           const url = `https://esgapiservice.com/api/authorization/search?q=${
             company.ticker
           }&token=${process.env.ESG_API_KEY ?? ''}`
           const api_res = await consumeExternalApi<ESG[]>(url)
-
           if (isErrorMessage(api_res) || !api_res[0]) {
+            // Create bad ticker log
             const res = await ctx.prisma.eSGBadTicker.create({
               data: {
                 company: {
                   connect: {
-                    id: company?.id,
+                    id: company.id,
                   },
                 },
               },
@@ -107,22 +141,40 @@ export const esgRouter = createTRPCRouter({
             if (!res) {
               return 'Failed to create bad ticker log'
             }
-
             return 'No data returned or max calls reached'
           } else {
             const ESGData = api_res[0]
-            const res = await ctx.prisma.eSG.create({
-              data: {
-                environment_grade: ESGData.environment_grade,
-                environment_score: ESGData.environment_score,
-                environment_level: ESGData.environment_level,
-                company: {
-                  connect: {
-                    id: company?.id,
+            const exists = await ctx.prisma.eSG.findFirst({
+              where: { companyId: company.id },
+            })
+
+            // Either create or update esg depending on if it exists
+            let res
+            if (exists) {
+              res = await ctx.prisma.eSG.update({
+                where: {
+                  id: exists.id,
+                },
+                data: {
+                  environment_grade: ESGData.environment_grade,
+                  environment_score: ESGData.environment_score,
+                  environment_level: ESGData.environment_level,
+                },
+              })
+            } else {
+              res = await ctx.prisma.eSG.create({
+                data: {
+                  environment_grade: ESGData.environment_grade,
+                  environment_score: ESGData.environment_score,
+                  environment_level: ESGData.environment_level,
+                  company: {
+                    connect: {
+                      id: company.id,
+                    },
                   },
                 },
-              },
-            })
+              })
+            }
 
             // Handle error creating ESG
             if (!res) {
@@ -136,11 +188,15 @@ export const esgRouter = createTRPCRouter({
 
             // Update index if last call
             if (index === MAX_API_CALLS) {
-              await updateESGIndex(
+              const res = await updateESGIndex(
                 ctx,
                 companyIndex as ESGIndex,
                 company as Company,
               )
+
+              if (!res) {
+                return 'Error updating index'
+              }
             }
           }
         }
