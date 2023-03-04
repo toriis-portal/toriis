@@ -1,7 +1,7 @@
 import { createTRPCRouter } from './trpc'
 import { exampleRouter } from './routers/example'
 import { esgRouter } from './routers/esg'
-import { investmentRouter } from './routers/investment'
+import { companyRouter } from './routers/company'
 
 /**
  * This is the primary router for your server.
@@ -10,7 +10,7 @@ import { investmentRouter } from './routers/investment'
  */
 export const appRouter = createTRPCRouter({
   example: exampleRouter,
-  investment: investmentRouter,
+  company: companyRouter,
   cronjob: esgRouter,
 })
 

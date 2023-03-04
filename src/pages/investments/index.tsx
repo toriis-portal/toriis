@@ -4,8 +4,8 @@ import { api } from '../../utils/api'
 
 const Home: FC = () => {
   const limit = 5
-  const { fetchNextPage, isLoading, data } =
-    api.investment.getInvestments.useInfiniteQuery(
+  const { fetchNextPage, isLoading, hasNextPage, isFetchingNextPage, data } =
+    api.company.getInvestments.useInfiniteQuery(
       {
         limit: limit,
       },
@@ -15,8 +15,6 @@ const Home: FC = () => {
       },
     )
 
-  console.log(data)
-
   return (
     <div>
       <h2>{isLoading && '(loading)'}</h2>
@@ -24,10 +22,7 @@ const Home: FC = () => {
         <div className="flex flex-col gap-4">
           <h1 className="font-medium">Company Name</h1>
           {data?.pages.map((page, index) => (
-            <div
-              className="flex flex-col gap-4"
-              key={page.items[0]?.id || index}
-            >
+            <div className="flex flex-col gap-4" key={index}>
               {page.items.map((item) => (
                 <div className="flex text-cobalt" key={item.id}>
                   {item.name}
@@ -39,10 +34,7 @@ const Home: FC = () => {
         <div className="flex flex-col gap-4">
           <h1 className="font-medium">Sector</h1>
           {data?.pages.map((page, index) => (
-            <div
-              className="flex flex-col gap-4"
-              key={page.items[0]?.id || index}
-            >
+            <div className="flex flex-col gap-4" key={index}>
               {page.items.map((item) => (
                 <div className="flex text-black" key={item.id}>
                   {item.sector}
@@ -54,10 +46,7 @@ const Home: FC = () => {
         <div className="flex flex-col gap-4">
           <h1 className="font-medium">Industry</h1>
           {data?.pages.map((page, index) => (
-            <div
-              className="flex flex-col gap-4"
-              key={page.items[0]?.id || index}
-            >
+            <div className="flex flex-col gap-4" key={index}>
               {page.items.map((item) => (
                 <div className="flex text-pumpkin" key={item.id}>
                   {item.industry}
@@ -72,6 +61,7 @@ const Home: FC = () => {
         onClick={() => {
           void fetchNextPage()
         }}
+        disabled={!hasNextPage || isFetchingNextPage}
       >
         Load More
       </button>

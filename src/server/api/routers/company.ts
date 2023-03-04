@@ -2,21 +2,20 @@ import { z } from 'zod'
 
 import { createTRPCRouter, publicProcedure } from '../trpc'
 
-export const investmentRouter = createTRPCRouter({
+export const companyRouter = createTRPCRouter({
   getInvestments: publicProcedure
     .input(
       z.object({
         limit: z.number().min(1).max(100).nullish(),
-        cursor: z.string().nullish(), // <-- "cursor" needs to exist, but can be any type
+        cursor: z.string().nullish(),
       }),
     )
     .query(async ({ input, ctx }) => {
       const limit = input.limit ?? 10
       const { cursor } = input
 
-      //temporary, can't get all the needed data
       const items = await ctx.prisma.company.findMany({
-        take: limit + 1, // get an extra item at the end which we'll use as next cursor
+        take: limit + 1,
         cursor: cursor ? { id: cursor } : undefined,
         select: {
           id: true,
