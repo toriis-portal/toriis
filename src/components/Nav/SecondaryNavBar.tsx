@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-// import { Link } from 'react-scroll'
+import { Link } from 'react-scroll'
 import clsx from 'clsx'
 
 interface InputProps {
@@ -16,7 +16,7 @@ const SecondaryNavBar: FC<InputProps> = ({ data }) => {
         {data.text.map((dataKey: { path: string; text: string }, i: number) => {
           return (
             <li key={i}>
-              {/* <Link
+              <Link
                 activeClass="active"
                 to={dataKey.path}
                 spy={true}
@@ -26,7 +26,7 @@ const SecondaryNavBar: FC<InputProps> = ({ data }) => {
                 className={navStyle}
               >
                 {dataKey.text}
-              </Link> */}
+              </Link>
             </li>
           )
         })}
