@@ -22,8 +22,8 @@ const isErrorMessage = (res: errorMessage | ESG[]): res is errorMessage => {
   return 'error' in res || 'message' in res
 }
 
-const maxDailyCallsReachedMessage = "Specified argument was out of the range of valid values. (Parameter 'You've reached your daily limit')"
-
+const maxDailyCallsReachedMessage =
+  "Specified argument was out of the range of valid values. (Parameter 'You've reached your daily limit')"
 
 const getFirstCompany = async (
   ctx: Context,
@@ -106,7 +106,10 @@ export const esgRouter = createTRPCRouter({
         {
           $unionWith: {
             coll: 'Company',
-            pipeline: [{ $limit: MAX_API_CALLS }, { $project: { _id: 1, ticker: 1 } }],
+            pipeline: [
+              { $limit: MAX_API_CALLS },
+              { $project: { _id: 1, ticker: 1 } },
+            ],
           },
         },
         { $limit: MAX_API_CALLS },
@@ -128,14 +131,17 @@ export const esgRouter = createTRPCRouter({
 
     console.log(cleanedCompanies.length)
 
-    cleanedCompanies.map(
+    const replies = cleanedCompanies.map(
       async (company: { ticker: string; id: string }, index: number) => {
         if (company.ticker !== 'NO_TICKER_FOUND') {
           const url = `https://esgapiservice.com/api/authorization/search?q=${
             company.ticker
           }&token=${process.env.ESG_API_KEY ?? ''}`
           const api_res = await consumeExternalApi<ESG[]>(url)
-          if (isErrorMessage(api_res) && api_res.error === maxDailyCallsReachedMessage) {
+          if (
+            isErrorMessage(api_res) &&
+            api_res.error === maxDailyCallsReachedMessage
+          ) {
             return 'Max daily calls reached'
           }
 
@@ -213,9 +219,15 @@ export const esgRouter = createTRPCRouter({
             }
           }
         }
+        return 'Success'
       },
     )
 
-    return 'Success'
+    const item_status = await Promise.all<string>(replies)
+
+    return {
+      status: 'Success',
+      item_status: item_status,
+    }
   }),
 })
