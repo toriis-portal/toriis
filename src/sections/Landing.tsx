@@ -17,24 +17,19 @@ const Landing: FC = () => {
     'text-4xl first-letter:font-black first-letter:text-[#FFA902] font-medium',
   )
   const landingHeader = clsx('text-4xl font-medium')
-  const textData: string[] = data.landingText.listItems
+  const textData = (data.landingText as { listItems: string[] }).listItems
   const landingTextStyle = clsx(
     'font-semibold underline decoration-[#FFA902] decoration-2 underline-offset-4',
   )
 
   if (!source.data) return <text> Loading...</text>
 
-  interface oldElem {
-    sector: string
-    _count: { sector: number }
-  }
-
-  const labels: string[] = source.data.map((dataKey: oldElem) => {
-    const obj: string = dataKey.sector
+  const labels: string[] = source.data.map((dataKey) => {
+    const obj: string = dataKey.sector as string
     return obj
   })
 
-  const features: number[] = source.data.map((dataKey: oldElem) => {
+  const features: number[] = source.data.map((dataKey) => {
     const obj: number = dataKey._count.sector
     return obj
   })
