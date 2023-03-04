@@ -18,15 +18,17 @@ const DropDownCard: FC<{ item: Props; index: number }> = ({ item, index }) => {
       })}
     >
       <div
-        className={clsx('flex w-full items-center space-x-8 pr-20 pl-24 pt-6', {
+        className={clsx('flex w-full items-center space-x-8 pr-16 pl-20 pt-6', {
           'pb-10': open,
         })}
       >
         <NumberCircle val={index} />
-        <p className="mb-2 inline pt-6 text-lg font-medium">{item.header}</p>
+        <p className="mb-2 inline pl-8 pt-6 text-lg font-medium">
+          {item.header}
+        </p>
       </div>
       {open ? (
-        <div className="border-t-2 border-cobalt pl-20 pr-20 pt-6 text-base text-neutral-600">
+        <div className="font-Inter border-t-2 border-cobalt pl-20 pr-20 pt-6 text-base text-neutral-600">
           {item.body}
           <ol className="list-[lower-alpha] pl-12 pr-8 ">
             {item.list.map((bullet) => (
