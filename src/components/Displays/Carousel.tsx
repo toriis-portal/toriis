@@ -62,7 +62,7 @@ const Carousel: FC<CarouselProps> = ({ carouselChildrenData }) => {
     <div
       className={clsx(
         'flex flex-col',
-        'gap-2 px-12 pt-12 pb-8',
+        'gap-4 px-12 pt-12 pb-8',
         'rounded-md border-4 border-clementine bg-white',
         'shadow-[-16px_16px_0px_0px] shadow-clementine',
       )}

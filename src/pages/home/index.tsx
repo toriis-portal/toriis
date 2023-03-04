@@ -18,20 +18,20 @@ const Home: FC = () => {
   return (
     <>
       <SecondaryNavBar data={data} />
-      <main className="px-12">
-        <div id="ourRequests" className="pt-20">
+      <main>
+        <div id="ourRequests" className="px-12 pt-20">
           <SampleSection text="Our Requests" />
         </div>
-        <div id="institutionalDivestment" className="pt-20">
+        <div id="institutionalDivestment" className="px-12 pt-20">
           <InstitutionalDivestments />
         </div>
         <div id="refuteUISReponse" className="pt-20">
           <RefuteUISResponse />
         </div>
-        <div id="UIUCSystem" className="pt-20">
+        <div id="UIUCSystem" className="px-12 pt-20">
           <SampleSection text="UIUC System" />
         </div>
-        <div id="divestmentHistory" className="pt-20">
+        <div id="divestmentHistory" className="px-12 pt-20">
           <SampleSection text="Divestment History" />
         </div>
         <SampleSection text="" />

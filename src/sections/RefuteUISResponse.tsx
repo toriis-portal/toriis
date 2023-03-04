@@ -11,10 +11,10 @@ const RefuteUISResponse: FC = () => {
     <div className="bg-clementine/20 px-12 py-20">
       <HighlightedTitle title="Refute UIS Response" />
       <div className="flex flex-row">
-        <p className="basis-1/2 px-20 py-8 text-2.5xl leading-tight">
+        <p className="basis-3/7 px-20 py-8 text-2.5xl leading-tight">
           {leftText}
         </p>
-        <div className="basis-1/2 pr-8">
+        <div className="basis-4/7 pr-8">
           <Carousel
             carouselChildrenData={HomeData.refuteResponse.carouselItems}
           />
