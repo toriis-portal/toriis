@@ -25,7 +25,7 @@ export const investmentRouter = createTRPCRouter({
           industry: true,
           investment: {
             select: {
-              costVal: true,
+              marketVal: true,
               quantity: true,
             },
           },
@@ -40,7 +40,7 @@ export const investmentRouter = createTRPCRouter({
       items.forEach((item) => {
         let asset_sum = 0
         item.investment.forEach((iv) => {
-          asset_sum += iv.costVal * iv.quantity
+          asset_sum += iv.marketVal * iv.quantity
         })
         Object.assign(item, { asset_sum: asset_sum })
       })
