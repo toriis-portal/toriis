@@ -14,37 +14,18 @@ interface CarouselProps {
 
 interface CarouselChildProps {
   childData: CarouselChildData
-  width: string
+  // width: string
 }
 
-const CarouselChild: FC<CarouselChildProps> = ({ childData, width }) => {
-  // console.log(childData.text)
+const CarouselChild: FC<CarouselChildProps> = ({ childData }) => {
   return (
-    // <div
-    //   // className="flex inline-flex items-center justify-center text-black"
-    //   // style={{ width: width }}
-    //   // className="w-16"
-    // >
-    //   {/* <p className="break-normal text-black">{childData.index}</p> */}
-    //   <p className="break-normal text-black">{childData.text}</p>
-    // </div>
-
     <p
       // className="flex inline-flex w-1/2 break-normal text-black"
       className="inline-flex"
-      style={{ width: width }}
+      style={{ width: '100%' }}
     >
       {childData.text}
-      {/* {childData.index} */}
-      {/* blah blah blach */}
     </p>
-
-    // <div
-    //   className="flex inline-flex items-center justify-center"
-    //   style={{ width: width }}
-    // >
-    //   {childData.index}
-    // </div>
   )
 }
 
@@ -58,7 +39,6 @@ const Carousel: FC<CarouselProps> = ({ carouselChildrenData }) => {
   }
 
   return (
-    // <div className="flex flex-col rounded-md border-4 border-clementine bg-white">
     <div
       className={clsx(
         'flex flex-col',
@@ -69,18 +49,15 @@ const Carousel: FC<CarouselProps> = ({ carouselChildrenData }) => {
     >
       <div className="overflow-hidden">
         <div
-          //flex flex-row
-          // whitespace-nowrap
-          className="whitespace-nowrap transition-transform" // TODO: mess around w duration, cur 150ms but medium recommended .3s??
-          style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+          className="flex flex-row whitespace-normal transition-transform" // TODO: mess around w duration, cur 150ms but medium recommended .3s??
+          style={{
+            transform: `translateX(-${activeIndex * 25}%)`,
+            width: '400%',
+          }}
         >
           {carouselChildrenData.map((childData, index) => {
             return (
-              <CarouselChild
-                childData={childData}
-                width="100%"
-                key={index}
-              ></CarouselChild>
+              <CarouselChild childData={childData} key={index}></CarouselChild>
             )
           })}
         </div>
