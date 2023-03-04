@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+.active {
+  text-decoration: underline;
+  text-decoration-color: #ffa902;
+  text-decoration-thickness: 0.2rem;
+  text-underline-offset: 0.5rem;
+}
+
 @layer base {
   @font-face {
     font-family: 'Klima';
