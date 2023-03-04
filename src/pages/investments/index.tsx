@@ -52,7 +52,7 @@ const Home: FC = () => {
           ))}
         </div>
         <div className="flex flex-col gap-4">
-          <h1 className="font-medium">Asset Sum</h1>
+          <h1 className="font-medium">Industry</h1>
           {data?.pages.map((page, index) => (
             <div
               className="flex flex-col gap-4"
@@ -60,7 +60,7 @@ const Home: FC = () => {
             >
               {page.items.map((item) => (
                 <div className="flex text-pumpkin" key={item.id}>
-                  {item.asset_sum}
+                  {item.industry}
                 </div>
               ))}
             </div>
