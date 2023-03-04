@@ -134,7 +134,6 @@ export const CompanyDetails: FC<CompanyDetailsProps> = ({
     // otherwise set display to empty
   }, [costData, valid]) // rerender if any of these values change to avoid hydration errors
 
-  // handles hydration error, if the display is empty then do not render first
   return (
     <>
       {/* render only one of error message or details, this logic format avoids
