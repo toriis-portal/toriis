@@ -18,7 +18,7 @@ const Landing: FC = () => {
     'text-4xl first-letter:font-black first-letter:text-[#FFA902] font-medium',
   )
   const landingHeader = clsx('text-4xl font-medium')
-  const textData = (data.landingText as { listItems: string[] }).listItems
+  const textData = data.listItems
   const landingTextStyle = clsx(
     'font-semibold underline decoration-[#FFA902] decoration-2 underline-offset-4',
   )
