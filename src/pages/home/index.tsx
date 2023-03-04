@@ -8,12 +8,6 @@ const Home: FC = () => {
     <div className="space-y-8">
       <InstitutionalDivestments />
       <RefuteUISResponse />
-      {/* TODO: remove later:  */}
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
     </div>
   )
 }

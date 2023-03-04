@@ -41,7 +41,6 @@ const CarouselDot: FC<CircleDotProps> = ({ active }) => {
 const Carousel: FC<CarouselProps> = ({ carouselChildrenData }) => {
   const [activeIndex, setActiveIndex] = useState(0)
 
-  // const initDotsStatuses: boolean[] = new Array(carouselChildrenData.length).fill(false)
   const initDotsStatuses: boolean[] = []
   for (let i = 0; i < carouselChildrenData.length; i++) {
     initDotsStatuses.push(false)
