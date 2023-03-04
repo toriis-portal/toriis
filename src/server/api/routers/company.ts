@@ -11,7 +11,7 @@ export const companyRouter = createTRPCRouter({
       }),
     )
     .query(async ({ input, ctx }) => {
-      const limit = input.limit ?? 10
+      const limit = input.limit ?? 9
       const { cursor } = input
 
       const items = await ctx.prisma.company.findMany({
