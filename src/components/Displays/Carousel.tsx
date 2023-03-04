@@ -70,7 +70,7 @@ const Carousel: FC<CarouselProps> = ({ carouselChildrenData }) => {
     >
       <div className="overflow-hidden">
         <div
-          className="flex flex-row whitespace-normal transition-transform" // TODO: mess around w duration, cur 150ms but medium recommended .3s??
+          className="flex flex-row whitespace-normal transition-transform"
           style={{
             transform: `translateX(-${activeIndex * 25}%)`,
             width: '400%',
@@ -82,13 +82,13 @@ const Carousel: FC<CarouselProps> = ({ carouselChildrenData }) => {
         </div>
       </div>
 
-      <div className="flex justify-between">
+      <div className="flex items-center justify-between">
         <button
           onClick={() => updateIndex(activeIndex - 1)}
           disabled={activeIndex == 0}
         >
           <ChevronLeftIcon
-            className={`h-6 font-extrabold ${
+            className={`h-8 font-extrabold ${
               activeIndex == 0 ? 'text-black/20' : 'text-black'
             }`}
           />
@@ -103,7 +103,7 @@ const Carousel: FC<CarouselProps> = ({ carouselChildrenData }) => {
           disabled={activeIndex == carouselChildrenData.length - 1}
         >
           <ChevronRightIcon
-            className={`h-6 font-extrabold ${
+            className={`h-8 font-extrabold ${
               activeIndex == carouselChildrenData.length - 1
                 ? 'text-black/20'
                 : 'text-black'
