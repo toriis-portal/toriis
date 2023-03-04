@@ -9,7 +9,7 @@ interface errorMessage {
   message?: string
 }
 
-const MAX_API_CALLS = 10
+const MAX_API_CALLS = 50
 const consumeExternalApi = async <T>(
   url: string,
 ): Promise<T | errorMessage> => {
@@ -21,6 +21,9 @@ const consumeExternalApi = async <T>(
 const isErrorMessage = (res: errorMessage | ESG[]): res is errorMessage => {
   return 'error' in res || 'message' in res
 }
+
+const maxDailyCallsReachedMessage = "Specified argument was out of the range of valid values. (Parameter 'You've reached your daily limit')"
+
 
 const getFirstCompany = async (
   ctx: Context,
@@ -51,6 +54,10 @@ export const esgRouter = createTRPCRouter({
   esgpull: publicProcedure.input(z.string()).query(async ({ input, ctx }) => {
     if (input !== process.env.CRONJOB_KEY) {
       return 'Not Authorized'
+    }
+
+    if (!process.env.ESG_API_KEY) {
+      return 'No Key Found For ESG API'
     }
 
     let companyIndex = await ctx.prisma.eSGIndex.findFirst({
@@ -99,10 +106,10 @@ export const esgRouter = createTRPCRouter({
         {
           $unionWith: {
             coll: 'Company',
-            pipeline: [{ $limit: 50 }, { $project: { _id: 1, ticker: 1 } }],
+            pipeline: [{ $limit: MAX_API_CALLS }, { $project: { _id: 1, ticker: 1 } }],
           },
         },
-        { $limit: 50 },
+        { $limit: MAX_API_CALLS },
       ],
     })
 
@@ -119,6 +126,8 @@ export const esgRouter = createTRPCRouter({
       },
     )
 
+    console.log(cleanedCompanies.length)
+
     cleanedCompanies.map(
       async (company: { ticker: string; id: string }, index: number) => {
         if (company.ticker !== 'NO_TICKER_FOUND') {
@@ -126,6 +135,10 @@ export const esgRouter = createTRPCRouter({
             company.ticker
           }&token=${process.env.ESG_API_KEY ?? ''}`
           const api_res = await consumeExternalApi<ESG[]>(url)
+          if (isErrorMessage(api_res) && api_res.error === maxDailyCallsReachedMessage) {
+            return 'Max daily calls reached'
+          }
+
           if (isErrorMessage(api_res) || !api_res[0]) {
             // Create bad ticker log
             const res = await ctx.prisma.eSGBadTicker.create({
