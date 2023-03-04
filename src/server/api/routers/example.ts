@@ -14,7 +14,9 @@ export const exampleRouter = createTRPCRouter({
   getSecretMessage: protectedProcedure.query(() => {
     return 'Secret message: SECS is the best team!'
   }),
+})
 
+export const companyRouter = createTRPCRouter({
   countByInvestment: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.company.groupBy({
       by: ['sector'],

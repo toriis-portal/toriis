@@ -10,9 +10,10 @@ import { PrimaryButton } from '../components'
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 const Landing: FC = () => {
-  const source = api.example.countByInvestment.useQuery(undefined, {
+  const source = api.company.countByInvestment.useQuery(undefined, {
     refetchOnWindowFocus: false,
   })
+
   const firstLetter = clsx(
     'text-4xl first-letter:font-black first-letter:text-[#FFA902] font-medium',
   )
@@ -22,7 +23,7 @@ const Landing: FC = () => {
     'font-semibold underline decoration-[#FFA902] decoration-2 underline-offset-4',
   )
 
-  if (!source.data) return <text> Loading...</text>
+  if (!source.data) return <p> Loading...</p>
 
   const labels: string[] = source.data.map((dataKey) => {
     const obj: string = dataKey.sector as string
@@ -36,8 +37,9 @@ const Landing: FC = () => {
 
   const options = {
     labels: labels,
+    fontFamily: 'Klima',
     legend: { show: false },
-    colors: ['#FFA902', '#E6F0FA', '#FF6112', '#17292E', '#0F81E8'],
+    colors: ['#FFA902', '#FF6112', '#17292E', '#0F81E8'],
     dataLabels: {
       enabled: true,
       dropShadow: {
@@ -53,19 +55,17 @@ const Landing: FC = () => {
     },
   }
   const series = features
-
-  console.log(labels)
   return (
     <>
       <div className="min-h-screen">
-        <div className="flex place-content-center space-x-4 pt-16">
-          <text className={firstLetter}>Transparent</text>
-          <text className={landingHeader}>and</text>
-          <text className={firstLetter}>Open</text>
-          <text className={firstLetter}>Resource</text>
-          <text className={landingHeader}>for</text>
-          <text className={firstLetter}>Institutional</text>
-          <text className={firstLetter}>Investments</text>
+        <div className="flex flex-wrap place-content-center space-x-4 pt-10">
+          <span className={firstLetter}>Transparent</span>
+          <span className={landingHeader}>and</span>
+          <span className={firstLetter}>Open</span>
+          <span className={firstLetter}>Resource</span>
+          <span className={landingHeader}>for</span>
+          <span className={firstLetter}>Institutional</span>
+          <span className={firstLetter}>Investments</span>
         </div>
         <div className="mx-14 flex justify-center py-10">
           <div className="donut place-content-center px-14 pt-6">
@@ -78,27 +78,19 @@ const Landing: FC = () => {
             />
           </div>
           <div>
-            <p className="pr-14">
-              <text>{textData[0]}</text>
-              <text className={landingTextStyle}>{textData[1]}</text>
-              <text>{textData[2]}</text>
-              <text className={landingTextStyle}>{textData[3]}</text>
+            <p className="pr-14 md:mb-8">
+              <span>{textData[0]}</span>
+              <span className={landingTextStyle}>{textData[1]}</span>
+              <span>{textData[2]}</span>
+              <span className={landingTextStyle}>{textData[3]}</span>
             </p>
-            <br></br>
-            <p className="pr-14">
-              <text>{textData[4]}</text>
-              <text className={landingTextStyle}>{textData[5]}</text>
+            <p className="pr-14 md:my-8">
+              <span>{textData[4]}</span>
+              <span className={landingTextStyle}>{textData[5]}</span>
             </p>
-            <br></br>
             <div className="flex gap-12 pt-4">
-              <PrimaryButton
-                text={textData[6] ? textData[6] : 'Loading'}
-                link=""
-              />
-              <PrimaryButton
-                text={textData[7] ? textData[7] : 'Loading'}
-                link=""
-              />
+              <PrimaryButton text="More About Fossil Fuels" link="" />
+              <PrimaryButton text="Learn About Investment" link="" />
             </div>
           </div>
         </div>
