@@ -2,10 +2,13 @@ import { useState } from 'react'
 import type { FC } from 'react'
 import clsx from 'clsx'
 
-import type { Props } from '../../types/ourRequest'
+import type { DropDownCardProps } from '../../types/ourRequest'
 import NumberCircle from '../Text/NumberCircle'
 
-const DropDownCard: FC<{ item: Props; index: number }> = ({ item, index }) => {
+const DropDownCard: FC<{ item: DropDownCardProps; index: number }> = ({
+  item,
+  index,
+}) => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => {
     setOpen(!open)
@@ -27,11 +30,11 @@ const DropDownCard: FC<{ item: Props; index: number }> = ({ item, index }) => {
           {item.header}
         </p>
       </div>
-      {open ? (
+      {open && (
         <div className="font-Inter border-t-2 border-cobalt pl-20 pr-20 pt-6 text-base text-neutral-600">
           {item.body}
           <ol className="list-[lower-alpha] pl-12 pr-8 ">
-            {item.list.map((bullet) => (
+            {item.list.map((bullet, index) => (
               <li key={index}> {bullet} </li>
             ))}
           </ol>
@@ -41,7 +44,7 @@ const DropDownCard: FC<{ item: Props; index: number }> = ({ item, index }) => {
             ))}
           </ol>
         </div>
-      ) : null}
+      )}
       <div className="flex pb-6 pr-6">
         <button
           className="ml-auto rounded-2xl bg-clementine px-3 py-1 text-sm italic"

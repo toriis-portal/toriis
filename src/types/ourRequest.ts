@@ -1,4 +1,4 @@
-export interface Props {
+export interface DropDownCardProps {
   header: string
   body: string
   list: string[]
