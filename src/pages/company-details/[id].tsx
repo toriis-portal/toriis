@@ -9,55 +9,79 @@ import { getCompanyTicker } from '../../server/api/routers/company'
 
 interface CompanyDetailsProps {
   ticker: string
-  cost: JSON | string
+  costData: DateClosePair[] | JSON | string
+  valid: boolean
 }
 
 export const getServerSideProps: GetServerSideProps<
   CompanyDetailsProps
 > = async ({ params }) => {
   let companyID: string
-  // grab companyID from url params
-  let data: JSON | string
+  let data: DateClosePair[] | JSON | string = 'No historical data found'
+  let val = false // assumes an error will occur, set to true after data validation
 
+  // grab companyID from url params
   if (params?.id) {
+    // if an ID exists in URL, it should be a company ID
     companyID = params.id as string
 
     // retrieve ticker by companyID
+    // case 1: t = 'NO_TICKER_FOUND' -> companyID is valid & stored in DB but no ticker exists
+    // case 2: t = 'Invalid CompanyID: No Ticker Found' -> companyID is invalid and/or not stored in DB
+    // case 3: t = TICKER -> companyID is valid & stored in DB with an existing ticker
     const t = await getCompanyTicker({
       prisma: prisma,
       input: companyID,
     })
 
-    // set props for component
-    // some companyIDs are valid but do not have a valid ticker, their return value if it exists in DB is NO_TICKER_FOUND
-    // for invalid companyIDs, getCompanyTicker will return 'Invalid CompanyID: No Ticker Found'
     let res: HistoricalResult | string
+
+    // case 0
     if (t === 'NO_TICKER_FOUND') {
-      data = 'No ticker found, no historical data found'
-      //   data = 'No data found'
+      data = 'No historical data found: no ticker exists for this company'
+
+      // case 1
+    } else if (t === 'Invalid CompanyID: No Ticker Found') {
+      data = 'No historical data found: this company does not exist'
+
+      // case 3
     } else {
+      // query yahoo-finance2 using valid ticker
       const query = t
+
+      // query data from period1 (past) to today (present)
       const options = {
         period1: '2022-02-01',
       }
-      res = await yahooFinance.historical(query, options)
-      //   res = await yahooFinance.search('AAPL')
-      res = JSON.stringify(res)
-      data = JSON.parse(res) as JSON
+
+      // await result, if valid then populate data and return valid
+      await yahooFinance
+        .historical(query, options)
+        .then((ret) => {
+          res = JSON.stringify(ret)
+          data = JSON.parse(res) as DateClosePair[]
+          val = true
+        })
+        .catch(() => {
+          // if invalid, populate data with an error message and leave valid = false
+          data = 'No historical data found'
+        })
     }
 
     return {
       props: {
         ticker: t,
-        cost: data,
+        costData: data,
+        valid: val,
       },
     }
   } else {
-    // for invalid companyIDs that are not in DB, add this context to the ticker value
+    // unable to retreive id from params, invalid case
     return {
       props: {
-        ticker: 'Invalid Company ID: NO_TICKER_FOUND',
-        cost: 'data as string',
+        ticker: 'Unable to retrieve company details',
+        costData: 'No historical data found',
+        valid: val,
       },
     }
   }
@@ -65,16 +89,17 @@ export const getServerSideProps: GetServerSideProps<
 
 interface DateClosePair {
   date: string
-  close: number
+  close: number // closing cost on date
 }
 
-function createData(cost: JSON): DateClosePair[] {
-  const data: JSON = cost
+// given a JSON data object
+function createData(costData: DateClosePair[]): DateClosePair[] {
+  const data: DateClosePair[] = costData
   let display: DateClosePair[] = []
 
-  if (typeof data !== 'string') {
+  if (typeof data !== 'string' && data) {
     data.map((obj: DateClosePair) => {
-      const day: string = new Date(obj.date).toLocaleString()
+      const day: string = new Date(obj.date).toLocaleDateString()
       const closingPrice: number = obj.close
       const insert: DateClosePair = {
         date: day,
@@ -82,60 +107,61 @@ function createData(cost: JSON): DateClosePair[] {
       }
 
       display.push(insert)
-      //   return (
-      //     <p key={date.toDateString()}>
-      //       {ticker} Closing cost on {date.toLocaleDateString()}: ${obj.close}
-      //     </p>
-      //   )
     })
     const length = display.length
     if (length > 100) {
       display = display.slice(length - 100)
     }
+    return display.reverse()
+  } else {
+    return []
   }
-  return display
 }
 
-export const CompanyDetails: FC<CompanyDetailsProps> = ({ ticker, cost }) => {
-  //   const display: DateClosePair[] = []
-  const [display, setDisplayState] = useState([])
-
-  //   const data: JSON | string = cost
-  //   const display: DateClosePair[] = []
-
-  //   if (typeof data !== 'string') {
-  //     data.map((obj: DateClosePair) => {
-  //       const day: string = new Date(obj.date).toLocaleString()
-  //       const closingPrice: number = obj.close
-  //       const insert: DateClosePair = {
-  //         date: day,
-  //         close: closingPrice,
-  //       }
-
-  //       display.push(insert)
-  //       //   return (
-  //       //     <p key={date.toDateString()}>
-  //       //       {ticker} Closing cost on {date.toLocaleDateString()}: ${obj.close}
-  //       //     </p>
-  //       //   )
-  //     })
-  //   }
+export const CompanyDetails: FC<CompanyDetailsProps> = ({
+  ticker,
+  costData,
+  valid,
+}) => {
+  // set to an empty array first
+  const [display, setDisplay] = useState<DateClosePair[]>([])
 
   useEffect(() => {
-    if (typeof cost !== 'string') setDisplayState(createData(cost))
-  }, [cost, display])
+    // only call if data is a JSON object populated with closing cost history
+    // set our display data accordignly
+    if (valid && typeof costData !== 'string') setDisplay(createData(costData))
+    // otherwise set display to empty
+  }, [costData, valid]) // rerender if any of these values change to avoid hydration errors
 
+  // handles hydration error, if the display is empty then do not render first
   return (
     <>
-      <div className="flex flex-col">
-        {typeof cost !== 'string' &&
-          display.map(({ date, close }) => (
-            <p key={ticker + date}>
-              {ticker} closing cost on {date}: ${close.toFixed(2)}
-            </p>
-          ))}
-        <p>{ticker}</p>
-      </div>
+      {/* render only one of error message or details, this logic format avoids
+      hydration errors */}
+      {((!display.length || !valid) && typeof costData === 'string' && (
+        <div>
+          <p>{costData}</p>
+        </div>
+      )) ||
+        (display.length && valid && typeof costData !== 'string' && (
+          <div>
+            <table>
+              <tbody>
+                <tr>
+                  <th>{ticker + "'"}s Closing Cost History</th>
+                </tr>
+
+                {typeof costData !== 'string' &&
+                  display.map(({ date, close }: DateClosePair) => (
+                    <tr key={ticker + date}>
+                      <td>{date}</td>
+                      <td>${close.toFixed(2)}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        ))}
     </>
   )
 }
