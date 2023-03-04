@@ -9,7 +9,7 @@ import { getCompanyTicker } from '../../server/api/routers/company'
 
 interface CompanyDetailsProps {
   ticker: string
-  costData: DateClosePair[] | JSON | string
+  costData: DateClosePair[] | string
   valid: boolean
 }
 
@@ -17,7 +17,7 @@ export const getServerSideProps: GetServerSideProps<
   CompanyDetailsProps
 > = async ({ params }) => {
   let companyID: string
-  let data: DateClosePair[] | JSON | string = 'No historical data found'
+  let data: DateClosePair[] | string = 'No historical data found'
   let val = false // assumes an error will occur, set to true after data validation
 
   // grab companyID from url params
@@ -127,9 +127,10 @@ export const CompanyDetails: FC<CompanyDetailsProps> = ({
   const [display, setDisplay] = useState<DateClosePair[]>([])
 
   useEffect(() => {
-    // only call if data is a JSON object populated with closing cost history
+    // only call if data is a non-empty DataClosePair[]
     // set our display data accordignly
-    if (valid && typeof costData !== 'string') setDisplay(createData(costData))
+    if (valid && typeof costData !== 'string' && costData.length)
+      setDisplay(createData(costData))
     // otherwise set display to empty
   }, [costData, valid]) // rerender if any of these values change to avoid hydration errors
 
