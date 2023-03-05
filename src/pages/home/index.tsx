@@ -36,14 +36,12 @@ const Home: FC = () => {
           <RefuteUISResponse />
         </div>
         <div id="divestmentHistory" className="px-12 pt-20">
-          <SampleSection text="Divestment History" />
+          <TimelineSection
+            text="Divestment History"
+            data={jsonData.timeline as TimelineEntry[]}
+          />
         </div>
-        <SampleSection text="" />
-        <SampleSection text="" />
-        <TimelineSection
-          text="test"
-          data={jsonData.timeline as TimelineEntry[]}
-        />
+
         <ToTopButton />
       </main>
     </>
