@@ -1,6 +1,8 @@
 import type { FC } from 'react'
 
+import OurRequest from '../../sections/OurRequests'
 import InstitutionalDivestments from '../../sections/InstitutionalDivestments'
+import Landing from '../../sections/Landing'
 import SecondaryNavBar from '../../components/Nav/SecondaryNavBar'
 import SampleSection from '../../sections/SampleSection'
 import TimelineSection from '../../sections/Timeline'
@@ -21,9 +23,10 @@ const Home: FC = () => {
   return (
     <>
       <SecondaryNavBar data={data} />
+      <Landing />
       <main className="px-12">
         <div id="ourRequests" className="pt-20">
-          <SampleSection text="Our Requests" />
+          <OurRequest />
         </div>
         <div id="institutionalDivestment" className="pt-20">
           <InstitutionalDivestments />
