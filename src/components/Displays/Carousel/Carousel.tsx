@@ -53,19 +53,14 @@ const Carousel: FC<CarouselProps> = ({ carouselChildrenData }) => {
           disabled={activeIndex == 0}
         >
           <ChevronLeftIcon
-            className={`h-9 font-extrabold ${
+            className={`h-9 stroke-current ${
               activeIndex == 0 ? 'text-black/20' : 'text-black'
             }`}
           />
         </button>
         <div className="flex flex-row gap-3">
           {carouselChildrenData.map((_, index) => {
-            return (
-              <CarouselDot
-                active={index == activeIndex ? true : false}
-                key={index}
-              />
-            )
+            return <CarouselDot active={index == activeIndex} key={index} />
           })}
         </div>
         <button
@@ -73,7 +68,7 @@ const Carousel: FC<CarouselProps> = ({ carouselChildrenData }) => {
           disabled={activeIndex == carouselChildrenData.length - 1}
         >
           <ChevronRightIcon
-            className={`h-9 font-extrabold ${
+            className={`h-9 stroke-current ${
               activeIndex == carouselChildrenData.length - 1
                 ? 'text-black/20'
                 : 'text-black'

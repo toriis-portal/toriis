@@ -2,7 +2,7 @@ import type { FC } from 'react'
 
 import HomeData from '../info/home.json'
 import HighlightedTitle from '../components/Text/HighlightedTitle'
-import Carousel from '../components/Displays/Carousel/Carousel'
+import { Carousel } from '../components'
 
 const RefuteUISResponse: FC = () => {
   const leftText: string = HomeData.refuteResponse.leftText
