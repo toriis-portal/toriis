@@ -3,6 +3,9 @@ import type { FC } from 'react'
 import InstitutionalDivestments from '../../sections/InstitutionalDivestments'
 import SecondaryNavBar from '../../components/Nav/SecondaryNavBar'
 import SampleSection from '../../sections/SampleSection'
+import TimelineSection from '../../sections/Timeline'
+import jsonData from '../../info/home.json'
+import type { TimelineEntry } from '../../sections/Timeline'
 
 const Home: FC = () => {
   const data = {
@@ -14,6 +17,7 @@ const Home: FC = () => {
       { path: 'divestmentHistory', text: 'Divestment History' },
     ],
   }
+
   return (
     <>
       <SecondaryNavBar data={data} />
@@ -35,6 +39,10 @@ const Home: FC = () => {
         </div>
         <SampleSection text="" />
         <SampleSection text="" />
+        <TimelineSection
+          text="test"
+          data={jsonData.timeline as TimelineEntry[]}
+        />
       </main>
     </>
   )

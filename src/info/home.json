@@ -28,5 +28,23 @@
       "Being responsible financial stewards for the long-term health of both portfolios and the planet;",
       "and, revoking support from fossil fuel companies and promoting a transition to a green energy future."
     ]
-  }
+  },
+  "timeline": [
+    {
+      "date": "2009",
+      "text": "Beyond Coal started as a branch of the Sierra Club"
+    },
+    {
+      "date": "2011",
+      "text": "Beyond Coal merged with Students for Environmental Concerns"
+    },
+    {
+      "date": "2013",
+      "text": "86% of the student body voted to divest from coal"
+    },
+    {
+      "date": "2015",
+      "text": "Student Senate passed a resolution to divest from coal"
+    }
+  ]
 }
