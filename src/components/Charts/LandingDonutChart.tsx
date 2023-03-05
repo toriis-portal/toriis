@@ -11,10 +11,9 @@ const LandingDonutChart: FC = () => {
   })
   if (!source.data) return <p> Loading...</p>
 
-  const labels: string[] = source.data.map((dataKey) => {
-    const obj: string = dataKey.sector as string
-    return obj
-  })
+  const labels: string[] = source.data.map(
+    (dataKey) => dataKey.sector as string,
+  )
 
   const features: number[] = source.data.map((dataKey) => {
     const obj: number = dataKey._count.sector

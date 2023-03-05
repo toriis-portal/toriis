@@ -32,8 +32,8 @@ const Landing: FC = () => {
             <span className={landingTextStyle}>{textData[5]}</span>
           </p>
           <div className="flex gap-12 pt-4">
-            <PrimaryButton text="More About Fossil Fuels" link="" />
-            <PrimaryButton text="Learn About Investment" link="" />
+            <PrimaryButton text="More About Fossil Fuels" link="/fossil-fuel" />
+            <PrimaryButton text="Learn About Investment" link="/investments" />
           </div>
         </div>
       </div>
