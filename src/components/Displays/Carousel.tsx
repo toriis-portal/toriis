@@ -41,21 +41,10 @@ const CarouselDot: FC<CircleDotProps> = ({ active }) => {
 const Carousel: FC<CarouselProps> = ({ carouselChildrenData }) => {
   const [activeIndex, setActiveIndex] = useState(0)
 
-  const initDotsStatuses: boolean[] = []
-  for (let i = 0; i < carouselChildrenData.length; i++) {
-    initDotsStatuses.push(false)
-  }
-  initDotsStatuses[0] = true
-  const [dotsStatuses, setDotsStatuses] = useState(initDotsStatuses)
-
   const updateIndex = (newIndex: number) => {
-    initDotsStatuses[0] = false
     if (newIndex >= 0 && newIndex < carouselChildrenData.length) {
       setActiveIndex(newIndex)
     }
-    const newStatus = [...initDotsStatuses]
-    newStatus[newIndex] = true
-    setDotsStatuses(newStatus)
   }
 
   return (
@@ -93,8 +82,13 @@ const Carousel: FC<CarouselProps> = ({ carouselChildrenData }) => {
           />
         </button>
         <div className="flex flex-row gap-3">
-          {dotsStatuses.map((status: boolean, index) => {
-            return <CarouselDot active={status} key={index} />
+          {carouselChildrenData.map((_, index) => {
+            return (
+              <CarouselDot
+                active={index == activeIndex ? true : false}
+                key={index}
+              />
+            )
           })}
         </div>
         <button
