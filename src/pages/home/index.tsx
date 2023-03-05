@@ -4,6 +4,7 @@ import OurRequest from '../../sections/OurRequests'
 import InstitutionalDivestments from '../../sections/InstitutionalDivestments'
 import SecondaryNavBar from '../../components/Nav/SecondaryNavBar'
 import SampleSection from '../../sections/SampleSection'
+import { ToTopButton } from '../../components'
 
 const Home: FC = () => {
   const data = {
@@ -36,6 +37,7 @@ const Home: FC = () => {
         </div>
         <SampleSection text="" />
         <SampleSection text="" />
+        <ToTopButton />
       </main>
     </>
   )
