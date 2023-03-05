@@ -10,8 +10,8 @@ import { esgRouter } from './routers/esg'
  */
 export const appRouter = createTRPCRouter({
   example: exampleRouter,
-  cronjob: esgRouter,
   company: companyRouter,
+  cronjob: esgRouter,
 })
 
 // export type definition of API
