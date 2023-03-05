@@ -54,4 +54,12 @@ export const companyRouter = createTRPCRouter({
         nextCursor,
       }
     }),
+  countByInvestment: publicProcedure.query(({ ctx }) => {
+    return ctx.prisma.company.groupBy({
+      by: ['sector'],
+      _count: {
+        sector: true,
+      },
+    })
+  }),
 })
