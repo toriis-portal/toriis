@@ -14,13 +14,13 @@ const Landing: FC = () => {
   )
 
   return (
-    <>
+    <div className="flex flex-col items-center justify-center">
       <CapitalizedTitle />
-      <div className="mx-14 flex flex-row justify-center py-10">
-        <div className="px-14 pt-6">
+      <div className="flex min-w-[900px] max-w-[1600px] flex-row items-center justify-center px-14 py-10">
+        <div className="basis-3/7 pr-[2em] pt-6">
           <LandingDonutChart />
         </div>
-        <div>
+        <div className="basis-4/7">
           <p className="pr-14 md:mb-8">
             <span>{textData[0]}</span>
             <span className={landingTextStyle}>{textData[1]}</span>
@@ -37,7 +37,7 @@ const Landing: FC = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
