@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import type { FC } from 'react'
 
 import { HighlightedTitle } from '../components'
@@ -17,16 +18,37 @@ interface TimlineItemProps {
   isLeft: boolean
 }
 
-const Spacer = () => {
-  return <div className="ml-10 min-h-[45%] min-w-fit" />
+interface TimelineTickProps {
+  isLeft: boolean
+  isShown: boolean
 }
 
-const getDirection = (isLeft: boolean, isAbbreviated: boolean) => {
-  if (isLeft) {
-    return isAbbreviated ? 'l' : 'left'
-  } else {
-    return isAbbreviated ? 'r' : 'right'
-  }
+const Spacer = () => {
+  return <div className="ml-10 min-h-[50%] min-w-fit" />
+}
+
+const TimelineTick: FC<TimelineTickProps> = ({ isLeft, isShown }) => {
+  return (
+    <>
+      {isShown ? (
+        <>
+          <div className={clsx({ 'mr-10': !isLeft, 'ml-10': isLeft })}>
+            <div
+              className={clsx(
+                'relative top-1/2 w-16 border-t-4 border-clementine',
+                {
+                  'float-right': !isLeft,
+                  'float-left': isLeft,
+                },
+              )}
+            />
+          </div>
+        </>
+      ) : (
+        <></>
+      )}
+    </>
+  )
 }
 
 const TimelineItem: FC<TimlineItemProps> = ({ data, isLeft }) => {
@@ -36,56 +58,31 @@ const TimelineItem: FC<TimlineItemProps> = ({ data, isLeft }) => {
         return (
           <div key={index}>
             {isLeft ? <> </> : <Spacer />}
-            <div
-              className={`m${getDirection(
-                isLeft,
-                true,
-              )}-10 flex min-h-fit flex-col`}
-            >
+            <div className="flex min-h-fit flex-col">
               <div
-                className={`relative float-right flex w-full flex-row justify-${
-                  !isLeft ? 'start' : 'end'
-                }`}
+                className={clsx('relative float-right flex w-full flex-row', {
+                  'justify-end': isLeft,
+                  'justify-start': !isLeft,
+                })}
               >
-                {!isLeft ? (
-                  <>
-                    <div className="align-right mr-10">
-                      <div
-                        className="relative top-1/2
-                    float-left w-16 border-t-4 border-clementine"
-                      />
-                    </div>
-                  </>
-                ) : (
-                  <></>
-                )}
-                <div
-                  className={`m${getDirection(
-                    isLeft,
-                    false,
-                  )}-20 basis-5/12 rounded-lg bg-darkTeal py-2`}
-                >
-                  <p className="m-0 text-center text-5xl text-white">
+                <TimelineTick isLeft={isLeft} isShown={!isLeft} />
+
+                <div className="basis-5/12 rounded-lg bg-darkTeal py-2">
+                  <p className="m-0 text-center text-4xl text-white">
                     {item.date}
                   </p>
                 </div>
-                {!isLeft ? (
-                  <></>
-                ) : (
-                  <>
-                    <div className="align-left ml-10">
-                      <div className="relative top-1/2 float-right w-16 border-t-4 border-clementine" />
-                    </div>
-                  </>
-                )}
+                <TimelineTick isLeft={isLeft} isShown={isLeft} />
               </div>
-              <div
-                className={`p-10 m${getDirection(
-                  !isLeft,
-                  true,
-                )}-28 text-${getDirection(!isLeft, false)} `}
-              >
-                <p className={`px-10 text-xl text-black`}>{item.text}</p>
+              <div className="px-10 py-5">
+                <p
+                  className={clsx('px-10 text-xl text-black', {
+                    'mr-6 text-right': isLeft,
+                    'ml-6 text-left': !isLeft,
+                  })}
+                >
+                  {item.text}
+                </p>
               </div>
             </div>
             {isLeft ? <Spacer /> : <> </>}
@@ -116,11 +113,11 @@ const TimelineSection: FC<InputProps> = ({ text, data }) => {
   const splitRight = splitData[1]
 
   return (
-    <div className="relative mx-96 h-[400px] min-h-screen border-spacing-1 text-6xl">
+    <div className="relative mx-72 min-h-screen border-spacing-1 text-6xl">
       <HighlightedTitle title={text} />
       <div className="absolute box-border h-full w-1/2 border-spacing-1 border-r-8 border-clementine"></div>
       <div className="flex flex-row">
-        <div className="flex w-1/2 flex-col">
+        <div className="pr-.5 flex w-1/2 flex-col">
           <TimelineItem data={splitLeft} isLeft={true} />
         </div>
         <div className="flex w-1/2 flex-col">
