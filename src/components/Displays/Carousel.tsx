@@ -22,7 +22,7 @@ interface CircleDotProps {
 
 const CarouselChild: FC<CarouselChildProps> = ({ childData }) => {
   return (
-    <p className="inline-flex" style={{ width: '100%' }}>
+    <p className="inline-flex leading-snug" style={{ width: '100%' }}>
       {childData.text}
     </p>
   )
@@ -76,7 +76,7 @@ const Carousel: FC<CarouselProps> = ({ carouselChildrenData }) => {
           disabled={activeIndex == 0}
         >
           <ChevronLeftIcon
-            className={`h-8 font-extrabold ${
+            className={`h-9 font-extrabold ${
               activeIndex == 0 ? 'text-black/20' : 'text-black'
             }`}
           />
@@ -96,7 +96,7 @@ const Carousel: FC<CarouselProps> = ({ carouselChildrenData }) => {
           disabled={activeIndex == carouselChildrenData.length - 1}
         >
           <ChevronRightIcon
-            className={`h-8 font-extrabold ${
+            className={`h-9 font-extrabold ${
               activeIndex == carouselChildrenData.length - 1
                 ? 'text-black/20'
                 : 'text-black'

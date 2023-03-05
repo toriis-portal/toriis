@@ -13,9 +13,6 @@ module.exports = {
         lightGray: '#D9D9D9',
         white: '#FFFFFF',
       },
-      fontSize: {
-        '2.5xl': '28px',
-      },
       flexBasis: {
         '3/7': '42.8571429%',
         '4/7': '57.1428571%',

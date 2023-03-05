@@ -11,7 +11,7 @@ const RefuteUISResponse: FC = () => {
     <div className="bg-clementine/20 px-12 py-20">
       <HighlightedTitle title="Refute UIS Response" />
       <div className="flex flex-row">
-        <p className="basis-3/7 px-20 py-8 text-2.5xl leading-tight">
+        <p className="basis-3/7 px-20 py-8 text-[28px] font-medium leading-tight">
           {leftText}
         </p>
         <div className="basis-4/7 pr-8">
