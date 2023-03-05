@@ -2,6 +2,7 @@ import type { FC } from 'react'
 
 import OurRequest from '../../sections/OurRequests'
 import InstitutionalDivestments from '../../sections/InstitutionalDivestments'
+import Landing from '../../sections/Landing'
 import SecondaryNavBar from '../../components/Nav/SecondaryNavBar'
 import SampleSection from '../../sections/SampleSection'
 
@@ -18,6 +19,7 @@ const Home: FC = () => {
   return (
     <>
       <SecondaryNavBar data={data} />
+      <Landing />
       <main className="px-12">
         <div id="ourRequests" className="pt-20">
           <OurRequest />
