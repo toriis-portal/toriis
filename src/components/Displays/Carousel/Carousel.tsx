@@ -4,38 +4,15 @@ import React, { useState } from 'react'
 import { ChevronLeftIcon } from '@heroicons/react/24/solid'
 import { ChevronRightIcon } from '@heroicons/react/24/solid'
 
+import CarouselChild from './CarouselChild'
+import CarouselDot from './CarouselDot'
+
 interface CarouselChildData {
   index: number
   text: string
 }
 interface CarouselProps {
   carouselChildrenData: CarouselChildData[]
-}
-
-interface CarouselChildProps {
-  childData: CarouselChildData
-}
-
-interface CircleDotProps {
-  active: boolean
-}
-
-const CarouselChild: FC<CarouselChildProps> = ({ childData }) => {
-  return (
-    <p className="inline-flex leading-snug" style={{ width: '100%' }}>
-      {childData.text}
-    </p>
-  )
-}
-
-const CarouselDot: FC<CircleDotProps> = ({ active }) => {
-  return (
-    <div
-      className={`h-3.5 w-3.5 rounded-full ${
-        active ? 'bg-pumpkin' : 'bg-lightGray'
-      }`}
-    ></div>
-  )
 }
 
 const Carousel: FC<CarouselProps> = ({ carouselChildrenData }) => {
