@@ -6,6 +6,7 @@ import NavButton from './Buttons/NavButton'
 import NavBar from './Nav/NavBar'
 import PrimaryButton from './Buttons/PrimaryButton'
 import ToTopButton from './Buttons/ToTopButton'
+import Carousel from './Displays/Carousel/Carousel'
 
 export {
   AuthButton,
@@ -16,4 +17,5 @@ export {
   NavBar,
   PrimaryButton,
   ToTopButton,
+  Carousel,
 }

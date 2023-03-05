@@ -8,7 +8,7 @@ import toriisimg from '../../../public/toriis.png'
 
 const NavBar: FC = () => {
   return (
-    <nav className="flex h-[100px] flex-row items-center justify-between bg-white px-10">
+    <nav className="flex h-[90px] flex-row items-center justify-between bg-white px-10">
       <Link href="/home" className="h-full w-auto justify-start">
         <Image
           src={toriisimg as HTMLImageElement}
