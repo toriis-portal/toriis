@@ -1,23 +1,24 @@
 import type { FC } from 'react'
 import clsx from 'clsx'
 
+const titleText: string[] = [
+  'Transparent',
+  'and',
+  'Open',
+  'Resource',
+  'for',
+  'Institutional',
+  'Investment',
+]
+
 const CapitalizedTitle: FC = () => {
   function isCapital(word: string) {
     return word.charAt(0) === word.charAt(0).toUpperCase()
   }
   const firstLetter = clsx(
-    'text-4xl first-letter:font-black first-letter:text-[#FFA902] font-medium',
+    'text-4xl first-letter:font-black first-letter:text-clementine font-medium',
   )
   const landingHeader = clsx('text-4xl font-medium')
-  const titleText: string[] = [
-    'Transparent',
-    'and',
-    'Open',
-    'Resource',
-    'for',
-    'Institutional',
-    'Investment',
-  ]
   return (
     <>
       <div className="flex flex-wrap place-content-center space-x-4 pt-10">
@@ -26,8 +27,7 @@ const CapitalizedTitle: FC = () => {
             key={index}
             className={isCapital(item) ? firstLetter : landingHeader}
           >
-            {' '}
-            {item}{' '}
+            {item}
           </span>
         ))}
       </div>

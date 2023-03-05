@@ -9,7 +9,7 @@ const LandingDonutChart: FC = () => {
   const source = api.company.countByInvestment.useQuery(undefined, {
     refetchOnWindowFocus: false,
   })
-  if (!source.data) return <p> Loading...</p>
+  if (!source.data) return <p className="h-96 w-96"> Loading...</p>
 
   const labels: string[] = source.data.map(
     (dataKey) => dataKey.sector as string,
@@ -36,13 +36,12 @@ const LandingDonutChart: FC = () => {
       },
     },
   }
-  const series = features
 
   return (
     <>
       <Chart
         options={options}
-        series={series}
+        series={features}
         type="donut"
         width="400"
         height="400"
