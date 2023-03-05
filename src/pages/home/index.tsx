@@ -1,5 +1,6 @@
 import type { FC } from 'react'
 
+import OurRequest from '../../sections/OurRequests'
 import InstitutionalDivestments from '../../sections/InstitutionalDivestments'
 import SecondaryNavBar from '../../components/Nav/SecondaryNavBar'
 import SampleSection from '../../sections/SampleSection'
@@ -19,7 +20,7 @@ const Home: FC = () => {
       <SecondaryNavBar data={data} />
       <main className="px-12">
         <div id="ourRequests" className="pt-20">
-          <SampleSection text="Our Requests" />
+          <OurRequest />
         </div>
         <div id="institutionalDivestment" className="pt-20">
           <InstitutionalDivestments />
