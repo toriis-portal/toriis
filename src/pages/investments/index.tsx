@@ -1,6 +1,7 @@
 import type { FC } from 'react'
 
 import { api } from '../../utils/api'
+import LoadMoreButton from '../../components/Buttons/LoadMoreButton'
 
 const Home: FC = () => {
   const limit = 5
@@ -56,15 +57,16 @@ const Home: FC = () => {
           ))}
         </div>
       </div>
-      <button
+      {/* <button
         className="justify-center font-bold"
         onClick={() => {
           void fetchNextPage()
         }}
         disabled={!hasNextPage || isFetchingNextPage}
-      >
-        Load More
-      </button>
+      > */}
+      {/* Load More
+      </button> */}
+      <LoadMoreButton />
     </div>
   )
 }
