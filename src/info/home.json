@@ -1,5 +1,52 @@
 {
   "example": "an awesome example",
+  "ourRequests": [
+    {
+      "header": "We request Chancellor Jones, President Tim Killeen and University of Illinois Foundation CFO Jim Moore publish explicit language detailing fossil fuel divestment by the University of Illinois System.",
+      "body": "We request that Chancellor Jones rewrite the April 15, 2021 letter delivered to Mr. Tim Killeen and Mr. Jim Moore to include explicit and transparent language regarding fossil fuel divestment. The letter must define divestment in clear and accessible terms. We define divestment as the act of removing investments in companies involved in fossil fuel extraction, refinement, or transportation — including oil, natural gas, and coal. It is imperative that this letter urges the UIF to avoid companies that profit from the extraction, refinement, or transportation of coal, petroleum, or natural gas. Without this explicit terminology that addresses and tackles divestment directly, any statements about investment evaluations are destined to be ignored.",
+      "list": [],
+      "sublist": []
+    },
+    {
+      "header": "We request that the University of Illinois Foundation release a comprehensive and publicly-accessible financial plan regarding fossil fuel divestment.",
+      "body": "We request that the University of Illinois Foundation release a comprehensive and publicly-accessible financial plan regarding fossil fuel divestment. The financial plan must outline the divestment from companies that profit from the extraction, transportation, or refinement of coal, petroleum, or natural gas. Furthermore, the plan must include investment strategies focusing on clean energy and communities most impacted by climate change. The following language is borrowed from Rutger’s divestment plan, which we urge the university to adopt:",
+      "list": [
+        "“Cease all new investments in funds whose strategy is focused on fossil fuel investments.”",
+        "“Divest from passive index funds with exposure to fossil fuel investments within one year and reinvest in environmentally friendly versions of those indices. In addition, actively seek new investment opportunities in renewable energy and energy efficiency categories provided they deliver competitive rates of return.” ",
+        "“Exit all currently held private fossil fuel investments within 10 years, or as soon as practicable.”",
+        "“Because some commingled funds may hold minimal exposure to fossil fuels, emphasize the university’s stance on this topic to investment partners, urging them to review their own processes and decisions regarding the inclusion of such assets in client portfolios.”"
+      ],
+      "sublist": []
+    },
+    {
+      "header": "We request the University of Illinois System incorporate fossil fuel divestment into their Investment Policy Statement.",
+      "body": "We request that the University of Illinois System immediately change the wording in their Investment Policy Statement from:",
+      "list": [
+        "“Within each asset category, investments shall be diversified further among economic sectors, industry, quality and size” to",
+        "“Within each asset category, investments shall be diversified further among economic sectors, industry, quality and size, while avoiding companies that profit from the extraction, refinement, or transportation of coal, petroleum, or natural gas.”"
+      ],
+      "sublist": []
+    },
+    {
+      "header": "We request that both UIF and UIS work with a third-party auditory to carbon grade its portfolio.",
+      "body": "We request that both UIF and UIS work with a third-party auditor to carbon grade its portfolio. Carbon grading entails auditors delineating explicit amounts of carbon in the university’s portfolio that are contributed towards the atmosphere.",
+      "list": [],
+      "sublist": []
+    },
+    {
+      "header": "We request that the University of Illinois Foundation and the University of Illinois System make their progress in fossil fuel divestment transparent.",
+      "body": "We request that the University of Illinois Foundation and the University of Illinois System make their progress in fossil fuel divestment transparent. Transparency includes but is not limited to:",
+      "list": [
+        "“Along with the Annual Report, UIS makes transparent a dataset (.csv, .db, .xlsx, ect.) file containing at minimum all operating and endowment pool investment information already published in the Annual Report. We also ask that this dataset include the sectors a company operates in for every given applicable holding (i.e., corporate bonds, asset-backed securities, etc.) and whether a company participates in the extraction, transportation, or refinement of fossil fuels.”",
+        "“UIF organizes a centralized and public portal to update the University of Illinois community on matters relating to fossil fuel divestments. Relevant information includes but is not limited to:”"
+      ],
+      "sublist": [
+        "“A detailed financial plan mentioned in Request B;”",
+        "“Historic data relating to UIF investments and subsequent divestments in fossil fuel companies;”",
+        "“Investments in clean energy and communities most impacted by climate change.”"
+      ]
+    }
+  ],
   "instDivestment": {
     "links": [
       {
@@ -28,5 +75,34 @@
       "Being responsible financial stewards for the long-term health of both portfolios and the planet;",
       "and, revoking support from fossil fuel companies and promoting a transition to a green energy future."
     ]
-  }
+  },
+  "refuteResponse": {
+    "leftText": "When faced with calls for fossil fuel divestment in the past, the University of Illinois has responded with a litany of excuses. We would like to take time now to respond to those main talking points.",
+    "carouselItems": [
+      {
+        "index": 0,
+        "text": "It has been claimed that UIUC graduates will be less desirable candidates in the energy sector if the university divests from fossil fuels. The University of Illinois’s programs in business, science, math, and engineering are some of the strongest in the world. Our divestment from fossil fuels will not have any impact on the credibility and prestige of these programs. Instead, the university will be an innovator and trailblazer, paving the way for the future of STEM and economics."
+      },
+      {
+        "index": 1,
+        "text": "It has been claimed that by divesting from fossil fuels, the UIF/UIS would have to divest from everything, namely companies and institutions mentioned by the BDS movement. This excuse is a classic example of the slippery slope fallacy; it is untrue that divestment from one cause ought to lead to divestment from another cause."
+      },
+      {
+        "index": 2,
+        "text": "It has been claimed that the University of Illinois will not actually weaken the fossil fuel industry by divesting from fossil fuels. This is untrue. The corporate bonds the University of Illinois System holds in fossil fuel companies provide an avenue for fossil fuel companies to raise corporate debt to finance their operations. Ending the purchasing of bonds in this sector will decrease the demand for corporate debt in this sector, which in turn will impact the amount of debt eligible to be raised. In tandem, when the University of Illinois Foundation sells its risk assets in this sector, the market-clearing price will decrease, driving down the market capitalization of the company. Technical economics aside, the purpose of divesting from industry is to remove the social license of that industry. By pulling investments out of the fossil fuel industry, the University of Illinois is taking a stance against the heavy polluters that overly contribute to climate change."
+      },
+      {
+        "index": 3,
+        "text": "It has been claimed generally that by giving up shares in the fossil fuel industry, we lose the opportunity to be advocating shareholders. However, there is no explicit policy in place that dictates how the university shall utilize the influence of their shares to impact the fossil fuel industry. Without an explicit policy in place, the university cannot claim to be advocating for shareholders. Furthermore, it has been claimed that by excusing ourselves from the fossil fuel industry, actors with the intent to expand the fossil fuel industry will gain more shares, hence negatively influencing these companies. This argument misses the point of fossil fuel divestment: It is up to the University of Illinois to actively make decisions to fight climate change, and refusing to divest from fossil fuels is a non-active approach."
+      }
+    ]
+  },
+  "listItems": [
+    "The University of Illinois has over ",
+    "$230 million invested ",
+    "that profit from the extraction, transportation, or combustion of coal, petroleum, or natural gas. The University of Illinois has stated and acknowledged that “the threats that we are facing due to climate change are immense and connect us all.” Yet, the University’s continued investments in fossil fuels have conveyed a contradicting statement: ",
+    "The concerns of short-term monetary profit outweigh the health of the campus community.",
+    "The University of Illinois must reverse the damage that investments in fossil fuels have wrought upon local communities and the world at large. ",
+    "This process begins with the immediate removal of all investments currently held in fossil fuel corporations and the complete cessation of further investment into these industries."
+  ]
 }
