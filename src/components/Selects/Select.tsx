@@ -132,7 +132,7 @@ export const Select: FC<SelectProps> = ({
       </button>
 
       {isOpen && (
-        <div className="absolute top-14 left-0 w-full rounded-md border-[0.5px] border-solid border-cobalt p-5 shadow-md">
+        <div className="absolute top-14 left-0 w-full rounded-md border-[0.5px] border-solid border-cobalt bg-white p-5 shadow-md">
           {isSearchable && (
             <div className="relative mb-5">
               <input

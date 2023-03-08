@@ -31,16 +31,6 @@ const extractSortyByQueryKey = (
 const Home: FC = () => {
   const [selectedSortKeys, setSelectedSortKeys] = useState<string[]>([])
 
-  useEffect(() => {
-    const refetchData = async () => {
-      await refetch()
-    }
-
-    refetchData().catch((err) => {
-      console.error(err)
-    })
-  }, [selectedSortKeys])
-
   const limit = 5
   const {
     fetchNextPage,
@@ -67,6 +57,16 @@ const Home: FC = () => {
       cacheTime: 0,
     },
   )
+
+  useEffect(() => {
+    const refetchData = async () => {
+      await refetch()
+    }
+
+    refetchData().catch((err) => {
+      console.error(err)
+    })
+  }, [selectedSortKeys])
 
   return (
     <div>
