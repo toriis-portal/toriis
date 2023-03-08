@@ -125,7 +125,11 @@ const Home: FC = () => {
           'Environment Grade': ['low to high', 'high to low'],
           'Net Asset Sum': ['low to high', 'high to low'],
         }}
-        onChange={setSelectedSortKeys}
+        updateControl={{
+          type: 'on-apply',
+          cb: setSelectedSortKeys,
+        }}
+        isSearchable={false}
       />
     </div>
   )
