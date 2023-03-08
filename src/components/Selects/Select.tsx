@@ -102,6 +102,9 @@ export const Select: FC<SelectProps> = ({
     }
   }
 
+  /**
+   * Called when the apply option is clicked and validates whether this dropdown should trigger
+   */
   const handleApply = () => {
     if (updateControl?.type !== 'on-apply') {
       return
@@ -110,6 +113,12 @@ export const Select: FC<SelectProps> = ({
     updateControl.cb(selected)
   }
 
+  /**
+   * Determines whether a value should be in the filter or not
+   *
+   * @param value The value in consideration
+   * @returns true if value includes searchQuery or searchQuery is empty, else false
+   */
   const handleSearchFilter = (value: string) =>
     searchQuery !== '' ? value.includes(searchQuery) : true
 
