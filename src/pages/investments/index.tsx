@@ -129,7 +129,7 @@ const Home: FC = () => {
           type: 'on-apply',
           cb: setSelectedSortKeys,
         }}
-        isSearchable={false}
+        isSearchable={true}
       />
     </div>
   )
