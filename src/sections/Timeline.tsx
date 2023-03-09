@@ -101,8 +101,8 @@ const TimelineSection: FC<InputProps> = ({ text, data }) => {
   return (
     <>
       <HighlightedTitle title={text} />
-      <div className="relative mx-[10%] min-h-screen border-spacing-1 text-6xl">
-        <div className="absolute box-border h-4/5 w-1/2 border-spacing-1 border-r-8 border-clementine"></div>
+      <div className="relative mx-[10%] my-10 min-h-screen border-spacing-1 text-6xl">
+        <div className="absolute box-border h-full w-1/2 border-spacing-1 border-r-8 border-clementine"></div>
         <div className="flex flex-row">
           <div className="pr-.5 flex w-1/2 flex-col">
             <TimelineItem data={splitLeft} isLeft={true} />
