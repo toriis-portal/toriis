@@ -1,5 +1,6 @@
 import type { Company, ESG, ESGIndex } from '@prisma/client'
 import { z } from 'zod'
+import { TRPCError } from '@trpc/server'
 
 import type { Context } from '../trpc'
 import { createTRPCRouter, publicProcedure } from '../trpc'
@@ -9,7 +10,7 @@ interface errorMessage {
   message?: string
 }
 
-const MAX_API_CALLS = 50
+const MAX_API_CALLS = 1
 const consumeExternalApi = async <T>(
   url: string,
 ): Promise<T | errorMessage> => {
@@ -18,7 +19,9 @@ const consumeExternalApi = async <T>(
 }
 
 // Typeguard for error messages
-const isErrorMessage = (res: errorMessage | ESG[]): res is errorMessage => {
+const isErrorMessage = (
+  res: errorMessage | ESG[] | ESG,
+): res is errorMessage => {
   return 'error' in res || 'message' in res
 }
 
@@ -40,6 +43,8 @@ const updateESGIndex = async (
   companyIndex: ESGIndex,
   company: Company,
 ): Promise<ESGIndex> => {
+  console.log(company)
+
   return await ctx.prisma.eSGIndex.update({
     where: {
       id: companyIndex?.id ?? '1',
@@ -53,11 +58,17 @@ const updateESGIndex = async (
 export const esgRouter = createTRPCRouter({
   esgpull: publicProcedure.input(z.string()).query(async ({ input, ctx }) => {
     if (input !== process.env.CRONJOB_KEY) {
-      return 'Not Authorized'
+      throw new TRPCError({
+        code: 'UNAUTHORIZED',
+        message: 'Expected a cronjob key, but found none.',
+      })
     }
 
     if (!process.env.ESG_API_KEY) {
-      return 'No Key Found For ESG API'
+      throw new TRPCError({
+        code: 'UNAUTHORIZED',
+        message: 'Expected an ESG API key, but found none.',
+      })
     }
 
     let companyIndex = await ctx.prisma.eSGIndex.findFirst({
@@ -78,7 +89,10 @@ export const esgRouter = createTRPCRouter({
         })
 
         if (!companyIndex) {
-          return 'Error creating index'
+          throw new TRPCError({
+            code: 'INTERNAL_SERVER_ERROR',
+            message: 'Error creating ESG Index',
+          })
         }
       }
     }
@@ -129,10 +143,9 @@ export const esgRouter = createTRPCRouter({
       },
     )
 
-    console.log(cleanedCompanies.length)
-
-    const replies = cleanedCompanies.map(
-      async (company: { ticker: string; id: string }, index: number) => {
+    // Retrieves ESG data from API
+    const companiesESG = await Promise.all(
+      cleanedCompanies.map(async (company) => {
         if (company.ticker !== 'NO_TICKER_FOUND') {
           const url = `https://esgapiservice.com/api/authorization/search?q=${
             company.ticker
@@ -142,11 +155,14 @@ export const esgRouter = createTRPCRouter({
             isErrorMessage(api_res) &&
             api_res.error === maxDailyCallsReachedMessage
           ) {
-            return 'Max daily calls reached'
+            throw new TRPCError({
+              code: 'UNAUTHORIZED',
+              message: 'Max daily calls reached',
+            })
           }
 
+          // If no ESG data is found create a bad ticker entry
           if (isErrorMessage(api_res) || !api_res[0]) {
-            // Create bad ticker log
             const res = await ctx.prisma.eSGBadTicker.create({
               data: {
                 company: {
@@ -158,76 +174,93 @@ export const esgRouter = createTRPCRouter({
             })
 
             if (!res) {
-              return 'Failed to create bad ticker log'
-            }
-            return 'No data returned or max calls reached'
-          } else {
-            const ESGData = api_res[0]
-            const exists = await ctx.prisma.eSG.findFirst({
-              where: { companyId: company.id },
-            })
-
-            // Either create or update esg depending on if it exists
-            let res
-            if (exists) {
-              res = await ctx.prisma.eSG.update({
-                where: {
-                  id: exists.id,
-                },
-                data: {
-                  environment_grade: ESGData.environment_grade,
-                  environment_score: ESGData.environment_score,
-                  environment_level: ESGData.environment_level,
-                },
+              throw new TRPCError({
+                code: 'INTERNAL_SERVER_ERROR',
+                message: 'Mongodb did not create item',
               })
-            } else {
-              res = await ctx.prisma.eSG.create({
-                data: {
-                  environment_grade: ESGData.environment_grade,
-                  environment_score: ESGData.environment_score,
-                  environment_level: ESGData.environment_level,
-                  company: {
-                    connect: {
-                      id: company.id,
-                    },
-                  },
-                },
-              })
-            }
-
-            // Handle error creating ESG
-            if (!res) {
-              await updateESGIndex(
-                ctx,
-                companyIndex as ESGIndex,
-                company as Company,
-              )
-              return 'Error creating ESG'
-            }
-
-            // Update index if last call
-            if (index === MAX_API_CALLS) {
-              const res = await updateESGIndex(
-                ctx,
-                companyIndex as ESGIndex,
-                company as Company,
-              )
-
-              if (!res) {
-                return 'Error updating index'
-              }
             }
           }
+          if (!api_res) {
+            return null
+          } else if (isErrorMessage(api_res)) {
+            return api_res
+          }
+
+          return api_res[0]
         }
-        return 'Success'
-      },
+      }),
     )
 
-    const item_status = await Promise.all<string>(replies)
+    // Update ESG data in database
+    companiesESG.forEach((companyESG, index) => {
+      // Async IIFE to allow for async/await in forEach
+      void (async () => {
+        if (companyESG && !isErrorMessage(companyESG)) {
+          const exists = await ctx.prisma.eSG.findFirst({
+            where: { companyId: cleanedCompanies[index]?.id },
+          })
 
-    return {
-      status: 'Success',
-      item_status: item_status,
-    }
+          let res = null
+
+          // Either create or update esg depending on if it exists
+          if (exists) {
+            res = await ctx.prisma.eSG.update({
+              where: {
+                id: exists.id,
+              },
+              data: {
+                environment_grade: companyESG.environment_grade,
+                environment_score: companyESG.environment_score,
+                environment_level: companyESG.environment_level,
+              },
+            })
+          } else {
+            res = await ctx.prisma.eSG.create({
+              data: {
+                environment_grade: companyESG.environment_grade,
+                environment_score: companyESG.environment_score,
+                environment_level: companyESG.environment_level,
+                company: {
+                  connect: {
+                    id: cleanedCompanies[index]?.id,
+                  },
+                },
+              },
+            })
+          }
+
+          // Handle error creating ESG
+          if (!res) {
+            await updateESGIndex(
+              ctx,
+              companyIndex as ESGIndex,
+              cleanedCompanies[index] as Company,
+            )
+            throw new TRPCError({
+              code: 'INTERNAL_SERVER_ERROR',
+              message: 'Mongodb did not create ESG item',
+            })
+          }
+        }
+
+        // Update index if last call
+        if (index === MAX_API_CALLS - 1) {
+          const res = await updateESGIndex(
+            ctx,
+            companyIndex as ESGIndex,
+            cleanedCompanies[index] as Company,
+          )
+
+          if (!res) {
+            throw new TRPCError({
+              code: 'INTERNAL_SERVER_ERROR',
+              message: 'Mongodb did not update ESG Index',
+            })
+          }
+        }
+      })()
+    })
+
+    return 'Success'
   }),
 })
