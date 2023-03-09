@@ -23,10 +23,6 @@ interface TimelineTickProps {
   isShown: boolean
 }
 
-const Spacer = () => {
-  return <div className="ml-10 min-h-[50%] min-w-fit" />
-}
-
 const TimelineTick: FC<TimelineTickProps> = ({ isLeft, isShown }) => {
   return (
     <>
@@ -56,9 +52,8 @@ const TimelineItem: FC<TimlineItemProps> = ({ data, isLeft }) => {
     <>
       {data.map((item, index) => {
         return (
-          <div key={index}>
-            {isLeft ? <> </> : <Spacer />}
-            <div className="flex min-h-fit flex-col">
+          <div key={index} className="flex flex-col">
+            <div className="flex flex-initial flex-col">
               <div
                 className={clsx('relative float-right flex w-full flex-row', {
                   'justify-end': isLeft,
@@ -85,7 +80,6 @@ const TimelineItem: FC<TimlineItemProps> = ({ data, isLeft }) => {
                 </p>
               </div>
             </div>
-            {isLeft ? <Spacer /> : <> </>}
           </div>
         )
       })}
@@ -113,7 +107,7 @@ const TimelineSection: FC<InputProps> = ({ text, data }) => {
   const splitRight = splitData[1]
 
   return (
-    <div className="relative mx-64 min-h-screen border-spacing-1 text-6xl">
+    <div className="relative mx-[10%] min-h-screen border-spacing-1 text-6xl">
       <HighlightedTitle title={text} />
       <div className="absolute box-border h-full w-1/2 border-spacing-1 border-r-8 border-clementine"></div>
       <div className="flex flex-row">
@@ -121,6 +115,7 @@ const TimelineSection: FC<InputProps> = ({ text, data }) => {
           <TimelineItem data={splitLeft} isLeft={true} />
         </div>
         <div className="flex w-1/2 flex-col">
+          <div className="ml-10 min-h-[5%] min-w-fit" />
           <TimelineItem data={splitRight} isLeft={false} />
         </div>
       </div>
