@@ -10,7 +10,11 @@ const InstitutionalDivestments: FC = () => {
 
   return (
     <>
-      <HighlightedTitle title="Institutional Divestment" />
+      <HighlightedTitle
+        title="Institutional Divestment"
+        size="medium"
+        color="clementine"
+      />
       <div className="my-6 w-full px-12">
         <div className="ml-[3%] space-y-6">
           {strings.map((string, index) => (

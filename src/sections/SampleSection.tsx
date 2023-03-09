@@ -9,7 +9,7 @@ interface InputProps {
 const SampleSection: FC<InputProps> = ({ text }) => {
   return (
     <div className="h-[400px] min-h-screen border-spacing-1  text-6xl">
-      <HighlightedTitle title={text} />
+      <HighlightedTitle title={text} size="medium" color="clementine" />
     </div>
   )
 }

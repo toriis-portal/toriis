@@ -9,7 +9,11 @@ const RefuteUISResponse: FC = () => {
 
   return (
     <div className="bg-clementine/20 px-12 py-20">
-      <HighlightedTitle title="Refute UIS Response" />
+      <HighlightedTitle
+        title="Refute UIS Response"
+        size="medium"
+        color="clementine"
+      />
       <div className="flex flex-row">
         <p className="basis-3/7 px-20 py-8 text-[28px] font-medium leading-tight">
           {leftText}
