@@ -8,7 +8,7 @@ const titleText: string[] = [
   'Resource',
   'for',
   'Institutional',
-  'Investment',
+  'Investments',
 ]
 
 const CapitalizedTitle: FC = () => {
@@ -27,7 +27,14 @@ const CapitalizedTitle: FC = () => {
             key={index}
             className={isCapital(item) ? firstLetter : landingHeader}
           >
-            {item}
+            {item.endsWith('s') ? (
+              <div>
+                <text>Investment</text>
+                <text className="text-clementine">s</text>
+              </div>
+            ) : (
+              item
+            )}
           </span>
         ))}
       </div>

@@ -11,11 +11,36 @@ const LandingDonutChart: FC = () => {
   })
   if (!source.data) return <p className="h-96 w-96"> Loading...</p>
 
+  interface dataObj {
+    label: string
+    count: number
+  }
+
+  const pairs: dataObj[] = source.data.map((data) => ({
+    label: data.sector as string,
+    count: data._count.sector,
+  }))
+
+  const total = pairs
+    .map((item) => item.count)
+    .reduce((prev, next) => prev + next)
+
+  pairs.sort()
+
+  console.log(pairs)
+
+  // @TODO
+  // populate new item
+  // extract
+  // pairs.map((item) =>
+  //   item.count / total < 0.05 ? console.log(item) : console.log('Not'),
+  // )
+
   const labels: string[] = source.data.map(
     (dataKey) => dataKey.sector as string,
   )
 
-  const features: number[] = source.data.map((dataKey) => dataKey._count.sector)
+  const counts: number[] = source.data.map((dataKey) => dataKey._count.sector)
 
   const options = {
     labels: labels,
@@ -41,7 +66,7 @@ const LandingDonutChart: FC = () => {
     <>
       <Chart
         options={options}
-        series={features}
+        series={counts}
         type="donut"
         width="100%"
         height="auto"
