@@ -6,7 +6,7 @@ interface TagProps {
 
 const Tag: FC<TagProps> = ({ title }) => {
   return (
-    <div className="flex max-w-fit rounded-full bg-lightBlue px-[22px] py-0 text-lg">
+    <div className="flex max-w-fit rounded-full bg-lightBlue px-[22px] py-0 text-lg font-medium">
       {title}
     </div>
   )
