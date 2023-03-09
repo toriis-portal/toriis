@@ -10,7 +10,7 @@ interface errorMessage {
   message?: string
 }
 
-const MAX_API_CALLS = 1
+const MAX_API_CALLS = 50
 const consumeExternalApi = async <T>(
   url: string,
 ): Promise<T | errorMessage> => {
@@ -25,7 +25,7 @@ const isErrorMessage = (
   return 'error' in res || 'message' in res
 }
 
-const maxDailyCallsReachedMessage =
+const MAX_DAILY_CALLS_REACHED_MESSAGE =
   "Specified argument was out of the range of valid values. (Parameter 'You've reached your daily limit')"
 
 const getFirstCompany = async (
@@ -153,7 +153,7 @@ export const esgRouter = createTRPCRouter({
           const api_res = await consumeExternalApi<ESG[]>(url)
           if (
             isErrorMessage(api_res) &&
-            api_res.error === maxDailyCallsReachedMessage
+            api_res.error === MAX_DAILY_CALLS_REACHED_MESSAGE
           ) {
             throw new TRPCError({
               code: 'UNAUTHORIZED',
@@ -163,23 +163,33 @@ export const esgRouter = createTRPCRouter({
 
           // If no ESG data is found create a bad ticker entry
           if (isErrorMessage(api_res) || !api_res[0]) {
-            const res = await ctx.prisma.eSGBadTicker.create({
-              data: {
-                company: {
-                  connect: {
-                    id: company.id,
-                  },
-                },
+            // Check if bad ticker already exists
+            const badTickerExists = await ctx.prisma.eSGBadTicker.findFirst({
+              where: {
+                companyId: company.id,
               },
             })
 
-            if (!res) {
-              throw new TRPCError({
-                code: 'INTERNAL_SERVER_ERROR',
-                message: 'Mongodb did not create item',
+            if (!badTickerExists) {
+              const res = await ctx.prisma.eSGBadTicker.create({
+                data: {
+                  company: {
+                    connect: {
+                      id: company.id,
+                    },
+                  },
+                },
               })
+
+              if (!res) {
+                throw new TRPCError({
+                  code: 'INTERNAL_SERVER_ERROR',
+                  message: 'Mongodb did not create item',
+                })
+              }
             }
           }
+
           if (!api_res) {
             return null
           } else if (isErrorMessage(api_res)) {
