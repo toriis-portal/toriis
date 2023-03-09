@@ -22,16 +22,26 @@ const LandingDonutChart: FC = () => {
     count: number
   }
 
-  // populate the OTHERS item
+  /*
+   * newCount is populated with the total count of companies from sectors that occupy < 5% of the donut chart.
+   */
   let newCount = pairs
     .filter((item) => item.count < 23)
     .reduce((prev, curr) => prev + curr.count, 0)
 
+  /*
+   * We will also add the count of companies that do not belong to a sector.
+   */
   newCount += pairs.find((item) => item.label === 'NONE')?.count ?? 0
 
+  /*
+   * We are adding a new sector named 'OTHERS' and populating with newCount.
+   */
   pairs.push({ label: 'OTHERS', count: newCount })
 
-  // remove item helper function
+  /*
+   * Helper function to remove item from object array.
+   */
   function removeItem(value: dataObj) {
     const index = pairs.indexOf(value)
     if (index > -1) {
@@ -40,19 +50,14 @@ const LandingDonutChart: FC = () => {
     return pairs
   }
 
-  // remove items below threshold 5%
-  function cleanData(pairs: dataObj[]) {
-    pairs.map((item) => {
-      item.count < 23 ? removeItem(item) : console.log('Fine')
-    })
-    pairs.map((item) => {
-      item.label == 'NONE' ? removeItem(item) : console.log('Fine')
-    })
-  }
-
-  cleanData(pairs)
-
-  console.log(pairs)
+  /*
+   * We are now parsing through the area and removing the sectors that now fall under the OTHERS category.
+   */
+  pairs.map((item) => {
+    item.count < 23 || item.label == 'NONE'
+      ? removeItem(item)
+      : console.log('Fine')
+  })
 
   const labels: string[] = pairs.map((dataKey) => dataKey.label)
 
