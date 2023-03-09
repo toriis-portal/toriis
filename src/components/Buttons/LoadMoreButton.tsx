@@ -1,9 +1,10 @@
-import type { FC, MouseEventHandler } from 'react'
+import type { FC } from 'react'
 import clsx from 'clsx'
 
 interface LoadMoreButtonProps {
-  onClick: MouseEventHandler<HTMLButtonElement>
+  onClick: () => void
   disabled: boolean
+  children?: React.ReactNode
 }
 
 const LoadMoreButton: FC<LoadMoreButtonProps> = ({ onClick, disabled }) => {
