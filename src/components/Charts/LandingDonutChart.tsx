@@ -6,7 +6,7 @@ import { api } from '../../utils/api'
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 const LandingDonutChart: FC = () => {
-  const source = api.company.countByInvestment.useQuery(undefined, {
+  const source = api.company.countBySector.useQuery(undefined, {
     refetchOnWindowFocus: false,
   })
   if (!source.data) return <p className="h-96 w-96"> Loading...</p>
@@ -43,8 +43,8 @@ const LandingDonutChart: FC = () => {
         options={options}
         series={features}
         type="donut"
-        width="400"
-        height="400"
+        width="100%"
+        height="auto"
       />
     </>
   )

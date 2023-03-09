@@ -5,7 +5,10 @@ import InstitutionalDivestments from '../../sections/InstitutionalDivestments'
 import RefuteUISResponse from '../../sections/RefuteUISResponse'
 import Landing from '../../sections/Landing'
 import SecondaryNavBar from '../../components/Nav/SecondaryNavBar'
-import SampleSection from '../../sections/SampleSection'
+import TimelineSection from '../../sections/Timeline'
+import jsonData from '../../info/home.json'
+import type { TimelineEntry } from '../../sections/Timeline'
+import { ToTopButton } from '../../components'
 
 const Home: FC = () => {
   const data = {
@@ -13,10 +16,10 @@ const Home: FC = () => {
       { path: 'ourRequests', text: 'Our Requests' },
       { path: 'institutionalDivestment', text: 'Institutional Divestment' },
       { path: 'refuteUISReponse', text: 'Refute UIS Response' },
-      { path: 'UIUCSystem', text: 'UIUC System' },
       { path: 'divestmentHistory', text: 'Divestment History' },
     ],
   }
+
   return (
     <>
       <SecondaryNavBar data={data} />
@@ -31,14 +34,14 @@ const Home: FC = () => {
         <div id="refuteUISReponse" className="pt-20">
           <RefuteUISResponse />
         </div>
-        <div id="UIUCSystem" className="px-12 pt-20">
-          <SampleSection text="UIUC System" />
-        </div>
         <div id="divestmentHistory" className="px-12 pt-20">
-          <SampleSection text="Divestment History" />
+          <TimelineSection
+            text="Divestment History"
+            data={jsonData.timeline as TimelineEntry[]}
+          />
         </div>
-        <SampleSection text="" />
-        <SampleSection text="" />
+
+        <ToTopButton />
       </main>
     </>
   )

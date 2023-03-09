@@ -5,7 +5,9 @@ import HighlightedTitle from './Text/HighlightedTitle'
 import NavButton from './Buttons/NavButton'
 import NavBar from './Nav/NavBar'
 import PrimaryButton from './Buttons/PrimaryButton'
+import ToTopButton from './Buttons/ToTopButton'
 import Carousel from './Displays/Carousel/Carousel'
+import Select from './Selects/Select'
 
 export {
   AuthButton,
@@ -15,5 +17,7 @@ export {
   NavButton,
   NavBar,
   PrimaryButton,
+  ToTopButton,
   Carousel,
+  Select,
 }

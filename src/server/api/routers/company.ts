@@ -3,14 +3,14 @@ import { z } from 'zod'
 
 import { createTRPCRouter, publicProcedure } from '../trpc'
 
-interface Company {
-  id: string
-  name: string
-  sector: Sector | null
-  industry: string | null
-  investment: { marketVal: number; quantity: number }[]
-  asset_sum?: number
-  ESG: { environment_grade: string }[]
+const extractSortOrder = (
+  sort: string | undefined | null,
+): sort is 'asc' | 'desc' | undefined => {
+  if (sort === undefined || sort === 'asc' || sort === 'desc') {
+    return true
+  }
+
+  return false
 }
 
 export const companyRouter = createTRPCRouter({
@@ -19,42 +19,35 @@ export const companyRouter = createTRPCRouter({
       z.object({
         limit: z.number().min(1).max(100).nullish(),
         cursor: z.string().nullish(),
+        sortByEnvGrade: z.string().nullish(),
+        sortByNetAssestSum: z.string().nullish(),
       }),
     )
     .query(async ({ input, ctx }) => {
       const limit = input.limit ?? 9
       const { cursor } = input
 
-      const rawItems = await ctx.prisma.company.findMany({
-        take: limit + 1,
-        cursor: cursor ? { id: cursor } : undefined,
-        select: {
-          id: true,
-          name: true,
-          sector: true,
-          industry: true,
-          investment: {
-            select: {
-              marketVal: true,
-              quantity: true,
-            },
-          },
+      const items = await ctx.prisma.company.findMany({
+        orderBy: {
+          netAssetSum: extractSortOrder(input.sortByNetAssestSum)
+            ? input.sortByNetAssestSum
+            : undefined,
+        },
+        include: {
           ESG: {
+            orderBy: {
+              environment_grade: extractSortOrder(input.sortByEnvGrade)
+                ? input.sortByEnvGrade
+                : undefined,
+            },
             select: {
               environment_grade: true,
             },
           },
         },
+        take: limit + 1,
+        cursor: cursor ? { id: cursor } : undefined,
       })
-
-      rawItems.forEach((item) => {
-        let asset_sum = 0
-        item.investment.forEach((iv) => {
-          asset_sum += iv.marketVal * iv.quantity
-        })
-        Object.assign(item, { asset_sum: asset_sum })
-      })
-      const items: Company[] = rawItems
 
       let nextCursor: typeof cursor | undefined = undefined
       if (items.length > limit) {
@@ -66,7 +59,7 @@ export const companyRouter = createTRPCRouter({
         nextCursor,
       }
     }),
-  countByInvestment: publicProcedure.query(({ ctx }) => {
+  countBySector: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.company.groupBy({
       by: ['sector'],
       _count: {
