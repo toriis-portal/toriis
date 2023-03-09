@@ -5,7 +5,9 @@ import InstitutionalDivestments from '../../sections/InstitutionalDivestments'
 import RefuteUISResponse from '../../sections/RefuteUISResponse'
 import Landing from '../../sections/Landing'
 import SecondaryNavBar from '../../components/Nav/SecondaryNavBar'
-import SampleSection from '../../sections/SampleSection'
+import TimelineSection from '../../sections/Timeline'
+import jsonData from '../../info/home.json'
+import type { TimelineEntry } from '../../sections/Timeline'
 import { ToTopButton } from '../../components'
 
 const Home: FC = () => {
@@ -17,6 +19,7 @@ const Home: FC = () => {
       { path: 'divestmentHistory', text: 'Divestment History' },
     ],
   }
+
   return (
     <>
       <SecondaryNavBar data={data} />
@@ -32,10 +35,12 @@ const Home: FC = () => {
           <RefuteUISResponse />
         </div>
         <div id="divestmentHistory" className="px-12 pt-20">
-          <SampleSection text="Divestment History" />
+          <TimelineSection
+            text="Divestment History"
+            data={jsonData.timeline as TimelineEntry[]}
+          />
         </div>
-        <SampleSection text="" />
-        <SampleSection text="" />
+
         <ToTopButton />
       </main>
     </>
