@@ -1,6 +1,17 @@
+import type { Sector } from '@prisma/client'
 import { z } from 'zod'
 
 import { createTRPCRouter, publicProcedure } from '../trpc'
+
+interface Company {
+  id: string
+  name: string
+  sector: Sector | null
+  industry: string | null
+  investment: { marketVal: number; quantity: number }[]
+  asset_sum?: number
+  ESG: { environment_grade: string }[]
+}
 
 export const companyRouter = createTRPCRouter({
   getInvestments: publicProcedure
@@ -14,7 +25,7 @@ export const companyRouter = createTRPCRouter({
       const limit = input.limit ?? 9
       const { cursor } = input
 
-      const items = await ctx.prisma.company.findMany({
+      const rawItems = await ctx.prisma.company.findMany({
         take: limit + 1,
         cursor: cursor ? { id: cursor } : undefined,
         select: {
@@ -36,13 +47,14 @@ export const companyRouter = createTRPCRouter({
         },
       })
 
-      items.forEach((item) => {
+      rawItems.forEach((item) => {
         let asset_sum = 0
         item.investment.forEach((iv) => {
           asset_sum += iv.marketVal * iv.quantity
         })
         Object.assign(item, { asset_sum: asset_sum })
       })
+      const items: Company[] = rawItems
 
       let nextCursor: typeof cursor | undefined = undefined
       if (items.length > limit) {
