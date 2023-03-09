@@ -20,29 +20,22 @@ interface TimlineItemProps {
 
 interface TimelineTickProps {
   isLeft: boolean
-  isShown: boolean
 }
 
-const TimelineTick: FC<TimelineTickProps> = ({ isLeft, isShown }) => {
+const TimelineTick: FC<TimelineTickProps> = ({ isLeft }) => {
   return (
     <>
-      {isShown ? (
-        <>
-          <div className={clsx({ 'mr-10': !isLeft, 'ml-10': isLeft })}>
-            <div
-              className={clsx(
-                'relative top-1/2 w-16 border-t-4 border-clementine',
-                {
-                  'float-right': !isLeft,
-                  'float-left': isLeft,
-                },
-              )}
-            />
-          </div>
-        </>
-      ) : (
-        <></>
-      )}
+      <div className={clsx({ 'mr-10': !isLeft, 'ml-10': isLeft })}>
+        <div
+          className={clsx(
+            'relative top-1/2 w-16 border-t-4 border-clementine',
+            {
+              'float-right': !isLeft,
+              'float-left': isLeft,
+            },
+          )}
+        />
+      </div>
     </>
   )
 }
@@ -56,18 +49,17 @@ const TimelineItem: FC<TimlineItemProps> = ({ data, isLeft }) => {
             <div className="flex flex-initial flex-col">
               <div
                 className={clsx('relative float-right flex w-full flex-row', {
-                  'justify-end': isLeft,
-                  'justify-start': !isLeft,
+                  'flex-row-reverse': isLeft,
+                  '': !isLeft,
                 })}
               >
-                <TimelineTick isLeft={isLeft} isShown={!isLeft} />
+                <TimelineTick isLeft={isLeft} />
 
                 <div className="basis-3/12 rounded-lg bg-darkTeal py-2">
                   <p className="m-0 text-center text-4xl text-white">
                     {item.date}
                   </p>
                 </div>
-                <TimelineTick isLeft={isLeft} isShown={isLeft} />
               </div>
               <div className="px-10 py-5">
                 <p
