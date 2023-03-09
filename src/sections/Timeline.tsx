@@ -107,19 +107,21 @@ const TimelineSection: FC<InputProps> = ({ text, data }) => {
   const splitRight = splitData[1]
 
   return (
-    <div className="relative mx-[10%] min-h-screen border-spacing-1 text-6xl">
+    <>
       <HighlightedTitle title={text} />
-      <div className="absolute box-border h-full w-1/2 border-spacing-1 border-r-8 border-clementine"></div>
-      <div className="flex flex-row">
-        <div className="pr-.5 flex w-1/2 flex-col">
-          <TimelineItem data={splitLeft} isLeft={true} />
-        </div>
-        <div className="flex w-1/2 flex-col">
-          <div className="ml-10 min-h-[5%] min-w-fit" />
-          <TimelineItem data={splitRight} isLeft={false} />
+      <div className="relative mx-[10%] min-h-screen border-spacing-1 text-6xl">
+        <div className="absolute box-border h-full w-1/2 border-spacing-1 border-r-8 border-clementine"></div>
+        <div className="flex flex-row">
+          <div className="pr-.5 flex w-1/2 flex-col">
+            <TimelineItem data={splitLeft} isLeft={true} />
+          </div>
+          <div className="flex w-1/2 flex-col">
+            <div className="ml-10 min-h-[5%] min-w-fit" />
+            <TimelineItem data={splitRight} isLeft={false} />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
