@@ -4,6 +4,7 @@ import type { FC } from 'react'
 import { Select } from '../../components'
 import Tag from '../../components/Text/Tag'
 import NetAssetTag from '../../components/Card/NetAssetTag'
+import ESGTag from '../../components/Card/ESGTag'
 import { api } from '../../utils/api'
 
 const extractSortyByQueryKey = (
@@ -75,6 +76,8 @@ const Home: FC = () => {
       <h2>{isLoading && '(loading)'}</h2>
       <Tag title="sector" />
       <NetAssetTag assetsum={1234567890} />
+      <ESGTag grade="AAA" />
+      <ESGTag grade="B" />
       <button
         className="justify-center font-bold"
         onClick={() => {
