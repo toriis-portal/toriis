@@ -23,9 +23,9 @@ const HighlightedTitle: FC<TitleProps> = ({ title, size, color }) => {
         />
         <p
           className={clsx(
-            'relative z-10',
-            { 'font-klima text-[32px] font-bold': size == 'large' },
-            { 'font-intel text-[28px] font-medium': size == 'medium' },
+            'relative z-10 font-medium',
+            { 'font-klima text-[32px]': size == 'large' },
+            { 'font-intel text-[28px]': size == 'medium' },
           )}
         >
           {title}

@@ -12,7 +12,7 @@ const InstitutionalDivestments: FC = () => {
     <>
       <HighlightedTitle
         title="Institutional Divestment"
-        size="medium"
+        size="large"
         color="clementine"
       />
       <div className="my-6 w-full px-12">
