@@ -57,16 +57,12 @@ const Home: FC = () => {
           ))}
         </div>
       </div>
-      {/* <button
-        className="justify-center font-bold"
+      <LoadMoreButton
         onClick={() => {
           void fetchNextPage()
         }}
         disabled={!hasNextPage || isFetchingNextPage}
-      > */}
-      {/* Load More
-      </button> */}
-      <LoadMoreButton />
+      />
     </div>
   )
 }
