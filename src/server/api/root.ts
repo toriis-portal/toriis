@@ -1,5 +1,6 @@
 import { createTRPCRouter } from './trpc'
 import { exampleRouter } from './routers/example'
+import { companyRouter } from './routers/company'
 import { esgRouter } from './routers/esg'
 
 /**
@@ -9,6 +10,7 @@ import { esgRouter } from './routers/esg'
  */
 export const appRouter = createTRPCRouter({
   example: exampleRouter,
+  company: companyRouter,
   cronjob: esgRouter,
 })
 

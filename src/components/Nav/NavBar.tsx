@@ -3,12 +3,12 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { NavButton } from '../components'
-import toriisimg from '../../public/toriis.png'
+import { NavButton } from '../index'
+import toriisimg from '../../../public/toriis.png'
 
 const NavBar: FC = () => {
   return (
-    <nav className="flex h-[120px] flex-row items-center justify-between bg-white px-12">
+    <nav className="flex h-[90px] flex-row items-center justify-between bg-white px-10">
       <Link href="/home" className="h-full w-auto justify-start">
         <Image
           src={toriisimg as HTMLImageElement}

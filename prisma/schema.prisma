@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["clientExtensions", "orderByNulls"]
 }
 
 datasource db {
@@ -41,6 +42,7 @@ model Company {
   ticker       String
   sector       Sector?
   industry     String?
+  netAssetSum  Float
   investment   Investment[]
   description  String?
   ESG          ESG[]

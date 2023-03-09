@@ -17,7 +17,7 @@ jobs:
           node-version: 19
 
       - name: Install dependencies
-        run: npm install
+        run: yarn install
 
       - name: Run linter
         env:
@@ -26,7 +26,7 @@ jobs:
           NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-        run: npm run lint
+        run: yarn run lint
 
   run-formatters:
     name: Run formatters
@@ -42,10 +42,10 @@ jobs:
           node-version: 19
 
       - name: Install dependencies
-        run: npm install
+        run: yarn install
 
       - name: Run formatter
-        run: npm run format
+        run: yarn run format
 
   run-build:
     runs-on: ubuntu-latest
@@ -59,7 +59,7 @@ jobs:
           node-version: 19
 
       - name: Install dependencies
-        run: npm install
+        run: yarn install
 
       - name: Build application
         env:
@@ -68,4 +68,4 @@ jobs:
           NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-        run: npm run build
+        run: yarn run build
