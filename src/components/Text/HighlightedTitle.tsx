@@ -2,8 +2,8 @@ import type { FC } from 'react'
 import clsx from 'clsx'
 interface TitleProps {
   title: string
-  size: string
-  color: 'medium' | 'large'
+  size: 'medium' | 'large'
+  color: string
 }
 
 const HighlightedTitle: FC<TitleProps> = ({ title, size, color }) => {
