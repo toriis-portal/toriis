@@ -3,13 +3,10 @@ import clsx from 'clsx'
 interface TitleProps {
   title: string
   size: string
-  color: string
+  color: 'medium' | 'large'
 }
 
 const HighlightedTitle: FC<TitleProps> = ({ title, size, color }) => {
-  // className={clsx('flex w-full items-center space-x-8 pr-16 pl-20 pt-6', {
-  //   'pb-10': open,
-  // })}
   return (
     <>
       <div className="mb-12 ml-[1.4rem] w-fit">
@@ -23,7 +20,7 @@ const HighlightedTitle: FC<TitleProps> = ({ title, size, color }) => {
         />
         <p
           className={clsx(
-            'relative z-10 font-medium',
+            'relative z-10',
             { 'font-klima text-[32px]': size == 'large' },
             { 'font-intel text-[28px]': size == 'medium' },
           )}
