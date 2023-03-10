@@ -12,56 +12,48 @@ const LandingDonutChart: FC = () => {
 
   if (!source.data) return <p className="h-96 w-96"> Loading...</p>
 
-  const pairs: dataObj[] = source.data.map((data) => ({
+  const pairs: sector[] = source.data.map((data) => ({
     label: data.sector as string,
     count: data._count.sector,
   }))
 
-  interface dataObj {
+  interface sector {
     label: string
     count: number
   }
 
   /*
-   * newCount is populated with the total count of companies from sectors that occupy < 5% of the donut chart.
-   */
-  let newCount = pairs
-    .filter((item) => item.count < 23)
-    .reduce((prev, curr) => prev + curr.count, 0)
+    This function cleans our input array of sectors by aggregating all sectors under a threshold,
+    including any none-type sectors, into a category labeled "OTHER".
+  */
+  function cleanData(arr: sector[]) {
+    /*
+     * Set total to calculate the threshold
+     */
+    const total = arr.reduce((sum, item) => sum + item.count, 0)
+    const threshold = total * 0.05
 
-  /*
-   * We will also add the count of companies that do not belong to a sector.
-   */
-  newCount += pairs.find((item) => item.label === 'NONE')?.count ?? 0
+    // This filtered array gives us everything that is above threshold
+    const filtered = arr.filter(
+      (item) => item.count >= threshold && item.label != 'NONE',
+    )
 
-  /*
-   * We are adding a new sector named 'OTHERS' and populating with newCount.
-   */
-  pairs.push({ label: 'OTHERS', count: newCount })
+    /*
+     * newCount is populated with the total count of companies from sectors that occupy < 5% of the donut chart.
+     */
+    const newCount = arr
+      .filter((item) => item.count < threshold || item.label === 'NONE')
+      .reduce((sum, item) => sum + item.count, 0)
 
-  /*
-   * Helper function to remove item from object array.
-   */
-  function removeItem(value: dataObj) {
-    const index = pairs.indexOf(value)
-    if (index > -1) {
-      pairs.splice(index, 1)
-    }
-    return pairs
+    // Then we can directly push to filtered array
+    filtered.push({ label: 'OTHER', count: newCount })
+
+    return filtered
   }
 
-  /*
-   * We are now parsing through the area and removing the sectors that now fall under the OTHERS category.
-   */
-  pairs.map((item) => {
-    item.count < 23 || item.label == 'NONE'
-      ? removeItem(item)
-      : console.log('Fine')
-  })
+  const labels: string[] = cleanData(pairs).map((dataKey) => dataKey.label)
 
-  const labels: string[] = pairs.map((dataKey) => dataKey.label)
-
-  const counts: number[] = pairs.map((dataKey) => dataKey.count)
+  const counts: number[] = cleanData(pairs).map((dataKey) => dataKey.count)
 
   const options = {
     labels: labels,
