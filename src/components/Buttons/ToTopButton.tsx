@@ -3,7 +3,7 @@ import React from 'react'
 import { animateScroll } from 'react-scroll'
 import { ArrowUpIcon } from '@heroicons/react/24/solid'
 
-interface animateScrollType {
+interface AnimateScrollController {
   animateTopScroll: (
     y: number,
     options: unknown,
@@ -20,7 +20,7 @@ interface animateScrollType {
 }
 
 const ToTopButton: FC = () => {
-  const typedAnimateScroll = animateScroll as animateScrollType
+  const typedAnimateScroll = animateScroll as AnimateScrollController
   return (
     <button
       onClick={typedAnimateScroll.scrollToTop}

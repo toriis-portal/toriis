@@ -5,7 +5,7 @@ import { TRPCError } from '@trpc/server'
 import type { Context } from '../trpc'
 import { createTRPCRouter, publicProcedure } from '../trpc'
 
-interface errorMessage {
+interface ErrorMessage {
   error?: string
   message?: string
 }
@@ -13,15 +13,15 @@ interface errorMessage {
 const MAX_API_CALLS = 50
 const consumeExternalApi = async <T>(
   url: string,
-): Promise<T | errorMessage> => {
+): Promise<T | ErrorMessage> => {
   const res = await fetch(url, { method: 'GET' })
   return (await res.json()) as T
 }
 
 // Typeguard for error messages
 const isErrorMessage = (
-  res: errorMessage | ESG[] | ESG,
-): res is errorMessage => {
+  res: ErrorMessage | ESG[] | ESG,
+): res is ErrorMessage => {
   return 'error' in res || 'message' in res
 }
 
@@ -43,8 +43,6 @@ const updateESGIndex = async (
   companyIndex: ESGIndex,
   company: Company,
 ): Promise<ESGIndex> => {
-  console.log(company)
-
   return await ctx.prisma.eSGIndex.update({
     where: {
       id: companyIndex?.id ?? '1',
@@ -164,14 +162,16 @@ export const esgRouter = createTRPCRouter({
           // If no ESG data is found create a bad ticker entry
           if (isErrorMessage(api_res) || !api_res[0]) {
             // Check if bad ticker already exists
-            const badTickerExists = await ctx.prisma.eSGBadTicker.findFirst({
-              where: {
-                companyId: company.id,
+            const badTickerExists = await ctx.prisma.eSGInvalidTicker.findFirst(
+              {
+                where: {
+                  companyId: company.id,
+                },
               },
-            })
+            )
 
             if (!badTickerExists) {
-              const res = await ctx.prisma.eSGBadTicker.create({
+              const res = await ctx.prisma.eSGInvalidTicker.create({
                 data: {
                   company: {
                     connect: {
