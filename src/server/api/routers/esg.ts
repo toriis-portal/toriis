@@ -190,12 +190,15 @@ export const esgRouter = createTRPCRouter({
             }
           }
 
+          // If ESG API returns nothing, return null
           if (!api_res) {
             return null
           } else if (isErrorMessage(api_res)) {
+            // If ESG API returns an error, return the error
             return api_res
           }
 
+          // Otherwise return ESG data
           return api_res[0]
         }
       }),
