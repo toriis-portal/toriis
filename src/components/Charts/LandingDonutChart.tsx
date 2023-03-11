@@ -5,17 +5,47 @@ import { api } from '../../utils/api'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
+interface sector {
+  label: string
+  count: number
+}
+
 const LandingDonutChart: FC = () => {
   const source = api.company.countBySector.useQuery(undefined, {
     refetchOnWindowFocus: false,
   })
+
   if (!source.data) return <p className="h-96 w-96"> Loading...</p>
 
-  const labels: string[] = source.data.map(
-    (dataKey) => dataKey.sector as string,
-  )
+  const pairs: sector[] = source.data.map((data) => ({
+    label: data.sector as string,
+    count: data._count.sector,
+  }))
 
-  const features: number[] = source.data.map((dataKey) => dataKey._count.sector)
+  /*
+    This function cleans our input array of sectors by aggregating all sectors under a threshold,
+    including any none-type sectors, into a category labeled "OTHER".
+  */
+  function cleanData(arr: sector[]) {
+    const total = arr.reduce((sum, item) => sum + item.count, 0)
+    const threshold = total * 0.05
+
+    const filtered = arr.filter(
+      (item) => item.count >= threshold && item.label != 'NONE',
+    )
+
+    const newCount = arr
+      .filter((item) => item.count < threshold || item.label === 'NONE')
+      .reduce((sum, item) => sum + item.count, 0)
+
+    filtered.push({ label: 'OTHER', count: newCount })
+
+    return filtered
+  }
+
+  const labels: string[] = cleanData(pairs).map((dataKey) => dataKey.label)
+
+  const counts: number[] = cleanData(pairs).map((dataKey) => dataKey.count)
 
   const options = {
     labels: labels,
@@ -41,7 +71,7 @@ const LandingDonutChart: FC = () => {
     <>
       <Chart
         options={options}
-        series={features}
+        series={counts}
         type="donut"
         width="100%"
         height="auto"
