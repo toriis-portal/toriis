@@ -119,12 +119,22 @@ const Home: FC = () => {
         Load More
       </button>
 
-      <Select
+      {/* <Select
         text="sort by"
         options={{
           'Environment Grade': ['low to high', 'high to low'],
           'Net Asset Sum': ['low to high', 'high to low'],
         }}
+        updateControl={{
+          type: 'on-apply',
+          cb: setSelectedSortKeys,
+        }}
+        isSearchable={true}
+      /> */}
+      <Select
+        text="filter by"
+        options={['test', 'test2']}
+        isFilter
         updateControl={{
           type: 'on-apply',
           cb: setSelectedSortKeys,

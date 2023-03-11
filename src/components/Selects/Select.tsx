@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react'
 import type { FC } from 'react'
-import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/24/solid'
+import {
+  ChevronDownIcon,
+  ChevronRightIcon,
+  MagnifyingGlassIcon,
+} from '@heroicons/react/24/solid'
+import clsx from 'clsx'
 
 type Options = string[] | Record<string, string[]>
 
@@ -16,6 +21,7 @@ interface SelectProps {
     cb: (value: string[]) => void
   }
   isSearchable?: boolean
+  isFilter?: boolean
   containerHeight?: string
 }
 
@@ -28,6 +34,44 @@ interface SelectProps {
 const isStringArray = (options: Options): options is string[] =>
   Array.isArray(options)
 
+const SelectChevron: FC<{ isFilter: boolean; isOpen: boolean }> = ({
+  isFilter,
+  isOpen,
+}) => {
+  const filterRotate = clsx({
+    'rotate-180': isOpen,
+  })
+
+  return (
+    <span
+      className={clsx(
+        'flex h-full items-center justify-center px-3',
+        {
+          'bg-lightBlue': isFilter,
+          'bg-black': !isFilter,
+        },
+        {
+          '-rotate-90': isFilter,
+        },
+      )}
+    >
+      <ChevronDownIcon
+        className={clsx(
+          'ease h-5 w-5 transform duration-300',
+          {
+            'rotate-180': isOpen && !isFilter,
+            'rotate-90': isOpen && isFilter,
+          },
+          {
+            'fill-white stroke-white': !isFilter,
+            'fill-black stroke-black': isFilter,
+          },
+        )}
+      />
+    </span>
+  )
+}
+
 export const Select: FC<SelectProps> = ({
   text,
   onClose,
@@ -35,6 +79,7 @@ export const Select: FC<SelectProps> = ({
   updateControl,
   options,
   isSearchable = false,
+  isFilter = false,
   containerHeight,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -45,13 +90,13 @@ export const Select: FC<SelectProps> = ({
     if (isOpen) {
       onOpen?.()
     }
-  }, [isOpen, onOpen])
+  }, [isOpen])
 
   useEffect(() => {
     if (!isOpen) {
       onClose?.()
     }
-  }, [isOpen, onClose])
+  }, [isOpen])
 
   /**
    * Updates the selected state and calls the onChange callback
@@ -131,12 +176,13 @@ export const Select: FC<SelectProps> = ({
         <span className="mx-5 flex h-full w-fit items-center justify-center bg-white">
           <span className="text-black">{text}</span>
         </span>
-        <span className="flex h-full items-center justify-center bg-black px-3">
-          <ChevronDownIcon
-            className={`ease h-5 w-5 transform fill-white stroke-white duration-300 ${
-              isOpen ? 'rotate-180' : ''
-            }`}
-          />
+        <span
+          className={clsx('flex h-full items-center justify-center px-3', {
+            'bg-lightBlue': isFilter,
+            'bg-black': !isFilter,
+          })}
+        >
+          <SelectChevron isFilter={isFilter} isOpen={isOpen} />
         </span>
       </button>
 

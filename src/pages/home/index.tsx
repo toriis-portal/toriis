@@ -9,6 +9,7 @@ import TimelineSection from '../../sections/Timeline'
 import jsonData from '../../info/home.json'
 import type { TimelineEntry } from '../../sections/Timeline'
 import { ToTopButton } from '../../components'
+import { Select } from '../../components'
 
 const Home: FC = () => {
   const data = {
@@ -24,6 +25,7 @@ const Home: FC = () => {
     <>
       <SecondaryNavBar data={data} />
       <Landing />
+      <Select text="test" options={['1', '2', '3']} />
       <main>
         <div id="ourRequests" className="pt-20">
           <OurRequest />
