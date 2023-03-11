@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import type { FC } from 'react'
 
-import { HighlightedTitle } from '../components'
+import { HighlightedTitle } from '../../components'
 
 interface InputProps {
   text: string

@@ -1,17 +1,18 @@
 import type { FC } from 'react'
 
-import OurRequest from '../../sections/OurRequests'
-import InstitutionalDivestments from '../../sections/InstitutionalDivestments'
-import RefuteUISResponse from '../../sections/RefuteUISResponse'
-import Landing from '../../sections/Landing'
-import SecondaryNavBar from '../../components/Nav/SecondaryNavBar'
-import TimelineSection from '../../sections/Timeline'
+import type { TimelineEntry } from '../../sections/home/Timeline'
 import jsonData from '../../info/home.json'
-import type { TimelineEntry } from '../../sections/Timeline'
-import { ToTopButton } from '../../components'
+import {
+  Landing,
+  OurRequest,
+  InstitutionalDivestments,
+  RefuteUISResponse,
+  TimelineSection,
+} from '../../sections'
+import { ToTopButton, SecondaryNavBar } from '../../components'
 
 const Home: FC = () => {
-  const data = {
+  const navItems = {
     text: [
       { path: 'ourRequests', text: 'Our Requests' },
       { path: 'institutionalDivestment', text: 'Institutional Divestment' },
@@ -22,7 +23,7 @@ const Home: FC = () => {
 
   return (
     <>
-      <SecondaryNavBar data={data} />
+      <SecondaryNavBar data={navItems} />
       <Landing />
       <main>
         <div id="ourRequests" className="pt-20">

@@ -2,10 +2,12 @@ import type { FC } from 'react'
 import React from 'react'
 import clsx from 'clsx'
 
-import data from '../info/home.json'
-import { PrimaryButton } from '../components'
-import CapitalizedTitle from '../components/Text/CapitalizedTitle'
-import LandingDonutChart from '../components/Charts/LandingDonutChart'
+import data from '../../info/home.json'
+import {
+  PrimaryButton,
+  LandingDonutChart,
+  CapitalizedTitle,
+} from '../../components'
 
 const Landing: FC = () => {
   const textData = data.listItems

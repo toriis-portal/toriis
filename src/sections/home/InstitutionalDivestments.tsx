@@ -1,9 +1,7 @@
 import type { FC } from 'react'
 
-import HomeData from '../info/home.json'
-import HighlightedTitle from '../components/Text/HighlightedTitle'
-import ListItem from '../components/Displays/ListItem'
-import LinkDisplay from '../components/Displays/LinkDisplay'
+import HomeData from '../../info/home.json'
+import { HighlightedTitle, ListItem, LinkDisplay } from '../../components'
 
 const InstitutionalDivestments: FC = () => {
   const strings: string[] = HomeData.instDivestment.listItems
