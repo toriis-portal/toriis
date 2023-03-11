@@ -2,10 +2,8 @@ import { useEffect, useState } from 'react'
 import type { FC } from 'react'
 
 import { Select } from '../../components'
-import Tag from '../../components/Text/Tag'
-import NetAssetTag from '../../components/Card/NetAssetTag'
-import ESGTag from '../../components/Card/ESGTag'
 import { api } from '../../utils/api'
+import CompanyCard from '../../components/Card/CompanyCard'
 
 const extractSortyByQueryKey = (
   key: 'Net Asset Sum' | 'Environment Grade',
@@ -74,10 +72,7 @@ const Home: FC = () => {
   return (
     <div>
       <h2>{isLoading && '(loading)'}</h2>
-      <Tag title="sector" />
-      <NetAssetTag assetsum={1234567890} />
-      <ESGTag grade="AAA" />
-      <ESGTag grade="B" />
+      <CompanyCard title="Company Name" />
       <button
         className="justify-center font-bold"
         onClick={() => {
