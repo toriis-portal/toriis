@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { FC } from 'react'
+import React from 'react'
 
 import { Select } from '../../components'
 import { api } from '../../utils/api'
@@ -28,7 +29,6 @@ const extractSortyByQueryKey = (
 
   return null
 }
-
 const Home: FC = () => {
   const [selectedSortKeys, setSelectedSortKeys] = useState<string[]>([])
 
@@ -40,7 +40,7 @@ const Home: FC = () => {
     isFetchingNextPage,
     data,
     refetch,
-  } = api.company.getInvestments.useInfiniteQuery(
+  } = api.company.getCompanies.useInfiniteQuery(
     {
       limit: limit,
       sortByNetAssestSum: extractSortyByQueryKey(
@@ -68,11 +68,20 @@ const Home: FC = () => {
       console.error(err)
     })
   }, [selectedSortKeys])
+  console.log(data?.pages[0]?.items[2])
 
   return (
     <div>
       <h2>{isLoading && '(loading)'}</h2>
-      <CompanyCard title="Company Name" />
+      {data?.pages.map((page, idx) => {
+        return (
+          <React.Fragment key={idx}>
+            {page.items.map((company) => (
+              <React.Fragment key={company.id}><CompanyCard input={company}/></React.Fragment>
+            ))}
+          </React.Fragment>
+        );
+      })}
       <button
         className="justify-center font-bold"
         onClick={() => {
