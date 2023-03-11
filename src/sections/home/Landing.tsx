@@ -2,7 +2,7 @@ import type { FC } from 'react'
 import React from 'react'
 import clsx from 'clsx'
 
-import data from '../../info/home.json'
+import HomeData from '../../info/home.json'
 import {
   PrimaryButton,
   LandingDonutChart,
@@ -10,7 +10,7 @@ import {
 } from '../../components'
 
 const Landing: FC = () => {
-  const textData = data.listItems
+  const textData = HomeData.landingContent
   const landingTextStyle = clsx(
     'font-semibold underline decoration-clementine decoration-2 underline-offset-4',
   )

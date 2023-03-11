@@ -3,7 +3,7 @@ import React from 'react'
 import { animateScroll } from 'react-scroll'
 import { ArrowUpIcon } from '@heroicons/react/24/solid'
 
-interface AnimateScrollController {
+export interface AnimateScrollController {
   animateTopScroll: (
     y: number,
     options: unknown,

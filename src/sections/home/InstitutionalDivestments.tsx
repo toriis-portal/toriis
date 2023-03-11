@@ -1,17 +1,19 @@
 import type { FC } from 'react'
 
 import HomeData from '../../info/home.json'
-import { HighlightedTitle, ListItem, LinkDisplay } from '../../components'
+import { HighlightedTitle, ListItem } from '../../components'
+
+import LinkDisplay from './LinkDisplay'
 
 const InstitutionalDivestments: FC = () => {
-  const strings: string[] = HomeData.instDivestment.listItems
+  const list: string[] = HomeData.instDivestment.listItems
 
   return (
     <>
       <HighlightedTitle title="Institutional Divestment" />
       <div className="my-6 w-full px-12">
         <div className="ml-[3%] space-y-6">
-          {strings.map((string, index) => (
+          {list.map((string, index) => (
             <ListItem
               key={index + 1}
               listVal={index + 1}

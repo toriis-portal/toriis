@@ -6,16 +6,11 @@ import { ChevronRightIcon } from '@heroicons/react/24/solid'
 
 import CarouselChild from './CarouselChild'
 import CarouselDot from './CarouselDot'
+import type { CarouselChildData } from './CarouselChild'
 
-interface CarouselChildData {
-  index: number
-  text: string
-}
-interface CarouselProps {
-  carouselChildrenData: CarouselChildData[]
-}
-
-const Carousel: FC<CarouselProps> = ({ carouselChildrenData }) => {
+const Carousel: FC<{ carouselChildrenData: CarouselChildData[] }> = ({
+  carouselChildrenData,
+}) => {
   const [activeIndex, setActiveIndex] = useState(0)
 
   const updateIndex = (newIndex: number) => {

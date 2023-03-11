@@ -3,11 +3,11 @@ import AuthButton from './Buttons/AuthButton'
 import NavButton from './Buttons/NavButton'
 import PrimaryButton from './Buttons/PrimaryButton'
 import ToTopButton from './Buttons/ToTopButton'
+import ReadMoreButton from './Buttons/ReadMoreButton'
 // Charts
 import LandingDonutChart from './Charts/LandingDonutChart'
 // Displays
 import ListItem from './Displays/ListItem'
-import LinkDisplay from './Displays/LinkDisplay'
 import DropDownCard from './Displays/DropDownCard'
 import Carousel from './Displays/Carousel/Carousel'
 // Nav
@@ -34,8 +34,8 @@ export {
   Select,
   LandingDonutChart,
   CapitalizedTitle,
-  LinkDisplay,
   DropDownCard,
   SecondaryNavBar,
   ShadowTitle,
+  ReadMoreButton,
 }

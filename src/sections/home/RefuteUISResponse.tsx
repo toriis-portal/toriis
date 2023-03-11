@@ -4,7 +4,7 @@ import HomeData from '../../info/home.json'
 import { Carousel, HighlightedTitle } from '../../components'
 
 const RefuteUISResponse: FC = () => {
-  const leftText: string = HomeData.refuteResponse.leftText
+  const leftText = HomeData.refuteResponse.leftText
 
   return (
     <div className="bg-clementine/20 px-12 py-20">

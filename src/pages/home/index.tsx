@@ -12,18 +12,16 @@ import {
 import { ToTopButton, SecondaryNavBar } from '../../components'
 
 const Home: FC = () => {
-  const navItems = {
-    text: [
-      { path: 'ourRequests', text: 'Our Requests' },
-      { path: 'institutionalDivestment', text: 'Institutional Divestment' },
-      { path: 'refuteUISReponse', text: 'Refute UIS Response' },
-      { path: 'divestmentHistory', text: 'Divestment History' },
-    ],
-  }
+  const navItems = [
+    { path: 'ourRequests', text: 'Our Requests' },
+    { path: 'institutionalDivestment', text: 'Institutional Divestment' },
+    { path: 'refuteUISReponse', text: 'Refute UIS Response' },
+    { path: 'divestmentHistory', text: 'Divestment History' },
+  ]
 
   return (
     <>
-      <SecondaryNavBar data={navItems} />
+      <SecondaryNavBar navItems={navItems} />
       <Landing />
       <main>
         <div id="ourRequests" className="pt-20">
