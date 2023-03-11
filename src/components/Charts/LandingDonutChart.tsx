@@ -5,7 +5,7 @@ import { api } from '../../utils/api'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
-interface sector {
+interface companySectorCount {
   label: string
   count: number
 }
@@ -17,7 +17,7 @@ const LandingDonutChart: FC = () => {
 
   if (!source.data) return <p className="h-96 w-96"> Loading...</p>
 
-  const pairs: sector[] = source.data.map((data) => ({
+  const pairs: companySectorCount[] = source.data.map((data) => ({
     label: data.sector as string,
     count: data._count.sector,
   }))
@@ -26,7 +26,7 @@ const LandingDonutChart: FC = () => {
     This function cleans our input array of sectors by aggregating all sectors under a threshold,
     including any none-type sectors, into a category labeled "OTHER".
   */
-  function cleanData(arr: sector[]) {
+  function cleanData(arr: companySectorCount[]) {
     const total = arr.reduce((sum, item) => sum + item.count, 0)
     const threshold = total * 0.05
 

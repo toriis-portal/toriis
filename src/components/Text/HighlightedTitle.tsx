@@ -1,10 +1,6 @@
 import type { FC } from 'react'
 
-interface TitleProps {
-  title: string
-}
-
-const HighlightedTitle: FC<TitleProps> = ({ title }) => {
+const HighlightedTitle: FC<{ title: string }> = ({ title }) => {
   return (
     <>
       <div className="mb-12 ml-[1.4rem] w-fit">
