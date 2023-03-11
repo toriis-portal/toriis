@@ -9,7 +9,7 @@ interface NavItem {
 
 const SecondaryNavBar: FC<{ navItems: NavItem[] }> = ({ navItems }) => {
   const navStyle = clsx(
-    'no-underline hover:decoration-clementine hover:underline hover:underline-offset-8 hover:decoration-[0.2rem]',
+    'no-underline hover:decoration-clementine hover:underline hover:underline-offset-8 hover:decoration-[0.2rem] hover:duration-100',
   )
   return (
     <nav className="center sticky top-0 z-50 bg-darkTeal py-2.5">

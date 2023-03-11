@@ -22,7 +22,8 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({ text, link }) => {
               'hover:shadow-[-5px_5px_0px_0px] hover:shadow-cobalt',
             )}
           >
-            {text} <ArrowRightIcon className="bold inline h-9 w-5" />
+            {text}{' '}
+            <ArrowRightIcon className="inline h-9 w-5 stroke-current stroke-1" />
           </button>
         </div>
       </Link>
