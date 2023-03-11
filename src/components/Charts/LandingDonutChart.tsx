@@ -5,6 +5,11 @@ import { api } from '../../utils/api'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
+interface sector {
+  label: string
+  count: number
+}
+
 const LandingDonutChart: FC = () => {
   const source = api.company.countBySector.useQuery(undefined, {
     refetchOnWindowFocus: false,
@@ -17,35 +22,22 @@ const LandingDonutChart: FC = () => {
     count: data._count.sector,
   }))
 
-  interface sector {
-    label: string
-    count: number
-  }
-
   /*
     This function cleans our input array of sectors by aggregating all sectors under a threshold,
     including any none-type sectors, into a category labeled "OTHER".
   */
   function cleanData(arr: sector[]) {
-    /*
-     * Set total to calculate the threshold
-     */
     const total = arr.reduce((sum, item) => sum + item.count, 0)
     const threshold = total * 0.05
 
-    // This filtered array gives us everything that is above threshold
     const filtered = arr.filter(
       (item) => item.count >= threshold && item.label != 'NONE',
     )
 
-    /*
-     * newCount is populated with the total count of companies from sectors that occupy < 5% of the donut chart.
-     */
     const newCount = arr
       .filter((item) => item.count < threshold || item.label === 'NONE')
       .reduce((sum, item) => sum + item.count, 0)
 
-    // Then we can directly push to filtered array
     filtered.push({ label: 'OTHER', count: newCount })
 
     return filtered
