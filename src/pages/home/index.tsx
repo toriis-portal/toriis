@@ -1,7 +1,5 @@
 import type { FC } from 'react'
 
-import type { TimelineEntry } from '../../sections/home/Timeline'
-import jsonData from '../../info/home.json'
 import {
   Landing,
   OurRequest,
@@ -34,10 +32,7 @@ const Home: FC = () => {
           <RefuteUISResponse />
         </div>
         <div id="divestmentHistory" className="px-12 pt-20">
-          <TimelineSection
-            text="Divestment History"
-            data={jsonData.timeline as TimelineEntry[]}
-          />
+          <TimelineSection />
         </div>
 
         <ToTopButton />

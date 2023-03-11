@@ -1,7 +1,5 @@
 import type { FC } from 'react'
 
-import { AuthButton } from '../components'
-
 const Main: FC = () => {
   return (
     <div className="flex h-screen flex-col items-center justify-center">
