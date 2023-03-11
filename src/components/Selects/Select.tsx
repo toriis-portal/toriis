@@ -45,13 +45,13 @@ export const Select: FC<SelectProps> = ({
     if (isOpen) {
       onOpen?.()
     }
-  }, [isOpen])
+  }, [isOpen, onOpen])
 
   useEffect(() => {
     if (!isOpen) {
       onClose?.()
     }
-  }, [isOpen])
+  }, [isOpen, onClose])
 
   /**
    * Updates the selected state and calls the onChange callback

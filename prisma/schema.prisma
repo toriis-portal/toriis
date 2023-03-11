@@ -37,15 +37,16 @@ model Investment {
 }
 
 model Company {
-  id          String       @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  ticker      String
-  sector      Sector?
-  industry    String?
-  netAssetSum Float
-  investment  Investment[]
-  description String?
-  ESG         ESG[]
+  id               String             @id @default(auto()) @map("_id") @db.ObjectId
+  name             String
+  ticker           String
+  sector           Sector?
+  industry         String?
+  netAssetSum      Float
+  investment       Investment[]
+  description      String?
+  ESG              ESG[]
+  ESGInvalidTicker ESGInvalidTicker[]
 }
 
 model Account {
@@ -104,4 +105,10 @@ model ESG {
 model ESGIndex {
   id        String @id @default(auto()) @map("_id") @db.ObjectId
   companyId String @db.ObjectId
+}
+
+model ESGInvalidTicker {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId String  @db.ObjectId
 }
