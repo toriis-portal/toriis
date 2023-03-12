@@ -35,12 +35,12 @@ export const companyRouter = createTRPCRouter({
         include: {
           ESG: {
             orderBy: {
-              environment_grade: extractSortOrder(input.sortByEnvGrade)
+              environmentGrade: extractSortOrder(input.sortByEnvGrade)
                 ? input.sortByEnvGrade
                 : undefined,
             },
             select: {
-              environment_grade: true,
+              environmentGrade: true,
             },
           },
         },
