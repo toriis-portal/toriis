@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import type { FC } from 'react'
+import React from 'react'
 
 import { Select } from '../../components'
 import { api } from '../../utils/api'
+import CompanyCard from '../../components/Card/CompanyCard'
 
 const extractSortyByQueryKey = (
   key: 'Net Asset Sum' | 'Environment Grade',
@@ -27,7 +29,6 @@ const extractSortyByQueryKey = (
 
   return null
 }
-
 const Home: FC = () => {
   const [selectedSortKeys, setSelectedSortKeys] = useState<string[]>([])
 
@@ -39,7 +40,7 @@ const Home: FC = () => {
     isFetchingNextPage,
     data,
     refetch,
-  } = api.company.getInvestments.useInfiniteQuery(
+  } = api.company.getCompanies.useInfiniteQuery(
     {
       limit: limit,
       sortByNetAssestSum: extractSortyByQueryKey(
@@ -69,46 +70,37 @@ const Home: FC = () => {
   }, [selectedSortKeys])
 
   return (
-    <div>
-      <h2>{isLoading && '(loading)'}</h2>
-      <div className="flex flex-row">
-        <div className="flex flex-col gap-4">
-          <h1 className="font-medium">Company Name</h1>
-          {data?.pages.map((page, index) => (
-            <div className="flex flex-col gap-4" key={index}>
-              {page.items.map((item) => (
-                <div className="flex text-cobalt" key={item.id}>
-                  {item.name}
-                </div>
-              ))}
-            </div>
-          ))}
+    <div className="flex flex-col bg-lightBlue rounded-t-xl items-center gap-5 w-11/12 self-center">
+      <div className="flex flex-row justify-between items-center self-stretch pt-[36px] px-[50px]">
+        <div className="flex flex-row items-center gap-3.5">
+          <p className="text-[32px] font-medium">Recommendations</p>
+          <p className="text-[#626161]">{"("}{data?.pages ? data.pages.length * 5 : 0}{" results)"}</p>
         </div>
-        <div className="flex flex-col gap-4">
-          <h1 className="font-medium">Sector</h1>
-          {data?.pages.map((page, index) => (
-            <div className="flex flex-col gap-4" key={index}>
-              {page.items.map((item) => (
-                <div className="flex text-black" key={item.id}>
-                  {item.sector}
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-        <div className="flex flex-col gap-4">
-          <h1 className="font-medium">Industry</h1>
-          {data?.pages.map((page, index) => (
-            <div className="flex flex-col gap-4" key={index}>
-              {page.items.map((item) => (
-                <div className="flex text-pumpkin" key={item.id}>
-                  {item.industry}
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
+        <Select
+          text="sort by"
+          options={{
+            'Environment Grade': ['low to high', 'high to low'],
+            'Net Asset Sum': ['low to high', 'high to low'],
+          }}
+          updateControl={{
+            type: 'on-apply',
+            cb: setSelectedSortKeys,
+          }}
+          isSearchable={true}
+        />
       </div>
+      <h2>{isLoading && '(loading)'}</h2>
+      {data?.pages.map((page, idx) => {
+        return (
+          <div key={idx} className="flex flex-col w-3/4 gap-5">
+            {page.items.map((company) => (
+              <React.Fragment key={company.id}><CompanyCard input={company}/></React.Fragment>
+            ))}
+          </div>
+        );
+      })}
+
+
       <button
         className="justify-center font-bold"
         onClick={() => {
@@ -118,19 +110,6 @@ const Home: FC = () => {
       >
         Load More
       </button>
-
-      <Select
-        text="sort by"
-        options={{
-          'Environment Grade': ['low to high', 'high to low'],
-          'Net Asset Sum': ['low to high', 'high to low'],
-        }}
-        updateControl={{
-          type: 'on-apply',
-          cb: setSelectedSortKeys,
-        }}
-        isSearchable={true}
-      />
     </div>
   )
 }
