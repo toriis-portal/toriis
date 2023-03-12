@@ -68,7 +68,6 @@ const Home: FC = () => {
       console.error(err)
     })
   }, [selectedSortKeys])
-  console.log(data?.pages[0]?.items[2])
 
   return (
     <div className="flex flex-col bg-lightBlue rounded-t-xl items-center gap-5 w-11/12 self-center">

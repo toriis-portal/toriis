@@ -17,9 +17,6 @@ module.exports = {
         '3/7': '42.8571429%',
         '4/7': '57.1428571%',
       },
-      spacing: {
-        'px-5.5': '22px',
-      },
     },
     fontFamily: {
       klima: ['Klima', 'Arial', 'Roboto'],
