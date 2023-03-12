@@ -12,7 +12,7 @@ interface ErrorMessage {
   message?: string
 }
 
-const MAX_API_CALLS = 5
+const MAX_API_CALLS = 50
 const consumeExternalApi = async <T>(
   url: string,
 ): Promise<T | ErrorMessage> => {

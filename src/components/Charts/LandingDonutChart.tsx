@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import dynamic from 'next/dynamic'
-import type { Sector } from '@prisma/client'
+import { Sector } from '@prisma/client'
 
 import { api } from '../../utils/api'
 import { sectorEnum } from '../../utils/enums'
@@ -33,14 +33,14 @@ const LandingDonutChart: FC = () => {
     const threshold = total * 0.05
 
     const filtered = arr
-      .filter((item) => item.count >= threshold && item.label != 'NONE')
+      .filter((item) => item.count >= threshold && item.label != Sector.NONE)
       .map((item) => ({
         label: sectorEnum[item.label as Sector],
         count: item.count,
       }))
 
     const newCount = arr
-      .filter((item) => item.count < threshold || item.label === 'NONE')
+      .filter((item) => item.count < threshold || item.label === Sector.NONE)
       .reduce((sum, item) => sum + item.count, 0)
 
     filtered.push({ label: 'Other', count: newCount })
