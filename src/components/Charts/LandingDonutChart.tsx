@@ -1,7 +1,9 @@
 import type { FC } from 'react'
 import dynamic from 'next/dynamic'
+import type { Sector } from '@prisma/client'
 
 import { api } from '../../utils/api'
+import { sectorEnum } from '../../utils/enums'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -18,7 +20,7 @@ const LandingDonutChart: FC = () => {
   if (!source.data) return <p className="h-96 w-96"> Loading...</p>
 
   const pairs: companySectorCount[] = source.data.map((data) => ({
-    label: data.sector as string,
+    label: data.sector as Sector,
     count: data._count.sector,
   }))
 
@@ -30,15 +32,18 @@ const LandingDonutChart: FC = () => {
     const total = arr.reduce((sum, item) => sum + item.count, 0)
     const threshold = total * 0.05
 
-    const filtered = arr.filter(
-      (item) => item.count >= threshold && item.label != 'NONE',
-    )
+    const filtered = arr
+      .filter((item) => item.count >= threshold && item.label != 'NONE')
+      .map((item) => ({
+        label: sectorEnum[item.label as Sector],
+        count: item.count,
+      }))
 
     const newCount = arr
       .filter((item) => item.count < threshold || item.label === 'NONE')
       .reduce((sum, item) => sum + item.count, 0)
 
-    filtered.push({ label: 'OTHER', count: newCount })
+    filtered.push({ label: 'Other', count: newCount })
 
     return filtered
   }

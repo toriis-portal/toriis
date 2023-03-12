@@ -1,16 +1,18 @@
-import type { Company, ESG, ESGIndex } from '@prisma/client'
+import type { Company, ESG, ESGIndex, EnvGrade } from '@prisma/client'
 import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
 
 import type { Context } from '../trpc'
 import { createTRPCRouter, publicProcedure } from '../trpc'
 
+import type { UncleanedESG } from './../../../types/index'
+
 interface ErrorMessage {
   error?: string
   message?: string
 }
 
-const MAX_API_CALLS = 50
+const MAX_API_CALLS = 5
 const consumeExternalApi = async <T>(
   url: string,
 ): Promise<T | ErrorMessage> => {
@@ -20,7 +22,7 @@ const consumeExternalApi = async <T>(
 
 // Typeguard for error messages
 const isErrorMessage = (
-  res: ErrorMessage | ESG[] | ESG,
+  res: ErrorMessage | ESG[] | ESG | UncleanedESG[] | UncleanedESG,
 ): res is ErrorMessage => {
   return 'error' in res || 'message' in res
 }
@@ -148,7 +150,7 @@ export const esgRouter = createTRPCRouter({
           const url = `https://esgapiservice.com/api/authorization/search?q=${
             company.ticker
           }&token=${process.env.ESG_API_KEY ?? ''}`
-          const api_res = await consumeExternalApi<ESG[]>(url)
+          const api_res = await consumeExternalApi<UncleanedESG[]>(url)
           if (
             isErrorMessage(api_res) &&
             api_res.error === MAX_DAILY_CALLS_REACHED_MESSAGE
@@ -222,17 +224,17 @@ export const esgRouter = createTRPCRouter({
                 id: exists.id,
               },
               data: {
-                environment_grade: companyESG.environment_grade,
-                environment_score: companyESG.environment_score,
-                environment_level: companyESG.environment_level,
+                environmentGrade: companyESG.environment_grade as EnvGrade,
+                environmentScore: companyESG.environment_score,
+                environmentLevel: companyESG.environment_level,
               },
             })
           } else {
             res = await ctx.prisma.eSG.create({
               data: {
-                environment_grade: companyESG.environment_grade,
-                environment_score: companyESG.environment_score,
-                environment_level: companyESG.environment_level,
+                environmentGrade: companyESG.environment_grade as EnvGrade,
+                environmentScore: companyESG.environment_score,
+                environmentLevel: companyESG.environment_level,
                 company: {
                   connect: {
                     id: cleanedCompanies[index]?.id,
