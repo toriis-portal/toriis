@@ -71,17 +71,37 @@ const Home: FC = () => {
   console.log(data?.pages[0]?.items[2])
 
   return (
-    <div>
+    <div className="flex flex-col bg-lightBlue rounded-t-xl items-center gap-5 w-11/12 self-center">
+      <div className="flex flex-row justify-between items-center self-stretch pt-[36px] px-[50px]">
+        <div className="flex flex-row items-center gap-3.5">
+          <p className="text-[32px] font-medium">Recommendations</p>
+          <p className="text-[#626161]">{"("}{data?.pages ? data.pages.length * 5 : 0}{" results)"}</p>
+        </div>
+        <Select
+          text="sort by"
+          options={{
+            'Environment Grade': ['low to high', 'high to low'],
+            'Net Asset Sum': ['low to high', 'high to low'],
+          }}
+          updateControl={{
+            type: 'on-apply',
+            cb: setSelectedSortKeys,
+          }}
+          isSearchable={true}
+        />
+      </div>
       <h2>{isLoading && '(loading)'}</h2>
       {data?.pages.map((page, idx) => {
         return (
-          <React.Fragment key={idx}>
+          <div key={idx} className="flex flex-col w-3/4 gap-5">
             {page.items.map((company) => (
               <React.Fragment key={company.id}><CompanyCard input={company}/></React.Fragment>
             ))}
-          </React.Fragment>
+          </div>
         );
       })}
+
+
       <button
         className="justify-center font-bold"
         onClick={() => {
@@ -91,19 +111,6 @@ const Home: FC = () => {
       >
         Load More
       </button>
-
-      <Select
-        text="sort by"
-        options={{
-          'Environment Grade': ['low to high', 'high to low'],
-          'Net Asset Sum': ['low to high', 'high to low'],
-        }}
-        updateControl={{
-          type: 'on-apply',
-          cb: setSelectedSortKeys,
-        }}
-        isSearchable={true}
-      />
     </div>
   )
 }
