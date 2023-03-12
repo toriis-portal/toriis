@@ -23,6 +23,16 @@ enum Sector {
   NONE                   @map("") // This is workaround for string mapping in enums in prisma
 }
 
+enum EnvGrade {
+  AAA
+  AA
+  A
+  BBB
+  BB
+  B
+  CCC
+}
+
 model Investment {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   company      Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
@@ -94,12 +104,12 @@ model VerificationToken {
 }
 
 model ESG {
-  id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  company           Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  companyId         String  @db.ObjectId
-  environment_score Int
-  environment_grade String
-  environment_level String
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  company          Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId        String   @db.ObjectId
+  environmentScore Int
+  environmentGrade EnvGrade
+  environmentLevel String
 }
 
 model ESGIndex {
