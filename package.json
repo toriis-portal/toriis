@@ -27,7 +27,6 @@
     "react-apexcharts": "^1.4.0",
     "react-dom": "18.2.0",
     "react-scroll": "^1.8.9",
-    "recharts": "^2.4.3",
     "superjson": "1.9.1",
     "yahoo-finance2": "^2.3.10",
     "zod": "^3.20.2"

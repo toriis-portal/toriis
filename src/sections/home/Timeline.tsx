@@ -1,14 +1,10 @@
 import clsx from 'clsx'
 import type { FC } from 'react'
 
-import { HighlightedTitle } from '../components'
+import { HighlightedTitle } from '../../components'
+import HomeData from '../../info/home.json'
 
-interface InputProps {
-  text: string
-  data: TimelineEntry[]
-}
-
-export interface TimelineEntry {
+interface TimelineEntry {
   date: string
   text: string
 }
@@ -93,14 +89,15 @@ const splitTimeline = (
   return splitData
 }
 
-const TimelineSection: FC<InputProps> = ({ text, data }) => {
-  const splitData = splitTimeline(data) ?? [[], []]
+const TimelineSection: FC = () => {
+  const timelineEntries = HomeData.timeline
+  const splitData = splitTimeline(timelineEntries) ?? [[], []]
   const splitLeft = splitData[0]
   const splitRight = splitData[1]
 
   return (
     <>
-      <HighlightedTitle title={text} />
+      <HighlightedTitle title="Divestment History" />
       <div className="relative mx-[10%] my-10 min-h-screen border-spacing-1 text-6xl">
         <div className="absolute box-border h-full w-1/2 border-spacing-1 border-r-8 border-clementine"></div>
         <div className="flex flex-row">

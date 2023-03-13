@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react'
 import type { FC } from 'react'
-import {
-  ChevronDownIcon,
-  ChevronRightIcon,
-  MagnifyingGlassIcon,
-} from '@heroicons/react/24/solid'
+import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import clsx from 'clsx'
+import { Sector } from '@prisma/client'
 
 type Options = string[] | Record<string, string[]>
 
@@ -45,13 +42,17 @@ const SelectChevron: FC<{ isFilter: boolean; isOpen: boolean }> = ({
   return (
     <span
       className={clsx(
-        'flex h-full items-center justify-center px-3',
+        'flex h-full items-center justify-center',
         {
           'bg-lightBlue': isFilter,
           'bg-black': !isFilter,
         },
         {
           '-rotate-90': isFilter,
+        },
+        {
+          'px-3': !isFilter,
+          'px-0': isFilter,
         },
       )}
     >
@@ -89,14 +90,16 @@ export const Select: FC<SelectProps> = ({
   useEffect(() => {
     if (isOpen) {
       onOpen?.()
+      setSearchQuery('')
     }
-  }, [isOpen])
+  }, [isOpen, onOpen])
 
   useEffect(() => {
     if (!isOpen) {
       onClose?.()
+      setSearchQuery('')
     }
-  }, [isOpen])
+  }, [isOpen, onClose])
 
   /**
    * Updates the selected state and calls the onChange callback
@@ -165,19 +168,34 @@ export const Select: FC<SelectProps> = ({
    * @returns true if value includes searchQuery or searchQuery is empty, else false
    */
   const handleSearchFilter = (value: string) =>
-    searchQuery !== '' ? value.includes(searchQuery) : true
+    searchQuery !== ''
+      ? value.toLowerCase().includes(searchQuery.toLowerCase())
+      : true
 
   return (
-    <div className="relative ml-10 w-72">
+    <div className="relative ml-10 w-60">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="float-right flex h-10 w-fit items-center justify-center overflow-hidden rounded-full border  border-solid border-darkTeal"
+        className={clsx(
+          'flex basis-full items-center overflow-hidden rounded-full border border-solid',
+          {
+            'justify-centerborder-darkTeal float-right h-10 w-fit': !isFilter,
+            'h-8 w-60 border-cobalt': isFilter,
+          },
+        )}
       >
-        <span className="mx-5 flex h-full w-fit items-center justify-center bg-white">
-          <span className="text-black">{text}</span>
-        </span>
         <span
-          className={clsx('flex h-full items-center justify-center px-3', {
+          className={clsx(
+            'mx-5 flex h-full w-fit basis-3/4 items-center justify-center bg-white',
+          )}
+        >
+          <span className={clsx('text-black', { 'text-sm': isFilter })}>
+            {text}
+          </span>
+        </span>
+        <div className="min-w-fit" />
+        <span
+          className={clsx('h-full basis-1/4 items-center justify-center px-3', {
             'bg-lightBlue': isFilter,
             'bg-black': !isFilter,
           })}
@@ -187,28 +205,45 @@ export const Select: FC<SelectProps> = ({
       </button>
 
       {isOpen && (
-        <div className="absolute top-14 left-0 w-full rounded-md border-[0.5px] border-solid border-cobalt bg-white p-5 shadow-md">
+        <div
+          className={clsx(
+            'absolute left-0 transform rounded-md border-[0.5px] border-solid border-cobalt bg-white shadow-md',
+            {
+              'w-full translate-y-14 p-5': !isFilter,
+              'w-60 translate-y-2 p-3': isFilter,
+            },
+          )}
+        >
           {isSearchable && (
             <div className="relative mb-5">
               <input
                 onChange={(e) => setSearchQuery(e.currentTarget.value)}
                 type="text"
-                className="relative h-7 w-full border border-solid border-black px-3 py-1 pl-8 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                placeholder="Search..."
+                className={clsx(
+                  'border-width-1 relative h-7 w-full rounded border border-solid border-black px-3 py-1 pl-8 focus:outline-none focus:ring-2 focus:ring-blue-400',
+                )}
+                placeholder="Search"
               />
-              <MagnifyingGlassIcon className="absolute top-1.5 left-2 h-4 w-4" />
+              <MagnifyingGlassIcon className="absolute top-1.5 left-2 h-4 w-4 fill-darkGray" />
             </div>
           )}
           <div
             className={`${
               containerHeight ? `max-h-[${containerHeight}]` : 'max-h-fit'
-            } w-full overflow-x-visible overflow-y-scroll p-0`}
+            } w-full overflow-y-auto overflow-x-visible p-0`}
           >
             {isStringArray(options) ? (
-              <ul className="m-auto flex w-11/12 flex-col gap-4">
+              <ul
+                className={clsx('m-auto flex w-11/12 flex-col', {
+                  'gap-4': !isFilter,
+                  'gap-1': isFilter,
+                })}
+              >
                 {options.filter(handleSearchFilter).map((option) => (
                   <li key={option} className="flex items-center text-black">
-                    <span>{option}</span>
+                    <span className={clsx({ 'text-sm': isFilter })}>
+                      {option}
+                    </span>
                     <input
                       onChange={() => handleChange(option)}
                       type="checkbox"
@@ -229,7 +264,7 @@ export const Select: FC<SelectProps> = ({
                           key={option}
                           className="flex items-center text-black"
                         >
-                          <span>{option}</span>
+                          <span className="text-sm">{option}</span>
                           <input
                             onChange={() =>
                               handleGroupChange(`${key}-${option}`)

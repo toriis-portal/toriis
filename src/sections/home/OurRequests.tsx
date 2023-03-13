@@ -1,8 +1,7 @@
 import type { FC } from 'react'
 
-import DropDownCard from '../components/Displays/DropDownCard'
-import HighlightedTitle from '../components/Text/HighlightedTitle'
-import HomeData from '../info/home.json'
+import HomeData from '../../info/home.json'
+import { DropDownCard, HighlightedTitle } from '../../components'
 
 const OurRequest: FC = () => {
   const requests = HomeData.ourRequests

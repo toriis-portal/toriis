@@ -1,16 +1,12 @@
 import type { FC } from 'react'
 import React from 'react'
 
-interface CarouselChildData {
+export interface CarouselChildData {
   index: number
   text: string
 }
 
-interface CarouselChildProps {
-  childData: CarouselChildData
-}
-
-const CarouselChild: FC<CarouselChildProps> = ({ childData }) => {
+const CarouselChild: FC<{ childData: CarouselChildData }> = ({ childData }) => {
   return (
     <p className="inline-flex leading-snug" style={{ width: '100%' }}>
       {childData.text}

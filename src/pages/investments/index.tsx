@@ -1,8 +1,15 @@
 import { useEffect, useState } from 'react'
 import type { FC } from 'react'
+import { EnvGrade, Sector } from '@prisma/client'
 
 import { Select } from '../../components'
 import { api } from '../../utils/api'
+import {
+  envGradeEnum,
+  netAssetSumEnum,
+  netAssetValueEnum,
+  sectorEnum,
+} from '../../utils/enums'
 
 const extractSortyByQueryKey = (
   key: 'Net Asset Sum' | 'Environment Grade',
@@ -118,29 +125,30 @@ const Home: FC = () => {
       >
         Load More
       </button>
-
-      {/* <Select
-        text="sort by"
-        options={{
-          'Environment Grade': ['low to high', 'high to low'],
-          'Net Asset Sum': ['low to high', 'high to low'],
-        }}
-        updateControl={{
-          type: 'on-apply',
-          cb: setSelectedSortKeys,
-        }}
-        isSearchable={true}
-      /> */}
-      <Select
-        text="filter by"
-        options={['test', 'test2']}
-        isFilter
-        updateControl={{
-          type: 'on-apply',
-          cb: setSelectedSortKeys,
-        }}
-        isSearchable={true}
-      />
+      <div className="flex flex-row gap-0">
+        <Select
+          text="Sector"
+          isFilter={true}
+          options={Object.values(sectorEnum)}
+        />
+        <Select
+          text="Industry"
+          isFilter={true}
+          isSearchable={true}
+          options={Object.values(sectorEnum)}
+        />
+        <Select
+          text="Environmental Grade"
+          isFilter={true}
+          options={Object.values(envGradeEnum)}
+        />
+        <Select
+          text="Net Asset Sum"
+          isFilter={true}
+          options={Object.values(netAssetSumEnum)}
+        />
+      </div>
+      <Select text="Sort By" options={[]} />
     </div>
   )
 }
