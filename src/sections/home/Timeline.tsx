@@ -2,12 +2,7 @@ import clsx from 'clsx'
 import type { FC } from 'react'
 
 import { HighlightedTitle } from '../../components'
-import HomeData from '../../info/home.json'
-
-interface TimelineEntry {
-  date: string
-  text: string
-}
+import type { TimelineEntry } from '../../types'
 
 interface TimlineItemProps {
   data: TimelineEntry[]
@@ -53,7 +48,7 @@ const TimelineItem: FC<TimlineItemProps> = ({ data, isLeft }) => {
 
                 <div className="basis-3/12 rounded-lg bg-darkTeal py-2">
                   <p className="m-0 text-center text-4xl text-white">
-                    {item.date}
+                    {item.year}
                   </p>
                 </div>
               </div>
@@ -64,7 +59,7 @@ const TimelineItem: FC<TimlineItemProps> = ({ data, isLeft }) => {
                     'ml-6 text-left': !isLeft,
                   })}
                 >
-                  {item.text}
+                  {item.description}
                 </p>
               </div>
             </div>
@@ -89,9 +84,8 @@ const splitTimeline = (
   return splitData
 }
 
-const TimelineSection: FC = () => {
-  const timelineEntries = HomeData.timeline
-  const splitData = splitTimeline(timelineEntries) ?? [[], []]
+const TimelineSection: FC<{ entries: TimelineEntry[] }> = ({ entries }) => {
+  const splitData = splitTimeline(entries) ?? [[], []]
   const splitLeft = splitData[0]
   const splitRight = splitData[1]
 

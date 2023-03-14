@@ -3,8 +3,9 @@ import type { FC } from 'react'
 import HomeData from '../../info/home.json'
 import { DropDownCard, HighlightedTitle } from '../../components'
 
-const OurRequest: FC = () => {
+const OurRequest: FC<{ content: any }> = ({ content }) => {
   const requests = HomeData.ourRequests
+  console.log(content)
 
   return (
     <div className=" rounded-xl bg-lightBlue pl-12 pb-10 pt-10">
