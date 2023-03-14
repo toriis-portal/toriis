@@ -9,8 +9,19 @@ import TimelineSection from '../../sections/Timeline'
 import jsonData from '../../info/home.json'
 import type { TimelineEntry } from '../../sections/Timeline'
 import { ToTopButton } from '../../components'
+import { contentClient } from '../../utils/content'
 
-const Home: FC = () => {
+export const getServerSideProps = async () => {
+  const requests = await contentClient.getEntries('request').then((res) => res.items)
+  return {
+    props: {
+      requests
+    }
+  }
+}
+
+const Home: FC<{ requests: any }> = ({ requests }) => {
+  console.log(requests)
   const data = {
     text: [
       { path: 'ourRequests', text: 'Our Requests' },

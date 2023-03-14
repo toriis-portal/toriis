@@ -18,7 +18,7 @@ const Landing: FC = () => {
       <CapitalizedTitle />
       <div className="flex min-w-[900px] max-w-[1600px] flex-row items-center justify-center px-14 py-10">
         <div className="basis-3/7 pr-[2em] pt-6">
-          <LandingDonutChart />
+          {/* <LandingDonutChart /> */}
         </div>
         <div className="basis-4/7">
           <p className="pr-14 md:mb-8">
