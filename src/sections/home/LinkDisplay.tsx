@@ -3,13 +3,13 @@ import Link from 'next/link'
 import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
 
 import HomeData from '../../info/home.json'
-import ShadowTitle from '../Text/ShadowTitle'
+import ShadowTitle from '../../components/Text/ShadowTitle'
 
 interface LinkTextPair {
   text: string
   link: string
 }
-const links = (HomeData.instDivestment as { links: LinkTextPair[] }).links
+const links = HomeData.instDivestment.links
 
 const LinkDisplay: FC = () => {
   return (
@@ -23,7 +23,7 @@ const LinkDisplay: FC = () => {
             <Link href={pair.link} target="_blank" rel="noopener noreferrer">
               {pair.text}
             </Link>
-            <ArrowUpRightIcon className="ml-2 inline h-4 w-4 text-white" />
+            <ArrowUpRightIcon className="ml-2 inline h-4 w-4 stroke-current stroke-1 text-white" />
           </div>
         ))}
       </div>

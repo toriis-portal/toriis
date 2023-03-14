@@ -1,39 +1,38 @@
 import type { FC } from 'react'
 
-import OurRequest from '../../sections/OurRequests'
-import InstitutionalDivestments from '../../sections/InstitutionalDivestments'
-import RefuteUISResponse from '../../sections/RefuteUISResponse'
-import Landing from '../../sections/Landing'
-import SecondaryNavBar from '../../components/Nav/SecondaryNavBar'
-import TimelineSection from '../../sections/Timeline'
-import jsonData from '../../info/home.json'
-import type { TimelineEntry } from '../../sections/Timeline'
-import { ToTopButton } from '../../components'
+import {
+  Landing,
+  OurRequest,
+  InstitutionalDivestments,
+  RefuteUISResponse,
+  TimelineSection,
+} from '../../sections'
+import { ToTopButton, SecondaryNavBar } from '../../components'
 import { contentClient } from '../../utils/content'
 
 export const getServerSideProps = async () => {
-  const requests = await contentClient.getEntries('request').then((res) => res.items)
+  const requests = await contentClient
+    .getEntries('request')
+    .then((res) => res.items)
   return {
     props: {
-      requests
-    }
+      requests,
+    },
   }
 }
 
 const Home: FC<{ requests: any }> = ({ requests }) => {
   console.log(requests)
-  const data = {
-    text: [
-      { path: 'ourRequests', text: 'Our Requests' },
-      { path: 'institutionalDivestment', text: 'Institutional Divestment' },
-      { path: 'refuteUISReponse', text: 'Refute UIS Response' },
-      { path: 'divestmentHistory', text: 'Divestment History' },
-    ],
-  }
+  const navItems = [
+    { path: 'ourRequests', text: 'Our Requests' },
+    { path: 'institutionalDivestment', text: 'Institutional Divestment' },
+    { path: 'refuteUISReponse', text: 'Refute UIS Response' },
+    { path: 'divestmentHistory', text: 'Divestment History' },
+  ]
 
   return (
     <>
-      <SecondaryNavBar data={data} />
+      <SecondaryNavBar navItems={navItems} />
       <Landing />
       <main>
         <div id="ourRequests" className="pt-20">
@@ -46,10 +45,7 @@ const Home: FC<{ requests: any }> = ({ requests }) => {
           <RefuteUISResponse />
         </div>
         <div id="divestmentHistory" className="px-12 pt-20">
-          <TimelineSection
-            text="Divestment History"
-            data={jsonData.timeline as TimelineEntry[]}
-          />
+          <TimelineSection />
         </div>
 
         <ToTopButton />

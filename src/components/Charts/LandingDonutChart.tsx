@@ -1,11 +1,13 @@
 import type { FC } from 'react'
 import dynamic from 'next/dynamic'
+import { Sector } from '@prisma/client'
 
 import { api } from '../../utils/api'
+import { sectorEnum } from '../../utils/enums'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
-interface sector {
+interface companySectorCount {
   label: string
   count: number
 }
@@ -17,8 +19,8 @@ const LandingDonutChart: FC = () => {
 
   if (!source.data) return <p className="h-96 w-96"> Loading...</p>
 
-  const pairs: sector[] = source.data.map((data) => ({
-    label: data.sector as string,
+  const pairs: companySectorCount[] = source.data.map((data) => ({
+    label: data.sector as Sector,
     count: data._count.sector,
   }))
 
@@ -26,19 +28,22 @@ const LandingDonutChart: FC = () => {
     This function cleans our input array of sectors by aggregating all sectors under a threshold,
     including any none-type sectors, into a category labeled "OTHER".
   */
-  function cleanData(arr: sector[]) {
+  function cleanData(arr: companySectorCount[]) {
     const total = arr.reduce((sum, item) => sum + item.count, 0)
     const threshold = total * 0.05
 
-    const filtered = arr.filter(
-      (item) => item.count >= threshold && item.label != 'NONE',
-    )
+    const filtered = arr
+      .filter((item) => item.count >= threshold && item.label != Sector.NONE)
+      .map((item) => ({
+        label: sectorEnum[item.label as Sector],
+        count: item.count,
+      }))
 
     const newCount = arr
-      .filter((item) => item.count < threshold || item.label === 'NONE')
+      .filter((item) => item.count < threshold || item.label === Sector.NONE)
       .reduce((sum, item) => sum + item.count, 0)
 
-    filtered.push({ label: 'OTHER', count: newCount })
+    filtered.push({ label: 'Other', count: newCount })
 
     return filtered
   }

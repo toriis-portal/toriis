@@ -2,13 +2,19 @@ import { useState } from 'react'
 import type { FC } from 'react'
 import clsx from 'clsx'
 
-import type { DropDownCardProps } from '../../types/ourRequest'
-import NumberCircle from '../Text/NumberCircle'
+import { NumberCircle, ReadMoreButton } from '../index'
 
-const DropDownCard: FC<{ item: DropDownCardProps; index: number }> = ({
-  item,
-  index,
-}) => {
+interface DropDownCardProps {
+  item: {
+    header: string
+    body: string
+    list: string[]
+    sublist: string[]
+  }
+  index: number
+}
+
+const DropDownCard: FC<DropDownCardProps> = ({ item, index }) => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => {
     setOpen(!open)
@@ -46,12 +52,7 @@ const DropDownCard: FC<{ item: DropDownCardProps; index: number }> = ({
         </div>
       )}
       <div className="flex pb-6 pr-6">
-        <button
-          className="ml-auto rounded-2xl bg-clementine px-3 py-1 text-sm italic"
-          onClick={handleOpen}
-        >
-          {open ? 'Show Less' : 'Read More'}
-        </button>
+        <ReadMoreButton isOpen={open} handleOpen={handleOpen} />
       </div>
     </div>
   )
