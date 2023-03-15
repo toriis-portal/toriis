@@ -2,11 +2,7 @@ import { createClient } from 'contentful'
 import type { ContentfulClientApi } from 'contentful'
 
 import { env } from '../env.mjs'
-
-// export const contentClient = createClient({
-//   space: env.CONTENTFUL_SPACE_ID,
-//   accessToken: env.CONTENTFUL_ACCESS_TOKEN,
-// })
+import type { TimelineEntry, OurRequestEntry } from '../types/index.js'
 
 export class ContentWrapper {
   client: ContentfulClientApi
@@ -20,21 +16,29 @@ export class ContentWrapper {
 
   get = async (entity: string) => {
     const client = this.client
-    const entries = await client.getEntries({ content_type: entity })
-    return entries.items.map((item) => item.fields)
+    const entries = await client.getEntries({
+      content_type: entity,
+    })
+    // const contentType = await client
+    //   .getContentType('request')
+    //   .then((res) => console.log('content type', res))
+    return this.parse(
+      entries.items.map((item) => item.fields),
+      entity,
+    )
   }
 
-  // async get(entity: string, contentfulOptions: any = {}): Promise<unknown[]> {
-  //   const client = this.client
-
-  //   const [entries, schema] = await Promise.all([
-  //     client.getEntries({
-  //       content_type: entity,
-  //       ...contentfulOptions,
-  //     }),
-  //     client.getContentType(entity),
-  //   ])
-
-  //   return Promise.all(entries.items.map((entry) => [entry, schema]))
-  // }
+  parse = (
+    entries: TimelineEntry[] | OurRequestEntry[] | any,
+    entity: string,
+  ) => {
+    switch (entity) {
+      case 'timeline':
+        return (entries as TimelineEntry[]).sort((a, b) => a.year - b.year)
+      case 'request':
+        return (entries as OurRequestEntry[]).sort((a, b) => a.order - b.order)
+      default:
+        return entries as TimelineEntry[]
+    }
+  }
 }

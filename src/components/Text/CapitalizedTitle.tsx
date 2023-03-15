@@ -28,7 +28,8 @@ const CapitalizedTitle: FC = () => {
             className={isCapital(item) ? firstLetter : landingHeader}
           >
             {item.endsWith('s') ? (
-              <div>Investment
+              <div>
+                Investment
                 <span className="text-clementine">s</span>
               </div>
             ) : (

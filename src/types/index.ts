@@ -1,3 +1,5 @@
+import type { Document } from '@contentful/rich-text-types'
+
 export interface UncleanedESG {
   environment_grade: string
   environment_score: number
@@ -9,6 +11,8 @@ export interface TimelineEntry {
   description: string
 }
 
-// export interface RequestContentItem {
-//   nodeType: 'paragraph' | 'ordered-list'
-// }
+export interface OurRequestEntry {
+  order: number
+  title: string
+  details: Document
+}

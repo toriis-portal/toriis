@@ -9,26 +9,26 @@ import {
 } from '../../sections'
 import { ToTopButton, SecondaryNavBar } from '../../components'
 import { ContentWrapper } from '../../utils/content'
-import type { TimelineEntry } from '../../types'
+import type { OurRequestEntry, TimelineEntry } from '../../types'
 
 export const getServerSideProps = async () => {
   const contentClient = new ContentWrapper()
   const ourRequestsContent = await contentClient.get('request')
-  const timelineContent = await contentClient.get('timeline').then((items) => (items as TimelineEntry[]).sort((a, b) => a.year - b.year))
+  const timelineEntries = await contentClient.get('timeline')
   return {
     props: {
       ourRequestsContent,
-      timelineContent,
+      timelineEntries,
     },
   }
 }
 
 interface HomeProps {
-  ourRequestsContent: any,
-  timelineContent: any,
+  ourRequestsContent: OurRequestEntry[]
+  timelineEntries: TimelineEntry[]
 }
 
-const Home: FC<HomeProps> = ({ ourRequestsContent, timelineContent }) => {
+const Home: FC<HomeProps> = ({ ourRequestsContent, timelineEntries }) => {
   const navItems = [
     { path: 'ourRequests', text: 'Our Requests' },
     { path: 'institutionalDivestment', text: 'Institutional Divestment' },
@@ -42,7 +42,7 @@ const Home: FC<HomeProps> = ({ ourRequestsContent, timelineContent }) => {
       <Landing />
       <main>
         <div id="ourRequests" className="pt-20">
-          <OurRequest content={ourRequestsContent} />
+          <OurRequest entries={ourRequestsContent} />
         </div>
         <div id="institutionalDivestment" className="px-12 pt-20">
           <InstitutionalDivestments />
@@ -51,7 +51,7 @@ const Home: FC<HomeProps> = ({ ourRequestsContent, timelineContent }) => {
           <RefuteUISResponse />
         </div>
         <div id="divestmentHistory" className="px-12 pt-20">
-          <TimelineSection entries={timelineContent} />
+          <TimelineSection entries={timelineEntries} />
         </div>
 
         <ToTopButton />
