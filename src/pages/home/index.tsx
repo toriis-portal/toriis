@@ -9,16 +9,18 @@ import {
 } from '../../sections'
 import { ToTopButton, SecondaryNavBar } from '../../components'
 import { ContentWrapper } from '../../utils/content'
-import type { OurRequestEntry, TimelineEntry } from '../../types'
+import type { LinkEntry, OurRequestEntry, TimelineEntry } from '../../types'
 
 export const getServerSideProps = async () => {
   const contentClient = new ContentWrapper()
   const ourRequestsContent = await contentClient.get('request')
   const timelineEntries = await contentClient.get('timeline')
+  const divestmentEntries = await contentClient.get('link')
   return {
     props: {
       ourRequestsContent,
       timelineEntries,
+      divestmentEntries,
     },
   }
 }
@@ -26,9 +28,14 @@ export const getServerSideProps = async () => {
 interface HomeProps {
   ourRequestsContent: OurRequestEntry[]
   timelineEntries: TimelineEntry[]
+  divestmentEntries: LinkEntry[]
 }
 
-const Home: FC<HomeProps> = ({ ourRequestsContent, timelineEntries }) => {
+const Home: FC<HomeProps> = ({
+  ourRequestsContent,
+  timelineEntries,
+  divestmentEntries,
+}) => {
   const navItems = [
     { path: 'ourRequests', text: 'Our Requests' },
     { path: 'institutionalDivestment', text: 'Institutional Divestment' },
@@ -45,7 +52,7 @@ const Home: FC<HomeProps> = ({ ourRequestsContent, timelineEntries }) => {
           <OurRequest entries={ourRequestsContent} />
         </div>
         <div id="institutionalDivestment" className="px-12 pt-20">
-          <InstitutionalDivestments />
+          <InstitutionalDivestments entries={divestmentEntries} />
         </div>
         <div id="refuteUISReponse" className="pt-20">
           <RefuteUISResponse />

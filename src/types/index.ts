@@ -16,3 +16,8 @@ export interface OurRequestEntry {
   title: string
   details: Document
 }
+
+export interface LinkEntry {
+  name: string
+  url: string
+}

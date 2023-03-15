@@ -19,9 +19,6 @@ export class ContentWrapper {
     const entries = await client.getEntries({
       content_type: entity,
     })
-    // const contentType = await client
-    //   .getContentType('request')
-    //   .then((res) => console.log('content type', res))
     return this.parse(
       entries.items.map((item) => item.fields),
       entity,
