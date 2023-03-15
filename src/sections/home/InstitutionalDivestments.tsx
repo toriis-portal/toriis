@@ -3,27 +3,27 @@ import Link from 'next/link'
 import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
 
 import { HighlightedTitle, ListItem, ShadowTitle } from '../../components'
-import type { LinkEntry } from '../../types'
+import type { LinkEntry, ListEntry } from '../../types'
 
-const InstitutionalDivestments: FC<{ entries: LinkEntry[] }> = ({
-  entries,
+interface InstitutionalDivestmentsProps {
+  linkEntries: LinkEntry[]
+  listEntries: ListEntry[]
+}
+
+const InstitutionalDivestments: FC<InstitutionalDivestmentsProps> = ({
+  linkEntries,
+  listEntries,
 }) => {
-  const divestmentList = [
-    'Reducing exposure to financial risks from the decline of the fossil fuel industry and the carbon bubble;',
-    'Being responsible financial stewards for the long-term health of both portfolios and the planet;',
-    'and, revoking support from fossil fuel companies and promoting a transition to a green energy future.',
-  ]
-
   return (
     <>
       <HighlightedTitle title="Institutional Divestment" />
       <div className="my-6 w-full px-12">
         <div className="ml-[3%] space-y-6">
-          {divestmentList.map((string, index) => (
+          {listEntries.map((entry, index) => (
             <ListItem
-              key={index + 1}
-              listVal={index + 1}
-              listContent={string}
+              key={index}
+              listVal={entry.order}
+              listContent={entry.details}
             />
           ))}
         </div>
@@ -33,7 +33,7 @@ const InstitutionalDivestments: FC<{ entries: LinkEntry[] }> = ({
           <ShadowTitle text="Institutional Divestment Links" />
         </div>
         <div className="flex flex-wrap justify-center leading-loose underline">
-          {entries.map((entry, index) => (
+          {linkEntries.map((entry, index) => (
             <div key={index} className="mx-2 inline-block">
               <Link href={entry.url} target="_blank" rel="noopener noreferrer">
                 {entry.name}

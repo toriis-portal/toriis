@@ -59,7 +59,7 @@ const TimelineItem: FC<TimlineItemProps> = ({ data, isLeft }) => {
                     'ml-6 text-left': !isLeft,
                   })}
                 >
-                  {item.description}
+                  {item.details}
                 </p>
               </div>
             </div>

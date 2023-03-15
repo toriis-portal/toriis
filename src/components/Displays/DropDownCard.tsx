@@ -5,9 +5,9 @@ import { BLOCKS } from '@contentful/rich-text-types'
 import clsx from 'clsx'
 
 import { NumberCircle, ReadMoreButton } from '../index'
-import type { OurRequestEntry } from '../../types'
+import type { OurRequestsEntry } from '../../types'
 
-const DropDownCard: FC<{ content: OurRequestEntry }> = ({ content }) => {
+const DropDownCard: FC<{ content: OurRequestsEntry }> = ({ content }) => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => {
     setOpen(!open)

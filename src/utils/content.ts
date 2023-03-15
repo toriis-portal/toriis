@@ -2,7 +2,14 @@ import { createClient } from 'contentful'
 import type { ContentfulClientApi } from 'contentful'
 
 import { env } from '../env.mjs'
-import type { TimelineEntry, OurRequestEntry } from '../types/index.js'
+import type {
+  TimelineEntry,
+  OurRequestsEntry,
+  RefuteResponseEntry,
+  ListEntry,
+  LinkEntry,
+  Info,
+} from '../types/index.js'
 
 export class ContentWrapper {
   client: ContentfulClientApi
@@ -25,17 +32,22 @@ export class ContentWrapper {
     )
   }
 
-  parse = (
-    entries: TimelineEntry[] | OurRequestEntry[] | any,
-    entity: string,
-  ) => {
+  parse = (entries: any, entity: string) => {
     switch (entity) {
       case 'timeline':
         return (entries as TimelineEntry[]).sort((a, b) => a.year - b.year)
       case 'request':
-        return (entries as OurRequestEntry[]).sort((a, b) => a.order - b.order)
+        return (entries as OurRequestsEntry[]).sort((a, b) => a.order - b.order)
+      case 'response':
+        return (entries as RefuteResponseEntry[]).sort(
+          (a, b) => a.order - b.order,
+        )
+      case 'list':
+        return (entries as ListEntry[]).sort((a, b) => a.order - b.order)
+      case 'info':
+        return (entries as Info[])[0] as Info
       default:
-        return entries as TimelineEntry[]
+        return entries as LinkEntry[]
     }
   }
 }

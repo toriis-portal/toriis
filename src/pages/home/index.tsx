@@ -9,32 +9,51 @@ import {
 } from '../../sections'
 import { ToTopButton, SecondaryNavBar } from '../../components'
 import { ContentWrapper } from '../../utils/content'
-import type { LinkEntry, OurRequestEntry, TimelineEntry } from '../../types'
+import type {
+  Info,
+  LinkEntry,
+  ListEntry,
+  OurRequestsEntry,
+  RefuteResponseEntry,
+  TimelineEntry,
+} from '../../types'
 
 export const getServerSideProps = async () => {
   const contentClient = new ContentWrapper()
-  const ourRequestsContent = await contentClient.get('request')
+  const info = await contentClient.get('info')
+  const ourRequestsEntries = await contentClient.get('request')
   const timelineEntries = await contentClient.get('timeline')
-  const divestmentEntries = await contentClient.get('link')
+  const divestmentLinkEntries = await contentClient.get('link')
+  const divestmentListEntries = await contentClient.get('list')
+  const refuteResponseEntries = await contentClient.get('response')
   return {
     props: {
-      ourRequestsContent,
+      info,
+      ourRequestsEntries,
       timelineEntries,
-      divestmentEntries,
+      divestmentListEntries,
+      divestmentLinkEntries,
+      refuteResponseEntries,
     },
   }
 }
 
 interface HomeProps {
-  ourRequestsContent: OurRequestEntry[]
+  info: Info
+  ourRequestsEntries: OurRequestsEntry[]
   timelineEntries: TimelineEntry[]
-  divestmentEntries: LinkEntry[]
+  divestmentListEntries: ListEntry[]
+  divestmentLinkEntries: LinkEntry[]
+  refuteResponseEntries: RefuteResponseEntry[]
 }
 
 const Home: FC<HomeProps> = ({
-  ourRequestsContent,
+  info,
+  ourRequestsEntries,
   timelineEntries,
-  divestmentEntries,
+  divestmentListEntries,
+  divestmentLinkEntries,
+  refuteResponseEntries,
 }) => {
   const navItems = [
     { path: 'ourRequests', text: 'Our Requests' },
@@ -46,16 +65,22 @@ const Home: FC<HomeProps> = ({
   return (
     <>
       <SecondaryNavBar navItems={navItems} />
-      <Landing />
+      <Landing text={info.landing} />
       <main>
         <div id="ourRequests" className="pt-20">
-          <OurRequest entries={ourRequestsContent} />
+          <OurRequest entries={ourRequestsEntries} />
         </div>
         <div id="institutionalDivestment" className="px-12 pt-20">
-          <InstitutionalDivestments entries={divestmentEntries} />
+          <InstitutionalDivestments
+            linkEntries={divestmentLinkEntries}
+            listEntries={divestmentListEntries}
+          />
         </div>
         <div id="refuteUISReponse" className="pt-20">
-          <RefuteUISResponse />
+          <RefuteUISResponse
+            leftText={info.refuteUisResponse}
+            entries={refuteResponseEntries}
+          />
         </div>
         <div id="divestmentHistory" className="px-12 pt-20">
           <TimelineSection entries={timelineEntries} />
