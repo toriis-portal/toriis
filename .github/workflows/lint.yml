@@ -50,7 +50,9 @@ jobs:
         run: yarn run format
 
   run-build:
+    name: Run build
     runs-on: ubuntu-latest
+
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
