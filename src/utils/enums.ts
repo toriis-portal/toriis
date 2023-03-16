@@ -25,9 +25,9 @@ export const envGradeEnum = {
 
 // TODO: Change these test values
 export const netAssetSumEnum = {
-  '0-100M': '0-100M',
-  '100M-500M': '100M-500M',
-  '500M-1B': '500M-1B',
-  '1B-5B': '1B-5B',
-  '5B-10B': '5B-10B',
+  '0-16B': '0-16B',
+  '16B-32B': '16B-32B',
+  '32B-48B': '32B-48B',
+  '48B-64B': '48B-64B',
+  '64B-80B': '64B-80B',
 }

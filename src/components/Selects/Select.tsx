@@ -229,7 +229,7 @@ export const Select: FC<SelectProps> = ({
           )}
           <div
             className={`${
-              containerHeight ? `max-h-[${containerHeight}]` : 'max-h-fit'
+              containerHeight ? `max-h-[240px]` : 'max-h-fit'
             } w-full overflow-y-auto overflow-x-visible p-0`}
           >
             {isStringArray(options) ? (
