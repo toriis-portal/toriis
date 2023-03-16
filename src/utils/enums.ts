@@ -29,5 +29,5 @@ export const netAssetSumEnum = {
   '16B-32B': '16B-32B',
   '32B-48B': '32B-48B',
   '48B-64B': '48B-64B',
-  '64B-80B': '64B-80B',
+  '64B+': '64B+',
 }
