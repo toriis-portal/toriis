@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import type { FC } from 'react'
-import { EnvGrade, Sector } from '@prisma/client'
 
 import { Select } from '../../components'
 import { api } from '../../utils/api'
@@ -235,7 +234,7 @@ const Home: FC = () => {
           options={Object.values(netAssetSumEnum)}
         />
       </div>
-      <Select text="Sort By" options={[]} />
+      {/* <Select text="Sort By" options={[]} /> */}
     </div>
   )
 }
