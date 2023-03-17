@@ -11,6 +11,7 @@ import {
 } from '../../components'
 
 const Landing: FC<{ text: Document }> = ({ text }) => {
+  // Custom contentful render for bold text and paragraph
   const contentfulOptions = {
     renderMark: {
       [MARKS.BOLD]: (text: any) => (

@@ -1,5 +1,5 @@
 import { createClient } from 'contentful'
-import type { ContentfulClientApi } from 'contentful'
+import type { ContentfulClientApi, ContentTypeCollection } from 'contentful'
 
 import { env } from '../env.mjs'
 import type {
@@ -10,6 +10,15 @@ import type {
   LinkEntry,
   Info,
 } from '../types/index.js'
+
+const homePageEntryTypes = [
+  'timeline',
+  'request',
+  'response',
+  'link',
+  'list',
+  'info',
+]
 
 export class ContentWrapper {
   client: ContentfulClientApi
@@ -23,16 +32,17 @@ export class ContentWrapper {
 
   get = async (entity: string) => {
     const client = this.client
+
     const entries = await client.getEntries({
       content_type: entity,
     })
-    return this.parse(
+    return this.sortEntryByType(
       entries.items.map((item) => item.fields),
       entity,
     )
   }
 
-  parse = (entries: any, entity: string) => {
+  sortEntryByType = (entries: any, entity: string) => {
     switch (entity) {
       case 'timeline':
         return (entries as TimelineEntry[]).sort((a, b) => a.year - b.year)
@@ -49,5 +59,24 @@ export class ContentWrapper {
       default:
         return entries as LinkEntry[]
     }
+  }
+
+  getAllHomePageEntries = async () => {
+    const homePageEntryMap: Record<
+      string,
+      | TimelineEntry[]
+      | RefuteResponseEntry[]
+      | OurRequestsEntry[]
+      | ListEntry[]
+      | Info
+      | LinkEntry[]
+    > = {}
+    await Promise.all(
+      homePageEntryTypes.map(async (entity) => {
+        const results = await this.get(entity)
+        homePageEntryMap[entity] = results
+      }),
+    )
+    return homePageEntryMap
   }
 }

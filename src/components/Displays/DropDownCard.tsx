@@ -13,6 +13,7 @@ const DropDownCard: FC<{ content: OurRequestsEntry }> = ({ content }) => {
     setOpen(!open)
   }
 
+  // Custom contentful render for ordered list
   const contentfulOptions = {
     renderNode: {
       [BLOCKS.OL_LIST]: (node: any, children: any) => (

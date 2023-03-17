@@ -20,12 +20,13 @@ import type {
 
 export const getServerSideProps = async () => {
   const contentClient = new ContentWrapper()
-  const info = await contentClient.get('info')
-  const ourRequestsEntries = await contentClient.get('request')
-  const timelineEntries = await contentClient.get('timeline')
-  const divestmentLinkEntries = await contentClient.get('link')
-  const divestmentListEntries = await contentClient.get('list')
-  const refuteResponseEntries = await contentClient.get('response')
+  const homeEntries = await contentClient.getAllHomePageEntries()
+  const info = homeEntries['info']
+  const ourRequestsEntries = homeEntries['request']
+  const timelineEntries = homeEntries['timeline']
+  const divestmentLinkEntries = homeEntries['link']
+  const divestmentListEntries = homeEntries['list']
+  const refuteResponseEntries = homeEntries['response']
   return {
     props: {
       info,
