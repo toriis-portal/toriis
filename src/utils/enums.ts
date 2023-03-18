@@ -23,7 +23,6 @@ export const envGradeEnum = {
   CCC: 'CCC',
 }
 
-// TODO: Change these test values
 export const netAssetSumEnum = {
   '0-16B': [0, 16e9],
   '16B-32B': [16e9, 32e9],
