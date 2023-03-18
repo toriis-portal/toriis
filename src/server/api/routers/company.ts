@@ -1,3 +1,4 @@
+import { EnvGrade, Sector } from '@prisma/client'
 import { z } from 'zod'
 
 import { createTRPCRouter, publicProcedure } from '../trpc'
@@ -20,6 +21,11 @@ export const companyRouter = createTRPCRouter({
         cursor: z.string().nullish(),
         sortByEnvGrade: z.string().nullish(),
         sortByNetAssestSum: z.string().nullish(),
+        filterBySector: z.array(z.nativeEnum(Sector)).nullish(),
+        filterByIndustry: z.array(z.string()).nullish(),
+        filterByEnvGrade: z.array(z.nativeEnum(EnvGrade)).nullish(),
+        filterByNetAssetSum: z.array(z.number(), z.number()).nullish(),
+        isFilterOperation: z.boolean(),
       }),
     )
     .query(async ({ input, ctx }) => {
@@ -27,6 +33,27 @@ export const companyRouter = createTRPCRouter({
       const { cursor } = input
 
       const items = await ctx.prisma.company.findMany({
+        where: {
+          sector: {
+            in: input.filterBySector,
+          },
+          industry: {
+            in: input.filterByIndustry,
+          },
+          netAssetSum: input.filterByNetAssetSum
+            ? {
+                gte: input.filterByNetAssetSum[0],
+                lte: input.filterByNetAssetSum[1],
+              }
+            : undefined,
+          ESG: {
+            some: {
+              environmentGrade: {
+                in: input.filterByEnvGrade ? input.filterByEnvGrade : undefined,
+              },
+            },
+          },
+        },
         orderBy: {
           netAssetSum: extractSortOrder(input.sortByNetAssestSum)
             ? input.sortByNetAssestSum
@@ -48,14 +75,21 @@ export const companyRouter = createTRPCRouter({
         cursor: cursor ? { id: cursor } : undefined,
       })
 
-      let nextCursor: typeof cursor | undefined = undefined
-      if (items.length > limit) {
-        const nextItem = items.pop()
-        nextCursor = nextItem?.id
-      }
-      return {
-        items,
-        nextCursor,
+      if (!input.isFilterOperation) {
+        let nextCursor: typeof cursor | undefined = undefined
+        if (items.length > limit) {
+          const nextItem = items.pop()
+          nextCursor = nextItem?.id
+        }
+        return {
+          items,
+          nextCursor,
+        }
+      } else {
+        return {
+          items,
+          cursor,
+        }
       }
     }),
   countBySector: publicProcedure.query(({ ctx }) => {

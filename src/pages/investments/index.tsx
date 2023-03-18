@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { FC } from 'react'
+import type { Sector } from '@prisma/client'
 
 import { Select } from '../../components'
 import { api } from '../../utils/api'
@@ -96,6 +97,13 @@ const INDUSTRIES = [
   'Waste Management',
 ]
 
+interface FilterOptions {
+  sectors: Sector[]
+  industries: string[]
+  netAssetSum: number[][]
+  envGrade: string[]
+}
+
 const extractSortyByQueryKey = (
   key: 'Net Asset Sum' | 'Environment Grade',
   selectedSorts: string[],
@@ -120,8 +128,23 @@ const extractSortyByQueryKey = (
   return null
 }
 
+const convertToFilterOptions = (selectedFilters: string[]) => {
+  if (selectedFilters && selectedFilters.length === 0) {
+    return undefined
+  }
+
+  return selectedFilters
+}
+
 const Home: FC = () => {
   const [selectedSortKeys, setSelectedSortKeys] = useState<string[]>([])
+  const [isFilterOperation, setIsFilterOperation] = useState<boolean>(false)
+  const [filterOptions, setFilterOptions] = useState<FilterOptions>({
+    sectors: [],
+    industries: [],
+    netAssetSum: [],
+    envGrade: [],
+  })
 
   const limit = 5
   const {
@@ -142,6 +165,14 @@ const Home: FC = () => {
         'Environment Grade',
         selectedSortKeys,
       ),
+      filterByIndustry: convertToFilterOptions(filterOptions.industries),
+      filterByEnvGrade: convertToFilterOptions(
+        filterOptions.envGrade,
+      ) as (keyof typeof envGradeEnum)[],
+      filterBySector: convertToFilterOptions(
+        filterOptions.sectors,
+      ) as (keyof typeof Sector)[],
+      isFilterOperation: isFilterOperation,
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
@@ -151,6 +182,7 @@ const Home: FC = () => {
   )
 
   useEffect(() => {
+    console.log(filterOptions)
     const refetchData = async () => {
       await refetch()
     }
@@ -158,7 +190,7 @@ const Home: FC = () => {
     refetchData().catch((err) => {
       console.error(err)
     })
-  }, [selectedSortKeys])
+  }, [refetch, selectedSortKeys, filterOptions])
 
   return (
     <div>
@@ -215,6 +247,17 @@ const Home: FC = () => {
           text="Sector"
           isFilter={true}
           options={Object.values(sectorEnum)}
+          updateControl={{
+            type: 'on-change',
+            cb: (selectedOptions) => {
+              setFilterOptions({
+                ...filterOptions,
+                sectors: selectedOptions.map((item) => {
+                  return item.toUpperCase().replace(' ', '_') as Sector
+                }),
+              })
+            },
+          }}
         />
         <Select
           text="Industry"
@@ -222,16 +265,34 @@ const Home: FC = () => {
           isSearchable={true}
           options={INDUSTRIES}
           containerHeight="240px"
+          updateControl={{
+            type: 'on-change',
+            cb: (selectedOptions) => {
+              setFilterOptions({
+                ...filterOptions,
+                industries: selectedOptions,
+              })
+            },
+          }}
         />
         <Select
           text="Environmental Grade"
           isFilter={true}
           options={Object.values(envGradeEnum)}
+          updateControl={{
+            type: 'on-change',
+            cb: (selectedOptions) => {
+              setFilterOptions({
+                ...filterOptions,
+                envGrade: selectedOptions,
+              })
+            },
+          }}
         />
         <Select
           text="Net Asset Sum"
           isFilter={true}
-          options={Object.values(netAssetSumEnum)}
+          options={Object.keys(netAssetSumEnum)}
         />
       </div>
       {/* <Select text="Sort By" options={[]} /> */}
