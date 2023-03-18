@@ -34,7 +34,7 @@ const InstitutionalDivestments: FC<InstitutionalDivestmentsProps> = ({
         </div>
         <div className="flex flex-wrap justify-center leading-loose underline">
           {linkEntries.map((entry, index) => (
-            <div key={index} className="mx-2 inline-block">
+            <div key={index} className="mx-2 inline-block text-center">
               <Link href={entry.url} target="_blank" rel="noopener noreferrer">
                 {entry.name}
               </Link>

@@ -30,14 +30,14 @@ const DropDownCard: FC<{ content: OurRequestsEntry }> = ({ content }) => {
     >
       <div
         className={clsx(
-          'flex w-full flex-col items-center space-x-8 px-14 pt-12 pb-1 md:flex-row',
+          'flex w-full flex-col items-center space-x-8 px-12 pt-10 md:flex-row',
           {
             'pb-10': open,
           },
         )}
       >
         <NumberCircle val={content.order} />
-        <p className="mb-2 inline pl-2 text-lg font-medium">{content.title}</p>
+        <p className="inline p-4 text-lg font-medium">{content.title}</p>
       </div>
       {open && (
         <div className="font-Inter border-t-2 border-cobalt pl-20 pr-20 pt-6 text-base text-neutral-600">
