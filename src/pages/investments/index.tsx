@@ -104,6 +104,43 @@ interface FilterOptions {
   envGrade: string[]
 }
 
+const mergeIntervals = (intervals: number[][]) => {
+  if (intervals.length <= 1) {
+    return intervals
+  }
+
+  const sortedIntervals = intervals.sort()
+
+  for (let i = 0; i < sortedIntervals.length - 1; i++) {
+    const currentInterval = sortedIntervals[i]
+    const nextInterval = sortedIntervals[i + 1]
+
+    if (
+      currentInterval &&
+      nextInterval &&
+      currentInterval[1] &&
+      nextInterval[0] &&
+      nextInterval[1]
+    ) {
+      if (currentInterval[1] == nextInterval[0]) {
+        currentInterval[1] = nextInterval[1]
+        sortedIntervals.splice(i + 1, 1)
+        i--
+      }
+    }
+  }
+
+  return sortedIntervals
+}
+
+const netAssetSumCallback = (selectedOptions: string[]) => {
+  const selectedNetAssetSum = selectedOptions.map((item) => {
+    return netAssetSumEnum[item as keyof typeof netAssetSumEnum]
+  })
+
+  return mergeIntervals(selectedNetAssetSum)
+}
+
 const extractSortyByQueryKey = (
   key: 'Net Asset Sum' | 'Environment Grade',
   selectedSorts: string[],
@@ -172,6 +209,7 @@ const Home: FC = () => {
       filterBySector: convertToFilterOptions(
         filterOptions.sectors,
       ) as (keyof typeof Sector)[],
+      filterByNetAssetSum: filterOptions.netAssetSum,
       isFilterOperation: isFilterOperation,
     },
     {
@@ -182,7 +220,6 @@ const Home: FC = () => {
   )
 
   useEffect(() => {
-    console.log(filterOptions)
     const refetchData = async () => {
       await refetch()
     }
@@ -293,6 +330,15 @@ const Home: FC = () => {
           text="Net Asset Sum"
           isFilter={true}
           options={Object.keys(netAssetSumEnum)}
+          updateControl={{
+            type: 'on-change',
+            cb: (selectedOptions) => {
+              setFilterOptions({
+                ...filterOptions,
+                netAssetSum: netAssetSumCallback(selectedOptions),
+              })
+            },
+          }}
         />
       </div>
       {/* <Select text="Sort By" options={[]} /> */}

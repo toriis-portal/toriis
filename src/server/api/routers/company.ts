@@ -24,13 +24,27 @@ export const companyRouter = createTRPCRouter({
         filterBySector: z.array(z.nativeEnum(Sector)).nullish(),
         filterByIndustry: z.array(z.string()).nullish(),
         filterByEnvGrade: z.array(z.nativeEnum(EnvGrade)).nullish(),
-        filterByNetAssetSum: z.array(z.number(), z.number()).nullish(),
+        filterByNetAssetSum: z.array(z.array(z.number(), z.number())).nullish(),
         isFilterOperation: z.boolean(),
       }),
     )
     .query(async ({ input, ctx }) => {
       const limit = input.limit ?? 9
       const { cursor } = input
+
+      const netAssetSumFilter = input.filterByNetAssetSum?.map((range) => {
+        return {
+          netAssetSum: {
+            gte: range[0],
+            lte: range[1],
+          },
+        }
+      })
+
+      const netAssetSumFilterCleaned =
+        netAssetSumFilter && netAssetSumFilter.length > 0
+          ? netAssetSumFilter
+          : undefined
 
       const items = await ctx.prisma.company.findMany({
         where: {
@@ -40,12 +54,7 @@ export const companyRouter = createTRPCRouter({
           industry: {
             in: input.filterByIndustry,
           },
-          netAssetSum: input.filterByNetAssetSum
-            ? {
-                gte: input.filterByNetAssetSum[0],
-                lte: input.filterByNetAssetSum[1],
-              }
-            : undefined,
+          OR: netAssetSumFilterCleaned,
           ESG: {
             some: {
               environmentGrade: {

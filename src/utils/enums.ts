@@ -25,9 +25,9 @@ export const envGradeEnum = {
 
 // TODO: Change these test values
 export const netAssetSumEnum = {
-  '0-16B': [0, 16 * (10 ^ 9)],
-  '16B-32B': [16 * (10 ^ 9), 32 * (10 ^ 9)],
-  '32B-48B': [32 * (10 ^ 9), 48 * (10 ^ 9)],
-  '48B-64B': [48 * (10 ^ 9), 64 * (10 ^ 9)],
-  '64B+': [64 * (10 ^ 9), Infinity],
+  '0-16B': [0, 16e9],
+  '16B-32B': [16e9, 32e9],
+  '32B-48B': [32e9, 48e9],
+  '48B-64B': [48e9, 64e9],
+  '64B+': [64e9, Number.MAX_SAFE_INTEGER],
 }
