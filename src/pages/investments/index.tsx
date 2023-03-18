@@ -5,97 +5,7 @@ import type { Sector } from '@prisma/client'
 import { Select } from '../../components'
 import { api } from '../../utils/api'
 import { envGradeEnum, netAssetSumEnum, sectorEnum } from '../../utils/enums'
-
-const INDUSTRIES = [
-  'Aerospace & Defense',
-  'Agricultural Inputs',
-  'Airlines',
-  'Asset Management',
-  'Auto & Truck Dealerships',
-  'Auto Manufacturers',
-  'Auto Parts',
-  'Banks—Diversified',
-  'Banks—Regional',
-  'Beverages—Brewers',
-  'Beverages—Non-Alcoholic',
-  'Beverages—Wineries & Distilleries',
-  'Biotechnology',
-  'Building Materials',
-  'Building Products & Equipment',
-  'Capital Markets',
-  'Communication Equipment',
-  'Computer Hardware',
-  'Confectioners',
-  'Conglomerates',
-  'Consumer Electronics',
-  'Credit Services',
-  'Diagnostics & Research',
-  'Drug Manufacturers—General',
-  'Drug Manufacturers—Specialty & Generic',
-  'Electronic Components',
-  'Electronic Gaming & Multimedia',
-  'Entertainment',
-  'Farm & Heavy Construction Machinery',
-  'Farm Products',
-  'Financial Data & Stock Exchanges',
-  'Food Distribution',
-  'Gold',
-  'Health Information Services',
-  'Healthcare Plans',
-  'Home Improvement Retail',
-  'Household & Personal Products',
-  'Industrial Distribution',
-  'Information Technology Services',
-  'Insurance Brokers',
-  'Insurance—Diversified',
-  'Insurance—Life',
-  'Internet Content & Information',
-  'Internet Retail',
-  'Leisure',
-  'Lodging',
-  'Medical Devices',
-  'Medical Distribution',
-  'Medical Instruments & Supplies',
-  'Mortgage Finance',
-  'Oil & Gas E&P',
-  'Oil & Gas Equipment & Services',
-  'Oil & Gas Integrated',
-  'Oil & Gas Midstream',
-  'Oil & Gas Refining & Marketing',
-  'Other Industrial Metals & Mining',
-  'Packaged Foods',
-  'Packaging & Containers',
-  'Pharmaceutical Retailers',
-  'Publishing',
-  'REIT—Healthcare Facilities',
-  'REIT—Office',
-  'REIT—Residential',
-  'REIT—Retail',
-  'REIT—Specialty',
-  'Railroads',
-  'Rental & Leasing Services',
-  'Restaurants',
-  'Scientific & Technical Instruments',
-  'Semiconductor Equipment & Materials',
-  'Semiconductors',
-  'Shell Companies',
-  'Software—Application',
-  'Software—Infrastructure',
-  'Solar',
-  'Specialty Business Services',
-  'Specialty Chemicals',
-  'Specialty Industrial Machinery',
-  'Specialty Retail',
-  'Steel',
-  'Telecom Services',
-  'Tobacco',
-  'Tools & Accessories',
-  'Utilities—Diversified',
-  'Utilities—Independent Power Producers',
-  'Utilities—Regulated Electric',
-  'Utilities—Regulated Gas',
-  'Waste Management',
-]
+import { INDUSTRIES } from '../../utils/constants'
 
 interface FilterOptions {
   sectors: Sector[]
@@ -104,41 +14,12 @@ interface FilterOptions {
   envGrade: string[]
 }
 
-const mergeIntervals = (intervals: number[][]) => {
-  if (intervals.length <= 1) {
-    return intervals
-  }
-
-  const sortedIntervals = intervals.sort()
-
-  for (let i = 0; i < sortedIntervals.length - 1; i++) {
-    const currentInterval = sortedIntervals[i]
-    const nextInterval = sortedIntervals[i + 1]
-
-    if (
-      currentInterval &&
-      nextInterval &&
-      currentInterval[1] &&
-      nextInterval[0] &&
-      nextInterval[1]
-    ) {
-      if (currentInterval[1] == nextInterval[0]) {
-        currentInterval[1] = nextInterval[1]
-        sortedIntervals.splice(i + 1, 1)
-        i--
-      }
-    }
-  }
-
-  return sortedIntervals
-}
-
 const netAssetSumCallback = (selectedOptions: string[]) => {
   const selectedNetAssetSum = selectedOptions.map((item) => {
     return netAssetSumEnum[item as keyof typeof netAssetSumEnum]
   })
 
-  return mergeIntervals(selectedNetAssetSum)
+  return selectedNetAssetSum
 }
 
 const extractSortyByQueryKey = (

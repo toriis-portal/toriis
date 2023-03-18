@@ -168,14 +168,14 @@ export const Select: FC<SelectProps> = ({
       : true
 
   return (
-    <div className="relative ml-10 w-60">
+    <div className="relative ml-10 w-1/6">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={clsx(
           'flex basis-full items-center overflow-hidden rounded-full border border-solid',
           {
             'justify-centerborder-darkTeal float-right h-10 w-fit': !isFilter,
-            'h-8 w-60 border-cobalt': isFilter,
+            'h-8 w-5/6 border-cobalt': isFilter,
           },
         )}
       >
@@ -229,7 +229,7 @@ export const Select: FC<SelectProps> = ({
           >
             {isStringArray(options) ? (
               <ul
-                className={clsx('m-auto flex w-11/12 flex-col', {
+                className={clsx('m-auto flex w-5/6 flex-col', {
                   'gap-4': !isFilter,
                   'gap-1': isFilter,
                 })}
