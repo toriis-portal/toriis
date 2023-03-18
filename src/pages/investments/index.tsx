@@ -175,7 +175,6 @@ const convertToFilterOptions = (selectedFilters: string[]) => {
 
 const Home: FC = () => {
   const [selectedSortKeys, setSelectedSortKeys] = useState<string[]>([])
-  const [isFilterOperation, setIsFilterOperation] = useState<boolean>(false)
   const [filterOptions, setFilterOptions] = useState<FilterOptions>({
     sectors: [],
     industries: [],
