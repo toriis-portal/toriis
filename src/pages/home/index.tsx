@@ -8,8 +8,54 @@ import {
   TimelineSection,
 } from '../../sections'
 import { ToTopButton, SecondaryNavBar } from '../../components'
+import { ContentWrapper } from '../../utils/content'
+import type {
+  Info,
+  LinkEntry,
+  ListEntry,
+  OurRequestsEntry,
+  RefuteResponseEntry,
+  TimelineEntry,
+} from '../../types'
 
-const Home: FC = () => {
+export const getServerSideProps = async () => {
+  const contentClient = new ContentWrapper()
+  const homeEntries = await contentClient.getAllHomePageEntries()
+  const info = homeEntries['info']
+  const ourRequestsEntries = homeEntries['request']
+  const timelineEntries = homeEntries['timeline']
+  const divestmentLinkEntries = homeEntries['link']
+  const divestmentListEntries = homeEntries['list']
+  const refuteResponseEntries = homeEntries['response']
+  return {
+    props: {
+      info,
+      ourRequestsEntries,
+      timelineEntries,
+      divestmentListEntries,
+      divestmentLinkEntries,
+      refuteResponseEntries,
+    },
+  }
+}
+
+interface HomeProps {
+  info: Info
+  ourRequestsEntries: OurRequestsEntry[]
+  timelineEntries: TimelineEntry[]
+  divestmentListEntries: ListEntry[]
+  divestmentLinkEntries: LinkEntry[]
+  refuteResponseEntries: RefuteResponseEntry[]
+}
+
+const Home: FC<HomeProps> = ({
+  info,
+  ourRequestsEntries,
+  timelineEntries,
+  divestmentListEntries,
+  divestmentLinkEntries,
+  refuteResponseEntries,
+}) => {
   const navItems = [
     { path: 'ourRequests', text: 'Our Requests' },
     { path: 'institutionalDivestment', text: 'Institutional Divestment' },
@@ -20,19 +66,25 @@ const Home: FC = () => {
   return (
     <>
       <SecondaryNavBar navItems={navItems} />
-      <Landing />
+      <Landing text={info.landing} />
       <main>
         <div id="ourRequests" className="pt-20">
-          <OurRequest />
+          <OurRequest entries={ourRequestsEntries} />
         </div>
         <div id="institutionalDivestment" className="px-12 pt-20">
-          <InstitutionalDivestments />
+          <InstitutionalDivestments
+            linkEntries={divestmentLinkEntries}
+            listEntries={divestmentListEntries}
+          />
         </div>
         <div id="refuteUISReponse" className="pt-20">
-          <RefuteUISResponse />
+          <RefuteUISResponse
+            leftText={info.refuteUisResponse}
+            entries={refuteResponseEntries}
+          />
         </div>
         <div id="divestmentHistory" className="px-12 pt-20">
-          <TimelineSection />
+          <TimelineSection entries={timelineEntries} />
         </div>
 
         <ToTopButton />

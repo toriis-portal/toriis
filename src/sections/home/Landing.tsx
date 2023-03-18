@@ -1,19 +1,31 @@
 import type { FC } from 'react'
 import React from 'react'
-import clsx from 'clsx'
+import type { Document } from '@contentful/rich-text-types'
+import { MARKS, BLOCKS } from '@contentful/rich-text-types'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
-import HomeData from '../../info/home.json'
 import {
   PrimaryButton,
   LandingDonutChart,
   CapitalizedTitle,
 } from '../../components'
 
-const Landing: FC = () => {
-  const textData = HomeData.landingContent
-  const landingTextStyle = clsx(
-    'font-semibold underline decoration-clementine decoration-2 underline-offset-4',
-  )
+const Landing: FC<{ text: Document }> = ({ text }) => {
+  // Custom contentful render for bold text and paragraph
+  const contentfulOptions = {
+    renderMark: {
+      [MARKS.BOLD]: (text: any) => (
+        <span className="font-semibold underline decoration-clementine decoration-2 underline-offset-4">
+          {text}
+        </span>
+      ),
+    },
+    renderNode: {
+      [BLOCKS.PARAGRAPH]: (node: any, children: any) => (
+        <p className="mb-8">{children}</p>
+      ),
+    },
+  }
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -23,16 +35,9 @@ const Landing: FC = () => {
           <LandingDonutChart />
         </div>
         <div className="basis-4/7">
-          <p className="pr-14 md:mb-8">
-            <span>{textData[0]}</span>
-            <span className={landingTextStyle}>{textData[1]}</span>
-            <span>{textData[2]}</span>
-            <span className={landingTextStyle}>{textData[3]}</span>
-          </p>
-          <p className="pr-14 md:my-8">
-            <span>{textData[4]}</span>
-            <span className={landingTextStyle}>{textData[5]}</span>
-          </p>
+          <div className="mb-8 pr-14">
+            {documentToReactComponents(text, contentfulOptions)}
+          </div>
           <div className="mt-4 flex flex-row gap-12">
             <PrimaryButton text="More About Fossil Fuels" link="/fossil-fuel" />
             <PrimaryButton text="Learn About Investment" link="/investments" />
