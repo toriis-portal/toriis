@@ -25,7 +25,6 @@ export const companyRouter = createTRPCRouter({
         filterByIndustry: z.array(z.string()).nullish(),
         filterByEnvGrade: z.array(z.nativeEnum(EnvGrade)).nullish(),
         filterByNetAssetSum: z.array(z.array(z.number(), z.number())).nullish(),
-        isFilterOperation: z.boolean(),
       }),
     )
     .query(async ({ input, ctx }) => {
@@ -84,21 +83,14 @@ export const companyRouter = createTRPCRouter({
         cursor: cursor ? { id: cursor } : undefined,
       })
 
-      if (!input.isFilterOperation) {
-        let nextCursor: typeof cursor | undefined = undefined
-        if (items.length > limit) {
-          const nextItem = items.pop()
-          nextCursor = nextItem?.id
-        }
-        return {
-          items,
-          nextCursor,
-        }
-      } else {
-        return {
-          items,
-          cursor,
-        }
+      let nextCursor: typeof cursor | undefined = undefined
+      if (items.length > limit) {
+        const nextItem = items.pop()
+        nextCursor = nextItem?.id
+      }
+      return {
+        items,
+        nextCursor,
       }
     }),
   countBySector: publicProcedure.query(({ ctx }) => {

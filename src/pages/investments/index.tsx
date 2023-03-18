@@ -210,7 +210,6 @@ const Home: FC = () => {
         filterOptions.sectors,
       ) as (keyof typeof Sector)[],
       filterByNetAssetSum: filterOptions.netAssetSum,
-      isFilterOperation: isFilterOperation,
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import type { FC } from 'react'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import clsx from 'clsx'
-import { Sector } from '@prisma/client'
 
 type Options = string[] | Record<string, string[]>
 
@@ -35,10 +34,6 @@ const SelectChevron: FC<{ isFilter: boolean; isOpen: boolean }> = ({
   isFilter,
   isOpen,
 }) => {
-  const filterRotate = clsx({
-    'rotate-180': isOpen,
-  })
-
   return (
     <span
       className={clsx(
