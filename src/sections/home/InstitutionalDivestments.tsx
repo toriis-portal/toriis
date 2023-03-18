@@ -17,7 +17,7 @@ const InstitutionalDivestments: FC<InstitutionalDivestmentsProps> = ({
   return (
     <>
       <HighlightedTitle title="Institutional Divestment" />
-      <div className="my-6 w-full px-12">
+      <div className="my-6 w-full md:px-12">
         <div className="ml-[3%] space-y-6">
           {listEntries.map((entry, index) => (
             <ListItem

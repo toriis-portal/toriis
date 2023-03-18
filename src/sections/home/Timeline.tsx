@@ -52,11 +52,16 @@ const TimelineItem: FC<TimlineItemProps> = ({ data, isLeft }) => {
                   </p>
                 </div>
               </div>
-              <div className="px-10 py-5">
+              <div
+                className={clsx('py-5', {
+                  'pr-10': isLeft,
+                  'pl-10': !isLeft,
+                })}
+              >
                 <p
-                  className={clsx('px-10 text-xl text-black', {
-                    'mr-6 text-right': isLeft,
-                    'ml-6 text-left': !isLeft,
+                  className={clsx('text-xl text-black', {
+                    'mr-6 pr-10 text-right': isLeft,
+                    'ml-6 pl-10 text-left': !isLeft,
                   })}
                 >
                   {item.details}
@@ -92,7 +97,7 @@ const TimelineSection: FC<{ entries: TimelineEntry[] }> = ({ entries }) => {
   return (
     <>
       <HighlightedTitle title="Divestment History" />
-      <div className="relative mx-[10%] my-10 min-h-screen border-spacing-1 text-6xl">
+      <div className="relative mx-[5%] my-10 min-h-screen border-spacing-1 text-6xl">
         <div className="absolute box-border h-full w-1/2 border-spacing-1 border-r-8 border-clementine"></div>
         <div className="flex flex-row">
           <div className="pr-.5 flex w-1/2 flex-col">
