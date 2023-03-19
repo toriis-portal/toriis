@@ -15,7 +15,7 @@ const NavButton: FC<NavButtonProps> = ({ title, link }) => {
     <Link
       href={link}
       className={clsx(
-        'm-0 ml-8 border-b-4 bg-white px-1 py-1 text-center font-klima text-[20px] font-medium text-black',
+        'ml-8 border-b-4 bg-white text-center font-klima text-[20px] font-medium text-black',
         {
           'border-cobalt': isActive,
           'border-white': !isActive,
