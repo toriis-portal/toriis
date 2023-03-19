@@ -42,7 +42,7 @@ const DropDownCard: FC<{ content: OurRequestsEntry }> = ({ content }) => {
         </p>
       </div>
       {open && (
-        <div className="font-Inter border-t-2 border-cobalt py-20 pt-6 text-base text-neutral-600">
+        <div className="font-Inter border-t-2 border-cobalt px-20 pt-6 text-base text-neutral-600">
           {documentToReactComponents(content.details, contentfulOptions)}
         </div>
       )}
