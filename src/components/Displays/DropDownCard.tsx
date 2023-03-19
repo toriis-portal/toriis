@@ -44,7 +44,7 @@ const DropDownCard: FC<{ content: OurRequestsEntry }> = ({ content }) => {
           {documentToReactComponents(content.details, contentfulOptions)}
         </div>
       )}
-      <div className="flex pb-6 pr-6">
+      <div className="flex px-6 pb-6">
         <ReadMoreButton isOpen={open} handleOpen={handleOpen} />
       </div>
     </div>

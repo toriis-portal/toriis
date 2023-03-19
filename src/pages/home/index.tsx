@@ -83,7 +83,7 @@ const Home: FC<HomeProps> = ({
             entries={refuteResponseEntries}
           />
         </div>
-        <div id="divestmentHistory" className="px-12 pt-20">
+        <div id="divestmentHistory" className="pt-20">
           <TimelineSection entries={timelineEntries} />
         </div>
 
