@@ -71,7 +71,7 @@ const Home: FC<HomeProps> = ({
         <div id="ourRequests" className="pt-20">
           <OurRequest entries={ourRequestsEntries} />
         </div>
-        <div id="institutionalDivestment" className="px-12 pt-20">
+        <div id="institutionalDivestment" className="pt-20">
           <InstitutionalDivestments
             linkEntries={divestmentLinkEntries}
             listEntries={divestmentListEntries}
