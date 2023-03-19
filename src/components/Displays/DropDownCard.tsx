@@ -30,7 +30,7 @@ const DropDownCard: FC<{ content: OurRequestsEntry }> = ({ content }) => {
     >
       <div
         className={clsx(
-          'flex w-full flex-col items-center px-12 pt-10 md:flex-row',
+          'flex w-full flex-col items-center px-4 pt-10 md:flex-row md:px-20',
           {
             'pb-10': open,
           },
@@ -42,7 +42,7 @@ const DropDownCard: FC<{ content: OurRequestsEntry }> = ({ content }) => {
         </p>
       </div>
       {open && (
-        <div className="font-Inter border-t-2 border-cobalt px-20 pt-6 text-base text-neutral-600">
+        <div className="font-Inter border-t-2 border-cobalt px-4 pt-6 text-base text-neutral-600 md:px-20">
           {documentToReactComponents(content.details, contentfulOptions)}
         </div>
       )}
