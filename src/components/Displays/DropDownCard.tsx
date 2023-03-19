@@ -24,26 +24,29 @@ const DropDownCard: FC<{ content: OurRequestsEntry }> = ({ content }) => {
 
   return (
     <div
-      className={clsx('mb-6 ml-8 mr-20 content-center rounded-xl bg-white', {
+      className={clsx('mb-6 content-center rounded-xl bg-white md:mx-20', {
         'border-4 border-cobalt': open,
       })}
     >
       <div
-        className={clsx('flex w-full items-center space-x-8 pr-16 pl-20 pt-6', {
-          'pb-10': open,
-        })}
+        className={clsx(
+          'flex w-full flex-col items-center px-4 pt-10 md:flex-row md:px-20',
+          {
+            'pb-10': open,
+          },
+        )}
       >
         <NumberCircle val={content.order} />
-        <p className="mb-2 inline pl-8 pt-6 text-lg font-medium">
+        <p className="inline p-4 text-lg font-medium md:ml-6">
           {content.title}
         </p>
       </div>
       {open && (
-        <div className="font-Inter border-t-2 border-cobalt pl-20 pr-20 pt-6 text-base text-neutral-600">
+        <div className="font-Inter border-t-2 border-cobalt px-4 pt-6 text-base text-neutral-600 md:px-20">
           {documentToReactComponents(content.details, contentfulOptions)}
         </div>
       )}
-      <div className="flex pb-6 pr-6">
+      <div className="flex px-6 pb-6">
         <ReadMoreButton isOpen={open} handleOpen={handleOpen} />
       </div>
     </div>

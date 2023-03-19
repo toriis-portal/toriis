@@ -30,17 +30,23 @@ const Landing: FC<{ text: Document }> = ({ text }) => {
   return (
     <div className="flex flex-col items-center justify-center">
       <CapitalizedTitle />
-      <div className="flex min-w-[900px] max-w-[1600px] flex-row items-center justify-center px-14 py-10">
-        <div className="basis-3/7 pr-[2em] pt-6">
+      <div className="flex flex-col items-center justify-center px-14 py-8 lg:flex-row">
+        <div className="basis-3/7">
           <LandingDonutChart />
         </div>
         <div className="basis-4/7">
-          <div className="mb-8 pr-14">
+          <div className="mb-6 p-4 lg:pr-14">
             {documentToReactComponents(text, contentfulOptions)}
-          </div>
-          <div className="mt-4 flex flex-row gap-12">
-            <PrimaryButton text="More About Fossil Fuels" link="/fossil-fuel" />
-            <PrimaryButton text="Learn About Investment" link="/investments" />
+            <div className="flex flex-col gap-12 md:flex-row">
+              <PrimaryButton
+                text="More About Fossil Fuels"
+                link="/fossil-fuel"
+              />
+              <PrimaryButton
+                text="Learn About Investment"
+                link="/investments"
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -15,9 +15,9 @@ const InstitutionalDivestments: FC<InstitutionalDivestmentsProps> = ({
   listEntries,
 }) => {
   return (
-    <>
+    <div className="px-12">
       <HighlightedTitle title="Institutional Divestment" />
-      <div className="my-6 w-full px-12">
+      <div className="my-6 w-full md:px-12">
         <div className="ml-[3%] space-y-6">
           {listEntries.map((entry, index) => (
             <ListItem
@@ -28,13 +28,13 @@ const InstitutionalDivestments: FC<InstitutionalDivestmentsProps> = ({
           ))}
         </div>
       </div>
-      <div className="mt-14 flex w-full flex-col items-center rounded-xl bg-darkTeal px-6 pt-6 pb-16 text-white">
+      <div className="mt-16 flex w-full flex-col items-center rounded-xl bg-darkTeal px-6 pt-6 pb-16 text-white">
         <div className="relative -top-12 ">
           <ShadowTitle text="Institutional Divestment Links" />
         </div>
         <div className="flex flex-wrap justify-center leading-loose underline">
           {linkEntries.map((entry, index) => (
-            <div key={index} className="mx-2 inline-block">
+            <div key={index} className="mx-2 inline-block text-center">
               <Link href={entry.url} target="_blank" rel="noopener noreferrer">
                 {entry.name}
               </Link>
@@ -43,7 +43,7 @@ const InstitutionalDivestments: FC<InstitutionalDivestmentsProps> = ({
           ))}
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

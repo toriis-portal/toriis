@@ -17,11 +17,11 @@ const RefuteUISResponse: FC<RefuteUISResponseProps> = ({
   return (
     <div className="bg-clementine/20 px-12 py-20">
       <HighlightedTitle title="Refute UIS Response" />
-      <div className="flex flex-row">
+      <div className="flex flex-col lg:flex-row">
         <div className="basis-3/7 px-20 py-8 text-[28px] font-medium leading-tight">
           {documentToReactComponents(leftText)}
         </div>
-        <div className="basis-4/7 pr-8">
+        <div className="basis-4/7 lg:pr-8">
           <Carousel carouselChildrenData={entries} />
         </div>
       </div>
