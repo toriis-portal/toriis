@@ -12,7 +12,7 @@ import Carousel from './Displays/Carousel/Carousel'
 // Accordions
 import RequestAccordion from './Accordions/RequestAccordion'
 // Nav
-import NavBar from './Nav/NavBar'
+import PrimaryNavBar from './Nav/PrimaryNavBar'
 import SecondaryNavBar from './Nav/SecondaryNavBar'
 // Selects
 import Select from './Selects/Select'
@@ -28,7 +28,7 @@ export {
   NumberCircle,
   HighlightedTitle,
   NavButton,
-  NavBar,
+  PrimaryNavBar,
   PrimaryButton,
   ToTopButton,
   Carousel,

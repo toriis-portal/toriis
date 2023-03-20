@@ -7,9 +7,9 @@ import { Navbar } from 'flowbite-react'
 import { NavButton } from '../index'
 import toriisimg from '../../../public/toriis.png'
 
-const NavBar: FC = () => {
+const PrimaryNavBar: FC = () => {
   return (
-    <Navbar fluid={true} rounded={true} className="px-4 py-0.5 sm:px-12">
+    <Navbar fluid={true} rounded={true} className="px-4 sm:py-0.5 sm:px-14">
       <Link href="/home">
         <Image
           src={toriisimg as HTMLImageElement}
@@ -27,4 +27,4 @@ const NavBar: FC = () => {
   )
 }
 
-export default NavBar
+export default PrimaryNavBar
