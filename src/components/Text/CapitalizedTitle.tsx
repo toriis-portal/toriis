@@ -8,7 +8,7 @@ const titleText: string[] = [
   'Resource',
   'for',
   'Institutional',
-  'Investment',
+  'Investments',
 ]
 
 const CapitalizedTitle: FC = () => {
@@ -21,13 +21,20 @@ const CapitalizedTitle: FC = () => {
   const landingHeader = clsx('text-4xl font-medium')
   return (
     <>
-      <div className="flex flex-wrap place-content-center space-x-4 pt-10">
+      <div className="flex flex-wrap place-content-center space-x-3 pt-10">
         {titleText.map((item, index) => (
           <span
             key={index}
             className={isCapital(item) ? firstLetter : landingHeader}
           >
-            {item}
+            {item.endsWith('s') ? (
+              <div>
+                Investment
+                <span className="text-clementine">s</span>
+              </div>
+            ) : (
+              item
+            )}
           </span>
         ))}
       </div>

@@ -22,6 +22,8 @@ const server = z.object({
   // Add `.min(1) on ID and SECRET if you want to make sure they're not empty
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
+  CONTENTFUL_SPACE_ID: z.string(),
+  CONTENTFUL_ACCESS_TOKEN: z.string(),
 })
 
 /**
@@ -46,6 +48,8 @@ const processEnv = {
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
+  CONTENTFUL_SPACE_ID: process.env.CONTENTFUL_SPACE_ID,
+  CONTENTFUL_ACCESS_TOKEN: process.env.CONTENTFUL_ACCESS_TOKEN,
 }
 
 // Don't touch the part below

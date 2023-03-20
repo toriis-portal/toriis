@@ -1,17 +1,8 @@
 import clsx from 'clsx'
 import type { FC } from 'react'
 
-import { HighlightedTitle } from '../components'
-
-interface InputProps {
-  text: string
-  data: TimelineEntry[]
-}
-
-export interface TimelineEntry {
-  date: string
-  text: string
-}
+import { HighlightedTitle } from '../../components'
+import type { TimelineEntry } from '../../types'
 
 interface TimlineItemProps {
   data: TimelineEntry[]
@@ -57,18 +48,23 @@ const TimelineItem: FC<TimlineItemProps> = ({ data, isLeft }) => {
 
                 <div className="basis-3/12 rounded-lg bg-darkTeal py-2">
                   <p className="m-0 text-center text-4xl text-white">
-                    {item.date}
+                    {item.year}
                   </p>
                 </div>
               </div>
-              <div className="px-10 py-5">
+              <div
+                className={clsx('py-5', {
+                  'pr-10': isLeft,
+                  'pl-10': !isLeft,
+                })}
+              >
                 <p
-                  className={clsx('px-10 text-xl text-black', {
-                    'mr-6 text-right': isLeft,
-                    'ml-6 text-left': !isLeft,
+                  className={clsx('text-xl text-black', {
+                    'mr-6 pr-10 text-right': isLeft,
+                    'ml-6 pl-10 text-left': !isLeft,
                   })}
                 >
-                  {item.text}
+                  {item.details}
                 </p>
               </div>
             </div>
@@ -93,15 +89,15 @@ const splitTimeline = (
   return splitData
 }
 
-const TimelineSection: FC<InputProps> = ({ text, data }) => {
-  const splitData = splitTimeline(data) ?? [[], []]
+const TimelineSection: FC<{ entries: TimelineEntry[] }> = ({ entries }) => {
+  const splitData = splitTimeline(entries) ?? [[], []]
   const splitLeft = splitData[0]
   const splitRight = splitData[1]
 
   return (
-    <>
-      <HighlightedTitle title={text} size="large" color="clementine" />
-      <div className="relative mx-[10%] my-10 min-h-screen border-spacing-1 text-6xl">
+    <div className="overflow-x-scroll px-12">
+      <HighlightedTitle title="Divestment History" />
+      <div className="relative mx-[5%] my-10 min-h-screen border-spacing-1 text-6xl">
         <div className="absolute box-border h-full w-1/2 border-spacing-1 border-r-8 border-clementine"></div>
         <div className="flex flex-row">
           <div className="pr-.5 flex w-1/2 flex-col">
@@ -113,7 +109,7 @@ const TimelineSection: FC<InputProps> = ({ text, data }) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
