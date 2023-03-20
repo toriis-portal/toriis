@@ -8,8 +8,9 @@ import ReadMoreButton from './Buttons/ReadMoreButton'
 import LandingDonutChart from './Charts/LandingDonutChart'
 // Displays
 import ListItem from './Displays/ListItem'
-import DropDownCard from './Displays/DropDownCard'
 import Carousel from './Displays/Carousel/Carousel'
+// Accordions
+import RequestAccordion from './Accordions/RequestAccordion'
 // Nav
 import NavBar from './Nav/NavBar'
 import SecondaryNavBar from './Nav/SecondaryNavBar'
@@ -34,7 +35,7 @@ export {
   Select,
   LandingDonutChart,
   CapitalizedTitle,
-  DropDownCard,
+  RequestAccordion,
   SecondaryNavBar,
   ShadowTitle,
   ReadMoreButton,
