@@ -59,7 +59,7 @@ const ChevronFilter: FC<ChevronFilterProps> = ({
 const tableHeaderMiddleStyle = clsx('w-1/12 border-x-2 border-white')
 const tableRowStyle = clsx('border-x-2 border-clementine text-center')
 
-// Have an Object with all possible sort actions
+// Object with all possible sort actions
 const InvestmentSortActions: InvestmentSortActions = {
   name: (a: Investment, b: Investment, isAscending: boolean) =>
     isAscending
