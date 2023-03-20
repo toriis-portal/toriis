@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import type { FC } from 'react'
 import React from 'react'
+import type { Company, EnvGrade } from '@prisma/client'
 
 import { Select } from '../../components'
 import { api } from '../../utils/api'
+import { CardProps } from '../../components/Card/CompanyCard'
 import CompanyCard from '../../components/Card/CompanyCard'
 
 const extractSortyByQueryKey = (
@@ -70,11 +72,15 @@ const Home: FC = () => {
   }, [selectedSortKeys])
 
   return (
-    <div className="flex flex-col bg-lightBlue rounded-t-xl items-center gap-5 w-11/12 self-center">
-      <div className="flex flex-row justify-between items-center self-stretch pt-[36px] px-[50px]">
+    <div className="flex w-11/12 flex-col items-center gap-5 self-center rounded-t-xl bg-lightBlue">
+      <div className="flex flex-row items-center justify-between self-stretch px-[50px] pt-[36px]">
         <div className="flex flex-row items-center gap-3.5">
           <p className="text-[32px] font-medium">Recommendations</p>
-          <p className="text-[#626161]">{"("}{data?.pages ? data.pages.length * 5 : 0}{" results)"}</p>
+          <p className="text-[#626161]">
+            {'('}
+            {data?.pages ? data.pages.length * 5 : 0}
+            {' results)'}
+          </p>
         </div>
         <Select
           text="sort by"
@@ -92,14 +98,20 @@ const Home: FC = () => {
       <h2>{isLoading && '(loading)'}</h2>
       {data?.pages.map((page, idx) => {
         return (
-          <div key={idx} className="flex flex-col w-3/4 gap-5">
-            {page.items.map((company) => (
-              <React.Fragment key={company.id}><CompanyCard input={company}/></React.Fragment>
-            ))}
+          <div key={idx} className="flex w-3/4 flex-col gap-5">
+            {page.items.map((company) => {
+              const company2: { ESG: EnvGrade | undefined } & {
+                company: Company
+              } = { ESG: company?.ESG[0]?.environmentGrade, company }
+              return (
+                <React.Fragment key={company.id}>
+                  <CompanyCard companyInfo={company2} />
+                </React.Fragment>
+              )
+            })}
           </div>
-        );
+        )
       })}
-
 
       <button
         className="justify-center font-bold"

@@ -128,7 +128,7 @@ export const Select: FC<SelectProps> = ({
         onClick={() => setIsOpen(!isOpen)}
         className="float-right flex h-10 w-fit items-center justify-center overflow-hidden rounded-full border  border-solid border-darkTeal"
       >
-        <span className="px-5 flex h-full w-fit items-center justify-center bg-white">
+        <span className="flex h-full w-fit items-center justify-center bg-white px-5">
           <span className="text-black">{text}</span>
         </span>
         <span className="flex h-full items-center justify-center bg-black px-3">
