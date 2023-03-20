@@ -1,6 +1,5 @@
 import type { Investment } from '@prisma/client'
 
-import { PrimaryButton } from '../../components'
 import InvestmentTable from '../../components/Table/InvestmentTable'
 
 const TEST_INVESTMENTS: Investment[] = [
@@ -39,7 +38,7 @@ const TEST_INVESTMENTS: Investment[] = [
   },
 ]
 
-const Home = () => {
+const Company = () => {
   return (
     <>
       <InvestmentTable investments={TEST_INVESTMENTS} />
@@ -48,4 +47,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Company

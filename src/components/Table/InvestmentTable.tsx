@@ -10,6 +10,22 @@ interface ChevronFilterProps {
   onClickDown: VoidFunction
 }
 
+type InvestmentSortAction = (
+  a: Investment,
+  b: Investment,
+  isAscending: boolean,
+) => number
+
+interface InvestmentSortActions {
+  name: InvestmentSortAction
+  coupon: InvestmentSortAction
+  maturityDate: InvestmentSortAction
+  quantity: InvestmentSortAction
+  costVal: InvestmentSortAction
+  marketVal: InvestmentSortAction
+  year: InvestmentSortAction
+}
+
 const ChevronFilter: FC<ChevronFilterProps> = ({
   text,
   onClickUp,
@@ -22,14 +38,14 @@ const ChevronFilter: FC<ChevronFilterProps> = ({
         <div className="flex flex-col">
           <button onClick={onClickUp}>
             <ChevronUpIcon
-              className="hover:fill-gray-500"
+              className="stroke-current stroke-1 hover:fill-gray-500"
               width="20px"
               height="20px"
             />
           </button>
           <button onClick={onClickDown}>
             <ChevronDownIcon
-              className="hover:fill-gray-500"
+              className="stroke-current stroke-1 hover:fill-gray-500"
               width="20px"
               height="20px"
             />
@@ -40,10 +56,38 @@ const ChevronFilter: FC<ChevronFilterProps> = ({
   )
 }
 
+const tableHeaderMiddleStyle = clsx('w-1/12 border-x-2 border-white')
+const tableRowStyle = clsx('border-x-2 border-clementine text-center')
+
+// Have an Object with all possible sort actions
+const InvestmentSortActions: InvestmentSortActions = {
+  name: (a: Investment, b: Investment, isAscending: boolean) =>
+    isAscending
+      ? a.rawName.localeCompare(b.rawName)
+      : b.rawName.localeCompare(a.rawName),
+  coupon: (a: Investment, b: Investment, isAscending: boolean) =>
+    isAscending ? a.coupon - b.coupon : b.coupon - a.coupon,
+  maturityDate: (a: Investment, b: Investment, isAscending: boolean) =>
+    isAscending
+      ? a.maturityDate.getTime() - b.maturityDate.getTime()
+      : b.maturityDate.getTime() - a.maturityDate.getTime(),
+  quantity: (a: Investment, b: Investment, isAscending: boolean) =>
+    isAscending ? a.quantity - b.quantity : b.quantity - a.quantity,
+  costVal: (a: Investment, b: Investment, isAscending: boolean) =>
+    isAscending ? a.costVal - b.costVal : b.costVal - a.costVal,
+  marketVal: (a: Investment, b: Investment, isAscending: boolean) =>
+    isAscending ? a.marketVal - b.marketVal : b.marketVal - a.marketVal,
+  year: (a: Investment, b: Investment, isAscending: boolean) =>
+    isAscending ? a.year - b.year : b.year - a.year,
+}
+
 const InvestmentTable: FC<{ investments: Investment[] }> = ({
   investments,
 }) => {
-  const [sortBy, setSortBy] = useState<string[]>(['name', 'asc'])
+  const [sortBy, setSortBy] = useState<[keyof InvestmentSortActions, boolean]>([
+    'name',
+    true,
+  ])
   const [sortedInvestments, setSortedInvestments] =
     useState<Investment[]>(investments)
 
@@ -51,35 +95,9 @@ const InvestmentTable: FC<{ investments: Investment[] }> = ({
     const sortedCopy = [...investments]
     setSortedInvestments(
       sortedCopy.sort((a, b) => {
-        switch (sortBy[0]) {
-          case 'name':
-            return sortBy[1] === 'asc'
-              ? a.rawName.localeCompare(b.rawName)
-              : b.rawName.localeCompare(a.rawName)
-          case 'coupon':
-            return sortBy[1] == 'asc'
-              ? a.coupon - b.coupon
-              : b.coupon - a.coupon
-          case 'maturityDate':
-            return sortBy[1] == 'asc'
-              ? a.maturityDate.getTime() - b.maturityDate.getTime()
-              : b.maturityDate.getTime() - a.maturityDate.getTime()
-          case 'quantity':
-            return sortBy[1] == 'asc'
-              ? a.quantity - b.quantity
-              : b.quantity - a.quantity
-          case 'costVal':
-            return sortBy[1] == 'asc'
-              ? a.costVal - b.costVal
-              : b.costVal - a.costVal
-          case 'marketVal':
-            return sortBy[1] == 'asc'
-              ? a.marketVal - b.marketVal
-              : b.marketVal - a.marketVal
-          case 'year':
-            return sortBy[1] == 'asc' ? a.year - b.year : b.year - a.year
-        }
-        return 0
+        const [sortKey, isAscending] = sortBy
+        const investmentSortAction = InvestmentSortActions[sortKey]
+        return investmentSortAction(a, b, isAscending)
       }),
     )
   }, [investments, sortBy])
@@ -90,50 +108,50 @@ const InvestmentTable: FC<{ investments: Investment[] }> = ({
         <tr className="bg-clementine text-white">
           <th className="w-1/6">
             <ChevronFilter
-              onClickUp={() => setSortBy(['name', 'asc'])}
-              onClickDown={() => setSortBy(['name', 'desc'])}
+              onClickUp={() => setSortBy(['name', true])}
+              onClickDown={() => setSortBy(['name', false])}
               text="Investment"
             />
           </th>
-          <th className="w-1/12 border-x-2 border-white">
+          <th className={tableHeaderMiddleStyle}>
             <ChevronFilter
-              onClickUp={() => setSortBy(['coupon', 'asc'])}
-              onClickDown={() => setSortBy(['coupon', 'desc'])}
+              onClickUp={() => setSortBy(['coupon', true])}
+              onClickDown={() => setSortBy(['coupon', false])}
               text="Coupon"
             />
           </th>
-          <th className="w-1/6 border-x-2 border-white">
+          <th className={tableHeaderMiddleStyle}>
             <ChevronFilter
-              onClickUp={() => setSortBy(['maturityDate', 'asc'])}
-              onClickDown={() => setSortBy(['maturityDate', 'desc'])}
+              onClickUp={() => setSortBy(['maturityDate', true])}
+              onClickDown={() => setSortBy(['maturityDate', false])}
               text="Maturity Date"
             />
           </th>
-          <th className="w-1/6 border-x-2 border-white">
+          <th className={tableHeaderMiddleStyle}>
             <ChevronFilter
-              onClickUp={() => setSortBy(['quantity', 'asc'])}
-              onClickDown={() => setSortBy(['quantity', 'desc'])}
+              onClickUp={() => setSortBy(['quantity', true])}
+              onClickDown={() => setSortBy(['quantity', false])}
               text="Quantity"
             />
           </th>
-          <th className="w-1/6 border-x-2 border-white">
+          <th className={tableHeaderMiddleStyle}>
             <ChevronFilter
-              onClickUp={() => setSortBy(['costVal', 'asc'])}
-              onClickDown={() => setSortBy(['costVal', 'desc'])}
+              onClickUp={() => setSortBy(['costVal', true])}
+              onClickDown={() => setSortBy(['costVal', false])}
               text="Cost Value"
             />
           </th>
-          <th className="w-1/6 border-x-2 border-white">
+          <th className={tableHeaderMiddleStyle}>
             <ChevronFilter
-              onClickUp={() => setSortBy(['marketVal', 'asc'])}
-              onClickDown={() => setSortBy(['marketVal', 'desc'])}
+              onClickUp={() => setSortBy(['marketVal', true])}
+              onClickDown={() => setSortBy(['marketVal', false])}
               text="Market Value"
             />
           </th>
           <th className="w-1/12">
             <ChevronFilter
-              onClickUp={() => setSortBy(['year', 'asc'])}
-              onClickDown={() => setSortBy(['year', 'desc'])}
+              onClickUp={() => setSortBy(['year', true])}
+              onClickDown={() => setSortBy(['year', false])}
               text="Year"
             />
           </th>
@@ -147,24 +165,14 @@ const InvestmentTable: FC<{ investments: Investment[] }> = ({
               className={clsx({ 'bg-lightClementine': index % 2 == 1 })}
             >
               <td className="p-4 text-center">{investment.rawName}</td>
-              <td className="border-x-2 border-clementine text-center">
-                {investment.coupon}
-              </td>
-              <td className="border-x-2 border-clementine text-center">
+              <td className={tableRowStyle}>{investment.coupon}</td>
+              <td className={tableRowStyle}>
                 {investment.maturityDate.toISOString()}
               </td>
-              <td className="border-x-2 border-clementine text-center">
-                {investment.quantity}
-              </td>
-              <td className="border-x-2 border-clementine text-center">
-                {investment.costVal}
-              </td>
-              <td className="border-x-2 border-clementine text-center">
-                {investment.marketVal}
-              </td>
-              <td className="border-x-2 border-clementine text-center">
-                {investment.year}
-              </td>
+              <td className={tableRowStyle}>{investment.quantity}</td>
+              <td className={tableRowStyle}>{investment.costVal}</td>
+              <td className={tableRowStyle}>{investment.marketVal}</td>
+              <td className={tableRowStyle}>{investment.year}</td>
             </tr>
           )
         })}
