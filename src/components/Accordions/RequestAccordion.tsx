@@ -7,7 +7,7 @@ import clsx from 'clsx'
 import { NumberCircle, ReadMoreButton } from '../index'
 import type { OurRequestsEntry } from '../../types'
 
-const DropDownCard: FC<{ content: OurRequestsEntry }> = ({ content }) => {
+const RequestAccordion: FC<{ content: OurRequestsEntry }> = ({ content }) => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => {
     setOpen(!open)
@@ -52,4 +52,4 @@ const DropDownCard: FC<{ content: OurRequestsEntry }> = ({ content }) => {
     </div>
   )
 }
-export default DropDownCard
+export default RequestAccordion

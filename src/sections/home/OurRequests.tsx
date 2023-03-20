@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 
-import { DropDownCard, HighlightedTitle } from '../../components'
+import { RequestAccordion, HighlightedTitle } from '../../components'
 import type { OurRequestsEntry } from '../../types'
 
 const OurRequest: FC<{ entries: OurRequestsEntry[] }> = ({ entries }) => {
@@ -9,7 +9,7 @@ const OurRequest: FC<{ entries: OurRequestsEntry[] }> = ({ entries }) => {
       <HighlightedTitle title="Our Requests" />
       {entries.map((entry, index) => (
         <div key={index}>
-          <DropDownCard content={entry} />
+          <RequestAccordion content={entry} />
         </div>
       ))}
     </div>
