@@ -23,12 +23,22 @@ enum Sector {
   NONE                   @map("") // This is workaround for string mapping in enums in prisma
 }
 
+enum EnvGrade {
+  AAA
+  AA
+  A
+  BBB
+  BB
+  B
+  CCC
+}
+
 model Investment {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   company      Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId    String   @db.ObjectId
   rawName      String
-  coupon       String
+  coupon       Float
   maturityDate DateTime
   quantity     Float
   costVal      Float
@@ -37,15 +47,16 @@ model Investment {
 }
 
 model Company {
-  id          String       @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  ticker      String
-  sector      Sector?
-  industry    String?
-  netAssetSum Float
-  investment  Investment[]
-  description String?
-  ESG         ESG[]
+  id               String             @id @default(auto()) @map("_id") @db.ObjectId
+  name             String
+  ticker           String
+  sector           Sector?
+  industry         String?
+  netAssetSum      Float
+  investment       Investment[]
+  description      String?
+  ESG              ESG[]
+  ESGInvalidTicker ESGInvalidTicker[]
 }
 
 model Account {
@@ -93,15 +104,21 @@ model VerificationToken {
 }
 
 model ESG {
-  id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  company           Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  companyId         String  @db.ObjectId
-  environment_score Int
-  environment_grade String
-  environment_level String
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  company          Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId        String   @db.ObjectId
+  environmentScore Int
+  environmentGrade EnvGrade
+  environmentLevel String
 }
 
 model ESGIndex {
   id        String @id @default(auto()) @map("_id") @db.ObjectId
   companyId String @db.ObjectId
+}
+
+model ESGInvalidTicker {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId String  @db.ObjectId
 }

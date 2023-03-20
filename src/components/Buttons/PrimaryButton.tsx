@@ -3,12 +3,12 @@ import { ArrowRightIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 import clsx from 'clsx'
 
-interface ButtonProps {
+interface PrimaryButtonProps {
   text: string
   link: string
 }
 
-const PrimaryButton: FC<ButtonProps> = ({ text, link }) => {
+const PrimaryButton: FC<PrimaryButtonProps> = ({ text, link }) => {
   return (
     <div>
       <Link href={link}>
@@ -22,7 +22,8 @@ const PrimaryButton: FC<ButtonProps> = ({ text, link }) => {
               'hover:shadow-[-5px_5px_0px_0px] hover:shadow-cobalt',
             )}
           >
-            {text} <ArrowRightIcon className="bold inline h-9 w-5" />
+            {text}{' '}
+            <ArrowRightIcon className="inline h-9 w-5 stroke-current stroke-1" />
           </button>
         </div>
       </Link>

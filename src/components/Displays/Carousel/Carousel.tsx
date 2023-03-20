@@ -4,18 +4,14 @@ import React, { useState } from 'react'
 import { ChevronLeftIcon } from '@heroicons/react/24/solid'
 import { ChevronRightIcon } from '@heroicons/react/24/solid'
 
+import type { RefuteResponseEntry } from '../../../types'
+
 import CarouselChild from './CarouselChild'
 import CarouselDot from './CarouselDot'
 
-interface CarouselChildData {
-  index: number
-  text: string
-}
-interface CarouselProps {
-  carouselChildrenData: CarouselChildData[]
-}
-
-const Carousel: FC<CarouselProps> = ({ carouselChildrenData }) => {
+const Carousel: FC<{ carouselChildrenData: RefuteResponseEntry[] }> = ({
+  carouselChildrenData,
+}) => {
   const [activeIndex, setActiveIndex] = useState(0)
 
   const updateIndex = (newIndex: number) => {
