@@ -1,20 +1,16 @@
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import type { FC } from 'react'
 import React from 'react'
 
-interface CarouselChildData {
-  index: number
-  text: string
-}
+import type { RefuteResponseEntry } from '../../../types'
 
-interface CarouselChildProps {
-  childData: CarouselChildData
-}
-
-const CarouselChild: FC<CarouselChildProps> = ({ childData }) => {
+const CarouselChild: FC<{ childData: RefuteResponseEntry }> = ({
+  childData,
+}) => {
   return (
-    <p className="inline-flex leading-snug" style={{ width: '100%' }}>
-      {childData.text}
-    </p>
+    <div className="inline-flex leading-snug" style={{ width: '100%' }}>
+      {documentToReactComponents(childData.details)}
+    </div>
   )
 }
 
