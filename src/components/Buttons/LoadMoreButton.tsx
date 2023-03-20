@@ -16,6 +16,7 @@ const LoadMoreButton: FC<LoadMoreButtonProps> = ({ onClick, disabled }) => {
         'm-6 px-7 py-3.5',
         'shadow-[-8px_8px_0px_0px] shadow-clementine',
         'active:shadow-[-12px_12px_0px_0px] active:shadow-clementine',
+        'hover:shadow-[-12px_12px_0px_0px] hover:shadow-clementine',
         `${disabled ? 'hidden' : ''}`,
       )}
       onClick={onClick}
