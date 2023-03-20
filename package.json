@@ -11,6 +11,7 @@
     "format": "yarn prettier --write . --plugin=prettier-plugin-tailwindcss"
   },
   "dependencies": {
+    "@contentful/rich-text-react-renderer": "^15.16.3",
     "@heroicons/react": "^2.0.16",
     "@next-auth/prisma-adapter": "^1.0.5",
     "@prisma/client": "^4.9.0",
@@ -21,6 +22,7 @@
     "@trpc/server": "^10.9.0",
     "apexcharts": "^3.37.1",
     "clsx": "^1.2.1",
+    "contentful": "^9.3.3",
     "next": "13.1.6",
     "next-auth": "^4.19.0",
     "react": "18.2.0",

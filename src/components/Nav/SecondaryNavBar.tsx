@@ -13,7 +13,7 @@ const SecondaryNavBar: FC<{ navItems: NavItem[] }> = ({ navItems }) => {
   )
   return (
     <nav className="center sticky top-0 z-50 bg-darkTeal py-2.5">
-      <ul className="flex cursor-pointer flex-row items-center justify-center space-x-8 p-4 text-white">
+      <ul className="flex cursor-pointer flex-col flex-wrap items-center justify-center p-4 text-white md:flex-row md:space-x-8">
         {navItems.map((dataKey: { path: string; text: string }, i: number) => {
           return (
             <li key={i}>

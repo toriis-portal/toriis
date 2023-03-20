@@ -29,8 +29,8 @@ const CapitalizedTitle: FC = () => {
           >
             {item.endsWith('s') ? (
               <div>
-                <text>Investment</text>
-                <text className="text-clementine">s</text>
+                Investment
+                <span className="text-clementine">s</span>
               </div>
             ) : (
               item
