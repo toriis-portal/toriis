@@ -30,6 +30,7 @@ const extractSortyByQueryKey = (
 
 const Home: FC = () => {
   const [selectedSortKeys, setSelectedSortKeys] = useState<string[]>([])
+  const [companyName, setCompanyName] = useState<string>('')
 
   const limit = 5
   const {
@@ -50,6 +51,7 @@ const Home: FC = () => {
         'Environment Grade',
         selectedSortKeys,
       ),
+      companyName: companyName,
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
@@ -70,6 +72,21 @@ const Home: FC = () => {
 
   return (
     <div>
+      <form
+        onSubmit={(e: React.SyntheticEvent) => {
+          e.preventDefault()
+          const target = e.target as typeof e.target & {
+            company_name: { value: string }
+          }
+          const input: string = target.company_name.value
+          setCompanyName(input.toUpperCase())
+        }}
+      >
+        <label htmlFor="company_name">Search company name:</label>
+        <input type="text" id="company_name" name="company_name" />
+        <button type="submit">Search</button>
+      </form>
+
       <h2>{isLoading && '(loading)'}</h2>
       <div className="flex flex-row">
         <div className="flex flex-col gap-4">

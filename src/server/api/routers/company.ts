@@ -20,6 +20,7 @@ export const companyRouter = createTRPCRouter({
         cursor: z.string().nullish(),
         sortByEnvGrade: z.string().nullish(),
         sortByNetAssestSum: z.string().nullish(),
+        companyName: z.string().nullish(),
       }),
     )
     .query(async ({ input, ctx }) => {
@@ -31,6 +32,11 @@ export const companyRouter = createTRPCRouter({
           netAssetSum: extractSortOrder(input.sortByNetAssestSum)
             ? input.sortByNetAssestSum
             : undefined,
+        },
+        where: {
+          name: {
+            contains: input.companyName,
+          },
         },
         include: {
           ESG: {
