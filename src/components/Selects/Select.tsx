@@ -123,10 +123,10 @@ export const Select: FC<SelectProps> = ({
     searchQuery !== '' ? value.includes(searchQuery) : true
 
   return (
-    <div className="relative ml-10 w-72">
+    <div className="relative w-72">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="float-right flex h-10 w-fit items-center justify-center overflow-hidden rounded-full border  border-solid border-darkTeal"
+        className="float-right flex h-10 w-fit items-center justify-center overflow-hidden rounded-full border border-solid border-darkTeal"
       >
         <span className="flex h-full w-fit items-center justify-center bg-white px-5">
           <span className="text-black">{text}</span>
