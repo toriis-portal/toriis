@@ -81,7 +81,7 @@ export const companyRouter = createTRPCRouter({
       const companyId = input.companyId ?? ''
       const cursor = input.cursor
 
-      const items = ctx.prisma.investment.findMany({
+      const items = await ctx.prisma.investment.findMany({
         where: {
           companyId: companyId,
         },
@@ -91,7 +91,7 @@ export const companyRouter = createTRPCRouter({
 
       let nextCursor: typeof cursor | undefined = undefined
 
-      const nextItem = (await items).pop()
+      const nextItem = items.pop()
       nextCursor = nextItem?.id
 
       return {
