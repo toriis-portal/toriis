@@ -10,22 +10,6 @@ interface ChevronFilterProps {
   onClickDown: VoidFunction
 }
 
-type InvestmentSortAction = (
-  a: Investment,
-  b: Investment,
-  isAscending: boolean,
-) => number
-
-interface InvestmentSortActions {
-  rawName: InvestmentSortAction
-  coupon: InvestmentSortAction
-  maturityDate: InvestmentSortAction
-  quantity: InvestmentSortAction
-  costVal: InvestmentSortAction
-  marketVal: InvestmentSortAction
-  year: InvestmentSortAction
-}
-
 const ChevronFilter: FC<ChevronFilterProps> = ({
   text,
   onClickUp,
@@ -62,7 +46,7 @@ const tableRowStyle = clsx('border-x-2 border-clementine text-center')
 const InvestmentTable: FC<{ investments: Investment[] }> = ({
   investments,
 }) => {
-  const [sortBy, setSortBy] = useState<[keyof InvestmentSortActions, boolean]>([
+  const [sortBy, setSortBy] = useState<[keyof Investment, boolean]>([
     'rawName',
     true,
   ])
