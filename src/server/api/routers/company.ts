@@ -58,6 +58,7 @@ export const companyRouter = createTRPCRouter({
         nextCursor,
       }
     }),
+
   countBySector: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.company.groupBy({
       by: ['sector'],
@@ -66,4 +67,36 @@ export const companyRouter = createTRPCRouter({
       },
     })
   }),
+
+  getInvestmentByCompany: publicProcedure
+    .input(
+      z.object({
+        limit: z.number().min(1).max(100).nullish(),
+        companyId: z.string().nullish(),
+        cursor: z.string().nullish(),
+      }),
+    )
+    .query(async ({ input, ctx }) => {
+      const limit = input.limit ?? 5
+      const companyId = input.companyId ?? ''
+      const cursor = input.cursor
+
+      const items = ctx.prisma.investment.findMany({
+        where: {
+          companyId: companyId,
+        },
+        take: limit + 1,
+        cursor: cursor ? { id: cursor } : undefined,
+      })
+
+      let nextCursor: typeof cursor | undefined = undefined
+
+      const nextItem = (await items).pop()
+      nextCursor = nextItem?.id
+
+      return {
+        items,
+        nextCursor,
+      }
+    }),
 })
