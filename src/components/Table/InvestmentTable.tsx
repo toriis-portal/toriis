@@ -17,7 +17,7 @@ type InvestmentSortAction = (
 ) => number
 
 interface InvestmentSortActions {
-  name: InvestmentSortAction
+  rawName: InvestmentSortAction
   coupon: InvestmentSortAction
   maturityDate: InvestmentSortAction
   quantity: InvestmentSortAction
@@ -59,33 +59,11 @@ const ChevronFilter: FC<ChevronFilterProps> = ({
 const tableHeaderMiddleStyle = clsx('w-1/12 border-x-2 border-white')
 const tableRowStyle = clsx('border-x-2 border-clementine text-center')
 
-// Object with all possible sort actions
-const InvestmentSortActions: InvestmentSortActions = {
-  name: (a: Investment, b: Investment, isAscending: boolean) =>
-    isAscending
-      ? a.rawName.localeCompare(b.rawName)
-      : b.rawName.localeCompare(a.rawName),
-  coupon: (a: Investment, b: Investment, isAscending: boolean) =>
-    isAscending ? a.coupon - b.coupon : b.coupon - a.coupon,
-  maturityDate: (a: Investment, b: Investment, isAscending: boolean) =>
-    isAscending
-      ? a.maturityDate.getTime() - b.maturityDate.getTime()
-      : b.maturityDate.getTime() - a.maturityDate.getTime(),
-  quantity: (a: Investment, b: Investment, isAscending: boolean) =>
-    isAscending ? a.quantity - b.quantity : b.quantity - a.quantity,
-  costVal: (a: Investment, b: Investment, isAscending: boolean) =>
-    isAscending ? a.costVal - b.costVal : b.costVal - a.costVal,
-  marketVal: (a: Investment, b: Investment, isAscending: boolean) =>
-    isAscending ? a.marketVal - b.marketVal : b.marketVal - a.marketVal,
-  year: (a: Investment, b: Investment, isAscending: boolean) =>
-    isAscending ? a.year - b.year : b.year - a.year,
-}
-
 const InvestmentTable: FC<{ investments: Investment[] }> = ({
   investments,
 }) => {
   const [sortBy, setSortBy] = useState<[keyof InvestmentSortActions, boolean]>([
-    'name',
+    'rawName',
     true,
   ])
   const [sortedInvestments, setSortedInvestments] =
@@ -96,8 +74,11 @@ const InvestmentTable: FC<{ investments: Investment[] }> = ({
     setSortedInvestments(
       sortedCopy.sort((a, b) => {
         const [sortKey, isAscending] = sortBy
-        const investmentSortAction = InvestmentSortActions[sortKey]
-        return investmentSortAction(a, b, isAscending)
+        if (isAscending) {
+          return a[sortKey] > b[sortKey] ? 1 : -1
+        } else {
+          return a[sortKey] > b[sortKey] ? -1 : 1
+        }
       }),
     )
   }, [investments, sortBy])
@@ -108,8 +89,8 @@ const InvestmentTable: FC<{ investments: Investment[] }> = ({
         <tr className="bg-clementine text-white">
           <th className="w-1/6">
             <ChevronFilter
-              onClickUp={() => setSortBy(['name', true])}
-              onClickDown={() => setSortBy(['name', false])}
+              onClickUp={() => setSortBy(['rawName', true])}
+              onClickDown={() => setSortBy(['rawName', false])}
               text="Investment"
             />
           </th>
