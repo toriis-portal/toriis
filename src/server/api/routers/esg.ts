@@ -17,7 +17,7 @@ const consumeExternalApi = async <T>(
   url: string,
 ): Promise<T | ErrorMessage> => {
   const res = await fetch(url, { method: 'GET' })
-  console.error('res', res)
+  console.log('res', res)
   return (await res.json()) as T
 }
 
