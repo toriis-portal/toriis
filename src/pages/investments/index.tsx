@@ -109,7 +109,9 @@ const Home: FC = () => {
         </label>
       </form>
 
-      <p>{isLoading && '(loading)'}</p>
+      {isLoading ? (
+        <p className="py-12 text-[22px] font-medium">(loading)</p>
+      ) : undefined}
 
       {data != undefined ? (
         data?.pages[0]?.items?.length < 1 ? (
