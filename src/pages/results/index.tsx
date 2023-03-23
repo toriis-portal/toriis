@@ -33,7 +33,7 @@ const Results: FC = () => {
     refetchData().catch((err) => {
       console.error(err)
     })
-  }, [])
+  }, [refetch])
 
   if (!data) {
     return (

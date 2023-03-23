@@ -91,8 +91,10 @@ export const companyRouter = createTRPCRouter({
 
       let nextCursor: typeof cursor | undefined = undefined
 
-      const nextItem = items.pop()
-      nextCursor = nextItem?.id
+      if (items.length > limit) {
+        const nextItem = items.pop()
+        nextCursor = nextItem?.id
+      }
 
       return {
         items,
