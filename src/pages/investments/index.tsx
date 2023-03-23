@@ -115,9 +115,7 @@ const Home: FC = () => {
           void fetchNextPage()
         }}
         disabled={!hasNextPage || isFetchingNextPage}
-      >
-        Load More
-      </LoadMoreButton>
+      ></LoadMoreButton>
 
       <Select
         text="sort by"
