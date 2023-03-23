@@ -71,7 +71,6 @@ const Home: FC = () => {
     })
   }, [selectedSortKeys])
 
-  console.log(data)
   return (
     <div className="flex flex-col items-center">
       <HighlightedTitle
@@ -112,62 +111,64 @@ const Home: FC = () => {
 
       <p>{isLoading && '(loading)'}</p>
 
-      {data?.pages[0].items.length < 1 ? (
-        <p className="py-12 text-[22px] font-medium">
-          No results found, try searching again.
-        </p>
-      ) : (
-        <>
-          <div className="flex flex-row">
-            <div className="flex flex-col gap-4">
-              <h1 className="font-medium">Company Name</h1>
-              {data?.pages.map((page, index) => (
-                <div className="flex flex-col gap-4" key={index}>
-                  {page.items.map((item) => (
-                    <div className="flex text-cobalt" key={item.id}>
-                      {item.name}
-                    </div>
-                  ))}
-                </div>
-              ))}
+      {data != undefined ? (
+        data?.pages[0]?.items?.length < 1 ? (
+          <p className="py-12 text-[22px] font-medium">
+            No results found, try searching again.
+          </p>
+        ) : (
+          <>
+            <div className="flex flex-row">
+              <div className="flex flex-col gap-4">
+                <h1 className="font-medium">Company Name</h1>
+                {data?.pages.map((page, index) => (
+                  <div className="flex flex-col gap-4" key={index}>
+                    {page.items.map((item) => (
+                      <div className="flex text-cobalt" key={item.id}>
+                        {item.name}
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+              <div className="flex flex-col gap-4">
+                <h1 className="font-medium">Sector</h1>
+                {data?.pages.map((page, index) => (
+                  <div className="flex flex-col gap-4" key={index}>
+                    {page.items.map((item) => (
+                      <div className="flex text-black" key={item.id}>
+                        {item.sector}
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+              <div className="flex flex-col gap-4">
+                <h1 className="font-medium">Industry</h1>
+                {data?.pages.map((page, index) => (
+                  <div className="flex flex-col gap-4" key={index}>
+                    {page.items.map((item) => (
+                      <div className="flex text-pumpkin" key={item.id}>
+                        {item.industry}
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="flex flex-col gap-4">
-              <h1 className="font-medium">Sector</h1>
-              {data?.pages.map((page, index) => (
-                <div className="flex flex-col gap-4" key={index}>
-                  {page.items.map((item) => (
-                    <div className="flex text-black" key={item.id}>
-                      {item.sector}
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-            <div className="flex flex-col gap-4">
-              <h1 className="font-medium">Industry</h1>
-              {data?.pages.map((page, index) => (
-                <div className="flex flex-col gap-4" key={index}>
-                  {page.items.map((item) => (
-                    <div className="flex text-pumpkin" key={item.id}>
-                      {item.industry}
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
 
-          <button
-            className="justify-center font-bold"
-            onClick={() => {
-              void fetchNextPage()
-            }}
-            disabled={!hasNextPage || isFetchingNextPage}
-          >
-            Load More
-          </button>
-        </>
-      )}
+            <button
+              className="justify-center font-bold"
+              onClick={() => {
+                void fetchNextPage()
+              }}
+              disabled={!hasNextPage || isFetchingNextPage}
+            >
+              Load More
+            </button>
+          </>
+        )
+      ) : undefined}
 
       <Select
         text="sort by"

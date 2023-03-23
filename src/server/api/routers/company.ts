@@ -20,7 +20,7 @@ export const companyRouter = createTRPCRouter({
         cursor: z.string().nullish(),
         sortByEnvGrade: z.string().nullish(),
         sortByNetAssestSum: z.string().nullish(),
-        companyName: z.string().nullish(),
+        companyName: z.string(),
       }),
     )
     .query(async ({ input, ctx }) => {
