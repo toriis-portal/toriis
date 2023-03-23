@@ -75,6 +75,7 @@ const Home: FC = () => {
     <div className="flex flex-col items-center">
       <HighlightedTitle title="Learn About Investments" />
       <form
+        className="w-full px-56"
         onSubmit={(e: React.SyntheticEvent) => {
           e.preventDefault()
           const target = e.target as typeof e.target & {
@@ -84,12 +85,24 @@ const Home: FC = () => {
           setCompanyName(input.toUpperCase())
         }}
       >
-        <label htmlFor="company_name">Search company name:</label>
-        <input type="text" id="company_name" name="company_name" />
-        <button type="submit">Search</button>
+        <label
+          htmlFor="company_name" // Keeping label element for accessibility - check that it actually works though?
+        >
+          <div className="flex flex-row">
+            <input
+              type="text"
+              id="company_name"
+              name="company_name"
+              placeholder="Search by Company Name"
+              className="grow rounded"
+            />
+            <button type="submit">Search</button>
+          </div>
+        </label>
       </form>
 
       <p>{isLoading && '(loading)'}</p>
+
       {data?.pages[0].items.length < 1 ? (
         <p className="text-[22px]">No results found, try searching again.</p>
       ) : (
