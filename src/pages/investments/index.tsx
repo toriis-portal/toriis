@@ -86,7 +86,7 @@ const Home: FC = () => {
         }}
       >
         <label
-          htmlFor="company_name" // Keeping label element for accessibility - check that it actually works though?
+          htmlFor="company_name" // Keeping label element for accessibility - TODO: check that it actually works though?
         >
           <div className="flex flex-row">
             <input
@@ -96,7 +96,12 @@ const Home: FC = () => {
               placeholder="Search by Company Name"
               className="grow rounded"
             />
-            <button type="submit">Search</button>
+            <button
+              type="submit"
+              className="underline-offset-6 ml-6 flex items-center justify-center rounded-full bg-black px-6 text-white underline" // TODO: reusing styles with "apply" button in Select component
+            >
+              Search
+            </button>
           </div>
         </label>
       </form>
