@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import type { FC } from 'react'
 
-import { Select } from '../../components'
+import { Select, HighlightedTitle } from '../../components'
 import { api } from '../../utils/api'
 
 const extractSortyByQueryKey = (
@@ -72,7 +72,8 @@ const Home: FC = () => {
 
   console.log(data)
   return (
-    <div>
+    <div className="flex flex-col items-center">
+      <HighlightedTitle title="Learn About Investments" />
       <form
         onSubmit={(e: React.SyntheticEvent) => {
           e.preventDefault()
@@ -88,9 +89,9 @@ const Home: FC = () => {
         <button type="submit">Search</button>
       </form>
 
-      <h2>{isLoading && '(loading)'}</h2>
+      <p>{isLoading && '(loading)'}</p>
       {data?.pages[0].items.length < 1 ? (
-        <h2>No results found, try searching again.</h2>
+        <p className="text-[22px]">No results found, try searching again.</p>
       ) : (
         <>
           <div className="flex flex-row">
