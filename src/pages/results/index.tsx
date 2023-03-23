@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import type { FC } from 'react'
 import { Spinner } from 'flowbite-react'
+import type { Investment } from '@prisma/client'
 
 import { api } from '../../utils/api'
+import { InvestmentTable } from '../../components'
 
 const Results: FC = () => {
   const limit = 5
@@ -42,20 +44,21 @@ const Results: FC = () => {
       </div>
     )
   }
-  console.log(data)
+
+  const table_data: Investment[] = []
+
+  {
+    data?.pages.map((page, index) => (
+      <div className="flex flex-col gap-4" key={index}>
+        {page.items.map((item) => table_data.push(item))}
+      </div>
+    ))
+  }
 
   return (
     <>
       <h2>{isLoading && '(loading)'}</h2>
-      {data?.pages.map((page, index) => (
-        <div className="flex flex-col gap-4" key={index}>
-          {page.items.map((item) => (
-            <div className="flex text-cobalt" key={item.id}>
-              {item.id}
-            </div>
-          ))}
-        </div>
-      ))}
+      <InvestmentTable investments={table_data} />
       <button
         className="justify-center font-bold"
         onClick={() => {
