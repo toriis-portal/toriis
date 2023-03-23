@@ -113,7 +113,9 @@ const Home: FC = () => {
         <p className="py-12 text-[22px] font-medium">(loading)</p>
       ) : undefined}
 
-      {data != undefined ? (
+      {data != undefined &&
+      data.pages != undefined &&
+      data.pages[0] != undefined ? (
         data?.pages[0]?.items?.length < 1 ? (
           <p className="py-12 text-[22px] font-medium">
             No results found, try searching again.
