@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { FC } from 'react'
+import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 
 import { Select, HighlightedTitle } from '../../components'
 import { api } from '../../utils/api'
@@ -88,13 +89,14 @@ const Home: FC = () => {
         <label
           htmlFor="company_name" // Keeping label element for accessibility - TODO: check that it actually works though?
         >
-          <div className="flex flex-row">
+          <div className="flex flex-row items-center">
+            <MagnifyingGlassIcon className="absolute h-6 stroke-current stroke-1 pl-4 text-darkGray	" />
             <input
               type="text"
               id="company_name"
               name="company_name"
               placeholder="Search by Company Name"
-              className="grow rounded"
+              className="grow rounded pl-14"
             />
             <button
               type="submit"
