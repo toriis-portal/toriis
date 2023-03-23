@@ -74,7 +74,11 @@ const Home: FC = () => {
   console.log(data)
   return (
     <div className="flex flex-col items-center">
-      <HighlightedTitle title="Learn About Investments" />
+      <HighlightedTitle
+        title="Learn About Investments"
+        size="large"
+        color="clementine"
+      />
       <form
         className="w-full px-56"
         onSubmit={(e: React.SyntheticEvent) => {
@@ -109,7 +113,9 @@ const Home: FC = () => {
       <p>{isLoading && '(loading)'}</p>
 
       {data?.pages[0].items.length < 1 ? (
-        <p className="text-[22px]">No results found, try searching again.</p>
+        <p className="py-12 text-[22px] font-medium">
+          No results found, try searching again.
+        </p>
       ) : (
         <>
           <div className="flex flex-row">
