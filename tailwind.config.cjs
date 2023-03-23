@@ -14,6 +14,8 @@ module.exports = {
         pumpkin: '#FF6112',
         clementine: '#FFA902',
         lightGray: '#D9D9D9',
+        lightShadow: '#23414634',
+        medGray: '#626161',
         white: '#FFFFFF',
       },
       flexBasis: {

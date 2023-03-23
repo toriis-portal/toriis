@@ -14,7 +14,7 @@ export interface CardProps {
 const CompanyCard: FC<CardProps> = ({ companyInfo }) => {
   return (
     <Link href={`/company/${companyInfo.company.id}`}>
-      <div className="box-border flex flex-col gap-[30px] rounded-xl border-[0.5px] border-darkTeal bg-white px-[40px] pt-[30px] pb-[20px] hover:-m-[3.2px] hover:border-4 hover:border-cobalt">
+      <div className="flex flex-col gap-[1.5vw] rounded-xl border-[0.5px] border-darkTeal bg-white px-[2.6vw] pt-[2vw] pb-[1.3vw] shadow-[0_4px_4px_0] shadow-lightShadow hover:-m-[3.2px] hover:border-4 hover:border-cobalt">
         <div className="flex flex-row justify-between text-[28px] font-medium text-black">
           {companyInfo.company.name}
           <Tag
@@ -37,7 +37,7 @@ const CompanyCard: FC<CardProps> = ({ companyInfo }) => {
               <p className="col-span-1 col-start-2 row-span-1 row-start-1">
                 {companyInfo.company.sector
                   ? sectorEnum[companyInfo.company.sector]
-                  : 'NONE'}
+                  : sectorEnum['NONE']}
               </p>
               <div className="col-span-1 col-start-1 row-span-1 row-start-3 self-center">
                 <Tag

@@ -4,6 +4,10 @@ import NavButton from './Buttons/NavButton'
 import PrimaryButton from './Buttons/PrimaryButton'
 import ToTopButton from './Buttons/ToTopButton'
 import ReadMoreButton from './Buttons/ReadMoreButton'
+// Card
+import CompanyCard from './Card/CompanyCard'
+import ESGTag from './Card/ESGTag'
+import NetAssetTag from './Card/NetAssetTag'
 // Charts
 import LandingDonutChart from './Charts/LandingDonutChart'
 // Displays
@@ -21,6 +25,7 @@ import NumberCircle from './Text/NumberCircle'
 import HighlightedTitle from './Text/HighlightedTitle'
 import CapitalizedTitle from './Text/CapitalizedTitle'
 import ShadowTitle from './Text/ShadowTitle'
+import Tag from './Text/Tag'
 
 export {
   AuthButton,
@@ -39,4 +44,8 @@ export {
   SecondaryNavBar,
   ShadowTitle,
   ReadMoreButton,
+  CompanyCard,
+  ESGTag,
+  NetAssetTag,
+  Tag,
 }

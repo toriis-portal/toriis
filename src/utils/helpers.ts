@@ -18,13 +18,18 @@ export const assetAmountToString = (assetsum: number) => {
 }
 
 export const envGradeToColor = (grade: string | undefined) => {
-  return grade
-    ? grade.charAt(0) === 'A'
-      ? 'bg-brightTeal'
-      : grade.charAt(0) === 'B'
-      ? 'bg-clementine'
-      : grade.charAt(0) === 'C'
-      ? 'bg-pumpkin'
-      : 'bg-lightGray'
-    : 'bg-lightGray'
+  if (grade === undefined || grade.length == 0) {
+    return 'bg-lightGray'
+  }
+
+  switch (grade.charAt(0)) {
+    case 'A':
+      return 'bg-brightTeal'
+    case 'B':
+      return 'bg-clementine'
+    case 'C':
+      return 'bg-pumpkin'
+    default:
+      return 'bg-lightGray'
+  }
 }

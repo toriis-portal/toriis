@@ -8,7 +8,7 @@ interface TagProps {
 
 const NetAssetTag: FC<TagProps> = ({ assetsum }) => {
   return (
-    <div className="flex min-w-[150px] max-w-fit flex-col items-center gap-2 rounded-xl bg-lightBlue px-4 py-2">
+    <div className="flex min-w-[150px] max-w-fit flex-col items-center justify-center gap-2 rounded-xl bg-lightBlue px-4 py-2">
       <div className="flex text-center text-lg font-medium">
         {'net asset sum'}
       </div>
