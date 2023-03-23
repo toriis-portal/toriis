@@ -96,7 +96,11 @@ const TimelineSection: FC<{ entries: TimelineEntry[] }> = ({ entries }) => {
 
   return (
     <div className="overflow-x-scroll px-12">
-      <HighlightedTitle title="Divestment History" />
+      <HighlightedTitle
+        title="Divestment History"
+        size="large"
+        color="clementine"
+      />
       <div className="relative mx-[5%] my-10 min-h-screen border-spacing-1 text-6xl">
         <div className="absolute box-border h-full w-1/2 border-spacing-1 border-r-8 border-clementine"></div>
         <div className="flex flex-row">

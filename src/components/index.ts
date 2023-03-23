@@ -26,6 +26,8 @@ import HighlightedTitle from './Text/HighlightedTitle'
 import CapitalizedTitle from './Text/CapitalizedTitle'
 import ShadowTitle from './Text/ShadowTitle'
 import Tag from './Text/Tag'
+// Tables
+import InvestmentTable from './Table/InvestmentTable'
 
 export {
   AuthButton,
@@ -44,6 +46,7 @@ export {
   SecondaryNavBar,
   ShadowTitle,
   ReadMoreButton,
+  InvestmentTable,
   CompanyCard,
   ESGTag,
   NetAssetTag,

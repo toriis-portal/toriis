@@ -13,6 +13,7 @@ module.exports = {
         brightTeal: '#40D7D4',
         pumpkin: '#FF6112',
         clementine: '#FFA902',
+        lightClementine: '#FFEECC',
         lightGray: '#D9D9D9',
         lightShadow: '#23414634',
         medGray: '#626161',
