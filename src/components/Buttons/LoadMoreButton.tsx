@@ -4,7 +4,6 @@ import clsx from 'clsx'
 interface LoadMoreButtonProps {
   onClick: () => void
   disabled: boolean
-  children?: React.ReactNode
 }
 
 const LoadMoreButton: FC<LoadMoreButtonProps> = ({ onClick, disabled }) => {
