@@ -86,9 +86,7 @@ const Home: FC = () => {
           setCompanyName(input.toUpperCase())
         }}
       >
-        <label
-          htmlFor="company_name" // Keeping label element for accessibility - TODO: check that it actually works though?
-        >
+        <label htmlFor="company_name">
           <div className="flex flex-row items-center">
             <MagnifyingGlassIcon className="absolute h-6 stroke-current stroke-1 pl-4 text-darkGray	" />
             <input
@@ -100,7 +98,7 @@ const Home: FC = () => {
             />
             <button
               type="submit"
-              className="underline-offset-6 ml-6 flex items-center justify-center rounded-full bg-black px-6 text-white underline" // TODO: reusing styles with "apply" button in Select component
+              className="underline-offset-6 ml-6 flex items-center justify-center rounded-full bg-black px-6 text-white underline"
             >
               Search
             </button>
