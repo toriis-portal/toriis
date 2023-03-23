@@ -21,6 +21,8 @@ import NumberCircle from './Text/NumberCircle'
 import HighlightedTitle from './Text/HighlightedTitle'
 import CapitalizedTitle from './Text/CapitalizedTitle'
 import ShadowTitle from './Text/ShadowTitle'
+// Tables
+import InvestmentTable from './Table/InvestmentTable'
 
 export {
   AuthButton,
@@ -39,4 +41,5 @@ export {
   SecondaryNavBar,
   ShadowTitle,
   ReadMoreButton,
+  InvestmentTable,
 }
