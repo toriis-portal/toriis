@@ -3,6 +3,7 @@ import type { FC } from 'react'
 
 import { Select } from '../../components'
 import { api } from '../../utils/api'
+import LoadMoreButton from '../../components/Buttons/LoadMoreButton'
 
 const extractSortyByQueryKey = (
   key: 'Net Asset Sum' | 'Environment Grade',
@@ -109,15 +110,12 @@ const Home: FC = () => {
           ))}
         </div>
       </div>
-      <button
-        className="justify-center font-bold"
+      <LoadMoreButton
         onClick={() => {
           void fetchNextPage()
         }}
         disabled={!hasNextPage || isFetchingNextPage}
-      >
-        Load More
-      </button>
+      ></LoadMoreButton>
 
       <Select
         text="sort by"
