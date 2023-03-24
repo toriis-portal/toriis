@@ -7,6 +7,7 @@ import { Spinner } from 'flowbite-react'
 import { Select } from '../../components'
 import { api } from '../../utils/api'
 import CompanyCard from '../../components/Card/CompanyCard'
+import LoadMoreButton from '../../components/Buttons/LoadMoreButton'
 
 const extractSortyByQueryKey = (
   key: 'Net Asset Sum' | 'Environment Grade',
@@ -119,15 +120,25 @@ const Home: FC = () => {
 
       {isLoading && <Spinner />}
 
-      <button
-        className="justify-center font-bold"
+      <LoadMoreButton
         onClick={() => {
           void fetchNextPage()
         }}
         disabled={!hasNextPage || isFetchingNextPage}
-      >
-        Load More
-      </button>
+      ></LoadMoreButton>
+
+      <Select
+        text="sort by"
+        options={{
+          'Environment Grade': ['low to high', 'high to low'],
+          'Net Asset Sum': ['low to high', 'high to low'],
+        }}
+        updateControl={{
+          type: 'on-apply',
+          cb: setSelectedSortKeys,
+        }}
+        isSearchable={true}
+      />
     </div>
   )
 }
