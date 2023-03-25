@@ -73,15 +73,15 @@ model Company {
   ESGInvalidTicker ESGInvalidTicker[]
   bloombergId      String?
   fuel             Fuel?
-  GHC              GHC?
   energy           Energy?
+  emission         Emission?
 }
 
 model Fuel {
   id                 String  @id @default(auto()) @map("_id") @db.ObjectId
   company            Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId          String  @unique @db.ObjectId
-  year               Int?
+  year               Int
   totalConsumption   Float?
   biodiesels         Float?
   biogases           Float?
@@ -99,12 +99,13 @@ model Energy {
   id                           String  @id @default(auto()) @map("_id") @db.ObjectId
   company                      Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId                    String  @unique @db.ObjectId
+  year                         Int?
   totalConsumption             Float?
   totalRenewableConsumption    Float?
   totalNonRenewableConsumption Float?
 }
 
-model GHC {
+model Emission {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   company    Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId  String    @unique @db.ObjectId
