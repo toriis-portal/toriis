@@ -68,7 +68,7 @@ model Company {
   netAssetSum      Float
   investment       Investment[]
   description      String?
-  ESG              ESG?
+  ESG              ESG[]
   ESGInvalidTicker ESGInvalidTicker[]
   bloombergId      String?
   // fuel             Fuel?
@@ -171,7 +171,7 @@ model VerificationToken {
 model ESG {
   id               String   @id @default(auto()) @map("_id") @db.ObjectId
   company          Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  companyId        String   @unique @db.ObjectId
+  companyId        String   @db.ObjectId
   environmentScore Int
   environmentGrade EnvGrade
   environmentLevel String
