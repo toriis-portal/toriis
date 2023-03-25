@@ -71,58 +71,48 @@ model Company {
   ESG              ESG[]
   ESGInvalidTicker ESGInvalidTicker[]
   bloombergId      String?
-  // fuel             Fuel?
-  // GHC              GHC?
-  // Electricity      Electricity?
-  // Energy           Energy?
+  fuel             Fuel?
+  GHC              GHC?
+  Energy           Energy?
 }
 
-// model Fuel {
-//   id                 String  @id @default(auto()) @map("_id") @db.ObjectId
-//   company            Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
-//   companyId          String  @unique @db.ObjectId
-//   year               Int
-//   totalConsumption   Float
-//   biodiesels         Float?
-//   biogases           Float?
-//   crudeOil           Float?
-//   coal               Float?
-//   oil                Float?
-//   gas                Float?
-//   otherBiomass       Float?
-//   sustainableBiomass Float?
-//   otherRenewable     Float?
-//   otherNonRenewable  Float?
-// }
+model Fuel {
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  company            Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId          String  @unique @db.ObjectId
+  year               Int?
+  totalConsumption   Float?
+  biodiesels         Float?
+  biogases           Float?
+  crudeOil           Float?
+  coal               Float?
+  oil                Float?
+  gas                Float?
+  otherBiomass       Float?
+  sustainableBiomass Float?
+  otherRenewable     Float?
+  otherNonRenewable  Float?
+}
 
-// model Electricity {
-//   id                       String  @id @default(auto()) @map("_id") @db.ObjectId
-//   company                  Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
-//   companyId                String  @unique @db.ObjectId
-//   totalConsumption         Float?
-//   totalProduction          Float?
-//   totalRenewableProduction Float?
-// }
+model Energy {
+  id                           String  @id @default(auto()) @map("_id") @db.ObjectId
+  company                      Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId                    String  @unique @db.ObjectId
+  totalConsumption             Float?
+  totalRenewableConsumption    Float?
+  totalNonRenewableConsumption Float?
+}
 
-// model Energy {
-//   id                           String  @id @default(auto()) @map("_id") @db.ObjectId
-//   company                      Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
-//   companyId                    String  @unique @db.ObjectId
-//   totalConsumption             Float?
-//   totalRenewableConsumption    Float?
-//   totalNonRenewableConsumption Float?
-// }
-
-// model GHC {
-//   id         String    @id @default(auto()) @map("_id") @db.ObjectId
-//   company    Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
-//   companyId  String    @unique @db.ObjectId
-//   date       DateTime?
-//   version    Int?
-//   scopeOne   Float?
-//   scopeTwo   Float?
-//   scopeThree Float?
-// }
+model GHC {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  company    Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId  String    @unique @db.ObjectId
+  date       DateTime?
+  version    Int?
+  scopeOne   Float?
+  scopeTwo   Float?
+  scopeThree Float?
+}
 
 model Account {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
