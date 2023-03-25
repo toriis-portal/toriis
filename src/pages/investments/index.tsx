@@ -4,7 +4,7 @@ import React from 'react'
 import type { Company, EnvGrade } from '@prisma/client'
 import { Spinner } from 'flowbite-react'
 
-import { Select } from '../../components'
+import { Select, ToTopButton } from '../../components'
 import { api } from '../../utils/api'
 import CompanyCard from '../../components/Card/CompanyCard'
 
@@ -72,7 +72,7 @@ const Home: FC = () => {
   }, [selectedSortKeys])
 
   return (
-    <div className="flex w-[95vw] flex-col items-center gap-5 self-center rounded-t-xl bg-lightBlue xl:w-11/12">
+    <div className="flex w-[95vw] flex-col items-center gap-5 self-center rounded-t-xl bg-lightBlue pb-20 xl:w-11/12">
       <div className="flex flex-row items-center justify-between self-stretch px-[3.6%] pt-[36px]">
         <div className="flex flex-col flex-wrap items-center md:flex-row md:gap-3.5">
           <p className="text-xl font-medium min-[500px]:text-3xl sm:text-[32px]">
@@ -80,7 +80,10 @@ const Home: FC = () => {
           </p>
           <p className="text-medGray">
             {'('}
-            {data?.pages ? data.pages.length * 5 : 0}
+            {data?.pages
+              ? (data.pages.length - 1) * limit +
+                (data.pages[data.pages.length - 1]?.items.length || 0)
+              : 0}
             {' results)'}
           </p>
         </div>
@@ -118,7 +121,6 @@ const Home: FC = () => {
       })}
 
       {isLoading && <Spinner />}
-
       <button
         className="justify-center font-bold"
         onClick={() => {
@@ -128,6 +130,7 @@ const Home: FC = () => {
       >
         Load More
       </button>
+      <ToTopButton />
     </div>
   )
 }
