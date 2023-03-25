@@ -38,6 +38,7 @@ enum Collection {
   Company
   Fuel
   GHC
+  Energy
 }
 
 model Staged {
@@ -73,7 +74,7 @@ model Company {
   bloombergId      String?
   fuel             Fuel?
   GHC              GHC?
-  Energy           Energy?
+  energy           Energy?
 }
 
 model Fuel {
