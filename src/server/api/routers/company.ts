@@ -13,7 +13,7 @@ const extractSortOrder = (
 }
 
 export const companyRouter = createTRPCRouter({
-  getInvestments: publicProcedure
+  getCompanies: publicProcedure
     .input(
       z.object({
         limit: z.number().min(1).max(100).nullish(),
