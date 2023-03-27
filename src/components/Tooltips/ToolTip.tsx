@@ -12,7 +12,7 @@ interface TitleProps {
 const ToolTip: FC<TitleProps> = ({ title, details, children }) => {
   return (
     <>
-      <div className="group relative flex justify-center">
+      <div className="group relative flex w-fit justify-center">
         <button className={clsx('bg-primary rounded', 'text-base text-black')}>
           <InformationCircleIcon className="w-6 " />
         </button>
