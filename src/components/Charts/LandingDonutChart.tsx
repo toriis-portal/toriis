@@ -25,10 +25,12 @@ const LandingDonutChart: FC = () => {
       </div>
     )
 
-  const pairs: companySectorCount[] = source.data.map((data) => ({
-    label: data.sector as Sector,
-    count: data._sum.netAssetSum,
-  }))
+  const pairs: companySectorCount[] = source.data
+    .filter((data) => data._sum.netAssetSum !== null)
+    .map((data) => ({
+      label: data.sector as Sector,
+      count: data._sum.netAssetSum as number,
+    }))
 
   /*
     This function cleans our input array of sectors by aggregating all sectors under a threshold,
