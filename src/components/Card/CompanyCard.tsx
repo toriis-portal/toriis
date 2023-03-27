@@ -19,7 +19,7 @@ const CompanyCard: FC<CardProps> = ({ companyInfo }) => {
           {companyInfo.company.name}
           <Tag
             title="environmental grade"
-            backgroundColor="lightBlue"
+            backgroundColor="bg-lightBlue"
             textColor="black"
           />
         </div>
@@ -30,7 +30,7 @@ const CompanyCard: FC<CardProps> = ({ companyInfo }) => {
               <div className="col-span-1 col-start-1 row-span-1 row-start-1 self-center">
                 <Tag
                   title="sector"
-                  backgroundColor="lightBlue"
+                  backgroundColor="bg-lightBlue"
                   textColor="black"
                 />
               </div>
@@ -42,7 +42,7 @@ const CompanyCard: FC<CardProps> = ({ companyInfo }) => {
               <div className="col-span-1 col-start-1 row-span-1 row-start-3 self-center">
                 <Tag
                   title="industry"
-                  backgroundColor="lightBlue"
+                  backgroundColor="bg-lightBlue"
                   textColor="black"
                 />
               </div>

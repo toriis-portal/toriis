@@ -9,7 +9,7 @@ interface TagProps {
 const Tag: FC<TagProps> = ({ title, backgroundColor, textColor }) => {
   return (
     <div
-      className={`flex justify-center rounded-full bg-${backgroundColor} text-${textColor} w-fit px-[18px] py-0 text-lg font-medium`}
+      className={`flex justify-center rounded-full ${backgroundColor} text-${textColor} w-fit px-[18px] py-0 text-lg font-medium`}
     >
       {title}
     </div>

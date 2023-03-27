@@ -81,7 +81,7 @@ const Company = () => {
       </div>
       <div className="flex justify-center">
         <div className="inline-flex pr-10">
-          <Tag title="sector" backgroundColor="cobalt" textColor="white" />
+          <Tag title="sector" backgroundColor="bg-cobalt" textColor="white" />
           <div className="pr-2  pl-2 font-medium">industrials</div>
 
           <ToolTip
@@ -90,7 +90,7 @@ const Company = () => {
           />
         </div>
         <div className="inline-flex pr-10">
-          <Tag title="industry" backgroundColor="cobalt" textColor="white" />
+          <Tag title="industry" backgroundColor="bg-cobalt" textColor="white" />
           <div className="pr-2 pl-2 font-medium">bank diversity</div>
 
           <ToolTip
@@ -101,7 +101,7 @@ const Company = () => {
         <div className="inline-flex pr-10">
           <Tag
             title="net asset sum"
-            backgroundColor="cobalt"
+            backgroundColor="bg-cobalt"
             textColor="white"
           />
           <div className="pr-2 pl-2 font-medium">500k</div>
@@ -113,16 +113,24 @@ const Company = () => {
         <div className="inline-flex">
           <Tag
             title="environmental grade"
-            backgroundColor="cobalt"
+            backgroundColor="bg-cobalt"
             textColor="white"
           />
           <div className="pr-2 pl-2">
-            <Tag title="AAA" backgroundColor="brightTeal" textColor="white" />
+            <Tag
+              title="AAA"
+              backgroundColor="bg-brightTeal"
+              textColor="white"
+            />
           </div>
           <ToolTip>
             <div>
               Average environmental grade for sector <b>Industrials</b>:
-              <Tag title="CCC" backgroundColor="clementine" textColor="white" />
+              <Tag
+                title="CCC"
+                backgroundColor="bg-clementine"
+                textColor="white"
+              />
               <br />
               Environmental grade: ESG refers to a set of values used to screen
               potential investments: Environmental, Social and Governance. An
