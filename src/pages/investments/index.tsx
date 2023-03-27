@@ -61,6 +61,9 @@ const Home: FC = () => {
     },
   )
 
+  const dataExists =
+    data != undefined && data.pages != undefined && data.pages[0] != undefined
+
   useEffect(() => {
     const refetchData = async () => {
       await refetch()
@@ -109,14 +112,10 @@ const Home: FC = () => {
         </label>
       </form>
 
-      {isLoading ? (
-        <p className="py-12 text-[22px] font-medium">(loading)</p>
-      ) : undefined}
+      {isLoading && <p className="py-12 text-[22px] font-medium">(loading)</p>}
 
-      {data != undefined &&
-      data.pages != undefined &&
-      data.pages[0] != undefined ? (
-        data?.pages[0]?.items?.length < 1 ? (
+      {dataExists &&
+        (data?.pages[0]?.items?.length < 1 ? (
           <p className="py-12 text-[22px] font-medium">
             No results found, try searching again.
           </p>
@@ -171,8 +170,7 @@ const Home: FC = () => {
               Load More
             </button>
           </>
-        )
-      ) : undefined}
+        ))}
 
       <Select
         text="sort by"
