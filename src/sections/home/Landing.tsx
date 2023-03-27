@@ -33,7 +33,7 @@ const Landing: FC<{ text: Document }> = ({ text }) => {
       <div className="flex flex-col items-center justify-center px-14 py-8 lg:flex-row">
         <div className="basis-3/7">
           <LandingDonutChart />
-          <div className=" font-Inter flex justify-center pt-2 text-xl font-medium">
+          <div className=" flex justify-center pt-2 font-inter text-xl font-semibold">
             Net Asset Sums per Sector
           </div>
         </div>
