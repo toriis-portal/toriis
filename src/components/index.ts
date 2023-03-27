@@ -28,7 +28,8 @@ import ShadowTitle from './Text/ShadowTitle'
 import Tag from './Text/Tag'
 // Tables
 import InvestmentTable from './Table/InvestmentTable'
-
+//Tooltips
+import Tooltip from './Tooltips/ToolTip'
 export {
   AuthButton,
   ListItem,
@@ -51,4 +52,5 @@ export {
   ESGTag,
   NetAssetTag,
   Tag,
+  Tooltip,
 }

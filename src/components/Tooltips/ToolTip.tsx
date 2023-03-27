@@ -2,13 +2,14 @@ import type { FC } from 'react'
 import clsx from 'clsx'
 import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import 'flowbite'
+
 interface TitleProps {
   title?: string
   details?: string
-  child?: React.ReactNode
+  children?: React.ReactNode
 }
 
-const ToolTip: FC<TitleProps> = ({ title, details, child }) => {
+const ToolTip: FC<TitleProps> = ({ title, details, children }) => {
   return (
     <>
       <div className="group relative inline-block">
@@ -23,7 +24,7 @@ const ToolTip: FC<TitleProps> = ({ title, details, child }) => {
         <div
           className={clsx(
             'border-light text-body-color absolute top-14 left-1/2',
-            '-translate-x-1/2 rounded border border-black bg-white',
+            'border-xl -translate-x-1/2 rounded border-black bg-white',
             'text-sm font-normal opacity-0 group-hover:opacity-100',
             'w-60 p-5 leading-4',
           )}
@@ -35,8 +36,8 @@ const ToolTip: FC<TitleProps> = ({ title, details, child }) => {
               'border-black bg-white',
             )}
           />
-          {child ? (
-            child
+          {children ? (
+            children
           ) : (
             <>
               <div className=" font-semibold">{title}:</div>
