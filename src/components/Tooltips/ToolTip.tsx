@@ -12,20 +12,20 @@ interface TitleProps {
 const ToolTip: FC<TitleProps> = ({ title, details, children }) => {
   return (
     <>
-      <div className="group relative inline-block">
+      <div className="group relative flex justify-center">
         <button
           className={clsx(
-            'bg-primary inline-flex rounded py-2 px-[18px]',
+            'bg-primary rounded py-2 px-[18px]',
             'text-base text-black',
           )}
         >
-          <InformationCircleIcon className="w-6" />
+          <InformationCircleIcon className="w-6 " />
         </button>
         <div
           className={clsx(
             'border-light text-body-color absolute top-14 left-1/2',
-            'border-xl -translate-x-1/2 rounded border-black bg-white',
-            'text-sm font-normal opacity-0 group-hover:opacity-100',
+            '-translate-x-1/2 rounded-xl border border-black bg-white',
+            'text-sm opacity-0 group-hover:opacity-100',
             'w-60 p-5 leading-4',
           )}
         >
