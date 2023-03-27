@@ -100,7 +100,7 @@ export const Select: FC<SelectProps> = ({
   }, [isOpen, onClose])
 
   useEffect(() => {
-    window.innerWidth < 1000 && shortText
+    window.innerWidth < 1500 && shortText
       ? setTextOption(shortText)
       : setTextOption(text)
   }, [shortText, text])
@@ -200,7 +200,7 @@ export const Select: FC<SelectProps> = ({
         >
           <span
             className={clsx('w-full text-black', {
-              'overflow-hidden whitespace-nowrap text-sm': isFilter,
+              'text-md overflow-hidden whitespace-nowrap font-inter': isFilter,
             })}
           >
             {textOption}
@@ -260,7 +260,7 @@ export const Select: FC<SelectProps> = ({
               >
                 {options.filter(handleSearchFilter).map((option) => (
                   <li key={option} className="flex items-center text-black">
-                    <span className={clsx({ 'text-sm': isFilter })}>
+                    <span className={clsx({ 'font-inter text-sm': isFilter })}>
                       {option}
                     </span>
                     <input

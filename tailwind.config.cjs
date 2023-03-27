@@ -31,6 +31,7 @@ module.exports = {
       },
       width: {
         '95%': '95vh',
+        '98%': '98vh',
       },
     },
     fontFamily: {

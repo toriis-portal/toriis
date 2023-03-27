@@ -116,8 +116,8 @@ const Home: FC = () => {
 
   return (
     <>
-      <div className="flex items-center justify-center">
-        <div className="flex w-95% flex-row justify-evenly gap-12 pb-4">
+      <div className="mx-10 flex items-center justify-center">
+        <div className="flex w-95% basis-3/4 flex-row justify-evenly gap-14 pb-4">
           <Select
             text="Sector"
             isFilter={true}

@@ -14,6 +14,15 @@ const extractSortOrder = (
   return false
 }
 
+const createNetAssetSumFilter = (range: number[]) => {
+  return {
+    netAssetSum: {
+      gte: range[0],
+      lte: range[1],
+    },
+  }
+}
+
 export const companyRouter = createTRPCRouter({
   getCompany: publicProcedure
     .input(
@@ -52,14 +61,9 @@ export const companyRouter = createTRPCRouter({
       const limit = input.limit ?? 9
       const { cursor } = input
 
-      const netAssetSumFilter = input.filterByNetAssetSum?.map((range) => {
-        return {
-          netAssetSum: {
-            gte: range[0],
-            lte: range[1],
-          },
-        }
-      })
+      const netAssetSumFilter = input.filterByNetAssetSum?.map((range) =>
+        createNetAssetSumFilter(range),
+      )
 
       const netAssetSumFilterCleaned =
         netAssetSumFilter && netAssetSumFilter.length > 0
