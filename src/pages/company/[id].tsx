@@ -1,93 +1,82 @@
-import type { Investment } from '@prisma/client'
+import { useEffect, useState } from 'react'
+import type { FC } from 'react'
 import { Spinner } from 'flowbite-react'
+import type { Investment } from '@prisma/client'
 import { useRouter } from 'next/router'
 
-import { HighlightedTitle, InvestmentTable } from '../../components'
 import { api } from '../../utils/api'
+import { InvestmentTable } from '../../components'
 
-const TEST_INVESTMENTS: Investment[] = [
-  {
-    id: '1',
-    companyId: 'Test Company 1',
-    rawName: 'Test Investment 1',
-    coupon: 0.1,
-    maturityDate: new Date('2021-01-01'),
-    quantity: 200,
-    costVal: 1000,
-    marketVal: 2000,
-    year: 2021,
-  },
-  {
-    id: '2',
-    companyId: 'Test Company 2',
-    rawName: 'Test Investment 2',
-    coupon: 0.2,
-    maturityDate: new Date('2021-01-02'),
-    quantity: 300,
-    costVal: 2000,
-    marketVal: 4000,
-    year: 2023,
-  },
-  {
-    id: '3',
-    companyId: 'Test Company 3',
-    rawName: 'Test Investment 3',
-    coupon: 0.3,
-    maturityDate: new Date('2021-01-03'),
-    quantity: 100,
-    costVal: 3000,
-    marketVal: 6000,
-    year: 2022,
-  },
-]
-
-const Company = () => {
+const Results: FC = () => {
+  const [selectedSort, setSelectedSort] = useState<
+    [keyof Investment, 'asc' | 'desc' | undefined]
+  >(['rawName', undefined])
   const companyId = (useRouter().query.id as string) ?? ''
-
-  const { data, isLoading, isError } = api.company.getCompany.useQuery(
-    { id: companyId },
-    { refetchOnWindowFocus: false, enabled: !!companyId },
+  const limit = 5
+  const {
+    fetchNextPage,
+    isLoading,
+    hasNextPage,
+    isFetchingNextPage,
+    data,
+    refetch,
+  } = api.company.getInvestmentByCompany.useInfiniteQuery(
+    {
+      limit: limit,
+      companyId: companyId,
+      sortKey: selectedSort[0],
+      sortOrder: selectedSort[1],
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+      refetchOnWindowFocus: false,
+      cacheTime: 0,
+    },
   )
 
-  if (isLoading) {
+  useEffect(() => {
+    const refetchData = async () => {
+      await refetch()
+    }
+
+    refetchData().catch((err) => {
+      console.error(err)
+    })
+  }, [selectedSort])
+
+  if (!data || isLoading) {
     return (
-      <div className="flex flex-col items-center px-12">
-        <Spinner color="info" />
+      <div className="text-center">
+        <Spinner />
       </div>
     )
   }
 
-  if (isError || !data) {
-    return (
-      <div className="flex flex-col items-center px-12">
-        <HighlightedTitle
-          title="Company Not Found"
-          size="large"
-          color="clementine"
-        />
-      </div>
-    )
-  }
+  const table_data: Investment[] = []
+
+  data?.pages.forEach((page) => {
+    page.items.forEach((item) => {
+      table_data.push(item)
+    })
+  })
 
   return (
-    <div className="mb-20 flex flex-col px-12">
-      <div className="flex flex-col items-center">
-        <HighlightedTitle title={data.name} size="large" color="clementine" />
-      </div>
-      <HighlightedTitle
-        title="Investment Visualizations"
-        size="medium"
-        color="brightTeal"
+    <>
+      <InvestmentTable
+        investments={table_data}
+        onSortChange={setSelectedSort}
       />
-      <HighlightedTitle
-        title="Investment Details"
-        size="medium"
-        color="brightTeal"
-      />
-      <InvestmentTable investments={TEST_INVESTMENTS} />
-      <button>Load more</button>
-    </div>
+      <button
+        className="justify-center font-bold"
+        onClick={() => {
+          void fetchNextPage()
+        }}
+        disabled={!hasNextPage || isFetchingNextPage}
+      >
+        Load More
+      </button>
+    </>
   )
 }
 
-export default Company
+export default Results

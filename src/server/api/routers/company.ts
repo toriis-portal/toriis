@@ -93,7 +93,7 @@ export const companyRouter = createTRPCRouter({
     .input(
       z.object({
         limit: z.number().min(1).max(100).nullish(),
-        companyId: z.string().nullish(),
+        companyId: z.string(),
         sortKey: z.string().nullish(),
         sortOrder: z.string().nullish(),
         cursor: z.string().nullish(),
@@ -107,10 +107,16 @@ export const companyRouter = createTRPCRouter({
 
       const cursor = input.cursor
 
+      if (!companyId) {
+        throw new TRPCError({
+          code: 'ERRNOTFOUND',
+          message: 'Expected a companyId, but found none.',
+        })
+      }
+
       const items = await ctx.prisma.investment.findMany({
         orderBy: {
           [sortKey]: sortOrder,
-          // id: 'asc',
         },
         where: {
           companyId: companyId,
