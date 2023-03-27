@@ -79,16 +79,6 @@ const Company = () => {
       <div className="flex flex-col items-center">
         <HighlightedTitle title={data.name} size="large" color="clementine" />
       </div>
-      <HighlightedTitle
-        title="Investment Visualizations"
-        size="medium"
-        color="brightTeal"
-      />
-      <HighlightedTitle
-        title="Investment Details"
-        size="medium"
-        color="brightTeal"
-      />
       <div className="flex justify-center">
         <div className="inline-flex pr-12">
           <Tag title="sector" backgroundColor="cobalt" textColor="white" />
@@ -144,6 +134,16 @@ const Company = () => {
           </ToolTip>
         </div>
       </div>
+      <HighlightedTitle
+        title="Investment Visualizations"
+        size="medium"
+        color="brightTeal"
+      />
+      <HighlightedTitle
+        title="Investment Details"
+        size="medium"
+        color="brightTeal"
+      />
       <InvestmentTable investments={TEST_INVESTMENTS} />
       <button>Load more</button>
     </div>
