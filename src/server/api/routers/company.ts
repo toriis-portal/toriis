@@ -1,3 +1,4 @@
+import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
 import { createTRPCRouter, publicProcedure } from '../trpc'
@@ -13,7 +14,27 @@ const extractSortOrder = (
 }
 
 export const companyRouter = createTRPCRouter({
-  getInvestments: publicProcedure
+  getCompany: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .query(async ({ input, ctx }) => {
+      const company = await ctx.prisma.company.findUnique({
+        where: {
+          id: input.id,
+        },
+      })
+      if (!company) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Company not found',
+        })
+      }
+      return company
+    }),
+  getCompanies: publicProcedure
     .input(
       z.object({
         limit: z.number().min(1).max(100).nullish(),
