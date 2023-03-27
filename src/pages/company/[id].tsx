@@ -1,5 +1,4 @@
 import type { Investment } from '@prisma/client'
-import clsx from 'clsx'
 import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
 
@@ -87,8 +86,8 @@ const Company = () => {
         color="brightTeal"
       />
       <div className="flex justify-center">
-        <div className="inline-flex pr-10">
-          <Tag title="sector" backgroundColor="clementine" textColor="white" />
+        <div className="inline-flex pr-12">
+          <Tag title="sector" backgroundColor="cobalt" textColor="white" />
           <div className="pr-2  pl-2 font-medium">industrials</div>
 
           <ToolTip
@@ -96,12 +95,8 @@ const Company = () => {
             details="The industrial sector includes companies involved directly in the production of capital goods such as electrical or industrial machinery, or in the provision of transportation services and infrastructure."
           />
         </div>
-        <div className="inline-flex pr-10">
-          <Tag
-            title="industry"
-            backgroundColor="clementine"
-            textColor="white"
-          />
+        <div className="inline-flex pr-12">
+          <Tag title="industry" backgroundColor="cobalt" textColor="white" />
           <div className="pr-2 pl-2 font-medium">bank diversity</div>
 
           <ToolTip
@@ -109,10 +104,10 @@ const Company = () => {
             details="A subset of sector, still looking for good info for each industry"
           />
         </div>
-        <div className="inline-flex pr-10">
+        <div className="inline-flex pr-12">
           <Tag
             title="net asset sum"
-            backgroundColor="clementine"
+            backgroundColor="cobalt"
             textColor="white"
           />
           <div className="pr-2 pl-2 font-medium">500k</div>
@@ -124,11 +119,11 @@ const Company = () => {
         <div className="inline-flex">
           <Tag
             title="environmental grade"
-            backgroundColor="clementine"
+            backgroundColor="cobalt"
             textColor="white"
           />
           <div className="pr-2 pl-2">
-            <Tag title="AAA" backgroundColor="clementine" textColor="white" />
+            <Tag title="AAA" backgroundColor="brightTeal" textColor="white" />
           </div>
           <ToolTip>
             <div>
