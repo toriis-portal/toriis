@@ -1,7 +1,10 @@
 import type { Investment } from '@prisma/client'
 import clsx from 'clsx'
+import { Spinner } from 'flowbite-react'
+import { useRouter } from 'next/router'
 
-import InvestmentTable from '../../components/Table/InvestmentTable'
+import { HighlightedTitle, InvestmentTable } from '../../components'
+import { api } from '../../utils/api'
 import ToolTip from '../../components/Tooltips/ToolTip'
 
 const TEST_INVESTMENTS: Investment[] = [
@@ -41,8 +44,48 @@ const TEST_INVESTMENTS: Investment[] = [
 ]
 
 const Company = () => {
+  const companyId = (useRouter().query.id as string) ?? ''
+
+  const { data, isLoading, isError } = api.company.getCompany.useQuery(
+    { id: companyId },
+    { refetchOnWindowFocus: false, enabled: !!companyId },
+  )
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center px-12">
+        <Spinner color="info" />
+      </div>
+    )
+  }
+
+  if (isError || !data) {
+    return (
+      <div className="flex flex-col items-center px-12">
+        <HighlightedTitle
+          title="Company Not Found"
+          size="large"
+          color="clementine"
+        />
+      </div>
+    )
+  }
+
   return (
-    <>
+    <div className="mb-20 flex flex-col px-12">
+      <div className="flex flex-col items-center">
+        <HighlightedTitle title={data.name} size="large" color="clementine" />
+      </div>
+      <HighlightedTitle
+        title="Investment Visualizations"
+        size="medium"
+        color="brightTeal"
+      />
+      <HighlightedTitle
+        title="Investment Details"
+        size="medium"
+        color="brightTeal"
+      />
       <div className="grid grid-flow-col grid-cols-4 gap-4">
         <ToolTip
           title="Industrial Sector"
@@ -80,7 +123,7 @@ const Company = () => {
       </div>
       <InvestmentTable investments={TEST_INVESTMENTS} />
       <button>Load more</button>
-    </>
+    </div>
   )
 }
 
