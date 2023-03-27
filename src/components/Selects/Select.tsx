@@ -177,7 +177,7 @@ export const Select: FC<SelectProps> = ({
       : true
 
   return (
-    <div className="relative flex-grow basis-0">
+    <div className={clsx('relative', { 'flex-grow basis-0': isFilter })}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={clsx(
@@ -190,18 +190,19 @@ export const Select: FC<SelectProps> = ({
       >
         <span
           className={clsx(
-            'mx-5 flex h-full w-fit flex-initial basis-1/4 items-center justify-center bg-white',
+            'flex h-full w-fit flex-initial items-center justify-center bg-white px-5',
+            { 'basis-1/4': isFilter },
           )}
         >
           <span
-            className={clsx('text-black', {
+            className={clsx('w-full text-black', {
               'overflow-hidden whitespace-nowrap text-sm': isFilter,
             })}
           >
             {textOption}
           </span>
         </span>
-        <div className="basis-1/2" />
+        <div className={clsx({ 'basis-1/2': isFilter })} />
         <span
           className={clsx(
             'float-right h-full basis-1/4 items-center justify-center px-3',
