@@ -80,7 +80,7 @@ const Company = () => {
         <HighlightedTitle title={data.name} size="large" color="clementine" />
       </div>
       <div className="flex justify-center">
-        <div className="inline-flex pr-12">
+        <div className="inline-flex pr-10">
           <Tag title="sector" backgroundColor="cobalt" textColor="white" />
           <div className="pr-2  pl-2 font-medium">industrials</div>
 
@@ -89,7 +89,7 @@ const Company = () => {
             details="The industrial sector includes companies involved directly in the production of capital goods such as electrical or industrial machinery, or in the provision of transportation services and infrastructure."
           />
         </div>
-        <div className="inline-flex pr-12">
+        <div className="inline-flex pr-10">
           <Tag title="industry" backgroundColor="cobalt" textColor="white" />
           <div className="pr-2 pl-2 font-medium">bank diversity</div>
 
@@ -98,7 +98,7 @@ const Company = () => {
             details="A subset of sector, still looking for good info for each industry"
           />
         </div>
-        <div className="inline-flex pr-12">
+        <div className="inline-flex pr-10">
           <Tag
             title="net asset sum"
             backgroundColor="cobalt"
