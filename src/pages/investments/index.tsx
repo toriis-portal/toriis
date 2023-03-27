@@ -31,7 +31,7 @@ const extractSortyByQueryKey = (
 
 const Home: FC = () => {
   const [selectedSortKeys, setSelectedSortKeys] = useState<string[]>([])
-  const [companyName, setCompanyName] = useState<string>('')
+  const [companySearchQuery, setCompanySearchQuery] = useState<string>('')
 
   const limit = 5
   const {
@@ -52,7 +52,7 @@ const Home: FC = () => {
         'Environment Grade',
         selectedSortKeys,
       ),
-      companyName: companyName,
+      companyName: companySearchQuery,
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
@@ -89,7 +89,7 @@ const Home: FC = () => {
             company_name: { value: string }
           }
           const input: string = target.company_name.value
-          setCompanyName(input.toUpperCase())
+          setCompanySearchQuery(input.toUpperCase())
         }}
       >
         <label htmlFor="company_name">
