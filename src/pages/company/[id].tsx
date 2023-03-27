@@ -2,9 +2,13 @@ import type { Investment } from '@prisma/client'
 import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
 
-import { HighlightedTitle, InvestmentTable, ToolTip } from '../../components'
+import {
+  HighlightedTitle,
+  InvestmentTable,
+  ToolTip,
+  Tag,
+} from '../../components'
 import { api } from '../../utils/api'
-import Tag from '../../components/Text/Tag'
 
 const TEST_INVESTMENTS: Investment[] = [
   {
