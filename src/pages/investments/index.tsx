@@ -116,8 +116,8 @@ const Home: FC = () => {
 
   return (
     <>
-      <div className="flex justify-center">
-        <div className="flex w-3/4 flex-row justify-evenly gap-12">
+      <div className="flex items-center justify-center">
+        <div className="flex w-95% flex-row justify-evenly gap-12 pb-4">
           <Select
             text="Sector"
             isFilter={true}
@@ -182,7 +182,7 @@ const Home: FC = () => {
           />
         </div>
       </div>
-      <div className="flex w-[95vw] flex-col items-center gap-5 self-center rounded-t-xl bg-lightBlue pb-20 xl:w-11/12">
+      <div className="flex w-95% flex-col items-center gap-5 self-center rounded-t-xl bg-lightBlue py-28 xl:w-11/12">
         <div className="flex flex-row items-center justify-between self-stretch px-[3.6%] pt-[36px]">
           <div className="flex flex-col flex-wrap items-center md:flex-row md:gap-3.5">
             <p className="text-xl font-medium min-[500px]:text-3xl sm:text-[32px]">

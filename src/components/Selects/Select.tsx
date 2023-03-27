@@ -177,7 +177,11 @@ export const Select: FC<SelectProps> = ({
       : true
 
   return (
-    <div className={clsx('relative', { 'flex-grow basis-0': isFilter })}>
+    <div
+      className={clsx('relative', {
+        'flex-grow basis-0': isFilter,
+      })}
+    >
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={clsx(
@@ -221,7 +225,7 @@ export const Select: FC<SelectProps> = ({
           className={clsx(
             'absolute left-0 transform rounded-md border-[0.5px] border-solid border-cobalt bg-white shadow-md',
             {
-              'w-full translate-y-14 p-5': !isFilter,
+              'w-60 -translate-x-20 translate-y-14 p-5': !isFilter,
               'w-full translate-y-2 p-3': isFilter,
             },
           )}
@@ -240,7 +244,7 @@ export const Select: FC<SelectProps> = ({
             </div>
           )}
           <div
-            className={clsx('w-full overflow-y-auto overflow-x-visible p-0', {
+            className={clsx('overflow-y-auto overflow-x-visible p-0', {
               'max-h-fit': !containerHeight,
               'max-h-1/4': containerHeight == '1/4',
               'max-h-1/2': containerHeight == '1/2',

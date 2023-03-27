@@ -29,6 +29,9 @@ module.exports = {
         '1/2': '50vh',
         '3/4': '75vh',
       },
+      width: {
+        '95%': '95vh',
+      },
     },
     fontFamily: {
       klima: ['Klima', 'Arial', 'Roboto'],
