@@ -13,17 +13,12 @@ const ToolTip: FC<TitleProps> = ({ title, details, children }) => {
   return (
     <>
       <div className="group relative flex justify-center">
-        <button
-          className={clsx(
-            'bg-primary rounded py-2 px-[18px]',
-            'text-base text-black',
-          )}
-        >
+        <button className={clsx('bg-primary rounded', 'text-base text-black')}>
           <InformationCircleIcon className="w-6 " />
         </button>
         <div
           className={clsx(
-            'border-light text-body-color absolute top-14 left-1/2',
+            'border-light text-body-color absolute top-12 left-1/2',
             '-translate-x-1/2 rounded-xl border border-black bg-white',
             'text-sm opacity-0 group-hover:opacity-100',
             'w-60 p-5 leading-4',
