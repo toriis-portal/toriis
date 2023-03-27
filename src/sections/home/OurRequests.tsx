@@ -1,16 +1,15 @@
 import type { FC } from 'react'
 
-import HomeData from '../../info/home.json'
-import { DropDownCard, HighlightedTitle } from '../../components'
+import { RequestAccordion, HighlightedTitle } from '../../components'
+import type { OurRequestsEntry } from '../../types'
 
-const OurRequest: FC = () => {
-  const requests = HomeData.ourRequests
+const OurRequest: FC<{ entries: OurRequestsEntry[] }> = ({ entries }) => {
   return (
-    <div className=" rounded-xl bg-lightBlue pl-12 pb-10 pt-10">
-      <HighlightedTitle title="Our Requests" />
-      {requests.map((request, index) => (
+    <div className="bg-lightBlue p-12">
+      <HighlightedTitle title="Our Requests" size="large" color="clementine" />
+      {entries.map((entry, index) => (
         <div key={index}>
-          <DropDownCard key={index} item={request} index={index + 1} />
+          <RequestAccordion content={entry} />
         </div>
       ))}
     </div>

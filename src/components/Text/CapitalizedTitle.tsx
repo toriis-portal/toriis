@@ -21,7 +21,7 @@ const CapitalizedTitle: FC = () => {
   const landingHeader = clsx('text-4xl font-medium')
   return (
     <>
-      <div className="flex flex-wrap place-content-center space-x-4 pt-10">
+      <div className="flex flex-wrap place-content-center space-x-3 pt-10">
         {titleText.map((item, index) => (
           <span
             key={index}
@@ -29,8 +29,8 @@ const CapitalizedTitle: FC = () => {
           >
             {item.endsWith('s') ? (
               <div>
-                <text>Investment</text>
-                <text className="text-clementine">s</text>
+                Investment
+                <span className="text-clementine">s</span>
               </div>
             ) : (
               item

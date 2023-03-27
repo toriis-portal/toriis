@@ -1,6 +1,7 @@
 import type { FC } from 'react'
 import dynamic from 'next/dynamic'
 import { Sector } from '@prisma/client'
+import { Spinner } from 'flowbite-react'
 
 import { api } from '../../utils/api'
 import { sectorEnum } from '../../utils/enums'
@@ -17,7 +18,12 @@ const LandingDonutChart: FC = () => {
     refetchOnWindowFocus: false,
   })
 
-  if (!source.data) return <p className="h-96 w-96"> Loading...</p>
+  if (!source.data)
+    return (
+      <div className="text-center">
+        <Spinner color="info" />
+      </div>
+    )
 
   const pairs: companySectorCount[] = source.data.map((data) => ({
     label: data.sector as Sector,
