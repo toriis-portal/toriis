@@ -33,6 +33,14 @@ enum EnvGrade {
   CCC
 }
 
+enum Collection {
+  Investment
+  Company
+  Fuel
+  Emission
+  Energy
+}
+
 model Investment {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   company      Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
@@ -57,6 +65,10 @@ model Company {
   description      String?
   ESG              ESG[]
   ESGInvalidTicker ESGInvalidTicker[]
+  bloombergId      String?
+  fuel             Fuel?
+  energy           Energy?
+  emission         Emission?
 }
 
 model Account {
@@ -121,4 +133,49 @@ model ESGInvalidTicker {
   id        String  @id @default(auto()) @map("_id") @db.ObjectId
   company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId String  @db.ObjectId
+}
+
+model Fuel {
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  company            Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId          String  @unique @db.ObjectId
+  year               Int
+  totalConsumption   Float?
+  biodiesels         Float?
+  biogases           Float?
+  crudeOil           Float?
+  coal               Float?
+  oil                Float?
+  gas                Float?
+  otherBiomass       Float?
+  sustainableBiomass Float?
+  otherRenewable     Float?
+  otherNonRenewable  Float?
+}
+
+model Energy {
+  id                           String  @id @default(auto()) @map("_id") @db.ObjectId
+  company                      Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId                    String  @unique @db.ObjectId
+  year                         Int?
+  totalConsumption             Float?
+  totalRenewableConsumption    Float?
+  totalNonRenewableConsumption Float?
+}
+
+model Emission {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  company    Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId  String    @unique @db.ObjectId
+  date       DateTime?
+  version    Int?
+  scopeOne   Float?
+  scopeTwo   Float?
+  scopeThree Float?
+}
+
+model Staged {
+  id      String     @id @default(auto()) @map("_id") @db.ObjectId
+  type    Collection
+  updates Json[]
 }
