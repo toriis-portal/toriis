@@ -18,7 +18,8 @@ interface SelectProps {
   }
   isSearchable?: boolean
   isFilter?: boolean
-  containerHeight?: string
+  containerHeight?: string // Only handles 1/4, 1/2, 3/4
+  shortText?: string
 }
 
 /**
@@ -77,10 +78,12 @@ export const Select: FC<SelectProps> = ({
   isSearchable = false,
   isFilter = false,
   containerHeight,
+  shortText,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [selected, setSelected] = useState<string[]>([])
   const [searchQuery, setSearchQuery] = useState('')
+  const [textOption, setTextOption] = useState<string>(text)
 
   useEffect(() => {
     if (isOpen) {
@@ -95,6 +98,12 @@ export const Select: FC<SelectProps> = ({
       setSearchQuery('')
     }
   }, [isOpen, onClose])
+
+  useEffect(() => {
+    window.innerWidth < 1000 && shortText
+      ? setTextOption(shortText)
+      : setTextOption(text)
+  }, [shortText, text])
 
   /**
    * Updates the selected state and calls the onChange callback
@@ -168,32 +177,39 @@ export const Select: FC<SelectProps> = ({
       : true
 
   return (
-    <div className="relative ml-10 w-1/6">
+    <div className="relative flex-grow basis-0">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={clsx(
-          'flex basis-full items-center overflow-hidden rounded-full border border-solid',
+          'flex w-full items-center overflow-hidden rounded-full border border-solid',
           {
             'justify-centerborder-darkTeal float-right h-10 w-fit': !isFilter,
-            'h-8 w-5/6 border-cobalt': isFilter,
+            'h-8 border-cobalt': isFilter,
           },
         )}
       >
         <span
           className={clsx(
-            'mx-5 flex h-full w-fit basis-3/4 items-center justify-center bg-white',
+            'mx-5 flex h-full w-fit flex-initial basis-1/4 items-center justify-center bg-white',
           )}
         >
-          <span className={clsx('text-black', { 'text-sm': isFilter })}>
-            {text}
+          <span
+            className={clsx('text-black', {
+              'overflow-hidden whitespace-nowrap text-sm': isFilter,
+            })}
+          >
+            {textOption}
           </span>
         </span>
-        <div className="min-w-fit" />
+        <div className="basis-1/2" />
         <span
-          className={clsx('h-full basis-1/4 items-center justify-center px-3', {
-            'bg-lightBlue': isFilter,
-            'bg-black': !isFilter,
-          })}
+          className={clsx(
+            'float-right h-full basis-1/4 items-center justify-center px-3',
+            {
+              'bg-lightBlue': isFilter,
+              'bg-black': !isFilter,
+            },
+          )}
         >
           <SelectChevron isFilter={isFilter} isOpen={isOpen} />
         </span>
@@ -205,7 +221,7 @@ export const Select: FC<SelectProps> = ({
             'absolute left-0 transform rounded-md border-[0.5px] border-solid border-cobalt bg-white shadow-md',
             {
               'w-full translate-y-14 p-5': !isFilter,
-              'w-60 translate-y-2 p-3': isFilter,
+              'w-full translate-y-2 p-3': isFilter,
             },
           )}
         >
@@ -223,9 +239,12 @@ export const Select: FC<SelectProps> = ({
             </div>
           )}
           <div
-            className={`${
-              containerHeight ? `max-h-[240px]` : 'max-h-fit'
-            } w-full overflow-y-auto overflow-x-visible p-0`}
+            className={clsx('w-full overflow-y-auto overflow-x-visible p-0', {
+              'max-h-fit': !containerHeight,
+              'max-h-1/4': containerHeight == '1/4',
+              'max-h-1/2': containerHeight == '1/2',
+              'max-h-3/4': containerHeight == '3/4',
+            })}
           >
             {isStringArray(options) ? (
               <ul
@@ -259,7 +278,9 @@ export const Select: FC<SelectProps> = ({
                           key={option}
                           className="flex items-center text-black"
                         >
-                          <span className="text-sm">{option}</span>
+                          <span className="text-sm max-sm:text-[3px]">
+                            {option}
+                          </span>
                           <input
                             onChange={() =>
                               handleGroupChange(`${key}-${option}`)

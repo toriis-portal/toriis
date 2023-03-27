@@ -158,67 +158,71 @@ const Home: FC = () => {
       >
         Load More
       </button>
-      <div className="flex flex-row gap-0">
-        <Select
-          text="Sector"
-          isFilter={true}
-          options={Object.values(sectorEnum)}
-          updateControl={{
-            type: 'on-change',
-            cb: (selectedOptions) => {
-              setFilterOptions({
-                ...filterOptions,
-                sectors: selectedOptions.map((item) => {
-                  return item.toUpperCase().replace(' ', '_') as Sector
-                }),
-              })
-            },
-          }}
-        />
-        <Select
-          text="Industry"
-          isFilter={true}
-          isSearchable={true}
-          options={INDUSTRIES}
-          containerHeight="240px"
-          updateControl={{
-            type: 'on-change',
-            cb: (selectedOptions) => {
-              setFilterOptions({
-                ...filterOptions,
-                industries: selectedOptions,
-              })
-            },
-          }}
-        />
-        <Select
-          text="Environmental Grade"
-          isFilter={true}
-          options={Object.values(envGradeEnum)}
-          updateControl={{
-            type: 'on-change',
-            cb: (selectedOptions) => {
-              setFilterOptions({
-                ...filterOptions,
-                envGrade: selectedOptions,
-              })
-            },
-          }}
-        />
-        <Select
-          text="Net Asset Sum"
-          isFilter={true}
-          options={Object.keys(netAssetSumEnum)}
-          updateControl={{
-            type: 'on-change',
-            cb: (selectedOptions) => {
-              setFilterOptions({
-                ...filterOptions,
-                netAssetSum: netAssetSumCallback(selectedOptions),
-              })
-            },
-          }}
-        />
+      <div className="flex justify-center">
+        <div className="flex w-3/4 flex-row justify-evenly gap-12">
+          <Select
+            text="Sector"
+            isFilter={true}
+            options={Object.values(sectorEnum)}
+            updateControl={{
+              type: 'on-change',
+              cb: (selectedOptions) => {
+                setFilterOptions({
+                  ...filterOptions,
+                  sectors: selectedOptions.map((item) => {
+                    return item.toUpperCase().replace(' ', '_') as Sector
+                  }),
+                })
+              },
+            }}
+          />
+          <Select
+            text="Industry"
+            isFilter={true}
+            isSearchable={true}
+            options={INDUSTRIES}
+            containerHeight="1/4"
+            updateControl={{
+              type: 'on-change',
+              cb: (selectedOptions) => {
+                setFilterOptions({
+                  ...filterOptions,
+                  industries: selectedOptions,
+                })
+              },
+            }}
+          />
+          <Select
+            text="Environmental Grade"
+            shortText="Env Grade"
+            isFilter={true}
+            options={Object.values(envGradeEnum)}
+            updateControl={{
+              type: 'on-change',
+              cb: (selectedOptions) => {
+                setFilterOptions({
+                  ...filterOptions,
+                  envGrade: selectedOptions,
+                })
+              },
+            }}
+          />
+          <Select
+            text="Net Asset Sum"
+            shortText="Net Asset"
+            isFilter={true}
+            options={Object.keys(netAssetSumEnum)}
+            updateControl={{
+              type: 'on-change',
+              cb: (selectedOptions) => {
+                setFilterOptions({
+                  ...filterOptions,
+                  netAssetSum: netAssetSumCallback(selectedOptions),
+                })
+              },
+            }}
+          />
+        </div>
       </div>
       {/* <Select text="Sort By" options={[]} /> */}
     </div>

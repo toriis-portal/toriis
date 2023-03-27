@@ -18,6 +18,11 @@ module.exports = {
         '3/7': '42.8571429%',
         '4/7': '57.1428571%',
       },
+      maxHeight: {
+        '1/4': '25vh',
+        '1/2': '50vh',
+        '3/4': '75vh',
+      },
     },
     fontFamily: {
       klima: ['Klima', 'Arial', 'Roboto'],
