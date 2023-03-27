@@ -14,7 +14,7 @@ interface companySectorCount {
 }
 
 const LandingDonutChart: FC = () => {
-  const source = api.company.countBySector.useQuery(undefined, {
+  const source = api.company.sumBySector.useQuery(undefined, {
     refetchOnWindowFocus: false,
   })
 
@@ -27,7 +27,7 @@ const LandingDonutChart: FC = () => {
 
   const pairs: companySectorCount[] = source.data.map((data) => ({
     label: data.sector as Sector,
-    count: data._count.sector,
+    count: data._sum.netAssetSum,
   }))
 
   /*
@@ -56,7 +56,9 @@ const LandingDonutChart: FC = () => {
 
   const labels: string[] = cleanData(pairs).map((dataKey) => dataKey.label)
 
-  const counts: number[] = cleanData(pairs).map((dataKey) => dataKey.count)
+  const sums: number[] = cleanData(pairs).map((dataKey) =>
+    Math.round(dataKey.count),
+  )
 
   const options = {
     labels: labels,
@@ -82,7 +84,7 @@ const LandingDonutChart: FC = () => {
     <>
       <Chart
         options={options}
-        series={counts}
+        series={sums}
         type="donut"
         width="100%"
         height="auto"
