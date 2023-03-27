@@ -43,29 +43,15 @@ const ChevronFilter: FC<ChevronFilterProps> = ({
 const tableHeaderMiddleStyle = clsx('w-1/12 border-x-2 border-white')
 const tableRowStyle = clsx('border-x-2 border-clementine text-center')
 
-const InvestmentTable: FC<{ investments: Investment[] }> = ({
-  investments,
-}) => {
-  const [sortBy, setSortBy] = useState<[keyof Investment, boolean]>([
-    'rawName',
-    true,
-  ])
-  const [sortedInvestments, setSortedInvestments] =
-    useState<Investment[]>(investments)
-
-  useEffect(() => {
-    const sortedCopy = [...investments]
-    setSortedInvestments(
-      sortedCopy.sort((a, b) => {
-        const [sortKey, isAscending] = sortBy
-        if (isAscending) {
-          return a[sortKey] > b[sortKey] ? 1 : -1
-        } else {
-          return a[sortKey] > b[sortKey] ? -1 : 1
-        }
-      }),
-    )
-  }, [investments, sortBy])
+const InvestmentTable: FC<{
+  investments: Investment[]
+  onSortChange: (sort: [keyof Investment, 'asc' | 'desc' | undefined]) => void
+}> = ({ investments, onSortChange }) => {
+  const handleSortChange = (
+    newSort: [keyof Investment, 'asc' | 'desc' | undefined],
+  ) => {
+    onSortChange(newSort)
+  }
 
   return (
     <table className="m-10 table-fixed border-2 border-clementine">
@@ -73,57 +59,57 @@ const InvestmentTable: FC<{ investments: Investment[] }> = ({
         <tr className="bg-clementine text-white">
           <th className="w-1/6">
             <ChevronFilter
-              onClickUp={() => setSortBy(['rawName', true])}
-              onClickDown={() => setSortBy(['rawName', false])}
+              onClickUp={() => handleSortChange(['rawName', 'asc'])}
+              onClickDown={() => handleSortChange(['rawName', 'desc'])}
               text="Investment"
             />
           </th>
           <th className={tableHeaderMiddleStyle}>
             <ChevronFilter
-              onClickUp={() => setSortBy(['coupon', true])}
-              onClickDown={() => setSortBy(['coupon', false])}
+              onClickUp={() => handleSortChange(['coupon', 'asc'])}
+              onClickDown={() => handleSortChange(['coupon', 'desc'])}
               text="Coupon"
             />
           </th>
           <th className={tableHeaderMiddleStyle}>
             <ChevronFilter
-              onClickUp={() => setSortBy(['maturityDate', true])}
-              onClickDown={() => setSortBy(['maturityDate', false])}
+              onClickUp={() => handleSortChange(['maturityDate', 'asc'])}
+              onClickDown={() => handleSortChange(['maturityDate', 'desc'])}
               text="Maturity Date"
             />
           </th>
           <th className={tableHeaderMiddleStyle}>
             <ChevronFilter
-              onClickUp={() => setSortBy(['quantity', true])}
-              onClickDown={() => setSortBy(['quantity', false])}
+              onClickUp={() => handleSortChange(['quantity', 'asc'])}
+              onClickDown={() => handleSortChange(['quantity', 'desc'])}
               text="Quantity"
             />
           </th>
           <th className={tableHeaderMiddleStyle}>
             <ChevronFilter
-              onClickUp={() => setSortBy(['costVal', true])}
-              onClickDown={() => setSortBy(['costVal', false])}
+              onClickUp={() => handleSortChange(['costVal', 'asc'])}
+              onClickDown={() => handleSortChange(['costVal', 'desc'])}
               text="Cost Value"
             />
           </th>
           <th className={tableHeaderMiddleStyle}>
             <ChevronFilter
-              onClickUp={() => setSortBy(['marketVal', true])}
-              onClickDown={() => setSortBy(['marketVal', false])}
+              onClickUp={() => handleSortChange(['marketVal', 'asc'])}
+              onClickDown={() => handleSortChange(['marketVal', 'desc'])}
               text="Market Value"
             />
           </th>
           <th className="w-1/12">
             <ChevronFilter
-              onClickUp={() => setSortBy(['year', true])}
-              onClickDown={() => setSortBy(['year', false])}
+              onClickUp={() => handleSortChange(['year', 'asc'])}
+              onClickDown={() => handleSortChange(['year', 'desc'])}
               text="Year"
             />
           </th>
         </tr>
       </thead>
       <tbody>
-        {sortedInvestments.map((investment: Investment, index: number) => {
+        {investments.map((investment: Investment, index: number) => {
           return (
             <tr
               key={investment.id}

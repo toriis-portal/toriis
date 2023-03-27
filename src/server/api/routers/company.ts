@@ -73,15 +73,24 @@ export const companyRouter = createTRPCRouter({
       z.object({
         limit: z.number().min(1).max(100).nullish(),
         companyId: z.string().nullish(),
+        sortKey: z.string().nullish(),
+        sortOrder: z.string().nullish(),
         cursor: z.string().nullish(),
       }),
     )
     .query(async ({ input, ctx }) => {
       const limit = input.limit ?? 5
       const companyId = input.companyId ?? ''
+      const sortKey = input.sortKey ?? 'rawName'
+      const sortOrder = input.sortOrder ?? undefined
+
       const cursor = input.cursor
 
       const items = await ctx.prisma.investment.findMany({
+        orderBy: {
+          [sortKey]: sortOrder,
+          // id: 'asc',
+        },
         where: {
           companyId: companyId,
         },

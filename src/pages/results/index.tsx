@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import type { FC } from 'react'
 import { Spinner } from 'flowbite-react'
 import type { Investment } from '@prisma/client'
@@ -7,6 +7,10 @@ import { api } from '../../utils/api'
 import { InvestmentTable } from '../../components'
 
 const Results: FC = () => {
+  const [selectedSort, setSelectedSort] = useState<
+    [keyof Investment, 'asc' | 'desc' | undefined]
+  >(['rawName', undefined])
+
   const limit = 5
   const companyId = '63ee97cc2c5ff254d2fcbed2'
   const {
@@ -20,10 +24,13 @@ const Results: FC = () => {
     {
       limit: limit,
       companyId: companyId,
+      sortKey: selectedSort[0],
+      sortOrder: selectedSort[1],
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
       refetchOnWindowFocus: false,
+      cacheTime: 0,
     },
   )
 
@@ -35,7 +42,7 @@ const Results: FC = () => {
     refetchData().catch((err) => {
       console.error(err)
     })
-  }, [refetch])
+  }, [selectedSort])
 
   if (!data) {
     return (
@@ -58,7 +65,10 @@ const Results: FC = () => {
   return (
     <>
       <h2>{isLoading && '(loading)'}</h2>
-      <InvestmentTable investments={table_data} />
+      <InvestmentTable
+        investments={table_data}
+        onSortChange={setSelectedSort}
+      />
       <button
         className="justify-center font-bold"
         onClick={() => {
