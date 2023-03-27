@@ -16,6 +16,7 @@ import PrimaryNavBar from './Nav/PrimaryNavBar'
 import SecondaryNavBar from './Nav/SecondaryNavBar'
 // Selects
 import Select from './Selects/Select'
+import SearchBar from './Selects/SearchBar'
 // Text
 import NumberCircle from './Text/NumberCircle'
 import HighlightedTitle from './Text/HighlightedTitle'
@@ -42,4 +43,5 @@ export {
   ShadowTitle,
   ReadMoreButton,
   InvestmentTable,
+  SearchBar,
 }
