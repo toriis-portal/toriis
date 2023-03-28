@@ -81,7 +81,7 @@ const Company = () => {
       </div>
       <div className="flex justify-center">
         <div className="inline-flex pr-10">
-          <Tag title="sector" backgroundColor="bg-cobalt" textColor="white" />
+          <Tag title="sector" additionalStyling="text-white bg-cobalt" />
           <div className="pr-2  pl-2 font-medium">industrials</div>
 
           <ToolTip
@@ -90,7 +90,7 @@ const Company = () => {
           />
         </div>
         <div className="inline-flex pr-10">
-          <Tag title="industry" backgroundColor="bg-cobalt" textColor="white" />
+          <Tag title="industry" additionalStyling="text-white bg-cobalt" />
           <div className="pr-2 pl-2 font-medium">bank diversity</div>
 
           <ToolTip
@@ -99,11 +99,7 @@ const Company = () => {
           />
         </div>
         <div className="inline-flex pr-10">
-          <Tag
-            title="net asset sum"
-            backgroundColor="bg-cobalt"
-            textColor="white"
-          />
+          <Tag title="net asset sum" additionalStyling="text-white bg-cobalt" />
           <div className="pr-2 pl-2 font-medium">500k</div>
           <ToolTip
             title="Net Asset Sum"
@@ -113,24 +109,15 @@ const Company = () => {
         <div className="inline-flex">
           <Tag
             title="environmental grade"
-            backgroundColor="bg-cobalt"
-            textColor="white"
+            additionalStyling="text-white bg-cobalt"
           />
           <div className="pr-2 pl-2">
-            <Tag
-              title="AAA"
-              backgroundColor="bg-brightTeal"
-              textColor="white"
-            />
+            <Tag title="AAA" additionalStyling="text-white bg-brightTeal" />
           </div>
           <ToolTip>
             <div>
               Average environmental grade for sector <b>Industrials</b>:
-              <Tag
-                title="CCC"
-                backgroundColor="bg-clementine"
-                textColor="white"
-              />
+              <Tag title="CCC" additionalStyling="text-white bg-clementine" />
               <br />
               Environmental grade: ESG refers to a set of values used to screen
               potential investments: Environmental, Social and Governance. An
