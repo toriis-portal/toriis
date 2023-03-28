@@ -42,7 +42,7 @@ const RequestAccordion: FC<{ content: OurRequestsEntry }> = ({ content }) => {
         </p>
       </div>
       {open && (
-        <div className="border-t-2 border-cobalt px-4 pt-6 font-inter text-base text-neutral-600 md:px-20">
+        <div className="font-Inter border-t-2 border-cobalt px-4 pt-6 text-base text-neutral-600 md:px-20">
           {documentToReactComponents(content.details, contentfulOptions)}
         </div>
       )}
