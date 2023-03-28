@@ -16,14 +16,14 @@ const FinancialCaseAccordion: FC<{ content: CaseEntry }> = ({ content }) => {
 
   return (
     <div
-      className={clsx('mb-6 content-center rounded-xl bg-white md:mx-32', {
+      className={clsx('mb-6 content-center rounded-xl bg-white lg:mx-32', {
         'border-4 border-cobalt': open,
         'border-[3px] border-black': !open,
       })}
     >
       <div
         className={clsx(
-          'flex w-full flex-row items-center justify-between bg-lightBlue px-4 py-2 md:flex-row',
+          'flex w-full flex-row items-center justify-between bg-lightBlue px-4 py-2 lg:flex-row',
           {
             '-mb-[2px] rounded-t-lg': open,
             'rounded-lg': !open,
@@ -31,9 +31,9 @@ const FinancialCaseAccordion: FC<{ content: CaseEntry }> = ({ content }) => {
         )}
       >
         <p
-          className={clsx('inline p-4 text-lg font-medium md:ml-6', {
-            'md:ml-6': !open,
-            '-ml-[1.5px] -mt-[1px] md:ml-[22.5px]': open,
+          className={clsx('inline p-4 text-lg font-medium lg:ml-6', {
+            'lg:ml-6': !open,
+            '-ml-[1.5px] -mt-[1px] lg:ml-[22.5px]': open,
           })}
         >
           {content.title}
@@ -55,6 +55,7 @@ const FinancialCaseAccordion: FC<{ content: CaseEntry }> = ({ content }) => {
               handleOpen={() => {
                 return
               }}
+              link={content.url}
             />
           </div>
         </div>

@@ -1,18 +1,44 @@
 import type { FC } from 'react'
+import clsx from 'clsx'
+import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
 
 interface ReadMoreButtonProps {
   isOpen: boolean
-  handleOpen: () => void
+  handleOpen?: () => void
+  link?: string
 }
 
-const ReadMoreButton: FC<ReadMoreButtonProps> = ({ isOpen, handleOpen }) => {
+const ReadMoreButton: FC<ReadMoreButtonProps> = ({
+  isOpen,
+  handleOpen,
+  link,
+}) => {
   return (
-    <button
-      className="ml-auto rounded-2xl bg-clementine pl-4 pr-3 pb-1 pt-2 text-center text-sm italic"
-      onClick={handleOpen}
+    <div
+      className={clsx(
+        'ml-auto flex flex-row items-center rounded-full bg-clementine text-center font-inter',
+        {
+          'px-4 py-[1px] text-base not-italic': link,
+          'px-4 py-1 text-base italic': !link,
+        },
+      )}
     >
-      {isOpen ? 'Show Less' : 'Read More'}
-    </button>
+      {link ? (
+        <>
+          <a href={link} target="_blank" rel="noopener noreferrer">
+            {isOpen ? 'Show less' : 'Read more'}
+          </a>
+          x
+          <ArrowUpRightIcon className="ml-2 inline h-3.5 w-4 justify-self-end stroke-current stroke-1" />
+        </>
+      ) : (
+        <>
+          <button className="italic" onClick={handleOpen}>
+            {isOpen ? 'Show less' : 'Read more'}
+          </button>
+        </>
+      )}
+    </div>
   )
 }
 
