@@ -8,8 +8,6 @@ import type { CaseEntry } from '../../types'
 export const getServerSideProps = async () => {
   const contentClient = new ContentWrapper()
   const caseEntries = await contentClient.get('case')
-  console.log(contentClient)
-  console.log(caseEntries)
   return {
     props: {
       caseEntries,
@@ -22,7 +20,6 @@ interface FossilFuelProps {
 }
 
 const Home: FC<FossilFuelProps> = ({ caseEntries }) => {
-  console.log(caseEntries)
   return (
     <>
       <ToTopButton />

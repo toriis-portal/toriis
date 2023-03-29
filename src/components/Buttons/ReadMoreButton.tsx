@@ -27,9 +27,8 @@ const ReadMoreButton: FC<ReadMoreButtonProps> = ({
         <>
           <a href={link} target="_blank" rel="noopener noreferrer">
             {isOpen ? 'Show less' : 'Read more'}
+            <ArrowUpRightIcon className="ml-2 mb-[1px] inline h-3.5 w-4 align-self-start stroke-current stroke-1" />
           </a>
-          x
-          <ArrowUpRightIcon className="ml-2 inline h-3.5 w-4 justify-self-end stroke-current stroke-1" />
         </>
       ) : (
         <>
