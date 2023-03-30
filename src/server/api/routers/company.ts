@@ -83,7 +83,7 @@ export const companyRouter = createTRPCRouter({
     return ctx.prisma.company.groupBy({
       by: ['sector'],
       _sum: {
-        netAssetSum: true,
+        netAssetVal: true,
       },
     })
   }),

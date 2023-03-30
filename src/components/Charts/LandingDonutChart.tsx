@@ -5,6 +5,7 @@ import { Spinner } from 'flowbite-react'
 
 import { api } from '../../utils/api'
 import { sectorEnum } from '../../utils/enums'
+import { assetAmountToString } from '../../utils/helpers'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -26,10 +27,10 @@ const LandingDonutChart: FC = () => {
     )
 
   const pairs: companySectorCount[] = source.data
-    .filter((data) => data._sum.netAssetSum !== null)
+    .filter((data) => data._sum.netAssetVal !== null)
     .map((data) => ({
       label: data.sector as Sector,
-      count: data._sum.netAssetSum as number,
+      count: data._sum.netAssetVal as number,
     }))
 
   /*
@@ -64,6 +65,13 @@ const LandingDonutChart: FC = () => {
 
   const options = {
     labels: labels,
+    tooltip: {
+      y: {
+        formatter: function (val: number) {
+          return '$' + assetAmountToString(val)
+        },
+      },
+    },
     fontFamily: 'Klima',
     legend: { show: false },
     colors: ['#FFA902', '#FF6112', '#17292E', '#0F81E8'],
