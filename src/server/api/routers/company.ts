@@ -87,4 +87,37 @@ export const companyRouter = createTRPCRouter({
       },
     })
   }),
+  getEnergyByCompany: publicProcedure
+    .input(
+      z.object({
+        companyId: z.string(),
+        sortKey: z.string().nullish(),
+        sortOrder: z.string().nullish(),
+      }),
+    )
+    .query(async ({ input, ctx }) => {
+      const companyId = input.companyId ?? ''
+      const sortKey = input.sortKey ?? 'rawName'
+      const sortOrder = input.sortOrder ?? undefined
+
+      if (!companyId) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Expected a companyId, but found none.',
+        })
+      }
+
+      const items = await ctx.prisma.energy.findMany({
+        orderBy: {
+          [sortKey]: sortOrder,
+        },
+        where: {
+          companyId: companyId,
+        },
+      })
+
+      return {
+        items,
+      }
+    }),
 })
