@@ -39,7 +39,7 @@ const LandingDonutChart: FC = () => {
   */
   function cleanData(arr: companySectorCount[]) {
     const total = arr.reduce((sum, item) => sum + item.count, 0)
-    const threshold = total * 0.05
+    const threshold = total * 0.04
 
     const filtered = arr
       .filter((item) => item.count >= threshold && item.label != null)
