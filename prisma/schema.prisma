@@ -72,19 +72,20 @@ model Company {
 }
 
 model Account {
-  id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId            String  @db.ObjectId
+  id                String            @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String            @db.ObjectId
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @map(name: "refresh_token")
-  access_token      String? @map(name: "access_token")
+  refresh_token     String?           @map(name: "refresh_token")
+  access_token      String?           @map(name: "access_token")
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.String
+  id_token          String?           @db.String
   session_state     String?
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  WhiteListedUsers  WhitelistedUsers?
 
   @@unique([provider, providerAccountId])
 }
@@ -178,4 +179,11 @@ model Staged {
   id      String     @id @default(auto()) @map("_id") @db.ObjectId
   type    Collection
   updates Json[]
+}
+
+model WhitelistedUsers {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  email     String
+  account   Account @relation(fields: [accountId], references: [id])
+  accountId String  @unique @db.ObjectId
 }
