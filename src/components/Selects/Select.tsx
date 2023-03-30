@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { FC } from 'react'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import clsx from 'clsx'
@@ -10,8 +10,6 @@ interface SelectProps {
   options: Options
   onClose?: () => void
   onOpen?: () => void
-  // onChange?: (value: string[]) => void
-  // type?: 'on-change' | 'on-apply'
   updateControl?: {
     type: 'on-change' | 'on-apply'
     cb: (value: string[]) => void
@@ -85,6 +83,8 @@ export const Select: FC<SelectProps> = ({
   const [searchQuery, setSearchQuery] = useState('')
   const [textOption, setTextOption] = useState<string>(text)
 
+  const ref = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     if (isOpen) {
       onOpen?.()
@@ -104,6 +104,23 @@ export const Select: FC<SelectProps> = ({
       ? setTextOption(shortText)
       : setTextOption(text)
   }, [shortText, text])
+
+  useEffect(() => {
+    const checkIfClickedOutside = (e: MouseEvent) => {
+      // If the menu is open and the clicked target is not within the menu,
+      // then close the menu
+      if (isOpen && ref.current && !ref.current.contains(e.target as Node)) {
+        setIsOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', checkIfClickedOutside)
+
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener('mousedown', checkIfClickedOutside)
+    }
+  }, [isOpen])
 
   /**
    * Updates the selected state and calls the onChange callback
@@ -178,6 +195,7 @@ export const Select: FC<SelectProps> = ({
 
   return (
     <div
+      ref={updateControl?.type == 'on-change' ? ref : null}
       className={clsx('relative', {
         'flex-grow basis-0': isFilter,
       })}
@@ -223,7 +241,7 @@ export const Select: FC<SelectProps> = ({
       {isOpen && (
         <div
           className={clsx(
-            'absolute left-0 transform rounded-md border-[0.5px] border-solid border-cobalt bg-white shadow-md',
+            'absolute left-0 z-10 transform rounded-md border-[0.5px] border-solid border-cobalt bg-white shadow-md',
             {
               'w-60 -translate-x-20 translate-y-14 p-5': !isFilter,
               'w-full translate-y-2 p-3': isFilter,

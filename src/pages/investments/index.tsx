@@ -207,7 +207,6 @@ const Home: FC = () => {
               type: 'on-apply',
               cb: setSelectedSortKeys,
             }}
-            isSearchable={true}
           />
         </div>
         {data?.pages.map((page, idx) => {
