@@ -19,7 +19,7 @@ interface FossilFuelProps {
   caseEntries: CaseEntry[]
 }
 
-const Home: FC<FossilFuelProps> = ({ caseEntries }) => {
+const FossilFuelPage: FC<FossilFuelProps> = ({ caseEntries }) => {
   return (
     <>
       <ToTopButton />
@@ -30,4 +30,4 @@ const Home: FC<FossilFuelProps> = ({ caseEntries }) => {
   )
 }
 
-export default Home
+export default FossilFuelPage

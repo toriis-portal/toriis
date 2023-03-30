@@ -25,23 +25,24 @@ const FinancialCaseAccordion: FC<{ content: CaseEntry }> = ({ content }) => {
   const contentfulOptions = {
     renderNode: {
       [BLOCKS.PARAGRAPH]: (node: Block | Inline, children: any) => {
-        if (
-          node.content.length > 1 &&
-          node.content[1] &&
-          node.content[1].nodeType === 'hyperlink'
-        ) {
+        return <p className="flex flex-wrap gap-1 break-normal">{children}</p>
+      },
+      [INLINES.HYPERLINK]: (node: Block | Inline, children: any) => {
+        if (node.nodeType === 'hyperlink') {
           const url =
-            'uri' in node.content[1].data &&
-            typeof node.content[1].data.uri == 'string'
-              ? node.content[1].data.uri
+            'uri' in node.data && typeof node.data.uri == 'string'
+              ? node.data.uri
               : '#'
           return (
-            <div className="flex flex-row">
-              <p>{children}</p>
-              <a href={url} target="_blank" rel="noopener noreferrer">
-                <ArrowUpRightIcon className="align-self-start ml-1 mb-0.5 inline h-4 w-4 stroke-current stroke-1" />
-              </a>
-            </div>
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-row"
+            >
+              {children}
+              <ArrowUpRightIcon className="align-self-start ml-0.5 mt-1 inline h-4 w-4 stroke-current stroke-1" />
+            </a>
           )
         }
         return <p>{children}</p>
@@ -56,7 +57,8 @@ const FinancialCaseAccordion: FC<{ content: CaseEntry }> = ({ content }) => {
         'border-[3px] border-black': !open,
       })}
     >
-      <div
+      <button
+        onClick={handleOpen}
         className={clsx(
           'flex w-full flex-row items-center justify-between bg-lightBlue px-4 py-2 lg:flex-row',
           {
@@ -73,14 +75,12 @@ const FinancialCaseAccordion: FC<{ content: CaseEntry }> = ({ content }) => {
         >
           {content.title}
         </p>
-        <button onClick={handleOpen}>
-          {open ? (
-            <MinusIcon className="mr-10 inline h-9 w-7 stroke-current stroke-2" />
-          ) : (
-            <PlusIcon className="mr-10 inline h-9 w-7 stroke-current stroke-2" />
-          )}
-        </button>
-      </div>
+        {open ? (
+          <MinusIcon className="mr-10 inline h-9 w-7 stroke-current stroke-2" />
+        ) : (
+          <PlusIcon className="mr-10 inline h-9 w-7 stroke-current stroke-2" />
+        )}
+      </button>
       {open && (
         <div className="font-regular mx-12 flex flex-col gap-2 border-t-2 border-cobalt pt-6 font-inter text-base text-black">
           {documentToReactComponents(content.details, contentfulOptions)}
