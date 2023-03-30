@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import type { FC } from 'react'
 import React from 'react'
 import type { Company, EnvGrade } from '@prisma/client'
@@ -40,6 +40,7 @@ const extractSortyByQueryKey = (
 const Home: FC = () => {
   const [selectedSortKeys, setSelectedSortKeys] = useState<string[]>([])
   const [companySearchQuery, setCompanySearchQuery] = useState<string>('')
+  // const [prevResultsEmpty, setPrevResultsEmpty] = useState<boolean>(false)
 
   const limit = 5
   const {
@@ -49,6 +50,7 @@ const Home: FC = () => {
     isFetchingNextPage,
     data,
     refetch,
+    resultsEmpty,
   } = api.company.getCompanies.useInfiniteQuery(
     {
       limit: limit,
@@ -69,23 +71,33 @@ const Home: FC = () => {
     },
   )
 
-  const dataExists =
-    data != undefined && data.pages != undefined && data.pages[0] != undefined
+  console.log(resultsEmpty)
 
   useEffect(() => {
+    console.log('refecth effect called')
     const refetchData = async () => {
       await refetch()
-    }
 
-    refetchData().catch((err) => {
-      console.error(err)
-    })
-  }, [selectedSortKeys])
+      refetchData().catch((err) => {
+        console.error(err)
+      })
+    }
+  }, [selectedSortKeys, companySearchQuery])
 
   const dataLength = data?.pages
     ? (data.pages.length - 1) * limit +
+      // TODO: does this work? recommendations just has init length
       (data.pages[data.pages.length - 1]?.items.length || 0)
     : 0
+  // useEffect(() => {
+  //   console.log(dataLength)
+  //   if (dataLength >= 1) {
+  //     setPrevResultsEmpty(false)
+  //   } else {
+  //     setPrevResultsEmpty(true)
+  //   }
+  // }, [dataLength])
+
   return (
     //   {dataExists &&
     //     (data?.pages[0]?.items?.length < 1 ? (
@@ -166,11 +178,17 @@ const Home: FC = () => {
       />
       <SearchBar setCompanySearchQuery={setCompanySearchQuery} />
       {/* TODO: make blue bkgd stretch to the bottom when fewer resulsts too */}
+      {resultsEmpty && (
+        <p className="py-12 text-[22px] font-medium">
+          No results found, try searching again.
+        </p>
+      )}
       <div className="flex w-[95vw] flex-col items-center gap-5 self-center rounded-t-xl bg-lightBlue pb-20 xl:w-11/12">
         <div className="flex flex-row items-center justify-between self-stretch px-[3.6%] pt-[36px]">
           <div className="flex flex-col flex-wrap items-center md:flex-row md:gap-3.5">
             <p className="text-xl font-medium min-[500px]:text-3xl sm:text-[32px]">
               Recommendations
+              {/* TODO: or Results conditionally */}
             </p>
             <p className="text-medGray">
               {'('}

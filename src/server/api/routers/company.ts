@@ -80,9 +80,12 @@ export const companyRouter = createTRPCRouter({
         const nextItem = items.pop()
         nextCursor = nextItem?.id
       }
+      const resultsEmpty = items.length == 0
+
       return {
         items,
         nextCursor,
+        resultsEmpty,
       }
     }),
   countBySector: publicProcedure.query(({ ctx }) => {
