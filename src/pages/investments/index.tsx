@@ -15,7 +15,7 @@ import CompanyCard from '../../components/Card/CompanyCard'
 import LoadMoreButton from '../../components/Buttons/LoadMoreButton'
 
 const extractSortyByQueryKey = (
-  key: 'Net Asset Sum' | 'Environment Grade',
+  key: 'Net Asset Value' | 'Environment Grade',
   selectedSorts: string[],
 ) => {
   const selectedSort = selectedSorts.find((item) => {
@@ -53,8 +53,8 @@ const Home: FC = () => {
   } = api.company.getCompanies.useInfiniteQuery(
     {
       limit: limit,
-      sortByNetAssestSum: extractSortyByQueryKey(
-        'Net Asset Sum',
+      sortByNetAssetVal: extractSortyByQueryKey(
+        'Net Asset Value',
         selectedSortKeys,
       ),
       sortByEnvGrade: extractSortyByQueryKey(
@@ -121,19 +121,20 @@ const Home: FC = () => {
               {' results)'}
             </p>
           </div>
-          <Select
-            text="sort by"
-            options={{
-              'Environment Grade': ['low to high', 'high to low'],
-              'Net Asset Sum': ['low to high', 'high to low'],
-            }}
-            updateControl={{
-              type: 'on-apply',
-              cb: setSelectedSortKeys,
-            }}
-            isSearchable={true}
-          />
         </div>
+        {/* TODO: fix positioning */}
+        <Select
+          text="sort by"
+          options={{
+            'Environment Grade': ['low to high', 'high to low'],
+            'Net Asset Value': ['low to high', 'high to low'],
+          }}
+          updateControl={{
+            type: 'on-apply',
+            cb: setSelectedSortKeys,
+          }}
+          isSearchable={true}
+        />
         {data?.pages.map((page, idx) => {
           return (
             <div
