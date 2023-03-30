@@ -40,7 +40,7 @@ export const companyRouter = createTRPCRouter({
         limit: z.number().min(1).max(100).nullish(),
         cursor: z.string().nullish(),
         sortByEnvGrade: z.string().nullish(),
-        sortByNetAssestSum: z.string().nullish(),
+        sortByNetAssetVal: z.string().nullish(),
       }),
     )
     .query(async ({ input, ctx }) => {
@@ -49,8 +49,8 @@ export const companyRouter = createTRPCRouter({
 
       const items = await ctx.prisma.company.findMany({
         orderBy: {
-          netAssetSum: extractSortOrder(input.sortByNetAssestSum)
-            ? input.sortByNetAssestSum
+          netAssetVal: extractSortOrder(input.sortByNetAssetVal)
+            ? input.sortByNetAssetVal
             : undefined,
         },
         include: {
@@ -79,11 +79,11 @@ export const companyRouter = createTRPCRouter({
         nextCursor,
       }
     }),
-  countBySector: publicProcedure.query(({ ctx }) => {
+  sumBySector: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.company.groupBy({
       by: ['sector'],
-      _count: {
-        sector: true,
+      _sum: {
+        netAssetVal: true,
       },
     })
   }),
