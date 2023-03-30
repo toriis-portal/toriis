@@ -41,6 +41,19 @@ declare module 'next-auth' {
  **/
 export const authOptions: NextAuthOptions = {
   callbacks: {
+    async signIn({ user }) {
+      // Check if the user is allowed to sign in
+      if (!user || !user.email) {
+        return false
+      } else {
+        const isAllowedToSignIn = await prisma.whitelistedUsers.findFirst({
+          where: {
+            email: user.email,
+          },
+        })
+        return !!isAllowedToSignIn
+      }
+    },
     session({ session, user }) {
       if (session.user) {
         session.user.id = user.id

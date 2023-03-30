@@ -182,8 +182,8 @@ model Staged {
 }
 
 model WhitelistedUsers {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   email     String
-  account   Account @relation(fields: [accountId], references: [id])
-  accountId String  @unique @db.ObjectId
+  account   Account? @relation(fields: [accountId], references: [id])
+  accountId String?  @unique @db.ObjectId
 }
