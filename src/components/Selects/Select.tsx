@@ -205,7 +205,8 @@ export const Select: FC<SelectProps> = ({
         className={clsx(
           'flex w-full items-center overflow-hidden rounded-full border border-solid',
           {
-            'justify-centerborder-darkTeal float-right h-10 w-fit': !isFilter,
+            'justify-centerborder-darkTeal float-right h-10 w-fit border-black':
+              !isFilter,
             'h-8 border-cobalt': isFilter,
           },
         )}
@@ -241,10 +242,10 @@ export const Select: FC<SelectProps> = ({
       {isOpen && (
         <div
           className={clsx(
-            'absolute left-0 z-10 transform rounded-md border-[0.5px] border-solid border-cobalt bg-white shadow-md',
+            'absolute left-0 z-10 transform rounded-md border-[0.5px] border-solid border-cobalt bg-white  shadow-md',
             {
               'w-60 -translate-x-20 translate-y-14 p-5': !isFilter,
-              'w-full translate-y-2 p-3': isFilter,
+              'w-full translate-y-2 p-4': isFilter,
             },
           )}
         >
@@ -277,7 +278,10 @@ export const Select: FC<SelectProps> = ({
                 })}
               >
                 {options.filter(handleSearchFilter).map((option) => (
-                  <li key={option} className="flex items-center text-black">
+                  <li
+                    key={option}
+                    className="mt-1 flex items-center text-black"
+                  >
                     <span className={clsx({ 'font-inter text-sm': isFilter })}>
                       {option}
                     </span>
