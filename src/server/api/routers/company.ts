@@ -1,5 +1,6 @@
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
+import type { Investment } from '@prisma/client'
 
 import { createTRPCRouter, publicProcedure } from '../trpc'
 
@@ -101,13 +102,13 @@ export const companyRouter = createTRPCRouter({
     .query(async ({ input, ctx }) => {
       const limit = input.limit ?? 5
       const companyId = input.companyId ?? ''
-      const sortKey = input.sortKey ?? undefined
-      const sortOrder = input.sortOrder
+      const sortKey = (input.sortKey ?? null) as keyof Investment | null
+      const sortOrder = input.sortOrder ?? null
       const cursor = input.cursor
 
       const items = await ctx.prisma.investment.findMany({
         orderBy: {
-          [sortKey]: sortOrder,
+          ...(sortKey ? { [sortKey]: sortOrder } : {}),
         },
         where: {
           companyId: companyId,
