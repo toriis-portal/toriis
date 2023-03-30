@@ -56,7 +56,8 @@ export const companyRouter = createTRPCRouter({
         },
         where: {
           name: {
-            contains: input.companyName, // TODO: make case insensitive
+            contains: input.companyName,
+            mode: 'insensitive',
           },
         },
         include: {

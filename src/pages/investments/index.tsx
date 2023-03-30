@@ -134,7 +134,6 @@ const Home: FC = () => {
             isSearchable={true}
           />
         </div>
-        {/* TODO: fix positioning */}
 
         {data?.pages.map((page, idx) => {
           return (
