@@ -19,35 +19,28 @@ const CompanyCard: FC<CardProps> = ({ companyInfo }) => {
           {companyInfo.company.name}
           <Tag
             title="environmental grade"
-            backgroundColor="lightBlue"
-            textColor="black"
+            className="bg-lightBlue text-black"
           />
         </div>
         <div className="flex flex-row items-center justify-between">
           <div className="flex h-fit flex-row gap-[20px]">
-            <NetAssetTag assetsum={companyInfo.company.netAssetSum} />
+            <NetAssetTag assetsum={companyInfo.company.netAssetVal} />
             <div className="mr-2 grid grid-cols-[100px_1fr] grid-rows-[auto_1fr_auto] gap-x-5 gap-y-1">
               <div className="col-span-1 col-start-1 row-span-1 row-start-1 self-center">
-                <Tag
-                  title="sector"
-                  backgroundColor="lightBlue"
-                  textColor="black"
-                />
+                <Tag title="sector" className="bg-lightBlue text-black" />
               </div>
               <p className="col-span-1 col-start-2 row-span-1 row-start-1">
                 {companyInfo.company.sector
                   ? sectorEnum[companyInfo.company.sector]
-                  : sectorEnum['NONE']}
+                  : 'None specified'}
               </p>
               <div className="col-span-1 col-start-1 row-span-1 row-start-3 self-center">
-                <Tag
-                  title="industry"
-                  backgroundColor="lightBlue"
-                  textColor="black"
-                />
+                <Tag title="industry" className="bg-lightBlue text-black" />
               </div>
               <p className="text-wrap col-span-1 col-start-2 row-span-1 row-start-3">
-                {companyInfo.company.industry}
+                {companyInfo.company.industry
+                  ? companyInfo.company.industry
+                  : 'None specified'}
               </p>
             </div>
           </div>

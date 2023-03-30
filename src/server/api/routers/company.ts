@@ -16,7 +16,7 @@ const extractSortOrder = (
 
 const createNetAssetSumFilter = (range: number[]) => {
   return {
-    netAssetSum: {
+    netAssetVal: {
       gte: range[0],
       lte: range[1],
     },
@@ -50,24 +50,24 @@ export const companyRouter = createTRPCRouter({
         limit: z.number().min(1).max(100).nullish(),
         cursor: z.string().nullish(),
         sortByEnvGrade: z.string().nullish(),
-        sortByNetAssestSum: z.string().nullish(),
+        sortByNetAssetVal: z.string().nullish(),
         filterBySector: z.array(z.nativeEnum(Sector)).nullish(),
         filterByIndustry: z.array(z.string()).nullish(),
         filterByEnvGrade: z.array(z.nativeEnum(EnvGrade)).nullish(),
-        filterByNetAssetSum: z.array(z.array(z.number(), z.number())).nullish(),
+        filterByNetAssetVal: z.array(z.array(z.number(), z.number())).nullish(),
       }),
     )
     .query(async ({ input, ctx }) => {
       const limit = input.limit ?? 9
       const { cursor } = input
 
-      const netAssetSumFilter = input.filterByNetAssetSum?.map((range) =>
+      const netAssetValFilter = input.filterByNetAssetVal?.map((range) =>
         createNetAssetSumFilter(range),
       )
 
-      const netAssetSumFilterCleaned =
-        netAssetSumFilter && netAssetSumFilter.length > 0
-          ? netAssetSumFilter
+      const netAssetValFilterCleaned =
+        netAssetValFilter && netAssetValFilter.length > 0
+          ? netAssetValFilter
           : undefined
 
       const items = await ctx.prisma.company.findMany({
@@ -78,7 +78,7 @@ export const companyRouter = createTRPCRouter({
           industry: {
             in: input.filterByIndustry,
           },
-          OR: netAssetSumFilterCleaned,
+          OR: netAssetValFilterCleaned,
           ESG: {
             some: {
               environmentGrade: {
@@ -88,8 +88,8 @@ export const companyRouter = createTRPCRouter({
           },
         },
         orderBy: {
-          netAssetSum: extractSortOrder(input.sortByNetAssestSum)
-            ? input.sortByNetAssestSum
+          netAssetVal: extractSortOrder(input.sortByNetAssetVal)
+            ? input.sortByNetAssetVal
             : undefined,
         },
         include: {
@@ -118,11 +118,11 @@ export const companyRouter = createTRPCRouter({
         nextCursor,
       }
     }),
-  countBySector: publicProcedure.query(({ ctx }) => {
+  sumBySector: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.company.groupBy({
       by: ['sector'],
-      _count: {
-        sector: true,
+      _sum: {
+        netAssetVal: true,
       },
     })
   }),

@@ -29,7 +29,7 @@ const netAssetSumCallback = (selectedOptions: string[]) => {
 }
 
 const extractSortyByQueryKey = (
-  key: 'Net Asset Sum' | 'Environment Grade',
+  key: 'Net Asset Value' | 'Environment Grade',
   selectedSorts: string[],
 ) => {
   const selectedSort = selectedSorts.find((item) => {
@@ -80,8 +80,8 @@ const Home: FC = () => {
   } = api.company.getCompanies.useInfiniteQuery(
     {
       limit: limit,
-      sortByNetAssestSum: extractSortyByQueryKey(
-        'Net Asset Sum',
+      sortByNetAssetVal: extractSortyByQueryKey(
+        'Net Asset Value',
         selectedSortKeys,
       ),
       sortByEnvGrade: extractSortyByQueryKey(
@@ -95,7 +95,7 @@ const Home: FC = () => {
       filterBySector: convertToFilterOptions(
         filterOptions.sectors,
       ) as (keyof typeof Sector)[],
-      filterByNetAssetSum: filterOptions.netAssetSum,
+      filterByNetAssetVal: filterOptions.netAssetSum,
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,

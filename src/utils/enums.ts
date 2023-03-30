@@ -10,7 +10,6 @@ export const sectorEnum = {
   CONSUMER_DEFENSIVE: 'Consumer Defensive',
   REAL_ESTATE: 'Real Estate',
   BASIC_MATERIALS: 'Basic Materials',
-  NONE: 'None Specified',
 }
 
 export const envGradeEnum = {
