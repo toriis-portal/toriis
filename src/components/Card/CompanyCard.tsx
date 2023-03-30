@@ -24,7 +24,7 @@ const CompanyCard: FC<CardProps> = ({ companyInfo }) => {
         </div>
         <div className="flex flex-row items-center justify-between">
           <div className="flex h-fit flex-row gap-[20px]">
-            <NetAssetTag assetsum={companyInfo.company.netAssetSum} />
+            <NetAssetTag assetsum={companyInfo.company.netAssetVal} />
             <div className="mr-2 grid grid-cols-[100px_1fr] grid-rows-[auto_1fr_auto] gap-x-5 gap-y-1">
               <div className="col-span-1 col-start-1 row-span-1 row-start-1 self-center">
                 <Tag title="sector" className="bg-lightBlue text-black" />

@@ -10,7 +10,7 @@ import CompanyCard from '../../components/Card/CompanyCard'
 import LoadMoreButton from '../../components/Buttons/LoadMoreButton'
 
 const extractSortyByQueryKey = (
-  key: 'Net Asset Sum' | 'Environment Grade',
+  key: 'Net Asset Value' | 'Environment Grade',
   selectedSorts: string[],
 ) => {
   const selectedSort = selectedSorts.find((item) => {
@@ -47,7 +47,7 @@ const Home: FC = () => {
     {
       limit: limit,
       sortByNetAssestSum: extractSortyByQueryKey(
-        'Net Asset Sum',
+        'Net Asset Value',
         selectedSortKeys,
       ),
       sortByEnvGrade: extractSortyByQueryKey(
@@ -92,7 +92,7 @@ const Home: FC = () => {
           text="sort by"
           options={{
             'Environment Grade': ['low to high', 'high to low'],
-            'Net Asset Sum': ['low to high', 'high to low'],
+            'Net Asset Value': ['low to high', 'high to low'],
           }}
           updateControl={{
             type: 'on-apply',
