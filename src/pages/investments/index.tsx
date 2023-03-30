@@ -121,20 +121,21 @@ const Home: FC = () => {
               {' results)'}
             </p>
           </div>
+          <Select
+            text="sort by"
+            options={{
+              'Environment Grade': ['low to high', 'high to low'],
+              'Net Asset Value': ['low to high', 'high to low'],
+            }}
+            updateControl={{
+              type: 'on-apply',
+              cb: setSelectedSortKeys,
+            }}
+            isSearchable={true}
+          />
         </div>
         {/* TODO: fix positioning */}
-        <Select
-          text="sort by"
-          options={{
-            'Environment Grade': ['low to high', 'high to low'],
-            'Net Asset Value': ['low to high', 'high to low'],
-          }}
-          updateControl={{
-            type: 'on-apply',
-            cb: setSelectedSortKeys,
-          }}
-          isSearchable={true}
-        />
+
         {data?.pages.map((page, idx) => {
           return (
             <div
