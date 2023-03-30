@@ -50,7 +50,6 @@ const Home: FC = () => {
     isFetchingNextPage,
     data,
     refetch,
-    resultsEmpty,
   } = api.company.getCompanies.useInfiniteQuery(
     {
       limit: limit,
@@ -70,11 +69,8 @@ const Home: FC = () => {
       cacheTime: 0,
     },
   )
-
-  console.log(resultsEmpty)
-
+  console.log(data)
   useEffect(() => {
-    console.log('refecth effect called')
     const refetchData = async () => {
       await refetch()
 
@@ -99,77 +95,6 @@ const Home: FC = () => {
   // }, [dataLength])
 
   return (
-    //   {dataExists &&
-    //     (data?.pages[0]?.items?.length < 1 ? (
-    //       <p className="py-12 text-[22px] font-medium">
-    //         No results found, try searching again.
-    //       </p>
-    //     ) : (
-    //       <>
-    //         <div className="flex flex-row">
-    //           <div className="flex flex-col gap-4">
-    //             <h1 className="font-medium">Company Name</h1>
-    //             {data?.pages.map((page, index) => (
-    //               <div className="flex flex-col gap-4" key={index}>
-    //                 {page.items.map((item) => (
-    //                   <div className="flex text-cobalt" key={item.id}>
-    //                     {item.name}
-    //                   </div>
-    //                 ))}
-    //               </div>
-    //             ))}
-    //           </div>
-    //           <div className="flex flex-col gap-4">
-    //             <h1 className="font-medium">Sector</h1>
-    //             {data?.pages.map((page, index) => (
-    //               <div className="flex flex-col gap-4" key={index}>
-    //                 {page.items.map((item) => (
-    //                   <div className="flex text-black" key={item.id}>
-    //                     {item.sector}
-    //                   </div>
-    //                 ))}
-    //               </div>
-    //             ))}
-    //           </div>
-    //           <div className="flex flex-col gap-4">
-    //             <h1 className="font-medium">Industry</h1>
-    //             {data?.pages.map((page, index) => (
-    //               <div className="flex flex-col gap-4" key={index}>
-    //                 {page.items.map((item) => (
-    //                   <div className="flex text-pumpkin" key={item.id}>
-    //                     {item.industry}
-    //                   </div>
-    //                 ))}
-    //               </div>
-    //             ))}
-    //           </div>
-    //         </div>
-
-    //         <button
-    //           className="justify-center font-bold"
-    //           onClick={() => {
-    //             void fetchNextPage()
-    //           }}
-    //           disabled={!hasNextPage || isFetchingNextPage}
-    //         >
-    //           Load More
-    //         </button>
-    //       </>
-    //     ))}
-
-    //   <Select
-    //     text="sort by"
-    //     options={{
-    //       'Environment Grade': ['low to high', 'high to low'],
-    //       'Net Asset Sum': ['low to high', 'high to low'],
-    //     }}
-    //     updateControl={{
-    //       type: 'on-apply',
-    //       cb: setSelectedSortKeys,
-    //     }}
-    //     isSearchable={true}
-    //   />
-
     <div className="flex flex-col items-center">
       <HighlightedTitle
         title="Learn About Investments"
@@ -178,11 +103,11 @@ const Home: FC = () => {
       />
       <SearchBar setCompanySearchQuery={setCompanySearchQuery} />
       {/* TODO: make blue bkgd stretch to the bottom when fewer resulsts too */}
-      {resultsEmpty && (
+      {/* {resultsEmpty && (
         <p className="py-12 text-[22px] font-medium">
           No results found, try searching again.
         </p>
-      )}
+      )} */}
       <div className="flex w-[95vw] flex-col items-center gap-5 self-center rounded-t-xl bg-lightBlue pb-20 xl:w-11/12">
         <div className="flex flex-row items-center justify-between self-stretch px-[3.6%] pt-[36px]">
           <div className="flex flex-col flex-wrap items-center md:flex-row md:gap-3.5">
