@@ -57,10 +57,10 @@ model Investment {
 model Company {
   id               String             @id @default(auto()) @map("_id") @db.ObjectId
   name             String
-  ticker           String
+  ticker           String?
   sector           Sector?
   industry         String?
-  netAssetSum      Float
+  netAssetVal      Float
   investment       Investment[]
   description      String?
   ESG              ESG[]

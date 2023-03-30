@@ -109,7 +109,7 @@ export const companyRouter = createTRPCRouter({
 
       if (!companyId) {
         throw new TRPCError({
-          code: 'ERRNOTFOUND',
+          code: 'BAD_REQUEST',
           message: 'Expected a companyId, but found none.',
         })
       }
