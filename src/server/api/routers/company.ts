@@ -79,7 +79,6 @@ export const companyRouter = createTRPCRouter({
         nextCursor,
       }
     }),
-
   countBySector: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.company.groupBy({
       by: ['sector'],
@@ -102,17 +101,9 @@ export const companyRouter = createTRPCRouter({
     .query(async ({ input, ctx }) => {
       const limit = input.limit ?? 5
       const companyId = input.companyId ?? ''
-      const sortKey = input.sortKey ?? 'rawName'
-      const sortOrder = input.sortOrder ?? undefined
-
+      const sortKey = input.sortKey ?? undefined
+      const sortOrder = input.sortOrder
       const cursor = input.cursor
-
-      if (!companyId) {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'Expected a companyId, but found none.',
-        })
-      }
 
       const items = await ctx.prisma.investment.findMany({
         orderBy: {
@@ -126,7 +117,6 @@ export const companyRouter = createTRPCRouter({
       })
 
       let nextCursor: typeof cursor | undefined = undefined
-
       if (items.length > limit) {
         const nextItem = items.pop()
         nextCursor = nextItem?.id

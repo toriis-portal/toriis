@@ -1,11 +1,12 @@
 import type { FC } from 'react'
 import { useState } from 'react'
-// import { useEffect } from 'react'
+import { useEffect } from 'react'
 import type { Investment } from '@prisma/client'
 import clsx from 'clsx'
-// import { useRouter } from 'next/router'
-// import { Spinner } from 'flowbite-react'
+import { Spinner } from 'flowbite-react'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid'
+
+import { api } from '../../utils/api'
 interface ChevronFilterProps {
   text: string
   onClickUp: VoidFunction
@@ -50,58 +51,54 @@ const InvestmentTable: FC<{ companyId: string }> = (companyId) => {
     [keyof Investment, 'asc' | 'desc' | undefined]
   >(['rawName', undefined])
   const limit = 5
-  // const {
-  //   fetchNextPage,
-  //   isLoading,
-  //   hasNextPage,
-  //   isFetchingNextPage,
-  //   data,
-  //   refetch,
-  // } = api.company.getInvestmentByCompany.useInfiniteQuery(
-  //   {
-  //     limit: limit,
-  //     companyId: companyId,
-  //     sortKey: selectedSort[0],
-  //     sortOrder: selectedSort[1],
-  //   },
-  //   {
-  //     getNextPageParam: (lastPage) => lastPage.nextCursor,
-  //     refetchOnWindowFocus: false,
-  //     cacheTime: 0,
-  //   },
-  // )
+  const {
+    fetchNextPage,
+    isLoading,
+    hasNextPage,
+    isFetchingNextPage,
+    data,
+    refetch,
+  } = api.company.getInvestmentByCompany.useInfiniteQuery(
+    {
+      limit: limit,
+      companyId: companyId.companyId,
+      sortKey: selectedSort[0],
+      sortOrder: selectedSort[1],
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+      refetchOnWindowFocus: false,
+      cacheTime: 0,
+    },
+  )
 
-  // useEffect(() => {
-  //   const refetchData = async () => {
-  //     await refetch()
-  //   }
+  console.log(data)
 
-  //   refetchData().catch((err) => {
-  //     console.error(err)
-  //   })
-  // }, [selectedSort])
+  useEffect(() => {
+    const refetchData = async () => {
+      await refetch()
+    }
 
-  // if (!data || isLoading) {
-  //   return (
-  //     <div className="text-center">
-  //       <Spinner />
-  //     </div>
-  //   )
-  // }
+    refetchData().catch((err) => {
+      console.error(err)
+    })
+  }, [selectedSort])
+
+  if (!data || isLoading) {
+    return (
+      <div className="text-center">
+        <Spinner />
+      </div>
+    )
+  }
 
   const table_data: Investment[] = []
 
-  // data?.pages.forEach((page) => {
-  //   page.items.forEach((item) => {
-  //     table_data.push(item)
-  //   })
-  // })
-
-  // const handleSortChange = (
-  //   newSort: [keyof Investment, 'asc' | 'desc' | undefined],
-  // ) => {
-  //   onSortChange(newSort)
-  // }
+  data?.pages.forEach((page) => {
+    page.items.forEach((item) => {
+      table_data.push(item)
+    })
+  })
 
   return (
     <div>
@@ -180,7 +177,7 @@ const InvestmentTable: FC<{ companyId: string }> = (companyId) => {
           })}
         </tbody>
       </table>
-      {/* <button
+      <button
         className="justify-center font-bold"
         onClick={() => {
           void fetchNextPage()
@@ -188,7 +185,7 @@ const InvestmentTable: FC<{ companyId: string }> = (companyId) => {
         disabled={!hasNextPage || isFetchingNextPage}
       >
         Load More
-      </button> */}
+      </button>
     </div>
   )
 }
