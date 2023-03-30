@@ -46,7 +46,7 @@ const Home: FC = () => {
   } = api.company.getCompanies.useInfiniteQuery(
     {
       limit: limit,
-      sortByNetAssestSum: extractSortyByQueryKey(
+      sortByNetAssetVal: extractSortyByQueryKey(
         'Net Asset Value',
         selectedSortKeys,
       ),
