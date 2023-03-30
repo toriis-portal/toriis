@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import dynamic from 'next/dynamic'
-import { Sector } from '@prisma/client'
+import type { Sector } from '@prisma/client'
 import { Spinner } from 'flowbite-react'
 
 import { api } from '../../utils/api'
@@ -39,14 +39,14 @@ const LandingDonutChart: FC = () => {
     const threshold = total * 0.05
 
     const filtered = arr
-      .filter((item) => item.count >= threshold && item.label != Sector.NONE)
+      .filter((item) => item.count >= threshold && item.label != null)
       .map((item) => ({
         label: sectorEnum[item.label as Sector],
         count: item.count,
       }))
 
     const newCount = arr
-      .filter((item) => item.count < threshold || item.label === Sector.NONE)
+      .filter((item) => item.count < threshold || item.label === null)
       .reduce((sum, item) => sum + item.count, 0)
 
     filtered.push({ label: 'Other', count: newCount })

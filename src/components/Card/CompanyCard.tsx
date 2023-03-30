@@ -32,13 +32,15 @@ const CompanyCard: FC<CardProps> = ({ companyInfo }) => {
               <p className="col-span-1 col-start-2 row-span-1 row-start-1">
                 {companyInfo.company.sector
                   ? sectorEnum[companyInfo.company.sector]
-                  : sectorEnum['NONE']}
+                  : 'None specified'}
               </p>
               <div className="col-span-1 col-start-1 row-span-1 row-start-3 self-center">
                 <Tag title="industry" className="bg-lightBlue text-black" />
               </div>
               <p className="text-wrap col-span-1 col-start-2 row-span-1 row-start-3">
-                {companyInfo.company.industry}
+                {companyInfo.company.industry
+                  ? companyInfo.company.industry
+                  : 'None specified'}
               </p>
             </div>
           </div>
