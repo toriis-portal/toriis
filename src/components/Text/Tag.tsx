@@ -2,14 +2,13 @@ import type { FC } from 'react'
 
 interface TagProps {
   title: string
-  backgroundColor: string
-  textColor: string
+  className: string
 }
 
-const Tag: FC<TagProps> = ({ title, backgroundColor, textColor }) => {
+const Tag: FC<TagProps> = ({ title, className }) => {
   return (
     <div
-      className={`flex justify-center rounded-full bg-${backgroundColor} text-${textColor} px-[18px] py-0 text-lg font-medium`}
+      className={`flex justify-center rounded-full ${className} w-fit px-[18px] py-0 text-lg font-medium`}
     >
       {title}
     </div>
