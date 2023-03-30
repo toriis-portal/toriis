@@ -10,6 +10,7 @@ import ESGTag from './Card/ESGTag'
 import NetAssetTag from './Card/NetAssetTag'
 // Charts
 import LandingDonutChart from './Charts/LandingDonutChart'
+import EmissionBarChart from './Charts/EmissionBarChart'
 // Displays
 import ListItem from './Displays/ListItem'
 import Carousel from './Displays/Carousel/Carousel'
@@ -53,4 +54,5 @@ export {
   NetAssetTag,
   Tag,
   ToolTip,
+  EmissionBarChart,
 }

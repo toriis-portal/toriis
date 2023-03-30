@@ -87,4 +87,16 @@ export const companyRouter = createTRPCRouter({
       },
     })
   }),
+  getCompanyScope: publicProcedure.query(({ input, ctx }) => {
+    return ctx.prisma.emission.findMany({
+      where: {
+        companyId: input,
+      },
+      select: {
+        scopeOne: true,
+        scopeTwo: true,
+        scopeThree: true,
+      },
+    })
+  }),
 })
