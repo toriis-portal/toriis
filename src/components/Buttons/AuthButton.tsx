@@ -1,17 +1,19 @@
-import type { FC } from 'react'
-import { signIn, signOut, useSession } from 'next-auth/react'
-import { UserIcon } from '@heroicons/react/24/solid'
 import React from 'react'
-import 'flowbite'
+import type { FC } from 'react'
+import { useState } from 'react'
+import { signIn, signOut, useSession } from 'next-auth/react'
+import { UserIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import clsx from 'clsx'
 
 const AuthButton: FC = () => {
   const { data: session } = useSession()
+  const [open, setOpen] = useState(false)
+
   const buttonStyle = clsx(
-    'bg-white border border-solid border-2 border-darkTeal text-darkTeal w-full rounded-lg py-3 mb-3',
+    'bg-white border border-solid border-2 border-darkTeal text-darkTeal w-full rounded-lg py-3 my-2',
   )
   const buttonStyleInverse = clsx(
-    'bg-darkTeal text-white w-full rounded-lg py-3 mt-4',
+    'bg-darkTeal text-white w-full rounded-lg py-3 mt-6',
   )
 
   return (
@@ -21,33 +23,34 @@ const AuthButton: FC = () => {
           data-popover-target="popover-click"
           data-popover-trigger="click"
           type="button"
-          className="h-full rounded-full bg-black p-1 text-center text-sm font-medium text-white"
+          className="h-full rounded-full bg-black p-2 text-center text-sm font-medium text-white"
+          onClick={() => setOpen(!open)}
         >
-          <UserIcon className="w-[2.4em] text-white" />
+          <UserIcon className="w-[2em] text-white" />
         </button>
       ) : (
         <button
-          data-popover-target="popover-click"
-          data-popover-trigger="click"
-          data-popover-offset="10"
-          type="button"
-          className="w-fit rounded-lg bg-lightBlue px-5 text-center text-sm font-medium text-black"
+          className="w-fit rounded-full bg-lightBlue px-5 py-1 text-center text-base font-medium text-black"
+          onClick={() => setOpen(!open)}
         >
-          Admin Login
+          admin login
         </button>
       )}
       <div
-        data-popover
-        id="popover-click"
-        role="tooltip"
         className={clsx(
-          'mr-20 rounded-lg border border-black bg-white px-2 py-6 lg:px-10',
+          'rounded-lg border border-black bg-white px-2 py-6 lg:px-8',
           'font-inter text-base font-normal text-black',
-          'absolute right-10 inline-block',
-          'invisible z-[100] w-[40%] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.3)] transition-opacity duration-300',
+          'absolute right-8 top-[5.5rem] inline-block',
+          'z-[100] w-[42%] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.3)] transition-opacity duration-200',
+          { 'invisible opacity-0': !open, 'visible opacity-100': open },
         )}
       >
-        <div className="px-10 py-2">
+        <div className="px-10 py-4">
+          <div className="absolute right-4 top-4 text-right">
+            <button onClick={() => setOpen(!open)}>
+              <XMarkIcon className="w-6 text-black" />
+            </button>
+          </div>
           {session ? (
             <div>
               <button className={buttonStyle}>Manage Website</button>
@@ -61,7 +64,10 @@ const AuthButton: FC = () => {
             </div>
           ) : (
             <div>
-              <button onClick={() => void signIn('google')}>
+              <button
+                className={buttonStyle}
+                onClick={() => void signIn('google', { callbackUrl: '/admin' })}
+              >
                 Continue with Google
               </button>
             </div>
