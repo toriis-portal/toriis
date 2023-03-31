@@ -40,9 +40,16 @@ const extractSortyByQueryKey = (
 const Home: FC = () => {
   const [selectedSortKeys, setSelectedSortKeys] = useState<string[]>([])
   const [companySearchQuery, setCompanySearchQuery] = useState<string>('')
-  // const [prevResultsEmpty, setPrevResultsEmpty] = useState<boolean>(false)
+  const [filteredResultsEmpty, setFilteredResultsEmpty] =
+    useState<boolean>(false)
 
   const limit = 5
+  // const fetchNextPage = null
+  // const isLoading = null
+  // const hasNextPage = null
+  // const isFetchingNextPage = null
+  // const data = []
+  // const refetch = null
   const {
     fetchNextPage,
     isLoading,
@@ -69,8 +76,42 @@ const Home: FC = () => {
       cacheTime: 0,
     },
   )
-  console.log(data)
+  // if (filteredResultsEmpty) {
+  //   {
+  //     fetchNextPage,
+  //     isLoading,
+  //     hasNextPage,
+  //     isFetchingNextPage,
+  //     data,
+  //     refetch,
+  //   } = api.company.getCompaniesUnfiltered.useInfiniteQuery(
+  //     {
+  //       limit: limit,
+  //       sortByNetAssetVal: extractSortyByQueryKey(
+  //         'Net Asset Value',
+  //         selectedSortKeys,
+  //       ),
+  //       sortByEnvGrade: extractSortyByQueryKey(
+  //         'Environment Grade',
+  //         selectedSortKeys,
+  //       ),
+  //     },
+  //     {
+  //       getNextPageParam: (lastPage) => lastPage.nextCursor,
+  //       refetchOnWindowFocus: false,
+  //       cacheTime: 0,
+  //     },
+  //   )
+  // }
+
+  const dataLength = data?.pages
+    ? (data.pages.length - 1) * limit +
+      // TODO: does this work? recommendations just has init length
+      (data.pages[data.pages.length - 1]?.items.length || 0)
+    : 0
+
   useEffect(() => {
+    // console.log(filteredDataLength)
     const refetchData = async () => {
       await refetch()
 
@@ -78,21 +119,39 @@ const Home: FC = () => {
         console.error(err)
       })
     }
+    console.log('first launch')
+    if (dataLength < 1) {
+      console.log(dataLength)
+      setFilteredResultsEmpty(true)
+    } else {
+      setFilteredResultsEmpty(false)
+    }
   }, [selectedSortKeys, companySearchQuery])
+  // console.log(filteredDataLength)
 
-  const dataLength = data?.pages
-    ? (data.pages.length - 1) * limit +
-      // TODO: does this work? recommendations just has init length
-      (data.pages[data.pages.length - 1]?.items.length || 0)
-    : 0
+  // if filtered results has no results, then
+  // - conditionally run unfiltered companies query
+  // - display "No results found"
+  // - display "Recommendations" instead of "Results"
+  // - set data to results of unfiltered query
+
+  useEffect(() => {
+    if (!isLoading && dataLength < 1) {
+      console.log(dataLength)
+      setFilteredResultsEmpty(true)
+    }
+  }, [dataLength])
+
   // useEffect(() => {
-  //   console.log(dataLength)
-  //   if (dataLength >= 1) {
-  //     setPrevResultsEmpty(false)
-  //   } else {
-  //     setPrevResultsEmpty(true)
+  //   if (!isLoading && filteredDataLength >= 1) {
+  //     console.log(filteredDataLength)
+  //     setFilteredResultsEmpty(false)
   //   }
-  // }, [dataLength])
+  // }, [companySearchQuery]) // TODO: also watch other selectors
+
+  console.log(data)
+  console.log(dataLength)
+  console.log(filteredResultsEmpty)
 
   return (
     <div className="flex flex-col items-center">
