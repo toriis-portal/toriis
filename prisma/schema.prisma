@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["clientExtensions", "orderByNulls"]
 }
 
 datasource db {
@@ -19,7 +20,24 @@ enum Sector {
   CONSUMER_DEFENSIVE
   REAL_ESTATE
   BASIC_MATERIALS
-  NONE                   @map("") // This is workaround for string mapping in enums in prisma
+}
+
+enum EnvGrade {
+  AAA
+  AA
+  A
+  BBB
+  BB
+  B
+  CCC
+}
+
+enum Collection {
+  Investment
+  Company
+  Fuel
+  Emission
+  Energy
 }
 
 model Investment {
@@ -27,7 +45,7 @@ model Investment {
   company      Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId    String   @db.ObjectId
   rawName      String
-  coupon       String
+  coupon       Float
   maturityDate DateTime
   quantity     Float
   costVal      Float
@@ -36,14 +54,20 @@ model Investment {
 }
 
 model Company {
-  id          String       @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  ticker      String
-  sector      Sector?
-  industry    String?
-  investment  Investment[]
-  description String?
-  ESG         ESG[]
+  id               String             @id @default(auto()) @map("_id") @db.ObjectId
+  name             String
+  ticker           String?
+  sector           Sector?
+  industry         String?
+  netAssetVal      Float
+  investment       Investment[]
+  description      String?
+  ESG              ESG[]
+  ESGInvalidTicker ESGInvalidTicker[]
+  bloombergId      String?
+  fuel             Fuel?
+  energy           Energy?
+  emission         Emission?
 }
 
 model Account {
@@ -91,15 +115,66 @@ model VerificationToken {
 }
 
 model ESG {
-  id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  company           Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  companyId         String  @db.ObjectId
-  environment_score Int
-  environment_grade String
-  environment_level String
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  company          Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId        String   @db.ObjectId
+  environmentScore Int
+  environmentGrade EnvGrade
+  environmentLevel String
 }
 
 model ESGIndex {
   id        String @id @default(auto()) @map("_id") @db.ObjectId
   companyId String @db.ObjectId
+}
+
+model ESGInvalidTicker {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId String  @db.ObjectId
+}
+
+model Fuel {
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  company            Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId          String  @unique @db.ObjectId
+  year               Int
+  totalConsumption   Float?
+  biodiesels         Float?
+  biogases           Float?
+  crudeOil           Float?
+  coal               Float?
+  oil                Float?
+  gas                Float?
+  otherBiomass       Float?
+  sustainableBiomass Float?
+  otherRenewable     Float?
+  otherNonRenewable  Float?
+}
+
+model Energy {
+  id                           String  @id @default(auto()) @map("_id") @db.ObjectId
+  company                      Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId                    String  @unique @db.ObjectId
+  year                         Int?
+  totalConsumption             Float?
+  totalRenewableConsumption    Float?
+  totalNonRenewableConsumption Float?
+}
+
+model Emission {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  company    Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId  String    @unique @db.ObjectId
+  date       DateTime?
+  version    Int?
+  scopeOne   Float?
+  scopeTwo   Float?
+  scopeThree Float?
+}
+
+model Staged {
+  id      String     @id @default(auto()) @map("_id") @db.ObjectId
+  type    Collection
+  updates Json[]
 }

@@ -1,15 +1,19 @@
+import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import type { Company } from '@prisma/client'
 import yahooFinance from 'yahoo-finance2'
-import { TRPCError } from '@trpc/server'
 
 import { createTRPCRouter, publicProcedure } from '../trpc'
 
-// interface for data returned by yahoo finance pkg
-// interface DateClosePair {
-//   date: string // date queried
-//   close: number // closing cost on date queried
-// }
+const extractSortOrder = (
+  sort: string | undefined | null,
+): sort is 'asc' | 'desc' | undefined => {
+  if (sort === undefined || sort === 'asc' || sort === 'desc') {
+    return true
+  }
+
+  return false
+}
 
 export const companyRouter = createTRPCRouter({
   // getTicker: publicProcedure.input(z.string()).query(({ ctx, input }) => {
@@ -80,4 +84,78 @@ export const companyRouter = createTRPCRouter({
       //   return error
       // })
     }),
+
+  getCompany: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .query(async ({ input, ctx }) => {
+      const company = await ctx.prisma.company.findUnique({
+        where: {
+          id: input.id,
+        },
+      })
+      if (!company) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Company not found',
+        })
+      }
+      return company
+    }),
+  getCompanies: publicProcedure
+    .input(
+      z.object({
+        limit: z.number().min(1).max(100).nullish(),
+        cursor: z.string().nullish(),
+        sortByEnvGrade: z.string().nullish(),
+        sortByNetAssetVal: z.string().nullish(),
+      }),
+    )
+    .query(async ({ input, ctx }) => {
+      const limit = input.limit ?? 9
+      const { cursor } = input
+
+      const items = await ctx.prisma.company.findMany({
+        orderBy: {
+          netAssetVal: extractSortOrder(input.sortByNetAssetVal)
+            ? input.sortByNetAssetVal
+            : undefined,
+        },
+        include: {
+          ESG: {
+            orderBy: {
+              environmentGrade: extractSortOrder(input.sortByEnvGrade)
+                ? input.sortByEnvGrade
+                : undefined,
+            },
+            select: {
+              environmentGrade: true,
+            },
+          },
+        },
+        take: limit + 1,
+        cursor: cursor ? { id: cursor } : undefined,
+      })
+
+      let nextCursor: typeof cursor | undefined = undefined
+      if (items.length > limit) {
+        const nextItem = items.pop()
+        nextCursor = nextItem?.id
+      }
+      return {
+        items,
+        nextCursor,
+      }
+    }),
+  countBySector: publicProcedure.query(({ ctx }) => {
+    return ctx.prisma.company.groupBy({
+      by: ['sector'],
+      _count: {
+        sector: true,
+      },
+    })
+  }),
 })

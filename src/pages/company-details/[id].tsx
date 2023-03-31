@@ -1,202 +1,197 @@
+import ApexCharts from 'apexcharts'
+import ReactApexChart from 'react-apexcharts'
+import type { ApexOptions } from 'apexcharts'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import type { FC } from 'react'
-// import type { GetServerSideProps } from 'next'
-// import yahooFinance from 'yahoo-finance2'
-// import type { HistoricalResult } from 'yahoo-finance2/dist/esm/src/modules/historical'
-// import { useEffect, useState } from 'react'
-
-// import { prisma } from '../../server/db'
-// import { getCompanyData } from '../../server/api/routers/company'
+import type { TRPCError } from '@trpc/server'
+import dynamic from 'next/dynamic'
 
 import { api } from '../../utils/api'
+import { companyRouter } from '../../server/api/routers/company'
 
 interface CompanyDetailsProps {
   id: string
 }
 
-// export const getServerSideProps: GetServerSideProps<
-//   CompanyDetailsProps
-// > = async ({ params }) => {
-//   let companyID: string
-//   let data: DateClosePair[] | string = 'No historical data found'
-//   let val = false // assumes an error will occur, set to true after data validation
-
-//   // grab companyID from url params
-//   if (params?.id) {
-//     // if an ID exists in URL, it should be a company ID
-//     companyID = params.id as string
-
-//     // retrieve ticker by companyID
-//     // case 1: t = 'NO_TICKER_FOUND' -> companyID is valid & stored in DB but no ticker exists
-//     // case 2: t = 'Invalid CompanyID: No Ticker Found' -> companyID is invalid and/or not stored in DB
-//     // case 3: t = TICKER -> companyID is valid & stored in DB with an existing ticker
-//     const t = await getCompanyTicker({
-//       prisma: prisma,
-//       input: companyID,
-//     })
-
-//     let res: HistoricalResult | string
-
-//     // case 0
-//     if (t === 'NO_TICKER_FOUND') {
-//       data = 'No historical data found: no ticker exists for this company'
-
-//       // case 1
-//     } else if (t === 'Invalid CompanyID: No Ticker Found') {
-//       data = 'No historical data found: this company does not exist'
-
-//       // case 3
-//     } else {
-//       // query yahoo-finance2 using valid ticker
-//       const query = t
-
-//       // query data from period1 (past) to today (present)
-//       const options = {
-//         period1: '2022-02-01',
-//       }
-
-//       // await result, if valid then populate data and return valid
-//       await yahooFinance
-//         .historical(query, options)
-//         .then((ret) => {
-//           res = JSON.stringify(ret)
-//           data = JSON.parse(res) as DateClosePair[]
-//           val = true
-//         })
-//         .catch(() => {
-//           // if invalid, populate data with an error message and leave valid = false
-//           data = 'No historical data found'
-//         })
-//     }
-
-//     return {
-//       props: {
-//         ticker: t,
-//         costData: data,
-//         valid: val,
-//       },
-//     }
-//   } else {
-//     // unable to retreive id from params, invalid case
-//     return {
-//       props: {
-//         ticker: 'Unable to retrieve company details',
-//         costData: 'No historical data found',
-//         valid: val,
-//       },
-//     }
-//   }
-// }
+const options: ApexOptions = {
+  // series: [
+  //   {
+  //     data: data,
+  //   },
+  // ],
+  chart: {
+    id: 'chart2',
+    type: 'line',
+    height: 230,
+    toolbar: {
+      autoSelected: 'pan',
+      show: false,
+    },
+  },
+  colors: ['#546E7A'],
+  stroke: {
+    width: 3,
+  },
+  dataLabels: {
+    enabled: false,
+  },
+  fill: {
+    opacity: 1,
+  },
+  markers: {
+    size: 0,
+  },
+  xaxis: {
+    type: 'datetime',
+  },
+}
 
 interface DateClosePair {
   date: string
   close: number // closing cost on date
 }
 
-// given a JSON data object
-function createData(costData: DateClosePair[]): DateClosePair[] {
-  const data: DateClosePair[] = costData
-  console.log(data)
-  // let display: DateClosePair[] = []
+// // given a JSON data object
+// function createData(costData: DateClosePair[]): DateClosePair[] {
+//   const data: DateClosePair[] = costData
+//   // let display: DateClosePair[] = []
 
-  // if (typeof data !== 'string' && data) {
-  //   console.log(data)
-  //   data.map((obj: DateClosePair) => {
-  //     const day: string = new Date(obj.date).toLocaleDateString()
-  //     const closingPrice: number = obj.close
-  //     const insert: DateClosePair = {
-  //       date: day,
-  //       close: closingPrice,
-  //     }
+//   // if (typeof data !== 'string' && data) {
+//   //   console.log(data)
+//   //   data.map((obj: DateClosePair) => {
+//   //     const day: string = new Date(obj.date).toLocaleDateString()
+//   //     const closingPrice: number = obj.close
+//   //     const insert: DateClosePair = {
+//   //       date: day,
+//   //       close: closingPrice,
+//   //     }
 
-  //     display.push(insert)
-  //   })
-  //   const length = display.length
-  //   if (length > 100) {
-  //     display = display.slice(length - 100)
-  //   }
-  //   return display.reverse()
-  // } else {
-  return []
-}
+//   //     display.push(insert)
+//   //   })
+//   //   const length = display.length
+//   //   if (length > 100) {
+//   //     display = display.slice(length - 100)
+//   //   }
+//   //   return display.reverse()
+//   // } else {
+//   return []
+// }
+
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 export const CompanyDetails: FC<CompanyDetailsProps> = () => {
-  // set to an empty array first
-  const uuid: string = (useRouter().query.id as string) ?? ''
+  // grab company_id from url
+  const company_id: string = (useRouter().query.id as string) ?? ''
 
-  let enabled = false
+  // if the router is not yet initialized, set company_id to ''
 
-  if (uuid != '') {
-    // console.log('empty')
-    enabled = true
+  // state variables for enabling/disabling queries when inputs are invalid
+  const [enabled, setEnabled] = useState(false)
+
+  // state variables for enabling/disabling queries after response from api
+  // const [querySuccess, setQuerySuccess] = useState(false)
+  // console.log(enabled)
+
+  // const priceData: any = ''
+
+  // query becomes enabled as soon as company id is available
+
+  // console.log('enabled before query: ', enabled)
+
+  const { data, isLoading, isError, isSuccess } =
+    api.company.getCompanyData.useQuery(
+      { id: company_id },
+      { enabled: enabled },
+    )
+  let dates: string[]
+  let closings: number[]
+  let options: unknown
+
+  useEffect(() => {
+    if (isError || isSuccess || !company_id) {
+      setEnabled(false)
+    } else if (!!company_id) {
+      console.log('Set to true')
+      setEnabled(true)
+    }
+  }, [isError, isSuccess, company_id])
+
+  if (isError || isSuccess || !company_id) {
+    if (isSuccess && !!data) {
+      // cleanedData = data.map((obj) => ({
+      //   date: obj.date.toLocaleDateString(),
+      //   close: obj.close,
+      // }))
+      dates = data.map((obj) => obj.date.toLocaleDateString())
+      closings = data.map((obj) => obj.close)
+      console.log(dates)
+      console.log(closings)
+
+      if (!!dates && !!closings) {
+        options = {
+          labels: dates,
+          fontFamily: 'Klima',
+          legend: { show: false },
+          colors: ['#FFA902', '#FF6112', '#17292E', '#0F81E8'],
+          series: [
+            {
+              name: 'Dates',
+              data: closings,
+            },
+          ],
+        }
+        return (
+          <>
+            <div>
+              <p>Done Loading: Success!</p>
+              <Chart
+                options={options}
+                series={closings}
+                type="line"
+                width="60%"
+                height="50%"
+              />
+            </div>
+          </>
+        )
+      }
+    }
   }
 
-  // console.log(uuid)
-  // const [display, setDisplay] = useState<DateClosePair[]>([])
+  console.log(data)
 
-  const priceData = api.company.getCompanyData.useQuery(
-    { id: uuid },
-    { enabled: enabled },
-  )
-
-  let parsedCompanyData: DateClosePair[]
-  // temporary handler for bad yahoo finance requests (no ticker found)
-  if (priceData.error) {
-    return null
-  } else {
-    const toParse = JSON.stringify(priceData)
-    parsedCompanyData = JSON.parse(toParse) as DateClosePair[]
-    parsedCompanyData = createData(parsedCompanyData)
-  }
-
-  console.log(parsedCompanyData)
-  // api.company.useQuery({ input: uuid })
-  // console.log(priceData)
-  // const dat = api.company.getCompanyData.useQuery(id).data as DateClosePair[]
-
-  // console.log(dat)s
-
-  // useEffect(() => {
-  //   // only call if data is a non-empty DataClosePair[]
-  //   // set our display data accordignly
-  //   if (valid && typeof costData !== 'string' && costData.length)
-  //     setDisplay(createData(costData))
-  //   // otherwise set display to empty
-  // }, [costData, valid]) // rerender if any of these values change to avoid hydration errors
-
-  return (
-    <>
+  if (isLoading) {
+    return (
       <div>
-        <p>Hi</p>
+        <p>Loading...</p>
       </div>
-      {/* {/* render only one of error message or details, this logic format avoids
-      hydration errors */}
-      {/* {((!display.length || !valid) && typeof costData === 'string' && (
-        <div>
-          <p>{costData}</p>
-        </div>
-      )) ||
-        (display.length && valid && typeof costData !== 'string' && (
-          <div>
-            <table>
-              <tbody>
-                <tr>
-                  <th>{ticker + "'"}s Closing Cost History</th>
-                </tr>
+    )
+  }
+  if (isError) {
+    return (
+      <div>
+        <p>Error</p>
+      </div>
+    )
+  }
 
-                {typeof costData !== 'string' &&
-                  display.map(({ date, close }: DateClosePair) => (
-                    <tr key={ticker + date}>
-                      <td>{date}</td>
-                      <td>${close.toFixed(2)}</td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
-        ))} */}
-    </>
-  )
+  if (isSuccess) {
+    return (
+      <>
+        <div>
+          <p>Done Loading: Success!</p>
+          <Chart
+            options={options}
+            // series={closings}
+            type="line"
+            width="60%"
+            height="50%"
+          />
+        </div>
+      </>
+    )
+  }
 }
 
 export default CompanyDetails
