@@ -40,6 +40,9 @@ declare module 'next-auth' {
  * @see https://next-auth.js.org/configuration/options
  **/
 export const authOptions: NextAuthOptions = {
+  pages: {
+    error: '/auth/error',
+  },
   callbacks: {
     async signIn({ user }) {
       // Check if the user is allowed to sign in

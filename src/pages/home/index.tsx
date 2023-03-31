@@ -7,7 +7,12 @@ import {
   RefuteUISResponse,
   TimelineSection,
 } from '../../sections'
-import { ToTopButton, SecondaryNavBar, AuthButton } from '../../components'
+import {
+  ToTopButton,
+  SecondaryNavBar,
+  AuthButton,
+  PrimaryNavBar,
+} from '../../components'
 import { ContentWrapper } from '../../utils/content'
 import type {
   Info,
@@ -65,6 +70,7 @@ const Home: FC<HomeProps> = ({
 
   return (
     <>
+      <PrimaryNavBar />
       <AuthButton />
       <SecondaryNavBar navItems={navItems} />
       <Landing text={info.landing} />
