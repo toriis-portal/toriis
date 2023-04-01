@@ -20,9 +20,6 @@ const AuthButton: FC = () => {
     <React.Fragment>
       {session ? (
         <button
-          data-popover-target="popover-click"
-          data-popover-trigger="click"
-          type="button"
           className="h-full rounded-full bg-black p-2 text-center text-sm font-medium text-white"
           onClick={() => setOpen(!open)}
         >

@@ -13,7 +13,10 @@ const AuthErrorPage: FC = () => {
       </p>
       <p className="p-10">
         Please check your email and{' '}
-        <span className={linkStyle} onClick={() => void signIn('google')}>
+        <span
+          className={linkStyle}
+          onClick={() => void signIn('google', { callbackUrl: '/admin' })}
+        >
           try again
         </span>
         , or{' '}
