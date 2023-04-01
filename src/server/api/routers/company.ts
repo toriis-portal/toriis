@@ -102,8 +102,8 @@ export const companyRouter = createTRPCRouter({
     .query(async ({ input, ctx }) => {
       const limit = input.limit ?? 5
       const companyId = input.companyId ?? ''
-      const sortKey = (input.sortKey ?? null) as keyof Investment | null
-      const sortOrder = input.sortOrder ?? null
+      const sortKey = (input.sortKey ?? undefined) as keyof Investment | null
+      const sortOrder = input.sortOrder ?? undefined
       const cursor = input.cursor
 
       const items = await ctx.prisma.investment.findMany({

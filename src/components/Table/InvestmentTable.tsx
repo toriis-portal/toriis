@@ -7,6 +7,7 @@ import { Spinner } from 'flowbite-react'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid'
 
 import { api } from '../../utils/api'
+import LoadMoreButton from '../Buttons/LoadMoreButton'
 interface ChevronFilterProps {
   text: string
   onClickUp: VoidFunction
@@ -72,17 +73,11 @@ const InvestmentTable: FC<{ companyId: string }> = (companyId) => {
     },
   )
 
-  console.log(data)
-
   useEffect(() => {
     const refetchData = async () => {
       await refetch()
     }
-
-    refetchData().catch((err) => {
-      console.error(err)
-    })
-  }, [selectedSort])
+  }, [refetch, selectedSort])
 
   if (!data || isLoading) {
     return (
@@ -91,14 +86,6 @@ const InvestmentTable: FC<{ companyId: string }> = (companyId) => {
       </div>
     )
   }
-
-  const table_data: Investment[] = []
-
-  data?.pages.forEach((page) => {
-    page.items.forEach((item) => {
-      table_data.push(item)
-    })
-  })
 
   return (
     <div>
@@ -157,35 +144,34 @@ const InvestmentTable: FC<{ companyId: string }> = (companyId) => {
           </tr>
         </thead>
         <tbody>
-          {table_data.map((investment: Investment, index: number) => {
-            return (
-              <tr
-                key={investment.id}
-                className={clsx({ 'bg-lightClementine': index % 2 == 1 })}
-              >
-                <td className="p-4 text-center">{investment.rawName}</td>
-                <td className={tableRowStyle}>{investment.coupon}</td>
-                <td className={tableRowStyle}>
-                  {investment.maturityDate.toISOString()}
-                </td>
-                <td className={tableRowStyle}>{investment.quantity}</td>
-                <td className={tableRowStyle}>{investment.costVal}</td>
-                <td className={tableRowStyle}>{investment.marketVal}</td>
-                <td className={tableRowStyle}>{investment.year}</td>
-              </tr>
-            )
+          {data?.pages.map((page) => {
+            return page.items.map((item, index) => {
+              return (
+                <tr
+                  key={item.id}
+                  className={clsx({ 'bg-lightClementine': index % 2 == 1 })}
+                >
+                  <td className="p-4 text-center">{item.rawName}</td>
+                  <td className={tableRowStyle}>{item.coupon}</td>
+                  <td className={tableRowStyle}>
+                    {item.maturityDate.toISOString()}
+                  </td>
+                  <td className={tableRowStyle}>{item.quantity}</td>
+                  <td className={tableRowStyle}>{item.costVal}</td>
+                  <td className={tableRowStyle}>{item.marketVal}</td>
+                  <td className={tableRowStyle}>{item.year}</td>
+                </tr>
+              )
+            })
           })}
         </tbody>
       </table>
-      <button
-        className="justify-center font-bold"
+      <LoadMoreButton
         onClick={() => {
           void fetchNextPage()
         }}
         disabled={!hasNextPage || isFetchingNextPage}
-      >
-        Load More
-      </button>
+      ></LoadMoreButton>
     </div>
   )
 }
