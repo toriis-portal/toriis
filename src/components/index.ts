@@ -4,6 +4,7 @@ import NavButton from './Buttons/NavButton'
 import PrimaryButton from './Buttons/PrimaryButton'
 import ToTopButton from './Buttons/ToTopButton'
 import ReadMoreButton from './Buttons/ReadMoreButton'
+import BackButton from './Buttons/BackButton'
 // Charts
 import LandingDonutChart from './Charts/LandingDonutChart'
 // Displays
@@ -42,4 +43,5 @@ export {
   ShadowTitle,
   ReadMoreButton,
   InvestmentTable,
+  BackButton,
 }
