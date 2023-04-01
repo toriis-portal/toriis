@@ -4,6 +4,9 @@ import { useState } from 'react'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { UserIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import clsx from 'clsx'
+import Image from 'next/image'
+
+import GoogleLogin from '../../../public/google.png'
 
 const AuthButton: FC = () => {
   const { data: session } = useSession()
@@ -38,11 +41,11 @@ const AuthButton: FC = () => {
           'rounded-lg border border-black bg-white py-6 px-2 lg:px-2',
           'font-inter text-base font-normal text-black',
           'absolute right-8 top-[5.5rem] inline-block',
-          'z-[100] w-[25%] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.3)] transition-opacity duration-200',
+          'z-[100] w-[40%] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.3)] transition-opacity duration-200 lg:w-[25%]',
           { 'invisible opacity-0': !open, 'visible opacity-100': open },
         )}
       >
-        <div className="px-10 py-4">
+        <div className="px-4 py-4 lg:px-10">
           <div className="absolute right-4 top-4 text-right">
             <button onClick={() => setOpen(!open)}>
               <XMarkIcon className="w-6 text-black" />
@@ -62,9 +65,17 @@ const AuthButton: FC = () => {
           ) : (
             <div>
               <button
-                className={buttonStyle}
+                className={clsx(
+                  buttonStyle,
+                  'flex flex-row items-center justify-center',
+                )}
                 onClick={() => void signIn('google', { callbackUrl: '/admin' })}
               >
+                <Image
+                  src={GoogleLogin}
+                  alt="google login"
+                  className="mr-3 h-4 w-4"
+                />
                 Continue with Google
               </button>
             </div>
