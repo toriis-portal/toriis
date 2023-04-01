@@ -20,7 +20,6 @@ enum Sector {
   CONSUMER_DEFENSIVE
   REAL_ESTATE
   BASIC_MATERIALS
-  NONE                   @map("") // This is workaround for string mapping in enums in prisma
 }
 
 enum EnvGrade {
@@ -31,6 +30,14 @@ enum EnvGrade {
   BB
   B
   CCC
+}
+
+enum Collection {
+  Investment
+  Company
+  Fuel
+  Emission
+  Energy
 }
 
 model Investment {
@@ -49,14 +56,18 @@ model Investment {
 model Company {
   id               String             @id @default(auto()) @map("_id") @db.ObjectId
   name             String
-  ticker           String
+  ticker           String?
   sector           Sector?
   industry         String?
-  netAssetSum      Float
+  netAssetVal      Float
   investment       Investment[]
   description      String?
   ESG              ESG[]
   ESGInvalidTicker ESGInvalidTicker[]
+  bloombergId      String?
+  fuel             Fuel?
+  energy           Energy?
+  emission         Emission?
 }
 
 model Account {
@@ -121,4 +132,49 @@ model ESGInvalidTicker {
   id        String  @id @default(auto()) @map("_id") @db.ObjectId
   company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId String  @db.ObjectId
+}
+
+model Fuel {
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  company            Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId          String  @unique @db.ObjectId
+  year               Int
+  totalConsumption   Float?
+  biodiesels         Float?
+  biogases           Float?
+  crudeOil           Float?
+  coal               Float?
+  oil                Float?
+  gas                Float?
+  otherBiomass       Float?
+  sustainableBiomass Float?
+  otherRenewable     Float?
+  otherNonRenewable  Float?
+}
+
+model Energy {
+  id                           String  @id @default(auto()) @map("_id") @db.ObjectId
+  company                      Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId                    String  @unique @db.ObjectId
+  year                         Int?
+  totalConsumption             Float?
+  totalRenewableConsumption    Float?
+  totalNonRenewableConsumption Float?
+}
+
+model Emission {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  company    Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId  String    @unique @db.ObjectId
+  date       DateTime?
+  version    Int?
+  scopeOne   Float?
+  scopeTwo   Float?
+  scopeThree Float?
+}
+
+model Staged {
+  id      String     @id @default(auto()) @map("_id") @db.ObjectId
+  type    Collection
+  updates Json[]
 }

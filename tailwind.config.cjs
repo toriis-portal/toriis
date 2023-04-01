@@ -15,6 +15,8 @@ module.exports = {
         clementine: '#FFA902',
         lightClementine: '#FFEECC',
         lightGray: '#D9D9D9',
+        lightShadow: '#23414634',
+        medGray: '#626161',
         white: '#FFFFFF',
       },
       flexBasis: {
@@ -24,6 +26,7 @@ module.exports = {
     },
     fontFamily: {
       klima: ['Klima', 'Arial', 'Roboto'],
+      inter: ['Inter', 'Klima', 'Arial'],
     },
   },
   plugins: [require('flowbite/plugin')],
