@@ -64,7 +64,7 @@ const Company = () => {
 
   if (isError || !data) {
     return (
-      <div className="flex flex-col items-center px-12">
+      <div className="flex flex-col items-center p-12">
         <HighlightedTitle
           title="Company Not Found"
           size="large"
