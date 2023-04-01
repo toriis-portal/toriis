@@ -144,12 +144,14 @@ const InvestmentTable: FC<{ companyId: string }> = (companyId) => {
           </tr>
         </thead>
         <tbody>
-          {data?.pages.map((page) => {
-            return page.items.map((item, index) => {
+          {data?.pages.map((page, pageIndex) => {
+            return page.items.map((item, itemIndex) => {
               return (
                 <tr
                   key={item.id}
-                  className={clsx({ 'bg-lightClementine': index % 2 == 1 })}
+                  className={clsx({
+                    'bg-lightClementine': (pageIndex + itemIndex) % 2 == 1,
+                  })}
                 >
                   <td className="p-4 text-center">{item.rawName}</td>
                   <td className={tableRowStyle}>{item.coupon}</td>
@@ -166,12 +168,14 @@ const InvestmentTable: FC<{ companyId: string }> = (companyId) => {
           })}
         </tbody>
       </table>
-      <LoadMoreButton
-        onClick={() => {
-          void fetchNextPage()
-        }}
-        disabled={!hasNextPage || isFetchingNextPage}
-      ></LoadMoreButton>
+      <div className="text-center">
+        <LoadMoreButton
+          onClick={() => {
+            void fetchNextPage()
+          }}
+          disabled={!hasNextPage || isFetchingNextPage}
+        ></LoadMoreButton>
+      </div>
     </div>
   )
 }
