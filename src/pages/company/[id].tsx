@@ -51,7 +51,7 @@ const Company = () => {
 
   const { data, isLoading, isError } = api.company.getCompany.useQuery(
     { id: companyId },
-    { refetchOnWindowFocus: false, enabled: !!companyId },
+    { refetchOnWindowFocus: false, retry: false, enabled: !!companyId },
   )
 
   if (isLoading) {
@@ -75,7 +75,7 @@ const Company = () => {
   }
 
   return (
-    <div className="mb-20 flex flex-col px-12">
+    <div className="mb-20 flex flex-col p-12">
       <div className="flex flex-col items-center">
         <HighlightedTitle title={data.name} size="large" color="clementine" />
       </div>
@@ -121,7 +121,7 @@ const Company = () => {
               ESG score measures how sustainably a company is conducting
               business based on their environmental impact calculated from their
               carbon emissions, energy consumption and climate change action. It
-              also addresses 
+              also addresses
             </div>
           </ToolTip>
         </div>
