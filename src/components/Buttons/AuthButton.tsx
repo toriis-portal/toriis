@@ -72,7 +72,7 @@ const AuthButton: FC = () => {
                 onClick={() => void signIn('google', { callbackUrl: '/admin' })}
               >
                 <Image
-                  src={GoogleLogin}
+                  src={GoogleLogin as HTMLImageElement}
                   alt="google login"
                   className="mr-3 h-4 w-4"
                 />
