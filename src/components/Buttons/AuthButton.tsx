@@ -5,6 +5,7 @@ import { signIn, signOut, useSession } from 'next-auth/react'
 import { UserIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import clsx from 'clsx'
 import Image from 'next/image'
+import Link from 'next/link'
 
 import GoogleLogin from '../../../public/google.png'
 
@@ -53,8 +54,12 @@ const AuthButton: FC = () => {
           </div>
           {session ? (
             <div>
-              <button className={buttonStyle}>Manage Website</button>
-              <button className={buttonStyle}>Manage Administration</button>
+              <Link href="/admin/data">
+                <button className={buttonStyle}>Manage Website</button>
+              </Link>
+              <Link href="/admin/management">
+                <button className={buttonStyle}>Manage Administration</button>
+              </Link>
               <button
                 onClick={() => void signOut()}
                 className={buttonStyleInverse}
