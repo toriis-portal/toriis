@@ -14,8 +14,8 @@ interface companySectorCount {
 
 // const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
-const EmissionBarChart: FC = () => {
-  const source = api.company.getCompanyScope.useQuery(undefined, {
+const EmissionBarChart: FC<{ companyId: string }> = (companyId) => {
+  const source = api.company.getCompanyScope.useQuery(companyId, undefined, {
     refetchOnWindowFocus: false,
   })
 
@@ -25,10 +25,9 @@ const EmissionBarChart: FC = () => {
         <Spinner color="info" />
       </div>
     )
-  console.log(source)
+  console.log(source.data)
   return (
     <div>
-      Emission Bar Chart
       {/* <Chart
             options={options}
             series={sums}
