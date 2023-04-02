@@ -99,7 +99,7 @@ const Home: FC = () => {
   // Refetch on search result is empty
   useEffect(() => {
     if (dataLengthArr.at(-1) === 0) {
-      setCompanySearchQuery('')
+      setCompanySearchQuery(' ')
     }
   }, [dataLengthArr, refetch])
 
