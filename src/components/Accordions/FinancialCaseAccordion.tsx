@@ -6,7 +6,7 @@ import {
   ArrowUpRightIcon,
 } from '@heroicons/react/24/solid'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import { BLOCKS, INLINES } from '@contentful/rich-text-types'
+import { INLINES } from '@contentful/rich-text-types'
 import type {
   Block,
   Inline,
@@ -24,28 +24,17 @@ const FinancialCaseAccordion: FC<{ content: CaseEntry }> = ({ content }) => {
 
   const contentfulOptions = {
     renderNode: {
-      [BLOCKS.PARAGRAPH]: (node: Block | Inline, children: any) => {
-        return <p className="flex flex-wrap gap-1 break-normal">{children}</p>
-      },
       [INLINES.HYPERLINK]: (node: Block | Inline, children: any) => {
-        if (node.nodeType === 'hyperlink') {
-          const url =
-            'uri' in node.data && typeof node.data.uri == 'string'
-              ? node.data.uri
-              : '#'
-          return (
-            <a
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-row"
-            >
-              {children}
-              <ArrowUpRightIcon className="align-self-start ml-0.5 mt-1 inline h-4 w-4 stroke-current stroke-1" />
-            </a>
-          )
-        }
-        return <p>{children}</p>
+        const url =
+          'uri' in node.data && typeof node.data.uri == 'string'
+            ? node.data.uri
+            : '#'
+        return (
+          <a href={url} target="_blank" rel="noopener noreferrer">
+            {children}
+            <ArrowUpRightIcon className="align-self-start ml-0.5 inline h-4 w-4 stroke-current stroke-1" />
+          </a>
+        )
       },
     },
   }
