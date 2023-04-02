@@ -7,6 +7,7 @@ import {
   InvestmentTable,
   ToolTip,
   Tag,
+  EnergyRadialBarChart,
 } from '../../components'
 import { api } from '../../utils/api'
 
@@ -131,6 +132,9 @@ const Company = () => {
         size="medium"
         color="brightTeal"
       />
+
+      <EnergyRadialBarChart />
+
       <HighlightedTitle
         title="Investment Details"
         size="medium"

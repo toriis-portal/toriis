@@ -9,6 +9,7 @@ import CompanyCard from './Card/CompanyCard'
 import ESGTag from './Card/ESGTag'
 import NetAssetTag from './Card/NetAssetTag'
 // Charts
+import EnergyRadialBarChart from './Charts/EnergyRadialBarChart'
 import LandingDonutChart from './Charts/LandingDonutChart'
 // Displays
 import ListItem from './Displays/ListItem'
@@ -53,4 +54,5 @@ export {
   NetAssetTag,
   Tag,
   ToolTip,
+  EnergyRadialBarChart,
 }
