@@ -1,5 +1,6 @@
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
+import type { Investment } from '@prisma/client'
 
 import { createTRPCRouter, publicProcedure } from '../trpc'
 
@@ -40,7 +41,7 @@ export const companyRouter = createTRPCRouter({
         limit: z.number().min(1).max(100).nullish(),
         cursor: z.string().nullish(),
         sortByEnvGrade: z.string().nullish(),
-        sortByNetAssestSum: z.string().nullish(),
+        sortByNetAssetVal: z.string().nullish(),
       }),
     )
     .query(async ({ input, ctx }) => {
@@ -49,8 +50,8 @@ export const companyRouter = createTRPCRouter({
 
       const items = await ctx.prisma.company.findMany({
         orderBy: {
-          netAssetSum: extractSortOrder(input.sortByNetAssestSum)
-            ? input.sortByNetAssestSum
+          netAssetVal: extractSortOrder(input.sortByNetAssetVal)
+            ? input.sortByNetAssetVal
             : undefined,
         },
         include: {
@@ -79,12 +80,52 @@ export const companyRouter = createTRPCRouter({
         nextCursor,
       }
     }),
-  countBySector: publicProcedure.query(({ ctx }) => {
+  sumBySector: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.company.groupBy({
       by: ['sector'],
-      _count: {
-        sector: true,
+      _sum: {
+        netAssetVal: true,
       },
     })
   }),
+
+  getInvestmentByCompany: publicProcedure
+    .input(
+      z.object({
+        limit: z.number().min(1).max(100).nullish(),
+        companyId: z.string(),
+        sortKey: z.string().nullish(),
+        sortOrder: z.string().nullish(),
+        cursor: z.string().nullish(),
+      }),
+    )
+    .query(async ({ input, ctx }) => {
+      const limit = input.limit ?? 5
+      const companyId = input.companyId ?? ''
+      const sortKey = (input.sortKey ?? undefined) as keyof Investment | null
+      const sortOrder = input.sortOrder ?? undefined
+      const cursor = input.cursor
+
+      const items = await ctx.prisma.investment.findMany({
+        orderBy: {
+          ...(sortKey ? { [sortKey]: sortOrder } : {}),
+        },
+        where: {
+          companyId: companyId,
+        },
+        take: limit + 1,
+        cursor: cursor ? { id: cursor } : undefined,
+      })
+
+      let nextCursor: typeof cursor | undefined = undefined
+      if (items.length > limit) {
+        const nextItem = items.pop()
+        nextCursor = nextItem?.id
+      }
+
+      return {
+        items,
+        nextCursor,
+      }
+    }),
 })
