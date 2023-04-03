@@ -38,7 +38,7 @@ const Company = () => {
       </div>
     )
   }
-  console.log(data)
+  // console.log(data)
 
   return (
     <div className="mb-20 flex flex-col px-12">
