@@ -39,7 +39,7 @@ const CompanyDetailsAccordian: FC<CompanyDetailsAccordianProps> = ({
       <p>{folded ? truncated : content}</p>
       <div className="flex px-6">
         <ReadMoreButton
-          isOpen={folded}
+          isOpen={!folded}
           handleOpen={() => {
             setFolded(!folded)
           }}
