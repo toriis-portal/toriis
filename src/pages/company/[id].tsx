@@ -2,6 +2,7 @@ import type { Investment } from '@prisma/client'
 import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
 
+import InvestmentDetailsChart from '../../components/Charts/InvestmentDetailsChart'
 import {
   HighlightedTitle,
   InvestmentTable,
@@ -121,7 +122,7 @@ const Company = () => {
               ESG score measures how sustainably a company is conducting
               business based on their environmental impact calculated from their
               carbon emissions, energy consumption and climate change action. It
-              also addresses 
+              also addresses
             </div>
           </ToolTip>
         </div>
@@ -131,6 +132,10 @@ const Company = () => {
         size="medium"
         color="brightTeal"
       />
+      <div>
+        <Tag title="Yahoo Finance" className="w-4 bg-gray-200" />
+        <InvestmentDetailsChart company_id={companyId} />
+      </div>
       <HighlightedTitle
         title="Investment Details"
         size="medium"
