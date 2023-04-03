@@ -17,11 +17,11 @@ const BackButton: FC = () => {
         clsx(
           'flex w-[5rem] place-content-center items-center justify-center font-klima text-[1.1rem]',
           'shadow-gray shadow-lg',
-          'rounded-3xl border-[0.05rem] border-black py-1 px-3',
+          'rounded-3xl border-[0.05rem] border-black py-1 ',
         ),
       )}
     >
-      <ArrowSmallLeftIcon className="inline w-[1rem] stroke-current stroke-1" />
+      <ArrowSmallLeftIcon className="mr-1 inline w-[1rem] stroke-current stroke-1" />
       <p className="font-[400]"> Back</p>
     </button>
   )
