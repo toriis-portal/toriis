@@ -12,12 +12,15 @@ interface companySectorCount {
   count: number
 }
 
-// const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
-const EmissionBarChart: FC<{ companyId: string }> = (companyId) => {
-  const source = api.company.getCompanyScope.useQuery(companyId, undefined, {
-    refetchOnWindowFocus: false,
-  })
+const EmissionBarChart: FC<{ companyId: string }> = ({ companyId }) => {
+  const source = api.company.getCompanyScope.useQuery(
+    { companyId },
+    {
+      refetchOnWindowFocus: false,
+    },
+  )
 
   if (!source.data)
     return (
@@ -25,16 +28,30 @@ const EmissionBarChart: FC<{ companyId: string }> = (companyId) => {
         <Spinner color="info" />
       </div>
     )
-  console.log(source.data)
+  const labels = ['Scope 1 Estimate', 'Scope 2 Estimate', 'Scope 3 Estimate']
+  const series = [
+    {
+      data: Object.entries(source.data).map(([x, y]) => ({ x, y })),
+    },
+  ]
+
+  const options = {
+    plotOptions: {
+      bar: {
+        horizontal: true,
+      },
+    },
+  }
+
   return (
     <div>
-      {/* <Chart
-            options={options}
-            series={sums}
-            type="bar"
-            width="100%"
-            height="auto"
-        /> */}
+      <Chart
+        options={options}
+        series={series}
+        type="bar"
+        width="100%"
+        height="auto"
+      />
     </div>
   )
 }
