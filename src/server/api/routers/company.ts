@@ -80,10 +80,8 @@ export const companyRouter = createTRPCRouter({
           },
           OR: netAssetValFilterCleaned,
           ESG: {
-            some: {
-              environmentGrade: {
-                in: input.filterByEnvGrade ? input.filterByEnvGrade : undefined,
-              },
+            environmentGrade: {
+              in: input.filterByEnvGrade ? input.filterByEnvGrade : undefined,
             },
           },
         },
@@ -91,14 +89,14 @@ export const companyRouter = createTRPCRouter({
           netAssetVal: extractSortOrder(input.sortByNetAssetVal)
             ? input.sortByNetAssetVal
             : undefined,
+          ESG: {
+            environmentGrade: extractSortOrder(input.sortByEnvGrade)
+              ? input.sortByEnvGrade
+              : undefined,
+          },
         },
         include: {
           ESG: {
-            orderBy: {
-              environmentGrade: extractSortOrder(input.sortByEnvGrade)
-                ? input.sortByEnvGrade
-                : undefined,
-            },
             select: {
               environmentGrade: true,
             },

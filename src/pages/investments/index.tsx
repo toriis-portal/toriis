@@ -91,7 +91,7 @@ const Home: FC = () => {
       filterByIndustry: convertToFilterOptions(filterOptions.industries),
       filterByEnvGrade: convertToFilterOptions(
         filterOptions.envGrade,
-      ) as (keyof typeof envGradeEnum)[],
+      ) as (keyof typeof EnvGrade)[],
       filterBySector: convertToFilterOptions(
         filterOptions.sectors,
       ) as (keyof typeof Sector)[],
@@ -218,7 +218,7 @@ const Home: FC = () => {
               {page.items.map((company) => {
                 const company2: { ESG: EnvGrade | undefined } & {
                   company: Company
-                } = { ESG: company?.ESG[0]?.environmentGrade, company }
+                } = { ESG: company?.ESG?.environmentGrade, company }
                 return (
                   <React.Fragment key={company.id}>
                     <CompanyCard companyInfo={company2} />
