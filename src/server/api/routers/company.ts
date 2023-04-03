@@ -51,9 +51,9 @@ export const companyRouter = createTRPCRouter({
       }
 
       // given the company ticker, query yahoo finance
-      const historicalFinanceData = yahooFinance.historical(query, options)
+      const companyFinanceData = yahooFinance.historical(query, options)
 
-      return historicalFinanceData
+      return companyFinanceData
     }),
 
   getCompany: publicProcedure
