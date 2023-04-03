@@ -46,3 +46,13 @@ export interface CaseEntry {
   details: Document
   url: string
 }
+
+export interface IndustryEntry {
+  name: string
+  details: string
+}
+
+export interface SectorEntry {
+  name: string
+  details: string
+}

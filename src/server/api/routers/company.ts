@@ -1,8 +1,11 @@
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import type { Investment } from '@prisma/client'
+import type { ContentfulClientApi } from 'contentful'
 
+import { env } from '../../../env.mjs'
 import { createTRPCRouter, publicProcedure } from '../trpc'
+import type { IndustryEntry, SectorEntry } from '../../../types/index.js'
 
 const extractSortOrder = (
   sort: string | undefined | null,
@@ -12,6 +15,40 @@ const extractSortOrder = (
   }
 
   return false
+}
+
+export class ContentWrapper {
+  client: ContentfulClientApi
+
+  constructor() {
+    this.client = createClient({
+      space: env.CONTENTFUL_SPACE_ID,
+      accessToken: env.CONTENTFUL_ACCESS_TOKEN,
+    })
+  }
+
+  get = async (entity: string) => {
+    const client = this.client
+    const entries = await client.getEntries({
+      content_type: entity,
+    })
+    return this.sortEntryByType(
+      entries.items.map((item) => item.fields),
+      entity,
+    )
+    console.log("Test")
+  }
+}
+
+sortEntryByType = (entries: any, entity: string) => {
+  switch (entity) {
+    case 'industry':
+      return entries as IndustryEntry[]
+    case 'sector':
+      return entries as SectorEntry[]
+    default:
+      return []
+  }
 }
 
 export const companyRouter = createTRPCRouter({
