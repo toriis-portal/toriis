@@ -7,6 +7,7 @@ import {
   InvestmentTable,
   ToolTip,
   Tag,
+  CompanyDetailsAccordian,
 } from '../../components'
 import { api } from '../../utils/api'
 
@@ -37,12 +38,18 @@ const Company = () => {
       </div>
     )
   }
+  console.log(data)
 
   return (
     <div className="mb-20 flex flex-col px-12">
       <div className="flex flex-col items-center">
         <HighlightedTitle title={data.name} size="large" color="clementine" />
       </div>
+
+      <CompanyDetailsAccordian
+        content={data.description ? data.description : ''}
+      />
+
       <div className="flex justify-center">
         <div className="inline-flex pr-10">
           <Tag title="sector" className="bg-cobalt text-white" />

@@ -16,6 +16,7 @@ import Carousel from './Displays/Carousel/Carousel'
 // Accordions
 import RequestAccordion from './Accordions/RequestAccordion'
 import FinancialCaseAccordion from './Accordions/FinancialCaseAccordion'
+import CompanyDetailsAccordian from './Accordions/CompanyDetailsAccordian'
 // Nav
 import PrimaryNavBar from './Nav/PrimaryNavBar'
 import SecondaryNavBar from './Nav/SecondaryNavBar'
@@ -55,4 +56,5 @@ export {
   Tag,
   FinancialCaseAccordion,
   ToolTip,
+  CompanyDetailsAccordian,
 }
