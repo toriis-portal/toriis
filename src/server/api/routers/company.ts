@@ -16,9 +16,6 @@ const extractSortOrder = (
 }
 
 export const companyRouter = createTRPCRouter({
-  // getTicker: publicProcedure.input(z.string()).query(({ ctx, input }) => {
-  //   return getCompanyTicker({ prisma: ctx.prisma, input })
-  // }),
   // given a company id, find company in db
   // then grab ticker,
   // then query yahoo-finance with ticker
@@ -53,36 +50,10 @@ export const companyRouter = createTRPCRouter({
         period1: '2022-02-01',
       }
 
-      // initialize data array
-      // let companyData: DateClosePair[]
-
-      // initialize temp result from yahoo finance
-      // pkg returns type HistoricalResult so we
-      // will parse it into a JSON object then cast it to DateClosePair[]
-      // let res: string
-
       // given the company ticker, query yahoo finance
       const ret = yahooFinance.historical(query, options)
 
       return ret
-
-      // .then((ret) => {
-      //   // while (ret == undefined) {
-      //   //   if (ret != undefined) {
-      //   //     return ret
-      //   //   }
-      //   // }
-      //   console.log(ret)
-      //   return ret
-      //   // res = JSON.stringify(ret)
-      //   // return res
-      //   // companyData = JSON.parse(res) as DateClosePair[]
-      //   // return companyData
-      // })
-      // .catch((error: unknown) => {
-      //   // if invalid, populate data with an error message and leave valid = false
-      //   return error
-      // })
     }),
 
   getCompany: publicProcedure

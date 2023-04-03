@@ -1,4 +1,3 @@
-/* @typescript-eslint-disable */
 import type { FC } from 'react'
 import { ArrowRightIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
