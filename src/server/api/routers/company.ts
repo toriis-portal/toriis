@@ -41,9 +41,9 @@ export const companyRouter = createTRPCRouter({
       }
 
       // given the company, grab the ticker as query value
-      const query: string | null = company.ticker
+      const companyTicker: string | null = company.ticker
 
-      if (!query) {
+      if (!companyTicker) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
           message: 'No Ticker Found',
@@ -51,7 +51,7 @@ export const companyRouter = createTRPCRouter({
       }
 
       // given the company ticker, query yahoo finance
-      const companyFinanceData = yahooFinance.historical(query, options)
+      const companyFinanceData = yahooFinance.historical(companyTicker, options)
 
       return companyFinanceData
     }),

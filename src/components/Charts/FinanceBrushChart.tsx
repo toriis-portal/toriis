@@ -4,7 +4,6 @@ import dynamic from 'next/dynamic'
 import type { HistoricalRowHistory } from 'yahoo-finance2/dist/esm/src/modules/historical'
 import { Spinner } from 'flowbite-react'
 
-import HighlightedTitle from '../Text/HighlightedTitle'
 import { api } from '../../utils/api'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
@@ -20,7 +19,7 @@ interface DateClosePair {
   y: number // closing cost, called y for apex
 }
 
-export const FinanceBrushChart: FC<FinanceBrushChartProps> = ({
+export const FinanceBrushChart: FC<FinanceBrushChartProps> | null = ({
   companyId,
 }) => {
   const { data, isLoading, isError } =
@@ -44,25 +43,19 @@ export const FinanceBrushChart: FC<FinanceBrushChartProps> = ({
   }
 
   if (isError || !data) {
-    return (
-      <>
-        <div className="flex flex-col items-center px-12">
-          <HighlightedTitle
-            title="Invalid Company or No Ticker Found"
-            size="large"
-            color="clementine"
-          />
-        </div>
-      </>
-    )
+    return null
   }
 
-  const chartData: DateClosePair[] = data.map((obj: HistoricalRowHistory) => ({
-    x: obj.date,
-    y: obj.close,
-  })) // {date: Date, close: number}
+  const chartData: DateClosePair[] = data.map(
+    (history: HistoricalRowHistory) => ({
+      x: history.date,
+      y: history.close,
+    }),
+  ) // {date: Date, close: number}
 
-  const labels: number[] = data.map((obj: HistoricalRowHistory) => obj.close)
+  const labels: number[] = data.map(
+    (history: HistoricalRowHistory) => history.close,
+  )
 
   const options: ApexOptions = {
     chart: {
@@ -85,9 +78,6 @@ export const FinanceBrushChart: FC<FinanceBrushChartProps> = ({
     fill: {
       opacity: 1,
     },
-    markers: {
-      size: 0,
-    },
   }
 
   const lineOptions: ApexOptions = {
@@ -99,9 +89,6 @@ export const FinanceBrushChart: FC<FinanceBrushChartProps> = ({
       },
       selection: {
         enabled: true,
-        xaxis: {
-          max: new Date().getTime(),
-        },
       },
     },
     colors: ['#008FFB'],

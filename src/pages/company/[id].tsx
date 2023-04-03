@@ -132,10 +132,11 @@ const Company = () => {
         size="medium"
         color="brightTeal"
       />
-      <div>
-        <Tag title="Yahoo Finance" className="w-4 bg-lightBlue" />
+
+      {<Tag title="Yahoo Finance" className="w-4 bg-lightBlue" /> && (
         <FinanceBrushChart companyId={companyId} />
-      </div>
+      )}
+
       <HighlightedTitle
         title="Investment Details"
         size="medium"
