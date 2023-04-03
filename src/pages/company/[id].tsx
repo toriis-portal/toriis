@@ -2,7 +2,7 @@ import type { Investment } from '@prisma/client'
 import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
 
-import InvestmentDetailsChart from '../../components/Charts/InvestmentDetailsChart'
+import FinanceBrushChart from '../../components/Charts/FinanceBrushChart'
 import {
   HighlightedTitle,
   InvestmentTable,
@@ -133,8 +133,8 @@ const Company = () => {
         color="brightTeal"
       />
       <div>
-        <Tag title="Yahoo Finance" className="w-4 bg-gray-200" />
-        <InvestmentDetailsChart company_id={companyId} />
+        <Tag title="Yahoo Finance" className="w-4 bg-lightBlue" />
+        <FinanceBrushChart companyId={companyId} />
       </div>
       <HighlightedTitle
         title="Investment Details"

@@ -19,11 +19,14 @@ export const companyRouter = createTRPCRouter({
   // given a company id, find company in db
   // then grab ticker,
   // then query yahoo-finance with ticker
-  getCompanyData: publicProcedure
+  getCompanyFinanceData: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
       // given a company id, find company in db
-      console.log('INPUT: ' + input.id)
+      const options = {
+        period1: '2022-02-01',
+      }
+
       const company: Company | null = await ctx.prisma.company.findUnique({
         where: {
           id: input.id,
@@ -32,28 +35,25 @@ export const companyRouter = createTRPCRouter({
 
       if (!company) {
         throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
+          code: 'NOT_FOUND',
           message: 'Error fetching company',
         })
       }
 
       // given the company, grab the ticker as query value
-      const query: string = company.ticker
+      const query: string | null = company.ticker
 
-      if (query === 'NO_TICKER_FOUND') {
+      if (!query) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
           message: 'No Ticker Found',
         })
       }
-      const options = {
-        period1: '2022-02-01',
-      }
 
       // given the company ticker, query yahoo finance
-      const ret = yahooFinance.historical(query, options)
+      const historicalFinanceData = yahooFinance.historical(query, options)
 
-      return ret
+      return historicalFinanceData
     }),
 
   getCompany: publicProcedure
