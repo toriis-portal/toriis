@@ -19,7 +19,7 @@ interface DateClosePair {
   y: number // closing cost, called y for apex
 }
 
-export const FinanceBrushChart: FC<FinanceBrushChartProps> | null = ({
+export const FinanceBrushChart: FC<FinanceBrushChartProps> = ({
   companyId,
 }) => {
   const { data, isLoading, isError } =
@@ -43,7 +43,7 @@ export const FinanceBrushChart: FC<FinanceBrushChartProps> | null = ({
   }
 
   if (isError || !data) {
-    return null
+    return <></>
   }
 
   const chartData: DateClosePair[] = data.map(
