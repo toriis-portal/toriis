@@ -8,7 +8,11 @@ interface CompanyDetailsAccordianProps {
 const CompanyDetailsAccordian: FC<CompanyDetailsAccordianProps> = ({
   content,
 }) => {
-  return <div>{content}</div>
+  return (
+    <div className="mb-10 rounded-[10px] border-[3px]  border-cobalt bg-lightBlue px-10 py-5">
+      {content}
+    </div>
+  )
 }
 
 export default CompanyDetailsAccordian
