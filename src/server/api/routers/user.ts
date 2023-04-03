@@ -7,7 +7,7 @@ export const userRouter = createTRPCRouter({
   firstLogin: protectedProcedure
     .input(z.object({ email: z.string(), userId: z.string() }))
     .mutation(async ({ input, ctx }) => {
-      const updatedWhiteList = await ctx.prisma.whitelistedUsers.update({
+      const updatedWhiteList = await ctx.prisma.whitelistedUser.update({
         where: {
           email: input.email,
         },

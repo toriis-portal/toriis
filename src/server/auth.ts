@@ -50,7 +50,7 @@ export const authOptions: NextAuthOptions = {
       if (!user || !user.email) {
         return false
       } else {
-        const isAllowedToSignIn = await prisma.whitelistedUsers.findFirst({
+        const isAllowedToSignIn = await prisma.whitelistedUser.findFirst({
           where: {
             email: user.email,
           },

@@ -13,6 +13,8 @@ const AdminPage: FC = () => {
     }
   }, [push, status])
 
+  console.log(session?.user)
+
   return <div>{session && <h1>Administration Control</h1>}</div>
 }
 
