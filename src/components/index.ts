@@ -16,6 +16,7 @@ import ListItem from './Displays/ListItem'
 import Carousel from './Displays/Carousel/Carousel'
 // Accordions
 import RequestAccordion from './Accordions/RequestAccordion'
+import FinancialCaseAccordion from './Accordions/FinancialCaseAccordion'
 // Nav
 import PrimaryNavBar from './Nav/PrimaryNavBar'
 import SecondaryNavBar from './Nav/SecondaryNavBar'
@@ -53,6 +54,7 @@ export {
   ESGTag,
   NetAssetTag,
   Tag,
+  FinancialCaseAccordion,
   ToolTip,
   EnergyRadialBarChart,
 }

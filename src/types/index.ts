@@ -40,3 +40,9 @@ export interface Info {
   landing: Document
   refuteUisResponse: Document
 }
+
+export interface CaseEntry {
+  title: string
+  details: Document
+  url: string
+}
