@@ -7,6 +7,7 @@ import {
   InvestmentTable,
   ToolTip,
   Tag,
+  BackButton,
 } from '../../components'
 import { api } from '../../utils/api'
 
@@ -39,7 +40,8 @@ const Company = () => {
   }
 
   return (
-    <div className="mb-20 flex flex-col p-12">
+    <div className="mb-20 mt-8 flex flex-col px-12 ">
+      <BackButton />
       <div className="flex flex-col items-center">
         <HighlightedTitle title={data.name} size="large" color="clementine" />
       </div>

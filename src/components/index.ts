@@ -4,6 +4,7 @@ import NavButton from './Buttons/NavButton'
 import PrimaryButton from './Buttons/PrimaryButton'
 import ToTopButton from './Buttons/ToTopButton'
 import ReadMoreButton from './Buttons/ReadMoreButton'
+import BackButton from './Buttons/BackButton'
 // Card
 import CompanyCard from './Card/CompanyCard'
 import ESGTag from './Card/ESGTag'
@@ -49,6 +50,7 @@ export {
   ShadowTitle,
   ReadMoreButton,
   InvestmentTable,
+  BackButton,
   CompanyCard,
   ESGTag,
   NetAssetTag,
