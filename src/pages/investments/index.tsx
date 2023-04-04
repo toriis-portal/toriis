@@ -7,8 +7,9 @@ import { Spinner } from 'flowbite-react'
 import {
   Select,
   HighlightedTitle,
-  SearchBar,
   ToTopButton,
+  PrimaryNavBar,
+  SearchBar,
 } from '../../components'
 import { api } from '../../utils/api'
 import CompanyCard from '../../components/Card/CompanyCard'
@@ -37,7 +38,7 @@ const extractSortyByQueryKey = (
 
   return null
 }
-const Home: FC = () => {
+const InvestmentPage: FC = () => {
   const [selectedSortKeys, setSelectedSortKeys] = useState<string[]>([])
   const [companySearchQuery, setCompanySearchQuery] = useState<string>('')
   const [dataLengthArr, setDataLengthArr] = useState<number[]>([])
@@ -104,13 +105,16 @@ const Home: FC = () => {
   }, [dataLengthArr, refetch])
 
   return (
-    <div className="flex flex-col items-center">
-      <HighlightedTitle
-        title="Learn About Investments"
-        size="large"
-        color="clementine"
-      />
-      <SearchBar setCompanySearchQuery={setCompanySearchQuery} />
+    <>
+      <PrimaryNavBar />
+      <div className="flex flex-col items-center">
+        <HighlightedTitle
+          title="Learn About Investments"
+          size="large"
+          color="clementine"
+        />
+        <SearchBar setCompanySearchQuery={setCompanySearchQuery} />
+      </div>
       {dataLengthArr.length > 2 && dataLengthArr.at(-2) === 0 && (
         <p className="py-12 text-[22px] font-medium">
           No results found, try searching again.
@@ -124,7 +128,10 @@ const Home: FC = () => {
             </p>
             <p className="text-medGray">
               {'('}
-              {dataLength}
+              {data?.pages
+                ? (data.pages.length - 1) * limit +
+                  (data.pages[data.pages.length - 1]?.items.length || 0)
+                : 0}
               {' results)'}
             </p>
           </div>
@@ -172,8 +179,8 @@ const Home: FC = () => {
         ></LoadMoreButton>
         <ToTopButton />
       </div>
-    </div>
+    </>
   )
 }
 
-export default Home
+export default InvestmentPage

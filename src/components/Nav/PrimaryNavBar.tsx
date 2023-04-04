@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Navbar } from 'flowbite-react'
 
-import { NavButton } from '../index'
+import { AuthButton, NavButton } from '../index'
 import toriisimg from '../../../public/toriis.png'
 
 const PrimaryNavBar: FC = () => {
@@ -23,6 +23,9 @@ const PrimaryNavBar: FC = () => {
           <NavButton title="Home" link="/home" />
           <NavButton title="Fossil Fuel" link="/fossil-fuel" />
           <NavButton title="Learn about Investments" link="/investments" />
+          <div className="flex w-fit flex-col justify-center">
+            <AuthButton />
+          </div>
         </Navbar.Collapse>
       </Navbar>
     </div>

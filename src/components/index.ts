@@ -4,6 +4,7 @@ import NavButton from './Buttons/NavButton'
 import PrimaryButton from './Buttons/PrimaryButton'
 import ToTopButton from './Buttons/ToTopButton'
 import ReadMoreButton from './Buttons/ReadMoreButton'
+import BackButton from './Buttons/BackButton'
 // Card
 import CompanyCard from './Card/CompanyCard'
 import ESGTag from './Card/ESGTag'
@@ -15,6 +16,7 @@ import ListItem from './Displays/ListItem'
 import Carousel from './Displays/Carousel/Carousel'
 // Accordions
 import RequestAccordion from './Accordions/RequestAccordion'
+import FinancialCaseAccordion from './Accordions/FinancialCaseAccordion'
 // Nav
 import PrimaryNavBar from './Nav/PrimaryNavBar'
 import SecondaryNavBar from './Nav/SecondaryNavBar'
@@ -31,6 +33,7 @@ import Tag from './Text/Tag'
 import InvestmentTable from './Table/InvestmentTable'
 //Tooltips
 import ToolTip from './Tooltips/ToolTip'
+
 export {
   AuthButton,
   ListItem,
@@ -50,9 +53,11 @@ export {
   ReadMoreButton,
   InvestmentTable,
   SearchBar,
+  BackButton,
   CompanyCard,
   ESGTag,
   NetAssetTag,
   Tag,
+  FinancialCaseAccordion,
   ToolTip,
 }
