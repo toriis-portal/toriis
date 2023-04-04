@@ -22,10 +22,10 @@ export const envGradeEnum = {
   CCC: 'CCC',
 }
 
-export const netAssetSumEnum = {
-  '0-16B': [0, 16e9],
-  '16B-32B': [16e9, 32e9],
-  '32B-48B': [32e9, 48e9],
-  '48B-64B': [48e9, 64e9],
-  '64B+': [64e9, Number.MAX_SAFE_INTEGER],
+export const netAssetValEnum = {
+  '0-5M': [0, 5e6],
+  '5M-10M': [5e6, 10e6],
+  '10M-15M': [10e6, 15e6],
+  '15M-20M': [15e6, 20e6],
+  '20M+': [20e6, Number.MAX_SAFE_INTEGER],
 }

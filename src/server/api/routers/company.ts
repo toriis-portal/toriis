@@ -15,7 +15,7 @@ const extractSortOrder = (
   return false
 }
 
-const createNetAssetSumFilter = (range: number[]) => {
+const createNetAssetValFilter = (range: number[]) => {
   return {
     netAssetVal: {
       gte: range[0],
@@ -64,7 +64,7 @@ export const companyRouter = createTRPCRouter({
       const { cursor } = input
 
       const netAssetValFilter = input.filterByNetAssetVal?.map((range) =>
-        createNetAssetSumFilter(range),
+        createNetAssetValFilter(range),
       )
 
       const netAssetValFilterCleaned =
@@ -84,22 +84,22 @@ export const companyRouter = createTRPCRouter({
           industry: {
             in: input.filterByIndustry,
           },
+          ESG: {
+            environmentGrade: {
+              in: input.filterByEnvGrade ? input.filterByEnvGrade : undefined,
+            },
+          },
           OR: netAssetValFilterCleaned,
-          // ESG: {
-          //   environmentGrade: {
-          //     in: input.filterByEnvGrade ? input.filterByEnvGrade : [],
-          //   },
-          // },
         },
         orderBy: {
           netAssetVal: extractSortOrder(input.sortByNetAssetVal)
             ? input.sortByNetAssetVal
             : undefined,
-          // ESG: {
-          //   environmentGrade: extractSortOrder(input.sortByEnvGrade)
-          //     ? input.sortByEnvGrade
-          //     : undefined,
-          // },
+          ESG: {
+            environmentGrade: extractSortOrder(input.sortByEnvGrade)
+              ? input.sortByEnvGrade
+              : undefined,
+          },
         },
         include: {
           ESG: {

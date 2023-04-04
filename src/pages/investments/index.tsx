@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react'
-import type { FC } from 'react'
-import type { Sector } from '@prisma/client'
 import React from 'react'
-import type { Company, EnvGrade } from '@prisma/client'
+import type { FC } from 'react'
+import { useEffect, useState } from 'react'
+import type { Company, EnvGrade, Sector } from '@prisma/client'
 import { Spinner } from 'flowbite-react'
 
 import {
@@ -15,22 +14,22 @@ import {
   LoadMoreButton,
 } from '../../components'
 import { api } from '../../utils/api'
-import { netAssetSumEnum, sectorEnum, envGradeEnum } from '../../utils/enums'
+import { sectorEnum, envGradeEnum, netAssetValEnum } from '../../utils/enums'
 import { INDUSTRIES } from '../../utils/constants'
 
 interface FilterOptions {
   sectors: Sector[]
   industries: string[]
-  netAssetSum: number[][]
+  netAssetVal: number[][]
   envGrade: string[]
 }
 
-const netAssetSumCallback = (selectedOptions: string[]) => {
-  const selectedNetAssetSum = selectedOptions.map((item) => {
-    return netAssetSumEnum[item as keyof typeof netAssetSumEnum]
+const netAssetValCallback = (selectedOptions: string[]) => {
+  const selectedNetAssetVal = selectedOptions.map((item) => {
+    return netAssetValEnum[item as keyof typeof netAssetValEnum]
   })
 
-  return selectedNetAssetSum
+  return selectedNetAssetVal
 }
 
 const extractSortyByQueryKey = (
@@ -49,9 +48,9 @@ const extractSortyByQueryKey = (
   const [_field, order] = selectedSort.split('-')
 
   if (order === 'low to high') {
-    return 'asc'
-  } else if (order === 'high to low') {
     return 'desc'
+  } else if (order === 'high to low') {
+    return 'asc'
   }
 
   return null
@@ -72,7 +71,7 @@ const InvestmentPage: FC = () => {
   const [filterOptions, setFilterOptions] = useState<FilterOptions>({
     sectors: [],
     industries: [],
-    netAssetSum: [],
+    netAssetVal: [],
     envGrade: [],
   })
 
@@ -104,7 +103,7 @@ const InvestmentPage: FC = () => {
       filterBySector: convertToFilterOptions(
         filterOptions.sectors,
       ) as (keyof typeof Sector)[],
-      filterByNetAssetVal: filterOptions.netAssetSum,
+      filterByNetAssetVal: filterOptions.netAssetVal,
       searchByCompanyName: companySearchQuery,
     },
     {
@@ -207,16 +206,16 @@ const InvestmentPage: FC = () => {
             }}
           />
           <Select
-            text="Net Asset Sum"
+            text="Net Asset Value"
             shortText="Net Asset"
             isFilter={true}
-            options={Object.keys(netAssetSumEnum)}
+            options={Object.keys(netAssetValEnum)}
             updateControl={{
               type: 'on-change',
               cb: (selectedOptions) => {
                 setFilterOptions({
                   ...filterOptions,
-                  netAssetSum: netAssetSumCallback(selectedOptions),
+                  netAssetVal: netAssetValCallback(selectedOptions),
                 })
               },
             }}

@@ -312,7 +312,7 @@ export const Select: FC<SelectProps> = ({
                             onChange={() =>
                               handleGroupChange(`${key}-${option}`)
                             }
-                            type="checkbox"
+                            type="radio"
                             className="ml-[auto] scale-125"
                             checked={selected.includes(`${key}-${option}`)}
                           />
