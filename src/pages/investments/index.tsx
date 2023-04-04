@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { FC } from 'react'
 import React from 'react'
 import type { Company, EnvGrade } from '@prisma/client'
@@ -10,10 +10,10 @@ import {
   ToTopButton,
   PrimaryNavBar,
   SearchBar,
+  CompanyCard,
+  LoadMoreButton,
 } from '../../components'
 import { api } from '../../utils/api'
-import CompanyCard from '../../components/Card/CompanyCard'
-import LoadMoreButton from '../../components/Buttons/LoadMoreButton'
 
 const extractSortyByQueryKey = (
   key: 'Net Asset Value' | 'Environment Grade',

@@ -20,7 +20,7 @@ const SearchBar: FC<SearchBarProps> = ({ setCompanySearchQuery }) => {
     >
       <label htmlFor="companyName">
         <div className="flex flex-row items-center">
-          <MagnifyingGlassIcon className="absolute h-6 stroke-current stroke-1 pl-4 text-darkGray	" />
+          <MagnifyingGlassIcon className="absolute h-6 stroke-current stroke-1 pl-4 text-darkGray" />
           <input
             type="text"
             id="companyName"

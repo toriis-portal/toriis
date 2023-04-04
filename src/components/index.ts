@@ -5,6 +5,7 @@ import PrimaryButton from './Buttons/PrimaryButton'
 import ToTopButton from './Buttons/ToTopButton'
 import ReadMoreButton from './Buttons/ReadMoreButton'
 import BackButton from './Buttons/BackButton'
+import LoadMoreButton from './Buttons/LoadMoreButton'
 // Card
 import CompanyCard from './Card/CompanyCard'
 import ESGTag from './Card/ESGTag'
@@ -43,6 +44,7 @@ export {
   PrimaryNavBar,
   PrimaryButton,
   ToTopButton,
+  LoadMoreButton,
   Carousel,
   Select,
   LandingDonutChart,
