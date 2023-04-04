@@ -66,7 +66,7 @@ const convertToFilterOptions = (selectedFilters: string[]) => {
 }
 
 const InvestmentPage: FC = () => {
-  const [companySearchQuery, setCompanySearchQuery] = useState<string>('')
+  const [companySearchQuery, setCompanySearchQuery] = useState<string>(' ')
   const [dataLengthArr, setDataLengthArr] = useState<number[]>([])
   const [selectedSortKeys, setSelectedSortKeys] = useState<string[]>([])
   const [filterOptions, setFilterOptions] = useState<FilterOptions>({
@@ -224,7 +224,7 @@ const InvestmentPage: FC = () => {
         </div>
       </div>
       {dataLengthArr.length > 2 && dataLengthArr.at(-2) === 0 && (
-        <p className="w-full text-center text-[22px] font-medium">
+        <p className="mb-8 w-full text-center text-[22px] font-medium">
           No results found, try searching again.
         </p>
       )}
