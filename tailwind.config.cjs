@@ -15,6 +15,7 @@ module.exports = {
         clementine: '#FFA902',
         lightClementine: '#FFEECC',
         lightGray: '#D9D9D9',
+        darkGray: '#7C7C7C',
         lightShadow: '#23414634',
         medGray: '#626161',
         white: '#FFFFFF',
