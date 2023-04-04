@@ -32,7 +32,7 @@ const extractSortyByQueryKey = (
 
   return null
 }
-const Home: FC = () => {
+const InvestmentPage: FC = () => {
   const [selectedSortKeys, setSelectedSortKeys] = useState<string[]>([])
 
   const limit = 5
@@ -137,4 +137,4 @@ const Home: FC = () => {
   )
 }
 
-export default Home
+export default InvestmentPage
