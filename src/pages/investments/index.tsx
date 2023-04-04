@@ -5,13 +5,18 @@ import React from 'react'
 import type { Company, EnvGrade } from '@prisma/client'
 import { Spinner } from 'flowbite-react'
 
-import { Select, ToTopButton } from '../../components'
+import {
+  Select,
+  HighlightedTitle,
+  ToTopButton,
+  PrimaryNavBar,
+  SearchBar,
+  CompanyCard,
+  LoadMoreButton,
+} from '../../components'
 import { api } from '../../utils/api'
-import { envGradeEnum } from '../../utils/enums'
-import { netAssetSumEnum, sectorEnum } from '../../utils/enums'
+import { netAssetSumEnum, sectorEnum, envGradeEnum } from '../../utils/enums'
 import { INDUSTRIES } from '../../utils/constants'
-import LoadMoreButton from '../../components/Buttons/LoadMoreButton'
-import CompanyCard from '../../components/Card/CompanyCard'
 
 interface FilterOptions {
   sectors: Sector[]
@@ -60,7 +65,9 @@ const convertToFilterOptions = (selectedFilters: string[]) => {
   return selectedFilters
 }
 
-const Home: FC = () => {
+const InvestmentPage: FC = () => {
+  const [companySearchQuery, setCompanySearchQuery] = useState<string>('')
+  const [dataLengthArr, setDataLengthArr] = useState<number[]>([])
   const [selectedSortKeys, setSelectedSortKeys] = useState<string[]>([])
   const [filterOptions, setFilterOptions] = useState<FilterOptions>({
     sectors: [],
@@ -70,6 +77,7 @@ const Home: FC = () => {
   })
 
   const limit = 5
+
   const {
     fetchNextPage,
     isLoading,
@@ -77,6 +85,7 @@ const Home: FC = () => {
     isFetchingNextPage,
     data,
     refetch,
+    isInitialLoading,
   } = api.company.getCompanies.useInfiniteQuery(
     {
       limit: limit,
@@ -96,28 +105,60 @@ const Home: FC = () => {
         filterOptions.sectors,
       ) as (keyof typeof Sector)[],
       filterByNetAssetVal: filterOptions.netAssetSum,
+      searchByCompanyName: companySearchQuery,
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
       refetchOnWindowFocus: false,
       cacheTime: 0,
+      retry: false,
     },
   )
+
+  const dataLength = data?.pages
+    ? (data.pages.length - 1) * limit +
+      (data.pages[data.pages.length - 1]?.items.length || 0)
+    : 0
 
   useEffect(() => {
     const refetchData = async () => {
       await refetch()
-    }
 
-    refetchData().catch((err) => {
-      console.error(err)
-    })
-  }, [refetch, selectedSortKeys, filterOptions])
+      refetchData().catch((err) => {
+        console.error(err)
+      })
+    }
+    if (!isInitialLoading) {
+      setDataLengthArr((prev) => [...prev, dataLength])
+    }
+  }, [
+    selectedSortKeys,
+    companySearchQuery,
+    refetch,
+    dataLength,
+    isInitialLoading,
+  ])
+
+  // Refetch on search result is empty
+  useEffect(() => {
+    if (dataLengthArr.at(-1) === 0) {
+      setCompanySearchQuery(' ')
+    }
+  }, [dataLengthArr, refetch])
 
   return (
     <>
+      <PrimaryNavBar />
+      <div className="mb-6 flex flex-col items-center">
+        <HighlightedTitle
+          title="Learn About Investments"
+          size="large"
+          color="clementine"
+        />
+        <SearchBar setCompanySearchQuery={setCompanySearchQuery} />
+      </div>
       <div className="mx-10 flex items-center justify-center">
-        <div className="flex w-95% basis-3/4 flex-row justify-evenly gap-4 pb-4 lg:gap-14">
+        <div className="mb-8 flex w-95% basis-3/4 flex-row justify-evenly gap-4 lg:gap-14">
           <Select
             text="Sector"
             isFilter={true}
@@ -182,11 +223,16 @@ const Home: FC = () => {
           />
         </div>
       </div>
+      {dataLengthArr.length > 2 && dataLengthArr.at(-2) === 0 && (
+        <p className="w-full text-center text-[22px] font-medium">
+          No results found, try searching again.
+        </p>
+      )}
       <div className="flex w-95% flex-col items-center gap-5 self-center rounded-t-xl bg-lightBlue pb-14 xl:w-11/12">
         <div className="flex flex-row items-center justify-between self-stretch px-[3.6%] pt-[36px]">
           <div className="flex flex-col flex-wrap items-center md:flex-row md:gap-3.5">
             <p className="text-xl font-medium min-[500px]:text-3xl sm:text-[32px]">
-              Recommendations
+              {companySearchQuery === ' ' ? 'Recommendations' : 'Results'}
             </p>
             <p className="text-medGray">
               {'('}
@@ -201,7 +247,7 @@ const Home: FC = () => {
             text="sort by"
             options={{
               'Environment Grade': ['low to high', 'high to low'],
-              'Net Asset Sum': ['low to high', 'high to low'],
+              'Net Asset Value': ['low to high', 'high to low'],
             }}
             updateControl={{
               type: 'on-apply',
@@ -243,4 +289,4 @@ const Home: FC = () => {
   )
 }
 
-export default Home
+export default InvestmentPage
