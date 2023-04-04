@@ -22,7 +22,7 @@ const BackButton: FC = () => {
       )}
     >
       <ArrowSmallLeftIcon className="mr-1 inline w-[1rem] stroke-current stroke-1" />
-      <p className="font-[400]"> Back</p>
+      <p> Back</p>
     </button>
   )
 }
