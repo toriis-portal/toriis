@@ -8,23 +8,23 @@ interface SearchBarProps {
 const SearchBar: FC<SearchBarProps> = ({ setCompanySearchQuery }) => {
   return (
     <form
-      className="w-full px-56 pb-5"
+      className="mb-8 w-full px-56"
       onSubmit={(e: React.SyntheticEvent) => {
         e.preventDefault()
         const target = e.target as typeof e.target & {
-          company_name: { value: string }
+          companyName: { value: string }
         }
-        const input: string = target.company_name.value
-        setCompanySearchQuery(input.toUpperCase())
+        const input: string = target.companyName.value
+        setCompanySearchQuery(input)
       }}
     >
-      <label htmlFor="company_name">
+      <label htmlFor="companyName">
         <div className="flex flex-row items-center">
           <MagnifyingGlassIcon className="absolute h-6 stroke-current stroke-1 pl-4 text-darkGray	" />
           <input
             type="text"
-            id="company_name"
-            name="company_name"
+            id="companyName"
+            name="companyName"
             placeholder="Search by Company Name"
             className="grow rounded pl-14"
           />
