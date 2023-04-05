@@ -72,6 +72,11 @@ export const companyRouter = createTRPCRouter({
           ? netAssetValFilter
           : undefined
 
+      const filterByEnvGradeCleaned =
+        input.filterByEnvGrade && input.filterByEnvGrade.length > 0
+          ? input.filterByEnvGrade
+          : undefined
+
       const items = await ctx.prisma.company.findMany({
         where: {
           name: {
@@ -84,11 +89,15 @@ export const companyRouter = createTRPCRouter({
           industry: {
             in: input.filterByIndustry,
           },
-          ESG: {
-            environmentGrade: {
-              in: input.filterByEnvGrade ? input.filterByEnvGrade : undefined,
-            },
-          },
+          ...(input.filterByEnvGrade
+            ? {
+                ESG: {
+                  environmentGrade: {
+                    in: filterByEnvGradeCleaned,
+                  },
+                },
+              }
+            : {}),
           OR: netAssetValFilterCleaned,
         },
         orderBy: {

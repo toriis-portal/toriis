@@ -64,16 +64,21 @@ const convertToFilterOptions = (selectedFilters: string[]) => {
   return selectedFilters
 }
 
+const initialSearchQuery = ' '
+const initialFilterOptions: FilterOptions = {
+  sectors: [],
+  industries: [],
+  netAssetVal: [],
+  envGrade: [],
+}
+
 const InvestmentPage: FC = () => {
-  const [companySearchQuery, setCompanySearchQuery] = useState<string>(' ')
+  const [companySearchQuery, setCompanySearchQuery] =
+    useState<string>(initialSearchQuery)
   const [dataLengthArr, setDataLengthArr] = useState<number[]>([])
   const [selectedSortKeys, setSelectedSortKeys] = useState<string[]>([])
-  const [filterOptions, setFilterOptions] = useState<FilterOptions>({
-    sectors: [],
-    industries: [],
-    netAssetVal: [],
-    envGrade: [],
-  })
+  const [filterOptions, setFilterOptions] =
+    useState<FilterOptions>(initialFilterOptions)
 
   const limit = 5
 
@@ -141,7 +146,8 @@ const InvestmentPage: FC = () => {
   // Refetch on search result is empty
   useEffect(() => {
     if (dataLengthArr.at(-1) === 0) {
-      setCompanySearchQuery(' ')
+      setCompanySearchQuery(initialSearchQuery)
+      setFilterOptions(initialFilterOptions)
     }
   }, [dataLengthArr, refetch])
 
