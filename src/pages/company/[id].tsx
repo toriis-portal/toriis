@@ -1,7 +1,9 @@
 import type { Investment } from '@prisma/client'
 import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
+import type { FC } from 'react'
 
+import { ContentWrapper } from '../../utils/content'
 import {
   HighlightedTitle,
   InvestmentTable,
@@ -9,8 +11,25 @@ import {
   Tag,
 } from '../../components'
 import { api } from '../../utils/api'
+import type { IndustryEntry } from '../../types'
 
-const Company = () => {
+// export const getServerSideProps = async () => {
+//   const contentClient = new ContentWrapper()
+//   const industryEntries = await contentClient.get('industry')
+//   console.log(`Industry: ${industryEntries[0]}`)
+//   return {
+//     props: {
+//       industryEntries,
+//     },
+//   }
+// }
+
+interface CompanyProps {
+  industryEntries: IndustryEntry[]
+}
+
+const Company: FC<CompanyProps> = ({ industryEntries }) => {
+  console.log(industryEntries)
   const companyId = (useRouter().query.id as string) ?? ''
 
   const { data, isLoading, isError } = api.company.getCompany.useQuery(

@@ -1,9 +1,8 @@
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import type { Investment } from '@prisma/client'
-import type { ContentfulClientApi } from 'contentful'
 
-import { env } from '../../../env.mjs'
+import { ContentWrapper } from '../../../utils/content'
 import { createTRPCRouter, publicProcedure } from '../trpc'
 import type { IndustryEntry, SectorEntry } from '../../../types/index.js'
 
@@ -15,40 +14,6 @@ const extractSortOrder = (
   }
 
   return false
-}
-
-export class ContentWrapper {
-  client: ContentfulClientApi
-
-  constructor() {
-    this.client = createClient({
-      space: env.CONTENTFUL_SPACE_ID,
-      accessToken: env.CONTENTFUL_ACCESS_TOKEN,
-    })
-  }
-
-  get = async (entity: string) => {
-    const client = this.client
-    const entries = await client.getEntries({
-      content_type: entity,
-    })
-    return this.sortEntryByType(
-      entries.items.map((item) => item.fields),
-      entity,
-    )
-    console.log("Test")
-  }
-}
-
-sortEntryByType = (entries: any, entity: string) => {
-  switch (entity) {
-    case 'industry':
-      return entries as IndustryEntry[]
-    case 'sector':
-      return entries as SectorEntry[]
-    default:
-      return []
-  }
 }
 
 export const companyRouter = createTRPCRouter({
@@ -70,6 +35,19 @@ export const companyRouter = createTRPCRouter({
           message: 'Company not found',
         })
       }
+
+      const contentClient = new ContentWrapper()
+      const industryEntries = await contentClient.get('industry')
+      let industryEntry: IndustryEntry = { name: '', details: '' }
+      console.log(`Industry: ${industryEntries[0].details}`)
+      industryEntries.map((item: IndustryEntry) => {
+        if (item.name == company['industry']) {
+          industryEntry = item
+        }
+      })
+
+      const sectorEntry: SectorEntry = { name: '', details: '' }
+      // @TODO: FINISH
       return company
     }),
   getCompanies: publicProcedure
