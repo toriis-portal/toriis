@@ -26,6 +26,9 @@ export const companyRouter = createTRPCRouter({
         where: {
           id: input.id,
         },
+        include: {
+          energy: true,
+        },
       })
       if (!company) {
         throw new TRPCError({
@@ -132,14 +135,10 @@ export const companyRouter = createTRPCRouter({
     .input(
       z.object({
         companyId: z.string(),
-        sortKey: z.string().nullish(),
-        sortOrder: z.string().nullish(),
       }),
     )
     .query(async ({ input, ctx }) => {
       const companyId = input.companyId ?? ''
-      const sortKey = input.sortKey ?? 'rawName'
-      const sortOrder = input.sortOrder ?? undefined
 
       if (!companyId) {
         throw new TRPCError({
@@ -148,17 +147,12 @@ export const companyRouter = createTRPCRouter({
         })
       }
 
-      const items = await ctx.prisma.energy.findMany({
-        orderBy: {
-          [sortKey]: sortOrder,
-        },
+      const energy = await ctx.prisma.energy.findUnique({
         where: {
           companyId: companyId,
         },
       })
 
-      return {
-        items,
-      }
+      return energy
     }),
 })

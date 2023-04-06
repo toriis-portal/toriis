@@ -33,3 +33,18 @@ export const envGradeToColor = (grade: string | undefined) => {
       return 'bg-lightGray'
   }
 }
+
+export const percentToTwoDecimals = (
+  numerator: number,
+  denominator: number,
+) => {
+  let val = (Math.floor((numerator * 10000) / denominator) / 100).toString()
+  if (!val.includes('.')) {
+    return val + '.00'
+  }
+  const split = val.split('.')
+  if (split[1] && split[1].length == 1) {
+    val = val + '0'
+  }
+  return val
+}

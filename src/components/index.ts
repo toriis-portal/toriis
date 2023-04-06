@@ -9,7 +9,7 @@ import CompanyCard from './Card/CompanyCard'
 import ESGTag from './Card/ESGTag'
 import NetAssetTag from './Card/NetAssetTag'
 // Charts
-import EnergyRadialBarChart from './Charts/EnergyRadialBarChart'
+import EnergyRadialChart from './Charts/EnergyRadialChart'
 import LandingDonutChart from './Charts/LandingDonutChart'
 // Displays
 import ListItem from './Displays/ListItem'
@@ -56,5 +56,5 @@ export {
   Tag,
   FinancialCaseAccordion,
   ToolTip,
-  EnergyRadialBarChart,
+  EnergyRadialChart,
 }
