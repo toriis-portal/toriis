@@ -1,16 +1,8 @@
 import type { FC } from 'react'
 import dynamic from 'next/dynamic'
-import type { Sector } from '@prisma/client'
 import { Spinner } from 'flowbite-react'
 
 import { api } from '../../utils/api'
-import { sectorEnum } from '../../utils/enums'
-import { assetAmountToString } from '../../utils/helpers'
-
-interface companySectorCount {
-  label: string
-  count: number
-}
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -31,7 +23,10 @@ const EmissionBarChart: FC<{ companyId: string }> = ({ companyId }) => {
   const labels = ['Scope 1 Estimate', 'Scope 2 Estimate', 'Scope 3 Estimate']
   const series = [
     {
-      data: Object.entries(source.data).map(([x, y]) => ({ x, y })),
+      data: Object.entries(source.data).map(([x, y], index) => ({
+        x: labels[index],
+        y,
+      })),
     },
   ]
 
@@ -39,20 +34,22 @@ const EmissionBarChart: FC<{ companyId: string }> = ({ companyId }) => {
     plotOptions: {
       bar: {
         horizontal: true,
+        borderRadius: 8,
       },
+    },
+    dataLabels: {
+      enabled: false,
     },
   }
 
   return (
-    <div>
-      <Chart
-        options={options}
-        series={series}
-        type="bar"
-        width="100%"
-        height="auto"
-      />
-    </div>
+    <Chart
+      options={options}
+      series={series}
+      type="bar"
+      width="100%"
+      height="auto"
+    />
   )
 }
 

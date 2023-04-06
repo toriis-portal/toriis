@@ -26,6 +26,9 @@ export const companyRouter = createTRPCRouter({
         where: {
           id: input.id,
         },
+        include: {
+          emission: true,
+        },
       })
       if (!company) {
         throw new TRPCError({

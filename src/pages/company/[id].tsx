@@ -91,42 +91,96 @@ const Company = () => {
           </ToolTip>
         </div>
       </div>
-      <HighlightedTitle
-        title="Investment Visualizations"
-        size="medium"
-        color="brightTeal"
-      />
-      <div className="grid grid-cols-2">
-        <div>
-          <EmissionBarChart companyId={companyId} />
+      {data.emission && (
+        <div className="pt-5">
+          <HighlightedTitle
+            title="Investment Visualizations"
+            size="medium"
+            color="brightTeal"
+          />
+          <Tag
+            title="Carbon Accounting"
+            className="round-s ml-6 bg-clementine text-white"
+          />
+          <div className="grid grid-cols-4 flex-col items-center justify-center align-middle">
+            <div className="col-span-2">
+              <EmissionBarChart companyId={companyId} />
+            </div>
+            <div className=" col-span-2 ml-20 rounded-xl bg-lightClementine p-4 font-inter text-base leading-snug">
+              <a
+                href="https://en.wikipedia.org/wiki/Carbon_accounting"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <b>
+                  <u>Carbon accounting</u>
+                </b>
+              </a>{' '}
+              methods serve as a framework for organizations to measure how much
+              carbon they emit. Standard carbon accounting frameworks divide
+              emissions into three scopes.{' '}
+              <a
+                href="https://www.epa.gov/climateleadership/scope-1-and-scope-2-inventory-guidance"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <u>Scope 1 and 2</u>
+              </a>{' '}
+              metrics quantify the greenhouse gas emissions caused by the
+              operations of an organization. Scope 1 emissions are the direct
+              greenhouse gas emissions that occur from the operations of
+              organization units such as facilities and transportation.{' '}
+              <a
+                href="https://www.epa.gov/climateleadership/scope-3-inventory-guidance"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <u>Scope 3</u>
+              </a>{' '}
+              metrics quantify the carbon footprint of an organization&#39;s
+              products in the value chain. For example, the Scope 3 emissions of
+              an organization that owns a natural gas pipeline includes the
+              emission caused by the burning of the gas that is transported and
+              sold by said organization. The{' '}
+              <a href="https://www.wri.org/" target="_blank" rel="noreferrer">
+                <u>World Resource Institute</u>
+              </a>{' '}
+              and{' '}
+              <a href="https://www.wbcsd.org/" target="_blank" rel="noreferrer">
+                <u>WBCSD</u>
+              </a>{' '}
+              provide the{' '}
+              <a
+                href="https://ghgprotocol.org/sites/default/files/standards/Corporate-Value-Chain-Accounting-Reporing-Standard_041613_2.pdf"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <u>standard for scope emissions reporting</u>
+              </a>
+              .
+              <br />
+              <br />
+              The Scope 1, 2 and 3 emissions presented are sources from
+              Bloomberg Finance L.P. via the University of Illinois-Urbana
+              Champaign Licence, 2023. Bloomberg Finance relies on self-reported
+              scope emission data when available, and uses robust{' '}
+              <a
+                href="https://bloomberg.com/professional/blog/bloombergs-greenhouse-gas-emissions-estimates-model-a-summary-of-challenges-and-modeling-solutions/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <u>machine learning models</u>
+              </a>{' '}
+              to estimate scope emissions when an organization does not provide
+              emissions data.
+              <br />
+              <br />
+              <br />
+              source: <u>fjkdshfjaksdhfjashdfajkdhfajdhfjk</u>
+            </div>
+          </div>
         </div>
-        <div className=" rounded-xl bg-lightClementine p-4">
-          Carbon accounting methods serve as a framework for organizations to
-          measure how much carbon they emit. Standard carbon accounting
-          frameworks divide emissions into three scopes. Scope 1 and 2 metrics
-          quantify the greenhouse gas emissions caused by the operations of an
-          organization. Scope 1 emissions are the direct greenhouse gas
-          emissions that occur from the operations of organization units such as
-          facilities and transportation. Scope 3 metrics quantify the carbon
-          footprint of an organization&aposs products in the value chain. For
-          example, the Scope 3 emissions of an organization that owns a natural
-          gas pipeline includes the emission caused by the burning of the gas
-          that is transported and sold by said organization. The World Resource
-          Institute and WBCSD provide the standard for scope emissions
-          reporting.
-          <br />
-          <br />
-          The Scope 1, 2 and 3 emissions presented are sources from Bloomberg
-          Finance L.P. via the University of Illinois-Urbana Champaign Licence,
-          2023. Bloomberg Finance relies on self-reported scope emission data
-          when available, and uses robust machine learning models to estimate
-          scope emissions when an organization does not provide emissions data.
-          <br />
-          <br />
-          <br />
-          source: fjkdshfjaksdhfjashdfajkdhfajdhfjk
-        </div>
-      </div>
+      )}
       <HighlightedTitle
         title="Investment Details"
         size="medium"
