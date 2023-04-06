@@ -4,6 +4,8 @@ import NavButton from './Buttons/NavButton'
 import PrimaryButton from './Buttons/PrimaryButton'
 import ToTopButton from './Buttons/ToTopButton'
 import ReadMoreButton from './Buttons/ReadMoreButton'
+import BackButton from './Buttons/BackButton'
+import LoadMoreButton from './Buttons/LoadMoreButton'
 // Card
 import CompanyCard from './Card/CompanyCard'
 import ESGTag from './Card/ESGTag'
@@ -16,11 +18,13 @@ import ListItem from './Displays/ListItem'
 import Carousel from './Displays/Carousel/Carousel'
 // Accordions
 import RequestAccordion from './Accordions/RequestAccordion'
+import FinancialCaseAccordion from './Accordions/FinancialCaseAccordion'
 // Nav
 import PrimaryNavBar from './Nav/PrimaryNavBar'
 import SecondaryNavBar from './Nav/SecondaryNavBar'
 // Selects
 import Select from './Selects/Select'
+import SearchBar from './Selects/SearchBar'
 // Text
 import NumberCircle from './Text/NumberCircle'
 import HighlightedTitle from './Text/HighlightedTitle'
@@ -31,6 +35,7 @@ import Tag from './Text/Tag'
 import InvestmentTable from './Table/InvestmentTable'
 //Tooltips
 import ToolTip from './Tooltips/ToolTip'
+
 export {
   AuthButton,
   ListItem,
@@ -40,6 +45,7 @@ export {
   PrimaryNavBar,
   PrimaryButton,
   ToTopButton,
+  LoadMoreButton,
   Carousel,
   Select,
   LandingDonutChart,
@@ -49,10 +55,13 @@ export {
   ShadowTitle,
   ReadMoreButton,
   InvestmentTable,
+  SearchBar,
+  BackButton,
   CompanyCard,
   ESGTag,
   NetAssetTag,
   Tag,
+  FinancialCaseAccordion,
   ToolTip,
   EmissionBarChart,
 }
