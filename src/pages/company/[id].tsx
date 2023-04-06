@@ -7,7 +7,7 @@ import {
   InvestmentTable,
   ToolTip,
   Tag,
-  CompanyDetailsAccordian,
+  CompanyDetailsAccordion,
 } from '../../components'
 import { api } from '../../utils/api'
 
@@ -46,7 +46,7 @@ const Company = () => {
         <HighlightedTitle title={data.name} size="large" color="clementine" />
       </div>
 
-      <CompanyDetailsAccordian
+      <CompanyDetailsAccordion
         content={data.description ? data.description : ''}
       />
 

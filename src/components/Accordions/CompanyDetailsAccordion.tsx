@@ -4,11 +4,11 @@ import { useState } from 'react'
 
 import { ReadMoreButton } from '../index'
 
-interface CompanyDetailsAccordianProps {
+interface CompanyDetailsAccordionProps {
   content: string
 }
 
-const CompanyDetailsAccordian: FC<CompanyDetailsAccordianProps> = ({
+const CompanyDetailsAccordion: FC<CompanyDetailsAccordionProps> = ({
   content,
 }) => {
   //   const lineLength = 5
@@ -49,4 +49,4 @@ const CompanyDetailsAccordian: FC<CompanyDetailsAccordianProps> = ({
   )
 }
 
-export default CompanyDetailsAccordian
+export default CompanyDetailsAccordion
