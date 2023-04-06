@@ -22,4 +22,21 @@ export const userRouter = createTRPCRouter({
         })
       }
     }),
+  deleteManyUsers: protectedProcedure // TODO: check
+    .input(z.object({ ids: z.array(z.string()) }))
+    .mutation(async ({ input, ctx }) => {
+      const deleteUsers = await ctx.prisma.user.deleteMany({
+        where: {
+          id: {
+            in: input.ids,
+          },
+        },
+      })
+      if (!deleteUsers) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to delete users',
+        })
+      }
+    }),
 })
