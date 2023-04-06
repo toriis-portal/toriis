@@ -97,13 +97,15 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
+  id              String           @id @default(auto()) @map("_id") @db.ObjectId
+  name            String?
+  email           String?          @unique
+  emailVerified   DateTime?
+  image           String?
+  accounts        Account[]
+  sessions        Session[]
+  createdAt       DateTime         @default(now())
+  WhitelistedUser WhitelistedUser?
 }
 
 model VerificationToken {
@@ -177,4 +179,11 @@ model Staged {
   id      String     @id @default(auto()) @map("_id") @db.ObjectId
   type    Collection
   updates Json[]
+}
+
+model WhitelistedUser {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  email  String  @unique
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String? @unique @db.ObjectId
 }
