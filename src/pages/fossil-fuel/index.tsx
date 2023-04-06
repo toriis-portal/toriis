@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 
-import { ToTopButton } from '../../components'
+import { PrimaryNavBar, ToTopButton } from '../../components'
 import { ContentWrapper } from '../../utils/content'
 import { FinancialCase } from '../../sections'
 import type { CaseEntry } from '../../types'
@@ -22,6 +22,7 @@ interface FossilFuelProps {
 const FossilFuelPage: FC<FossilFuelProps> = ({ caseEntries }) => {
   return (
     <>
+      <PrimaryNavBar />
       <ToTopButton />
       <div id="financialCase" className="pt-20">
         <FinancialCase entries={caseEntries} />
