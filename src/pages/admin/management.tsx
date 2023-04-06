@@ -12,8 +12,7 @@ const AdminAdminPage: FC = () => {
   const mutation = api.user.deleteManyUsers.useMutation() // TODO: check about options here
 
   const handleDeleteUsers = () => {
-    console.log('deleting users')
-    const ids = ['642f51f32767e2315fce2fc4'] // = ['lizatest1']
+    const ids = ['642f52c92767e2315fce2fd6', '642f52ec2767e2315fce2fda'] // = ['lizatest1']
     mutation.mutate({ ids })
   }
 
