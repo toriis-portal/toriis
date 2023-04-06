@@ -22,17 +22,20 @@ interface DateClosePair {
 export const FinanceBrushChart: FC<FinanceBrushChartProps> = ({
   companyId,
 }) => {
+  const today = new Date()
+
+  const yearAgo = new Date()
+  yearAgo.setFullYear(today.getFullYear() - 1)
+
+  const yahooOptions = {
+    period1: yearAgo.toDateString(),
+  }
+
   const { data, isLoading, isError } =
     api.company.getCompanyFinanceData.useQuery(
-      { id: companyId },
+      { id: companyId, options: yahooOptions },
       { refetchOnWindowFocus: false, enabled: !!companyId, retry: false },
     )
-
-  const d = new Date()
-  const y = d.getFullYear() - 1
-  d.setFullYear(y)
-
-  console.log(d)
 
   if (isLoading) {
     return (
@@ -53,28 +56,30 @@ export const FinanceBrushChart: FC<FinanceBrushChartProps> = ({
     }),
   ) // {date: Date, close: number}
 
-  const labels: number[] = data.map(
-    (history: HistoricalRowHistory) => history.close,
-  )
+  // const labels: number[] = data.map(
+  //   (history: HistoricalRowHistory) => history.close,
+  // )
 
   const options: ApexOptions = {
     chart: {
-      id: 'yahooChart',
-      toolbar: {
-        autoSelected: 'pan',
-        show: true,
-      },
+      id: 'FinanceBrushChart',
     },
     xaxis: {
       type: 'datetime',
+      // min: yearAgo,
+    },
+    yaxis: {
+      labels: {
+        formatter: (value: number) => {
+          return '$' + value.toFixed(2).toString()
+        },
+      },
     },
     colors: ['#546E7A'],
     stroke: {
-      width: 3,
+      width: 2,
     },
-    dataLabels: {
-      enabled: false,
-    },
+
     fill: {
       opacity: 1,
     },
@@ -82,9 +87,9 @@ export const FinanceBrushChart: FC<FinanceBrushChartProps> = ({
 
   const lineOptions: ApexOptions = {
     chart: {
-      id: 'Below',
+      id: 'ChartSelector',
       brush: {
-        target: 'yahooChart',
+        target: 'FinanceBrushChart',
         enabled: true,
       },
       selection: {
@@ -95,19 +100,23 @@ export const FinanceBrushChart: FC<FinanceBrushChartProps> = ({
     fill: {
       type: 'gradient',
       gradient: {
-        opacityFrom: 0.91,
+        opacityFrom: 0.9,
         opacityTo: 0.1,
       },
     },
-
     xaxis: {
       type: 'datetime',
-      tooltip: {
-        enabled: true,
+      labels: {
+        format: "MMMM 'yy",
       },
     },
     yaxis: {
       tickAmount: 2,
+      labels: {
+        formatter: (value: number) => {
+          return '$' + value.toFixed(2).toString()
+        },
+      },
     },
   }
 
@@ -120,14 +129,14 @@ export const FinanceBrushChart: FC<FinanceBrushChartProps> = ({
 
   return (
     <>
-      <div>
+      <div className="flex-column">
         <Chart
           options={options}
           width="100%"
           height="100%"
           series={series}
           type="line"
-          labels={labels}
+          // labels={labels}
         />
         <ChartLine
           options={lineOptions}
@@ -135,22 +144,11 @@ export const FinanceBrushChart: FC<FinanceBrushChartProps> = ({
           height="120px"
           series={series}
           type="area"
+          // labels={labels}
         />
       </div>
     </>
   )
-
-  // return (
-  //   <>
-  //     <div className="flex flex-col items-center px-12">
-  //       <HighlightedTitle
-  //         title="Error Displaying Chart"
-  //         size="large"
-  //         color="clementine"
-  //       />
-  //     </div>
-  //   </>
-  // )
 }
 
 export default FinanceBrushChart

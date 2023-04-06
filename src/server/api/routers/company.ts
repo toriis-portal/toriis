@@ -21,12 +21,12 @@ export const companyRouter = createTRPCRouter({
   // then grab ticker,
   // then query yahoo-finance with ticker
   getCompanyFinanceData: publicProcedure
-    .input(z.object({ id: z.string() }))
+    .input(
+      z.object({ id: z.string(), options: z.object({ period1: z.string() }) }),
+    )
     .query(async ({ ctx, input }) => {
       // given a company id, find company in db
-      const options = {
-        period1: '2022-02-01',
-      }
+      const options = input.options
 
       const company: Company | null = await ctx.prisma.company.findUnique({
         where: {

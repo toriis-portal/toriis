@@ -99,7 +99,10 @@ const Company = () => {
 
       {!!companyId && data.ticker && (
         <>
-          <Tag title="Yahoo Finance" className="w-4 bg-lightBlue" />
+          <Tag
+            title="Yahoo Finance"
+            className="w-4 rounded-md bg-clementine text-white"
+          />
           <FinanceBrushChart companyId={companyId} />
         </>
       )}
