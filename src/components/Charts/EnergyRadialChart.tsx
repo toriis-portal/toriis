@@ -10,15 +10,12 @@ interface companyId {
 
 const EnergyRadialChart: FC<companyId> = ({ energyData }) => {
   const labels = ['Renewable Energy']
-  if (
-    energyData.totalRenewableConsumption === null ||
-    energyData.totalConsumption === null
-  ) {
-    console.error('error')
-    return null
-  }
+
   const data = [
-    (energyData.totalRenewableConsumption * 100) / energyData.totalConsumption,
+    energyData.totalConsumption && energyData.totalRenewableConsumption
+      ? (energyData.totalRenewableConsumption * 100) /
+        energyData.totalConsumption
+      : 0,
   ]
 
   const options = {
