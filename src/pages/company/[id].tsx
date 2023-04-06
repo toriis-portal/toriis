@@ -1,4 +1,3 @@
-import type { Investment } from '@prisma/client'
 import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
 
@@ -38,7 +37,6 @@ const Company = () => {
       </div>
     )
   }
-  // console.log(data)
 
   return (
     <div className="mb-20 flex flex-col px-12">
