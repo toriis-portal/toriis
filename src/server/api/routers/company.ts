@@ -131,28 +131,4 @@ export const companyRouter = createTRPCRouter({
         nextCursor,
       }
     }),
-  getEnergyByCompany: publicProcedure
-    .input(
-      z.object({
-        companyId: z.string(),
-      }),
-    )
-    .query(async ({ input, ctx }) => {
-      const companyId = input.companyId ?? ''
-
-      if (!companyId) {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'Expected a companyId, but found none.',
-        })
-      }
-
-      const energy = await ctx.prisma.energy.findUnique({
-        where: {
-          companyId: companyId,
-        },
-      })
-
-      return energy
-    }),
 })
