@@ -10,7 +10,7 @@ interface CompanyDetailsAccordionProps {
 const CompanyDetailsAccordion: FC<CompanyDetailsAccordionProps> = ({
   content,
 }) => {
-  const [folded, setFolded] = useState(false)
+  const [folded, setFolded] = useState(true)
 
   // TODO: make this dependent on width still...
   const maxWordCount = 75
