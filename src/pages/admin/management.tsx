@@ -13,7 +13,7 @@ const AdminAdminPage: FC = () => {
 
   const handleDeleteUsers = () => {
     console.log('deleting users')
-    const ids = ['642f50d01c844879937b9c69', '642f50e81c844879937b9c70'] // = ['lizatest1', 'lizatest2']
+    const ids = ['642f51f32767e2315fce2fc4'] // = ['lizatest1']
     mutation.mutate({ ids })
   }
 
@@ -32,10 +32,8 @@ const AdminAdminPage: FC = () => {
           boom boom
         </button>
 
-        {mutation.error ? (
+        {mutation.error && (
           <p>Something went wrong! {mutation.error.message}</p>
-        ) : (
-          <p>Successful deletion</p>
         )}
       </div>
     )
