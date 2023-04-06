@@ -99,7 +99,7 @@ const Company = () => {
       {data.energy && (
         <div className="flex flex-row">
           <EnergyRadialChart energyData={data.energy} />
-          <p>here is some text!</p>
+          <p>the text box will go here</p>
         </div>
       )}
 

@@ -1,10 +1,6 @@
 import type { FC } from 'react'
 import dynamic from 'next/dynamic'
 import type { Energy } from '@prisma/client'
-import { Spinner } from 'flowbite-react'
-
-import { api } from '../../utils/api'
-import { percentToTwoDecimals } from '../../utils/helpers'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -22,21 +18,26 @@ const EnergyRadialChart: FC<companyId> = ({ energyData }) => {
     return null
   }
   const data = [
-    percentToTwoDecimals(
-      energyData.totalRenewableConsumption,
-      energyData.totalConsumption,
-    ),
+    (energyData.totalRenewableConsumption * 100) / energyData.totalConsumption,
   ]
 
   const options = {
     labels: labels,
     fontFamily: 'Klima',
     legend: { show: false },
-    colors: ['#40D7D4'],
-    dataLabels: {
-      enabled: true,
-      dropShadow: {
-        enabled: false,
+    colors: ['#0F81E8'],
+    plotOptions: {
+      radialBar: {
+        hollow: {
+          size: '70%',
+        },
+        dataLabels: {
+          value: {
+            formatter: function (val: number) {
+              return val.toFixed(2).toString() + '%'
+            },
+          },
+        },
       },
     },
   }
@@ -47,7 +48,7 @@ const EnergyRadialChart: FC<companyId> = ({ energyData }) => {
         options={options}
         series={data}
         type="radialBar"
-        width="200%"
+        width="155%"
         height="auto"
       />
     </>
