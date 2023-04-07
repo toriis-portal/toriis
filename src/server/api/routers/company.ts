@@ -1,3 +1,4 @@
+import { EnvGrade, Sector } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import type { Investment } from '@prisma/client'
@@ -12,6 +13,57 @@ const extractSortOrder = (
   }
 
   return false
+}
+
+const createNetAssetValFilter = (range: number[]) => {
+  return {
+    netAssetVal: {
+      gte: range[0],
+      lte: range[1],
+    },
+  }
+}
+
+interface SortOrder {
+  netAssetVal?: 'asc' | 'desc'
+  ESG?: {
+    environmentGrade?: 'asc' | 'desc'
+  }
+}
+type SortByString = 'asc' | 'desc'
+
+const sortStringZodType = z
+  .union([z.literal('asc'), z.literal('desc')])
+  .nullish()
+
+const createSortOrder = (
+  sortByNetAssetVal?: SortByString | null,
+  sortByEnvGrade?: SortByString | null,
+): SortOrder[] | SortOrder | { name: SortByString } => {
+  if (sortByNetAssetVal && sortByEnvGrade) {
+    return [
+      {
+        netAssetVal: sortByNetAssetVal,
+      },
+      {
+        ESG: {
+          environmentGrade: sortByEnvGrade,
+        },
+      },
+    ]
+  } else if (sortByNetAssetVal) {
+    return {
+      netAssetVal: sortByNetAssetVal,
+    }
+  } else if (sortByEnvGrade) {
+    return {
+      ESG: {
+        environmentGrade: sortByEnvGrade,
+      },
+    }
+  } else {
+    return {}
+  }
 }
 
 export const companyRouter = createTRPCRouter({
@@ -40,39 +92,64 @@ export const companyRouter = createTRPCRouter({
       z.object({
         limit: z.number().min(1).max(100).nullish(),
         cursor: z.string().nullish(),
-        sortByEnvGrade: z.string().nullish(),
-        sortByNetAssetVal: z.string().nullish(),
-        companyName: z.string(),
+        sortByEnvGrade: sortStringZodType,
+        sortByNetAssetVal: sortStringZodType,
+        filterBySector: z.array(z.nativeEnum(Sector)).nullish(),
+        filterByIndustry: z.array(z.string()).nullish(),
+        filterByEnvGrade: z.array(z.nativeEnum(EnvGrade)).nullish(),
+        filterByNetAssetVal: z.array(z.array(z.number(), z.number())).nullish(),
+        searchByCompanyName: z.string(),
       }),
     )
     .query(async ({ input, ctx }) => {
       const limit = input.limit ?? 9
       const { cursor } = input
 
+      const netAssetValFilter = input.filterByNetAssetVal?.map((range) =>
+        createNetAssetValFilter(range),
+      )
+
+      const netAssetValFilterCleaned =
+        netAssetValFilter && netAssetValFilter.length > 0
+          ? netAssetValFilter
+          : undefined
+
+      const filterByEnvGradeCleaned =
+        input.filterByEnvGrade && input.filterByEnvGrade.length > 0
+          ? input.filterByEnvGrade
+          : undefined
+
       const items = await ctx.prisma.company.findMany({
-        orderBy: {
-          netAssetVal: extractSortOrder(input.sortByNetAssetVal)
-            ? input.sortByNetAssetVal
-            : undefined,
-        },
         where: {
           name: {
-            contains: input.companyName,
+            contains: input.searchByCompanyName,
             mode: 'insensitive',
           },
+          sector: {
+            in: input.filterBySector,
+          },
+          industry: {
+            in: input.filterByIndustry,
+          },
+          ...(input.filterByEnvGrade
+            ? {
+                ESG: {
+                  environmentGrade: {
+                    in: filterByEnvGradeCleaned,
+                  },
+                },
+              }
+            : {}),
+          OR: netAssetValFilterCleaned,
         },
         include: {
           ESG: {
-            orderBy: {
-              environmentGrade: extractSortOrder(input.sortByEnvGrade)
-                ? input.sortByEnvGrade
-                : undefined,
-            },
             select: {
               environmentGrade: true,
             },
           },
         },
+        orderBy: createSortOrder(input.sortByNetAssetVal, input.sortByEnvGrade),
         take: limit + 1,
         cursor: cursor ? { id: cursor } : undefined,
       })

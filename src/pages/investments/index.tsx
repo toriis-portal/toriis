@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
-import type { FC } from 'react'
 import React from 'react'
-import type { Company, EnvGrade } from '@prisma/client'
+import type { FC } from 'react'
+import { useEffect, useState } from 'react'
+import type { Company, EnvGrade, Sector } from '@prisma/client'
 import { Spinner } from 'flowbite-react'
 
 import {
@@ -14,6 +14,23 @@ import {
   LoadMoreButton,
 } from '../../components'
 import { api } from '../../utils/api'
+import { sectorEnum, envGradeEnum, netAssetValEnum } from '../../utils/enums'
+import { INDUSTRIES } from '../../utils/constants'
+
+interface FilterOptions {
+  sectors: Sector[]
+  industries: string[]
+  netAssetVal: number[][]
+  envGrade: string[]
+}
+
+const netAssetValCallback = (selectedOptions: string[]) => {
+  const selectedNetAssetVal = selectedOptions.map((item) => {
+    return netAssetValEnum[item as keyof typeof netAssetValEnum]
+  })
+
+  return selectedNetAssetVal
+}
 
 const extractSortyByQueryKey = (
   key: 'Net Asset Value' | 'Environment Grade',
@@ -31,17 +48,37 @@ const extractSortyByQueryKey = (
   const [_field, order] = selectedSort.split('-')
 
   if (order === 'low to high') {
-    return 'asc'
+    return key == 'Environment Grade' ? 'desc' : 'asc'
   } else if (order === 'high to low') {
-    return 'desc'
+    return key == 'Environment Grade' ? 'asc' : 'desc'
   }
 
   return null
 }
+
+const convertToFilterOptions = (selectedFilters: string[]) => {
+  if (selectedFilters && selectedFilters.length === 0) {
+    return undefined
+  }
+
+  return selectedFilters
+}
+
+const initialSearchQuery = ' '
+const initialFilterOptions: FilterOptions = {
+  sectors: [],
+  industries: [],
+  netAssetVal: [],
+  envGrade: [],
+}
+
 const InvestmentPage: FC = () => {
-  const [selectedSortKeys, setSelectedSortKeys] = useState<string[]>([])
-  const [companySearchQuery, setCompanySearchQuery] = useState<string>('')
+  const [companySearchQuery, setCompanySearchQuery] =
+    useState<string>(initialSearchQuery)
   const [dataLengthArr, setDataLengthArr] = useState<number[]>([])
+  const [selectedSortKeys, setSelectedSortKeys] = useState<string[]>([])
+  const [filterOptions, setFilterOptions] =
+    useState<FilterOptions>(initialFilterOptions)
 
   const limit = 5
 
@@ -64,12 +101,21 @@ const InvestmentPage: FC = () => {
         'Environment Grade',
         selectedSortKeys,
       ),
-      companyName: companySearchQuery,
+      filterByIndustry: convertToFilterOptions(filterOptions.industries),
+      filterByEnvGrade: convertToFilterOptions(
+        filterOptions.envGrade,
+      ) as (keyof typeof EnvGrade)[],
+      filterBySector: convertToFilterOptions(
+        filterOptions.sectors,
+      ) as (keyof typeof Sector)[],
+      filterByNetAssetVal: filterOptions.netAssetVal,
+      searchByCompanyName: companySearchQuery,
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
       refetchOnWindowFocus: false,
       cacheTime: 0,
+      retry: false,
     },
   )
 
@@ -100,27 +146,94 @@ const InvestmentPage: FC = () => {
   // Refetch on search result is empty
   useEffect(() => {
     if (dataLengthArr.at(-1) === 0) {
-      setCompanySearchQuery(' ')
+      setCompanySearchQuery(initialSearchQuery)
+      setFilterOptions(initialFilterOptions)
     }
   }, [dataLengthArr, refetch])
 
   return (
     <>
       <PrimaryNavBar />
-      <div className="flex flex-col items-center">
+      <div className="mb-6 flex flex-col items-center">
         <HighlightedTitle
           title="Learn About Investments"
           size="large"
           color="clementine"
         />
         <SearchBar setCompanySearchQuery={setCompanySearchQuery} />
-        {dataLengthArr.length > 2 && dataLengthArr.at(-2) === 0 && (
-          <p className="py-12 text-[22px] font-medium">
-            No results found, try searching again.
-          </p>
-        )}
       </div>
-      <div className="flex w-[95vw] flex-col items-center gap-5 self-center rounded-t-xl bg-lightBlue pb-20 xl:w-11/12">
+      <div className="mx-10 flex items-center justify-center">
+        <div className="mb-8 flex w-95% basis-3/4 flex-row justify-evenly gap-4 lg:gap-14">
+          <Select
+            text="Sector"
+            isFilter={true}
+            options={Object.values(sectorEnum)}
+            updateControl={{
+              type: 'on-change',
+              cb: (selectedOptions) => {
+                setFilterOptions({
+                  ...filterOptions,
+                  sectors: selectedOptions.map((item) => {
+                    return item.toUpperCase().replace(' ', '_') as Sector
+                  }),
+                })
+              },
+            }}
+          />
+          <Select
+            text="Industry"
+            isFilter={true}
+            isSearchable={true}
+            options={INDUSTRIES}
+            containerHeight="1/4"
+            updateControl={{
+              type: 'on-change',
+              cb: (selectedOptions) => {
+                setFilterOptions({
+                  ...filterOptions,
+                  industries: selectedOptions,
+                })
+              },
+            }}
+          />
+          <Select
+            text="Environmental Grade"
+            shortText="Env Grade"
+            isFilter={true}
+            options={Object.values(envGradeEnum)}
+            updateControl={{
+              type: 'on-change',
+              cb: (selectedOptions) => {
+                setFilterOptions({
+                  ...filterOptions,
+                  envGrade: selectedOptions,
+                })
+              },
+            }}
+          />
+          <Select
+            text="Net Asset Value"
+            shortText="Net Asset"
+            isFilter={true}
+            options={Object.keys(netAssetValEnum)}
+            updateControl={{
+              type: 'on-change',
+              cb: (selectedOptions) => {
+                setFilterOptions({
+                  ...filterOptions,
+                  netAssetVal: netAssetValCallback(selectedOptions),
+                })
+              },
+            }}
+          />
+        </div>
+      </div>
+      {dataLengthArr.length > 2 && dataLengthArr.at(-2) === 0 && (
+        <p className="mb-8 w-full text-center text-[22px] font-medium">
+          No results found, try searching again.
+        </p>
+      )}
+      <div className="flex w-95% flex-col items-center gap-5 self-center rounded-t-xl bg-lightBlue pb-14 xl:w-11/12">
         <div className="flex flex-row items-center justify-between self-stretch px-[3.6%] pt-[36px]">
           <div className="flex flex-col flex-wrap items-center md:flex-row md:gap-3.5">
             <p className="text-xl font-medium min-[500px]:text-3xl sm:text-[32px]">
@@ -145,10 +258,8 @@ const InvestmentPage: FC = () => {
               type: 'on-apply',
               cb: setSelectedSortKeys,
             }}
-            isSearchable={true}
           />
         </div>
-
         {data?.pages.map((page, idx) => {
           return (
             <div
@@ -158,7 +269,7 @@ const InvestmentPage: FC = () => {
               {page.items.map((company) => {
                 const company2: { ESG: EnvGrade | undefined } & {
                   company: Company
-                } = { ESG: company?.ESG[0]?.environmentGrade, company }
+                } = { ESG: company?.ESG?.environmentGrade, company }
                 return (
                   <React.Fragment key={company.id}>
                     <CompanyCard companyInfo={company2} />
@@ -176,7 +287,7 @@ const InvestmentPage: FC = () => {
             void fetchNextPage()
           }}
           disabled={!hasNextPage || isFetchingNextPage}
-        ></LoadMoreButton>
+        />
         <ToTopButton />
       </div>
     </>
