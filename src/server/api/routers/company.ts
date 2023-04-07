@@ -24,6 +24,50 @@ const createNetAssetValFilter = (range: number[]) => {
   }
 }
 
+interface SortOrder {
+  netAssetVal?: 'asc' | 'desc'
+  ESG?: {
+    environmentGrade?: 'asc' | 'desc'
+  }
+}
+type SortByString = 'asc' | 'desc'
+
+const sortStringZodType = z
+  .union([z.literal('asc'), z.literal('desc')])
+  .nullish()
+
+const createSortOrder = (
+  sortByNetAssetVal?: SortByString | null,
+  sortByEnvGrade?: SortByString | null,
+): SortOrder[] | SortOrder | { name: SortByString } => {
+  console.log(sortByNetAssetVal, sortByEnvGrade)
+  if (sortByNetAssetVal && sortByEnvGrade) {
+    return [
+      {
+        netAssetVal: sortByNetAssetVal,
+      },
+      {
+        ESG: {
+          environmentGrade: sortByEnvGrade,
+        },
+      },
+    ]
+  } else if (sortByNetAssetVal) {
+    return {
+      netAssetVal: sortByNetAssetVal,
+    }
+  } else if (sortByEnvGrade) {
+    console.log('sortByEnvGrade', sortByEnvGrade)
+    return {
+      ESG: {
+        environmentGrade: sortByEnvGrade,
+      },
+    }
+  } else {
+    return { name: 'asc' }
+  }
+}
+
 export const companyRouter = createTRPCRouter({
   getCompany: publicProcedure
     .input(
@@ -50,8 +94,8 @@ export const companyRouter = createTRPCRouter({
       z.object({
         limit: z.number().min(1).max(100).nullish(),
         cursor: z.string().nullish(),
-        sortByEnvGrade: z.string().nullish(),
-        sortByNetAssetVal: z.string().nullish(),
+        sortByEnvGrade: sortStringZodType,
+        sortByNetAssetVal: sortStringZodType,
         filterBySector: z.array(z.nativeEnum(Sector)).nullish(),
         filterByIndustry: z.array(z.string()).nullish(),
         filterByEnvGrade: z.array(z.nativeEnum(EnvGrade)).nullish(),
@@ -100,16 +144,6 @@ export const companyRouter = createTRPCRouter({
             : {}),
           OR: netAssetValFilterCleaned,
         },
-        orderBy: {
-          netAssetVal: extractSortOrder(input.sortByNetAssetVal)
-            ? input.sortByNetAssetVal
-            : undefined,
-          ESG: {
-            environmentGrade: extractSortOrder(input.sortByEnvGrade)
-              ? input.sortByEnvGrade
-              : undefined,
-          },
-        },
         include: {
           ESG: {
             select: {
@@ -117,6 +151,7 @@ export const companyRouter = createTRPCRouter({
             },
           },
         },
+        orderBy: createSortOrder(input.sortByNetAssetVal, input.sortByEnvGrade),
         take: limit + 1,
         cursor: cursor ? { id: cursor } : undefined,
       })
