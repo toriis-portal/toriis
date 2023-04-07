@@ -37,18 +37,30 @@ export const companyRouter = createTRPCRouter({
       }
 
       const contentClient = new ContentWrapper()
+
       const industryEntries = await contentClient.get('industry')
       let industryEntry: IndustryEntry = { name: '', details: '' }
-      console.log(`Industry: ${industryEntries[0].details}`)
+      // console.log(`Industry: ${industryEntries[0].details}`)
       industryEntries.map((item: IndustryEntry) => {
         if (item.name == company['industry']) {
           industryEntry = item
         }
       })
 
-      const sectorEntry: SectorEntry = { name: '', details: '' }
-      // @TODO: FINISH
-      return company
+      let sectorEntry: SectorEntry = { name: '', details: '' }
+      const sectorEntries = await contentClient.get('sector')
+      console.log(company)
+      sectorEntries.map((item: SectorEntry) => {
+        if (
+          item.name ==
+          company['sector'].charAt(0).toUpperCase() +
+            company['sector'].slice(1).toLowerCase()
+        ) {
+          sectorEntry = item
+        }
+      })
+
+      return [company, sectorEntry, industryEntry]
     }),
   getCompanies: publicProcedure
     .input(
