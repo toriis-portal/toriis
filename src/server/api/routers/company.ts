@@ -213,4 +213,29 @@ export const companyRouter = createTRPCRouter({
         nextCursor,
       }
     }),
+
+  getFossilFuelsByCompany: publicProcedure
+    .input(
+      z.object({
+        companyId: z.string(),
+      }),
+    )
+    .query(async ({ input, ctx }) => {
+      const companyId = input.companyId ?? ''
+
+      const items = await ctx.prisma.fuel.findFirst({
+        where: {
+          companyId: companyId,
+        },
+        select: {
+          coal: true,
+          oil: true,
+          gas: true,
+          sustainableBiomass: true,
+          totalConsumption: true,
+        },
+      })
+
+      return items
+    }),
 })

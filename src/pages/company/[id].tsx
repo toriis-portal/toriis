@@ -10,6 +10,7 @@ import {
   BackButton,
 } from '../../components'
 import { api } from '../../utils/api'
+import FuelRadialChart from '../../components/Charts/FuelRadialChart'
 
 const Company = () => {
   const companyId = (useRouter().query.id as string) ?? ''
@@ -97,6 +98,7 @@ const Company = () => {
         size="medium"
         color="brightTeal"
       />
+      <FuelRadialChart />
       <HighlightedTitle
         title="Investment Details"
         size="medium"
