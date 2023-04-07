@@ -48,9 +48,9 @@ const extractSortyByQueryKey = (
   const [_field, order] = selectedSort.split('-')
 
   if (order === 'low to high') {
-    return 'desc'
+    return key == 'Environment Grade' ? 'desc' : 'asc'
   } else if (order === 'high to low') {
-    return 'asc'
+    return key == 'Environment Grade' ? 'asc' : 'desc'
   }
 
   return null

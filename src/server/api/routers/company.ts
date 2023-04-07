@@ -40,7 +40,6 @@ const createSortOrder = (
   sortByNetAssetVal?: SortByString | null,
   sortByEnvGrade?: SortByString | null,
 ): SortOrder[] | SortOrder | { name: SortByString } => {
-  console.log(sortByNetAssetVal, sortByEnvGrade)
   if (sortByNetAssetVal && sortByEnvGrade) {
     return [
       {
@@ -57,14 +56,13 @@ const createSortOrder = (
       netAssetVal: sortByNetAssetVal,
     }
   } else if (sortByEnvGrade) {
-    console.log('sortByEnvGrade', sortByEnvGrade)
     return {
       ESG: {
         environmentGrade: sortByEnvGrade,
       },
     }
   } else {
-    return { name: 'asc' }
+    return {}
   }
 }
 
