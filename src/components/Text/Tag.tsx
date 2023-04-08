@@ -8,7 +8,7 @@ interface TagProps {
 const Tag: FC<TagProps> = ({ title, className }) => {
   return (
     <div
-      className={`flex justify-center rounded-full ${className} w-fit px-[18px] py-0 text-lg font-medium`}
+      className={`flex w-fit justify-center rounded-full px-[18px] py-0 text-lg font-medium ${className}`}
     >
       {title}
     </div>
