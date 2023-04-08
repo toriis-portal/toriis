@@ -1,8 +1,7 @@
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
-import type { Company } from '@prisma/client'
+import type { Company, Investment } from '@prisma/client'
 import yahooFinance from 'yahoo-finance2'
-import type { Investment } from '@prisma/client'
 
 import { createTRPCRouter, publicProcedure } from '../trpc'
 
