@@ -48,7 +48,7 @@ const Company = () => {
       <div className="flex flex-col items-center">
         <HighlightedTitle title={data.name} size="large" color="clementine" />
       </div>
-      <div className="mb-6 flex flex-row items-center justify-between xl:px-16">
+      <div className="mb-6 flex flex-row items-center justify-between xl:px-20">
         <div className={tagGroupStyle}>
           <Tag title="sector" className="bg-cobalt text-white" />
           <div className={noteStyle}>industrials</div>
