@@ -66,10 +66,10 @@ const Company = () => {
           />
         </div>
         <div className="inline-flex pr-10">
-          <Tag title="net asset sum" className="bg-cobalt text-white" />
+          <Tag title="net asset value" className="bg-cobalt text-white" />
           <div className="pr-2 pl-2 font-medium">500k</div>
           <ToolTip
-            title="Net Asset Sum"
+            title="Net Asset Value"
             details="Calculated as the sum market values for each corporate bond for <company_name> "
           />
         </div>

@@ -8,7 +8,7 @@ interface SearchBarProps {
 const SearchBar: FC<SearchBarProps> = ({ setCompanySearchQuery }) => {
   return (
     <form
-      className="mb-8 w-full px-56"
+      className="w-full px-56"
       onSubmit={(e: React.SyntheticEvent) => {
         e.preventDefault()
         const target = e.target as typeof e.target & {
