@@ -1,12 +1,13 @@
-import type { Investment } from '@prisma/client'
 import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
 
+import FinanceBrushChart from '../../components/Charts/FinanceBrushChart'
 import {
   HighlightedTitle,
   InvestmentTable,
   ToolTip,
   Tag,
+  EnergyRadialChart,
   BackButton,
 } from '../../components'
 import { api } from '../../utils/api'
@@ -65,10 +66,10 @@ const Company = () => {
           />
         </div>
         <div className="inline-flex pr-10">
-          <Tag title="net asset sum" className="bg-cobalt text-white" />
+          <Tag title="net asset value" className="bg-cobalt text-white" />
           <div className="pr-2 pl-2 font-medium">500k</div>
           <ToolTip
-            title="Net Asset Sum"
+            title="Net Asset Value"
             details="Calculated as the sum market values for each corporate bond for <company_name> "
           />
         </div>
@@ -97,6 +98,24 @@ const Company = () => {
         size="medium"
         color="brightTeal"
       />
+      
+      {!!companyId && data.ticker && (
+        <>
+          <Tag
+            title="Yahoo Finance"
+            className="w-4 rounded-md bg-clementine text-white"
+          />
+          <FinanceBrushChart companyId={companyId} />
+        </>
+      )}
+      
+      {data.energy && (
+        <div className="flex flex-row">
+          <EnergyRadialChart energyData={data.energy} />
+          <p>the text box will go here</p>
+        </div>
+      )}
+
       <HighlightedTitle
         title="Investment Details"
         size="medium"
