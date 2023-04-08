@@ -13,6 +13,7 @@ import NetAssetTag from './Card/NetAssetTag'
 // Charts
 import EnergyRadialChart from './Charts/EnergyRadialChart'
 import LandingDonutChart from './Charts/LandingDonutChart'
+import FinanceBrushChart from './Charts/FinanceBrushChart'
 // Displays
 import ListItem from './Displays/ListItem'
 import Carousel from './Displays/Carousel/Carousel'
@@ -49,6 +50,7 @@ export {
   Carousel,
   Select,
   LandingDonutChart,
+  FinanceBrushChart,
   CapitalizedTitle,
   RequestAccordion,
   SecondaryNavBar,

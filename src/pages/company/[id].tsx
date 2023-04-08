@@ -1,6 +1,7 @@
 import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
 
+import FinanceBrushChart from '../../components/Charts/FinanceBrushChart'
 import {
   HighlightedTitle,
   InvestmentTable,
@@ -97,6 +98,17 @@ const Company = () => {
         size="medium"
         color="brightTeal"
       />
+      
+      {!!companyId && data.ticker && (
+        <>
+          <Tag
+            title="Yahoo Finance"
+            className="w-4 rounded-md bg-clementine text-white"
+          />
+          <FinanceBrushChart companyId={companyId} />
+        </>
+      )}
+      
       {data.energy && (
         <div className="flex flex-row">
           <EnergyRadialChart energyData={data.energy} />
