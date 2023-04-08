@@ -4,11 +4,11 @@ import type { Energy } from '@prisma/client'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
-interface companyId {
+interface EnergyRadialChartProps {
   energyData: Energy
 }
 
-const EnergyRadialChart: FC<companyId> = ({ energyData }) => {
+const EnergyRadialChart: FC<EnergyRadialChartProps> = ({ energyData }) => {
   const labels = ['Renewable Energy']
 
   const data = [

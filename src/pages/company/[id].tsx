@@ -97,14 +97,12 @@ const Company = () => {
         size="medium"
         color="brightTeal"
       />
-      {data.energy &&
-        data.energy.totalConsumption &&
-        data.energy.totalRenewableConsumption && (
-          <div className="flex flex-row">
-            <EnergyRadialChart energyData={data.energy} />
-            <p>the text box will go here</p>
-          </div>
-        )}
+      {data.energy && (
+        <div className="flex flex-row">
+          <EnergyRadialChart energyData={data.energy} />
+          <p>the text box will go here</p>
+        </div>
+      )}
 
       <HighlightedTitle
         title="Investment Details"
