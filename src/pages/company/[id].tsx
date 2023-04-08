@@ -1,4 +1,3 @@
-import type { Investment } from '@prisma/client'
 import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
 
@@ -8,6 +7,8 @@ import {
   InvestmentTable,
   ToolTip,
   Tag,
+  EnergyRadialChart,
+  BackButton,
 } from '../../components'
 import { api } from '../../utils/api'
 
@@ -16,7 +17,7 @@ const Company = () => {
 
   const { data, isLoading, isError } = api.company.getCompany.useQuery(
     { id: companyId },
-    { refetchOnWindowFocus: false, enabled: !!companyId },
+    { refetchOnWindowFocus: false, retry: false, enabled: !!companyId },
   )
 
   if (isLoading) {
@@ -29,7 +30,7 @@ const Company = () => {
 
   if (isError || !data) {
     return (
-      <div className="flex flex-col items-center px-12">
+      <div className="flex flex-col items-center p-12">
         <HighlightedTitle
           title="Company Not Found"
           size="large"
@@ -40,7 +41,8 @@ const Company = () => {
   }
 
   return (
-    <div className="mb-20 flex flex-col px-12">
+    <div className="mb-20 mt-8 flex flex-col px-12 ">
+      <BackButton />
       <div className="flex flex-col items-center">
         <HighlightedTitle title={data.name} size="large" color="clementine" />
       </div>
@@ -64,10 +66,10 @@ const Company = () => {
           />
         </div>
         <div className="inline-flex pr-10">
-          <Tag title="net asset sum" className="bg-cobalt text-white" />
+          <Tag title="net asset value" className="bg-cobalt text-white" />
           <div className="pr-2 pl-2 font-medium">500k</div>
           <ToolTip
-            title="Net Asset Sum"
+            title="Net Asset Value"
             details="Calculated as the sum market values for each corporate bond for <company_name> "
           />
         </div>
@@ -96,7 +98,7 @@ const Company = () => {
         size="medium"
         color="brightTeal"
       />
-
+      
       {!!companyId && data.ticker && (
         <>
           <Tag
@@ -105,6 +107,13 @@ const Company = () => {
           />
           <FinanceBrushChart companyId={companyId} />
         </>
+      )}
+      
+      {data.energy && (
+        <div className="flex flex-row">
+          <EnergyRadialChart energyData={data.energy} />
+          <p>the text box will go here</p>
+        </div>
       )}
 
       <HighlightedTitle

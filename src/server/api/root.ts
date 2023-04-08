@@ -1,6 +1,7 @@
 import { createTRPCRouter } from './trpc'
 import { companyRouter } from './routers/company'
 import { esgRouter } from './routers/esg'
+import { userRouter } from './routers/user'
 
 /**
  * This is the primary router for your server.
@@ -9,6 +10,7 @@ import { esgRouter } from './routers/esg'
  */
 export const appRouter = createTRPCRouter({
   company: companyRouter,
+  user: userRouter,
   cronjob: esgRouter,
 })
 
