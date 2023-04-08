@@ -22,7 +22,6 @@ export const companyRouter = createTRPCRouter({
       z.object({ id: z.string(), options: z.object({ period1: z.string() }) }),
     )
     .query(async ({ ctx, input }) => {
-      // given a company id, find company in db
       const options = input.options
 
       const company: Company | null = await ctx.prisma.company.findUnique({
@@ -38,7 +37,6 @@ export const companyRouter = createTRPCRouter({
         })
       }
 
-      // given the company, grab the ticker as query value
       const companyTicker: string | null = company.ticker
 
       if (!companyTicker) {
@@ -48,7 +46,6 @@ export const companyRouter = createTRPCRouter({
         })
       }
 
-      // given the company ticker, query yahoo finance
       const companyFinanceData = yahooFinance.historical(companyTicker, options)
 
       return companyFinanceData
