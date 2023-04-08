@@ -21,7 +21,7 @@ const ChevronFilter: FC<ChevronFilterProps> = ({
 }) => {
   return (
     <>
-      <div className="flex flex-row justify-center gap-1">
+      <div className="flex flex-row items-center justify-center gap-1">
         <p className="mx-2 my-auto max-w-fit text-white">{text}</p>
         <div className="flex flex-col">
           <button onClick={onClickUp}>
@@ -44,8 +44,10 @@ const ChevronFilter: FC<ChevronFilterProps> = ({
   )
 }
 
-const tableHeaderMiddleStyle = clsx('w-1/12 border-x-2 border-white')
-const tableRowStyle = clsx('border-x-2 border-clementine text-center')
+const tableHeaderMiddleStyle = clsx('border-x-2 min-w-10 border-white p-3')
+const tableRowStyle = clsx(
+  'border-x-2 border-clementine text-center p-4 min-w-[8rem] truncate',
+)
 
 const InvestmentTable: FC<{ companyId: string }> = (companyId) => {
   const [selectedSort, setSelectedSort] = useState<
@@ -92,7 +94,7 @@ const InvestmentTable: FC<{ companyId: string }> = (companyId) => {
       <table className="m-10 table-fixed border-2 border-clementine">
         <thead>
           <tr className="bg-clementine text-white">
-            <th className="w-1/6">
+            <th>
               <ChevronFilter
                 onClickUp={() => setSelectedSort(['rawName', 'asc'])}
                 onClickDown={() => setSelectedSort(['rawName', 'desc'])}
@@ -153,10 +155,10 @@ const InvestmentTable: FC<{ companyId: string }> = (companyId) => {
                     'bg-lightClementine': (pageIndex + itemIndex) % 2 == 1,
                   })}
                 >
-                  <td className="p-4 text-center">{item.rawName}</td>
+                  <td className={tableRowStyle}>{item.rawName}</td>
                   <td className={tableRowStyle}>{item.coupon}</td>
                   <td className={tableRowStyle}>
-                    {item.maturityDate.toISOString()}
+                    {item.maturityDate.toLocaleDateString()}
                   </td>
                   <td className={tableRowStyle}>{item.quantity}</td>
                   <td className={tableRowStyle}>{item.costVal}</td>

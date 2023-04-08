@@ -105,7 +105,9 @@ const Company = () => {
         size="medium"
         color="brightTeal"
       />
-      <InvestmentTable companyId={companyId} />
+      <div className="flex w-full flex-row items-center justify-center">
+        <InvestmentTable companyId={companyId} />
+      </div>
     </div>
   )
 }
