@@ -4,6 +4,7 @@ import type { Document } from '@contentful/rich-text-types'
 import { MARKS, BLOCKS } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
+import LeaveContinueModal from '../../components/Modals/LeaveContinueModal'
 import {
   PrimaryButton,
   LandingDonutChart,
@@ -29,6 +30,10 @@ const Landing: FC<{ text: Document }> = ({ text }) => {
 
   return (
     <div className="flex flex-col items-center justify-center">
+      <LeaveContinueModal
+        leave={() => alert('Leave')}
+        cont={() => alert('Continue Editing')}
+      />
       <CapitalizedTitle />
       <div className="flex flex-col items-center justify-center px-14 py-8 lg:flex-row">
         <div className="basis-3/7">

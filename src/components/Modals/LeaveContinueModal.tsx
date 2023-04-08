@@ -1,24 +1,31 @@
 import React from 'react'
 import type { FC } from 'react'
 
-import Tag from '../Text/Tag'
-
 interface ModalProps {
   leave: () => void
   cont: () => void
 }
 
-export const LeaveContinueModal: FC<ModalProps> = ({ leave, cont }) => {
-  //   const title = 'Leave Page'
-
+export const LeaveContinueModal: FC<ModalProps> = ({
+  leave = () => alert('Leave'),
+  cont = () => alert('Continue'),
+}) => {
   return (
     <>
-      <button onClick={leave}>
-        <Tag title="Leave Page" className="rounded-xl" />
-      </button>
-      <button onClick={leave}>
-        <Tag title="Continue Editing" className="rounded-xl" />
-      </button>
+      <div className="m-2 flex h-[35px] gap-8 text-base font-normal text-white">
+        <button
+          className="w-[155px] rounded-full bg-clementine text-white"
+          onClick={leave}
+        >
+          <p>Leave Page</p>
+        </button>
+        <button
+          className="w-[155px] rounded-full bg-cobalt text-white "
+          onClick={cont}
+        >
+          <p>Continue Editing</p>
+        </button>
+      </div>
     </>
   )
 }
