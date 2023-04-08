@@ -18,7 +18,7 @@ const CompanyCard: FC<CardProps> = ({ companyInfo }) => {
           'flex flex-col gap-[1.5vw] rounded-xl bg-white px-[2.6vw] pt-[2vw] pb-[1.3vw]',
           'border-[0.5px] border-darkTeal shadow-[0_4px_4px_0] shadow-lightShadow',
           'hover:-m-[3.2px] hover:border-4 hover:border-cobalt',
-          'w-full overflow-x-scroll',
+          'overflow-x-scroll',
         )}
       >
         <div className="flex flex-row justify-between text-[28px] font-medium text-black">

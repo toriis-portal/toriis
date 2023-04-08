@@ -270,7 +270,7 @@ const InvestmentPage: FC = () => {
             return (
               <div
                 key={idx}
-                className="flex w-11/12 flex-col gap-[1.5vw] min-[1130px]:w-10/12 xl:w-[65vw]"
+                className="flex w-11/12 flex-col gap-[1.5vw] min-[1130px]:w-10/12 xl:w-10/12"
               >
                 {page.items.map((company) => {
                   const company2: { ESG: EnvGrade | undefined } & {
