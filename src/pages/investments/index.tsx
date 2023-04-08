@@ -80,7 +80,7 @@ const InvestmentPage: FC = () => {
   const [filterOptions, setFilterOptions] =
     useState<FilterOptions>(initialFilterOptions)
 
-  const limit = 5
+  const limit = 10
 
   const {
     fetchNextPage,
