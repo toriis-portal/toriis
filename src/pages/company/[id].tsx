@@ -13,6 +13,7 @@ import { api } from '../../utils/api'
 
 const tagGroupStyle = clsx('flex-col lg:inline-flex lg:flex-row')
 const noteStyle = clsx('lg:px-2 font-medium truncate')
+const tagStyle = clsx('bg-cobalt text-white')
 
 const Company = () => {
   const companyId = (useRouter().query.id as string) ?? ''
@@ -50,7 +51,7 @@ const Company = () => {
       </div>
       <div className="mb-6 flex flex-row items-center justify-between xl:px-20">
         <div className={tagGroupStyle}>
-          <Tag title="sector" className="bg-cobalt text-white" />
+          <Tag title="sector" className={tagStyle} />
           <div className={noteStyle}>industrials</div>
 
           <ToolTip
@@ -59,7 +60,7 @@ const Company = () => {
           />
         </div>
         <div className={tagGroupStyle}>
-          <Tag title="industry" className="bg-cobalt text-white" />
+          <Tag title="industry" className={tagStyle} />
           <div className={noteStyle}>bank diversity</div>
 
           <ToolTip
@@ -68,7 +69,7 @@ const Company = () => {
           />
         </div>
         <div className={tagGroupStyle}>
-          <Tag title="net asset value" className="bg-cobalt text-white" />
+          <Tag title="net asset value" className={tagStyle} />
           <div className={noteStyle}>500k</div>
           <ToolTip
             title="Net Asset Value"
@@ -76,7 +77,7 @@ const Company = () => {
           />
         </div>
         <div className={tagGroupStyle}>
-          <Tag title="environmental grade" className="bg-cobalt text-white" />
+          <Tag title="environmental grade" className={tagStyle} />
           <div className={noteStyle}>
             <Tag title="AAA" className="bg-brightTeal text-white" />
           </div>
