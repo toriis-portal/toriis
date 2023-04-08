@@ -103,7 +103,7 @@ const Company = () => {
         size="medium"
         color="brightTeal"
       />
-      
+
       {!!companyId && data.ticker && (
         <>
           <Tag
@@ -113,7 +113,7 @@ const Company = () => {
           <FinanceBrushChart companyId={companyId} />
         </>
       )}
-      
+
       {data.energy && (
         <div className="flex flex-row">
           <EnergyRadialChart energyData={data.energy} />
