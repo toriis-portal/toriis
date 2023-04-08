@@ -78,6 +78,9 @@ export const companyRouter = createTRPCRouter({
         where: {
           id: input.id,
         },
+        include: {
+          energy: true,
+        },
       })
       if (!company) {
         throw new TRPCError({

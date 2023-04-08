@@ -1,4 +1,3 @@
-import type { Investment } from '@prisma/client'
 import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
 
@@ -7,6 +6,7 @@ import {
   InvestmentTable,
   ToolTip,
   Tag,
+  EnergyRadialChart,
   BackButton,
 } from '../../components'
 import { api } from '../../utils/api'
@@ -97,6 +97,13 @@ const Company = () => {
         size="medium"
         color="brightTeal"
       />
+      {data.energy && (
+        <div className="flex flex-row">
+          <EnergyRadialChart energyData={data.energy} />
+          <p>the text box will go here</p>
+        </div>
+      )}
+
       <HighlightedTitle
         title="Investment Details"
         size="medium"
