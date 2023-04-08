@@ -3,6 +3,7 @@ import React from 'react'
 import type { Document } from '@contentful/rich-text-types'
 import { MARKS, BLOCKS } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import { useState } from 'react'
 
 import LeaveContinueModal from '../../components/Modals/LeaveContinueModal'
 import {
@@ -27,38 +28,48 @@ const Landing: FC<{ text: Document }> = ({ text }) => {
       ),
     },
   }
+  const [modal, setModal] = useState(true)
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <LeaveContinueModal
-        onLeave={() => alert('Leave')}
-        onContinue={() => alert('Continue Editing')}
-      />
-      <CapitalizedTitle />
-      <div className="flex flex-col items-center justify-center px-14 py-8 lg:flex-row">
-        <div className="basis-3/7">
-          <LandingDonutChart />
-          <div className="flex justify-center pt-2 font-inter text-xl font-semibold">
-            Assets Per Sector
+    <>
+      <div className="flex flex-col items-center justify-center">
+        {modal && (
+          <div className="m-10">
+            <LeaveContinueModal
+              onLeave={() => {
+                setModal(false)
+                setTimeout(() => alert('Leave Page'), 20)
+              }}
+              onContinue={() => alert('Continue Editing')}
+            />
           </div>
-        </div>
-        <div className="basis-4/7">
-          <div className="mb-6 p-4 lg:pr-14">
-            {documentToReactComponents(text, contentfulOptions)}
-            <div className="flex flex-col gap-12 md:flex-row">
-              <PrimaryButton
-                text="More About Fossil Fuels"
-                link="/fossil-fuel"
-              />
-              <PrimaryButton
-                text="Learn About Investment"
-                link="/investments"
-              />
+        )}
+        <CapitalizedTitle />
+        <div className="flex flex-col items-center justify-center px-14 py-8 lg:flex-row">
+          <div className="basis-3/7">
+            <LandingDonutChart />
+            <div className="flex justify-center pt-2 font-inter text-xl font-semibold">
+              Assets Per Sector
+            </div>
+          </div>
+          <div className="basis-4/7">
+            <div className="mb-6 p-4 lg:pr-14">
+              {documentToReactComponents(text, contentfulOptions)}
+              <div className="flex flex-col gap-12 md:flex-row">
+                <PrimaryButton
+                  text="More About Fossil Fuels"
+                  link="/fossil-fuel"
+                />
+                <PrimaryButton
+                  text="Learn About Investment"
+                  link="/investments"
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
