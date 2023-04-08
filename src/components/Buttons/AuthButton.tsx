@@ -42,7 +42,7 @@ const AuthButton: FC = () => {
           'rounded-lg border border-black bg-white py-6 px-2 lg:px-2',
           'font-inter text-base font-normal text-black',
           'absolute right-8 top-[5.5rem] inline-block',
-          'z-[100] w-[40%] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.3)] transition-opacity duration-200 lg:w-[25%]',
+          'z-[100] w-[40%] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.3)] transition-opacity duration-200 lg:w-[28%]',
           { 'invisible opacity-0': !open, 'visible opacity-100': open },
         )}
       >
@@ -59,6 +59,9 @@ const AuthButton: FC = () => {
               </Link>
               <Link href="/admin/management">
                 <button className={buttonStyle}>Manage Administration</button>
+              </Link>
+              <Link href="/admin/review">
+                <button className={buttonStyle}>Request Management</button>
               </Link>
               <button
                 onClick={() => void signOut()}
