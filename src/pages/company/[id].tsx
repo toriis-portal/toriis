@@ -2,11 +2,13 @@ import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
 import clsx from 'clsx'
 
+import FinanceBrushChart from '../../components/Charts/FinanceBrushChart'
 import {
   HighlightedTitle,
   InvestmentTable,
   ToolTip,
   Tag,
+  EnergyRadialChart,
   BackButton,
 } from '../../components'
 import { api } from '../../utils/api'
@@ -101,6 +103,24 @@ const Company = () => {
         size="medium"
         color="brightTeal"
       />
+      
+      {!!companyId && data.ticker && (
+        <>
+          <Tag
+            title="Yahoo Finance"
+            className="w-4 rounded-md bg-clementine text-white"
+          />
+          <FinanceBrushChart companyId={companyId} />
+        </>
+      )}
+      
+      {data.energy && (
+        <div className="flex flex-row">
+          <EnergyRadialChart energyData={data.energy} />
+          <p>the text box will go here</p>
+        </div>
+      )}
+
       <HighlightedTitle
         title="Investment Details"
         size="medium"

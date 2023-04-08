@@ -1,7 +1,8 @@
 import { EnvGrade, Sector } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
-import type { Investment } from '@prisma/client'
+import type { Company, Investment } from '@prisma/client'
+import yahooFinance from 'yahoo-finance2'
 
 import { createTRPCRouter, publicProcedure } from '../trpc'
 
@@ -67,6 +68,40 @@ const createSortOrder = (
 }
 
 export const companyRouter = createTRPCRouter({
+  getCompanyFinanceData: publicProcedure
+    .input(
+      z.object({ id: z.string(), options: z.object({ period1: z.string() }) }),
+    )
+    .query(async ({ ctx, input }) => {
+      const options = input.options
+
+      const company: Company | null = await ctx.prisma.company.findUnique({
+        where: {
+          id: input.id,
+        },
+      })
+
+      if (!company) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Error fetching company',
+        })
+      }
+
+      const companyTicker: string | null = company.ticker
+
+      if (!companyTicker) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'No Ticker Found',
+        })
+      }
+
+      const companyFinanceData = yahooFinance.historical(companyTicker, options)
+
+      return companyFinanceData
+    }),
+
   getCompany: publicProcedure
     .input(
       z.object({
@@ -77,6 +112,9 @@ export const companyRouter = createTRPCRouter({
       const company = await ctx.prisma.company.findUnique({
         where: {
           id: input.id,
+        },
+        include: {
+          energy: true,
         },
       })
       if (!company) {
