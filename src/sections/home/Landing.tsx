@@ -31,8 +31,8 @@ const Landing: FC<{ text: Document }> = ({ text }) => {
   return (
     <div className="flex flex-col items-center justify-center">
       <LeaveContinueModal
-        leave={() => alert('Leave')}
-        cont={() => alert('Continue Editing')}
+        onLeave={() => alert('Leave')}
+        onContinue={() => alert('Continue Editing')}
       />
       <CapitalizedTitle />
       <div className="flex flex-col items-center justify-center px-14 py-8 lg:flex-row">
