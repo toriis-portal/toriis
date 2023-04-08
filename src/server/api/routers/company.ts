@@ -17,9 +17,6 @@ const extractSortOrder = (
 }
 
 export const companyRouter = createTRPCRouter({
-  // given a company id, find company in db
-  // then grab ticker,
-  // then query yahoo-finance with ticker
   getCompanyFinanceData: publicProcedure
     .input(
       z.object({ id: z.string(), options: z.object({ period1: z.string() }) }),

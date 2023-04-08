@@ -13,7 +13,6 @@ interface FinanceBrushChartProps {
   companyId: string
 }
 
-// data structure for chart
 interface DateClosePair {
   x: Date // date, called x for apex
   y: number // closing cost, called y for apex
@@ -54,11 +53,7 @@ export const FinanceBrushChart: FC<FinanceBrushChartProps> = ({
       x: history.date,
       y: history.close,
     }),
-  ) // {date: Date, close: number}
-
-  // const labels: number[] = data.map(
-  //   (history: HistoricalRowHistory) => history.close,
-  // )
+  )
 
   const options: ApexOptions = {
     chart: {
@@ -66,7 +61,6 @@ export const FinanceBrushChart: FC<FinanceBrushChartProps> = ({
     },
     xaxis: {
       type: 'datetime',
-      // min: yearAgo,
     },
     yaxis: {
       labels: {
@@ -136,7 +130,6 @@ export const FinanceBrushChart: FC<FinanceBrushChartProps> = ({
           height="100%"
           series={series}
           type="line"
-          // labels={labels}
         />
         <ChartLine
           options={lineOptions}
@@ -144,7 +137,6 @@ export const FinanceBrushChart: FC<FinanceBrushChartProps> = ({
           height="120px"
           series={series}
           type="area"
-          // labels={labels}
         />
       </div>
     </>
