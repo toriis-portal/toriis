@@ -88,7 +88,7 @@ const InvestmentTable: FC<{ companyId: string }> = (companyId) => {
   }
 
   return (
-    <div>
+    <div className="overflow-x-scroll">
       <table className="m-10 table-fixed border-2 border-clementine">
         <thead>
           <tr className="bg-clementine text-white">

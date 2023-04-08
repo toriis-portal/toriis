@@ -1,6 +1,6 @@
-import type { Investment } from '@prisma/client'
 import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
+import clsx from 'clsx'
 
 import {
   HighlightedTitle,
@@ -10,6 +10,9 @@ import {
   BackButton,
 } from '../../components'
 import { api } from '../../utils/api'
+
+const tagGroupStyle = clsx('flex-col lg:inline-flex lg:flex-row')
+const noteStyle = clsx('lg:px-2 font-medium truncate')
 
 const Company = () => {
   const companyId = (useRouter().query.id as string) ?? ''
@@ -45,36 +48,36 @@ const Company = () => {
       <div className="flex flex-col items-center">
         <HighlightedTitle title={data.name} size="large" color="clementine" />
       </div>
-      <div className="flex justify-center">
-        <div className="inline-flex pr-10">
+      <div className="mb-6 flex flex-row items-center justify-between xl:px-16">
+        <div className={tagGroupStyle}>
           <Tag title="sector" className="bg-cobalt text-white" />
-          <div className="pr-2  pl-2 font-medium">industrials</div>
+          <div className={noteStyle}>industrials</div>
 
           <ToolTip
             title="Industrial Sector"
             details="The industrial sector includes companies involved directly in the production of capital goods such as electrical or industrial machinery, or in the provision of transportation services and infrastructure."
           />
         </div>
-        <div className="inline-flex pr-10">
+        <div className={tagGroupStyle}>
           <Tag title="industry" className="bg-cobalt text-white" />
-          <div className="pr-2 pl-2 font-medium">bank diversity</div>
+          <div className={noteStyle}>bank diversity</div>
 
           <ToolTip
             title="Bank Diversity Industry"
             details="A subset of sector, still looking for good info for each industry"
           />
         </div>
-        <div className="inline-flex pr-10">
+        <div className={tagGroupStyle}>
           <Tag title="net asset value" className="bg-cobalt text-white" />
-          <div className="pr-2 pl-2 font-medium">500k</div>
+          <div className={noteStyle}>500k</div>
           <ToolTip
             title="Net Asset Value"
             details="Calculated as the sum market values for each corporate bond for <company_name> "
           />
         </div>
-        <div className="inline-flex">
+        <div className={tagGroupStyle}>
           <Tag title="environmental grade" className="bg-cobalt text-white" />
-          <div className="pr-2 pl-2">
+          <div className={noteStyle}>
             <Tag title="AAA" className="bg-brightTeal text-white" />
           </div>
           <ToolTip>
