@@ -57,6 +57,7 @@ const SelectEntry = <TableRow extends BaseTableRowGeneric<TableRow>>({
   const changedStyles = row.changedEntries.includes(col.key)
     ? 'bg-green-100'
     : ''
+  const disabledStyles = !col.isEditable ? 'bg-gray-100' : ''
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (typeof selected === 'number') {
@@ -71,8 +72,14 @@ const SelectEntry = <TableRow extends BaseTableRowGeneric<TableRow>>({
 
   return (
     <select
-      className={clsx(col.ctrl.applyStyle?.(row), 'w-full', changedStyles)}
+      className={clsx(
+        col.ctrl.applyStyle?.(row),
+        'w-full',
+        changedStyles,
+        disabledStyles,
+      )}
       value={selected}
+      disabled={!col.isEditable}
       onClick={(e) => {
         e.stopPropagation()
 
@@ -110,10 +117,16 @@ const TextEntry = <TableRow extends BaseTableRowGeneric<TableRow>>({
   const changedStyles = row.changedEntries.includes(col.key)
     ? 'bg-green-100'
     : ''
+  const disabledStyles = !col.isEditable ? 'bg-gray-100' : ''
 
   return (
     <input
-      className={clsx(col.ctrl.applyStyle?.(row), 'w-full', changedStyles)}
+      className={clsx(
+        col.ctrl.applyStyle?.(row),
+        'w-full',
+        changedStyles,
+        disabledStyles,
+      )}
       type="text"
       value={col.ctrl.render(row)}
       disabled={!col.isEditable}

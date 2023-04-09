@@ -104,7 +104,7 @@ export const Test = () => {
         {
           key: 'year',
           label: 'Year',
-          isEditable: true,
+          isEditable: false,
           ctrl: {
             type: 'text',
             render: (row) => row.year,
@@ -113,7 +113,7 @@ export const Test = () => {
         {
           key: 'coupon',
           label: 'Coupon',
-          isEditable: true,
+          isEditable: false,
           ctrl: {
             type: 'select',
             options: [
