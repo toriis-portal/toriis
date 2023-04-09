@@ -183,9 +183,16 @@ export const DynamicTable = <TableRow extends BaseTableRowGeneric<TableRow>>({
     row: rowStyles,
   } = styles ?? {}
 
+  const STYLES = {
+    table: clsx(BASE_TABLE_STYLES.table, tableStyles),
+    header: clsx(BASE_TABLE_STYLES.header, headerStyles),
+    body: clsx(BASE_TABLE_STYLES.body, bodyStyles),
+    row: clsx(BASE_TABLE_STYLES.row, rowStyles),
+  }
+
   return (
-    <table className={clsx(BASE_TABLE_STYLES.table, tableStyles)}>
-      <thead className={clsx(BASE_TABLE_STYLES.header, headerStyles)}>
+    <table className={STYLES.table}>
+      <thead className={STYLES.header}>
         <tr>
           {columns.map((col) => (
             <th key={String(col.key)} className={col.headerClassName}>
@@ -194,9 +201,9 @@ export const DynamicTable = <TableRow extends BaseTableRowGeneric<TableRow>>({
           ))}
         </tr>
       </thead>
-      <tbody className={clsx(BASE_TABLE_STYLES.body, bodyStyles)}>
+      <tbody className={STYLES.body}>
         {rows.map((row) => (
-          <tr key={row._id} className={clsx(BASE_TABLE_STYLES.row, rowStyles)}>
+          <tr key={row._id} className={STYLES.row}>
             {columns.map((col) => (
               <td
                 key={String(col.key)}

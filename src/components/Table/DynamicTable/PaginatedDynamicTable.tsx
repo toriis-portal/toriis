@@ -26,7 +26,7 @@ export const PaginatedDynamicTable = <
   const { rowCount: _rowCount, pageCount, page, onPageChange } = paginated ?? {}
 
   return (
-    <div>
+    <div className="w-96">
       <DynamicTable {...tableProps} />
       <div className="flex">
         <ChevronLeftIcon

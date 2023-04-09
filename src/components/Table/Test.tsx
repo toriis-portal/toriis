@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { DynamicTable } from './DynamicTable'
+import { DynamicTable, PaginatedDynamicTable } from './DynamicTable'
 
 const data = [
   {
@@ -89,7 +89,13 @@ export const Test = () => {
   }
 
   return (
-    <DynamicTable
+    <PaginatedDynamicTable
+      paginated={{
+        page: 1,
+        pageCount: 10,
+        onPageChange: (page) => console.log(page),
+        rowCount: rows.length,
+      }}
       rows={rows}
       columns={[
         {
