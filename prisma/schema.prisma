@@ -40,6 +40,12 @@ enum Collection {
   Energy
 }
 
+enum Status {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
 model Investment {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   company      Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
@@ -106,6 +112,7 @@ model User {
   sessions        Session[]
   createdAt       DateTime         @default(now())
   WhitelistedUser WhitelistedUser?
+  ReviewRequest   ReviewRequest[]
 }
 
 model VerificationToken {
@@ -175,10 +182,14 @@ model Emission {
   scopeThree Float?
 }
 
-model Staged {
+model ReviewRequest {
   id      String     @id @default(auto()) @map("_id") @db.ObjectId
-  type    Collection
+  dataset Collection
   updates Json[]
+  status  Status     @default(PENDING)
+  comment String?
+  user    User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String     @db.ObjectId
 }
 
 model WhitelistedUser {
