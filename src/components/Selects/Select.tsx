@@ -100,7 +100,7 @@ export const Select: FC<SelectProps> = ({
   }, [isOpen, onClose])
 
   useEffect(() => {
-    window.innerWidth < 1500 && shortText
+    window.innerWidth < 1200 && shortText
       ? setTextOption(shortText)
       : setTextOption(text)
   }, [shortText, text])
