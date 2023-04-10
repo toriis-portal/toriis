@@ -1,24 +1,30 @@
-import type { Investment } from '@prisma/client'
 import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
-import type { FC } from 'react'
+import clsx from 'clsx'
 
 import { ContentWrapper } from '../../utils/content'
+import FinanceBrushChart from '../../components/Charts/FinanceBrushChart'
 import {
   HighlightedTitle,
   InvestmentTable,
   ToolTip,
   Tag,
+  EnergyRadialChart,
+  BackButton,
 } from '../../components'
 import { api } from '../../utils/api'
 import type { IndustryEntry } from '../../types'
 
-const Company: FC = () => {
+const tagGroupStyle = clsx('flex-col lg:inline-flex lg:flex-row')
+const noteStyle = clsx('lg:px-2 font-medium truncate')
+const tagStyle = clsx('bg-cobalt text-white')
+
+const Company = () => {
   const companyId = (useRouter().query.id as string) ?? ''
 
   const { data, isLoading, isError } = api.company.getCompany.useQuery(
     { id: companyId },
-    { refetchOnWindowFocus: false, enabled: !!companyId },
+    { refetchOnWindowFocus: false, retry: false, enabled: !!companyId },
   )
 
   if (isLoading) {
@@ -31,7 +37,7 @@ const Company: FC = () => {
 
   if (isError || !data) {
     return (
-      <div className="flex flex-col items-center px-12">
+      <div className="flex flex-col items-center p-12">
         <HighlightedTitle
           title="Company Not Found"
           size="large"
@@ -42,34 +48,35 @@ const Company: FC = () => {
   }
 
   return (
-    <div className="mb-20 flex flex-col px-12">
+    <div className="mb-20 mt-8 flex flex-col px-12 ">
+      <BackButton />
       <div className="flex flex-col items-center">
         <HighlightedTitle title={data.name} size="large" color="clementine" />
       </div>
-      <div className="flex justify-center">
-        <div className="inline-flex pr-10">
-          <Tag title="sector" className="bg-cobalt text-white" />
-          <div className="pr-2  pl-2 font-medium">{data[1].name}</div>
+      <div className="mb-6 flex flex-row items-center justify-between xl:px-20">
+        <div className={tagGroupStyle}>
+          <Tag title="sector" className={tagStyle} />
+          <div className={noteStyle}>{data[1].name}</div>
 
           <ToolTip title={data[1].name} details={data[1].details} />
         </div>
-        <div className="inline-flex pr-10">
-          <Tag title="industry" className="bg-cobalt text-white" />
-          <div className="pr-2 pl-2 font-medium">{data[2].name}</div>
+        <div className={tagGroupStyle}>
+          <Tag title="industry" className={tagStyle} />
+          <div className={noteStyle}>{data[2].name}</div>
 
           <ToolTip title={data[2].name} details={data[2].details} />
         </div>
-        <div className="inline-flex pr-10">
-          <Tag title="net asset sum" className="bg-cobalt text-white" />
-          <div className="pr-2 pl-2 font-medium">500k</div>
+        <div className={tagGroupStyle}>
+          <Tag title="net asset value" className={tagStyle} />
+          <div className={noteStyle}>500k</div>
           <ToolTip
-            title="Net Asset Sum"
+            title="Net Asset Value"
             details="Calculated as the sum market values for each corporate bond for <company_name> "
           />
         </div>
-        <div className="inline-flex">
-          <Tag title="environmental grade" className="bg-cobalt text-white" />
-          <div className="pr-2 pl-2">
+        <div className={tagGroupStyle}>
+          <Tag title="environmental grade" className={tagStyle} />
+          <div className={noteStyle}>
             <Tag title="AAA" className="bg-brightTeal text-white" />
           </div>
           <ToolTip>
@@ -82,7 +89,7 @@ const Company: FC = () => {
               ESG score measures how sustainably a company is conducting
               business based on their environmental impact calculated from their
               carbon emissions, energy consumption and climate change action. It
-              also addresses 
+              also addresses
             </div>
           </ToolTip>
         </div>
@@ -92,12 +99,32 @@ const Company: FC = () => {
         size="medium"
         color="brightTeal"
       />
+
+      {!!companyId && data.ticker && (
+        <>
+          <Tag
+            title="Yahoo Finance"
+            className="w-4 rounded-md bg-clementine text-white"
+          />
+          <FinanceBrushChart companyId={companyId} />
+        </>
+      )}
+
+      {data.energy && (
+        <div className="flex flex-row">
+          <EnergyRadialChart energyData={data.energy} />
+          <p>the text box will go here</p>
+        </div>
+      )}
+
       <HighlightedTitle
         title="Investment Details"
         size="medium"
         color="brightTeal"
       />
-      <InvestmentTable companyId={companyId} />
+      <div className="flex w-full flex-row items-center justify-center">
+        <InvestmentTable companyId={companyId} />
+      </div>
     </div>
   )
 }
