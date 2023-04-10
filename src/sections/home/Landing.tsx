@@ -1,11 +1,12 @@
 import type { FC } from 'react'
+import { useEffect } from 'react'
 import React from 'react'
 import type { Document } from '@contentful/rich-text-types'
 import { MARKS, BLOCKS } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { useState } from 'react'
 
-import LeaveContinueModal from '../../components/Modals/LeaveContinueModal'
+import LeaveConfirmationModal from '../../components/Modals/LeaveConfirmationModal'
 import {
   PrimaryButton,
   LandingDonutChart,
@@ -28,22 +29,20 @@ const Landing: FC<{ text: Document }> = ({ text }) => {
       ),
     },
   }
-  const [modal, setModal] = useState(true)
+  const [modal, setModal] = useState(false)
 
   return (
     <>
       <div className="flex flex-col items-center justify-center">
-        {modal && (
-          <div className="m-10">
-            <LeaveContinueModal
-              onLeave={() => {
-                setModal(false)
-                setTimeout(() => alert('Leave Page'), 20)
-              }}
-              onContinue={() => alert('Continue Editing')}
-            />
-          </div>
-        )}
+        <div className="h-20 w-20" onClick={() => setModal(!modal)}>
+          Click Me
+        </div>
+        <LeaveConfirmationModal
+          isOpen={modal}
+          onLeave={() => {}}
+          onContinue={() => {}}
+        />
+
         <CapitalizedTitle />
         <div className="flex flex-col items-center justify-center px-14 py-8 lg:flex-row">
           <div className="basis-3/7">
