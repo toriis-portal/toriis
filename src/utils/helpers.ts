@@ -33,3 +33,7 @@ export const envGradeToColor = (grade: string | undefined) => {
       return 'bg-lightGray'
   }
 }
+
+export const formatDate = (date: Date) => {
+  return date.getMonth().toString() + "/" + date.getDate().toString() + "/" + date.getFullYear().toString()
+}
