@@ -138,15 +138,17 @@ export const companyRouter = createTRPCRouter({
 
       let sectorEntry: SectorEntry = { name: '', details: '' }
       const sectorEntries = await contentClient.get('sector')
-      sectorEntries.map((item: SectorEntry) => {
-        if (
-          item.name ==
-          company['sector'].charAt(0).toUpperCase() +
-            company['sector'].slice(1).toLowerCase()
-        ) {
-          sectorEntry = item
-        }
-      })
+      if (sectorEntries && Array.isArray(sectorEntries)) {
+        sectorEntries.map((item: SectorEntry) => {
+          if (
+            item.name ==
+            company['sector'].charAt(0).toUpperCase() +
+              company['sector'].slice(1).toLowerCase()
+          ) {
+            sectorEntry = item
+          }
+        })
+      }
 
       return [company, sectorEntry, industryEntry]
     }),

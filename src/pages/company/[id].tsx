@@ -1,8 +1,8 @@
 import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
 import clsx from 'clsx'
+import { Company } from '@prisma/client'
 
-import { ContentWrapper } from '../../utils/content'
 import FinanceBrushChart from '../../components/Charts/FinanceBrushChart'
 import {
   HighlightedTitle,
@@ -13,7 +13,7 @@ import {
   BackButton,
 } from '../../components'
 import { api } from '../../utils/api'
-import type { IndustryEntry } from '../../types'
+import type { IndustryEntry, SectorEntry } from '../../types'
 
 const tagGroupStyle = clsx('flex-col lg:inline-flex lg:flex-row')
 const noteStyle = clsx('lg:px-2 font-medium truncate')
@@ -21,11 +21,13 @@ const tagStyle = clsx('bg-cobalt text-white')
 
 const Company = () => {
   const companyId = (useRouter().query.id as string) ?? ''
+  type CompanyData = [Company, SectorEntry, IndustryEntry]
 
-  const { data, isLoading, isError } = api.company.getCompany.useQuery(
-    { id: companyId },
-    { refetchOnWindowFocus: false, retry: false, enabled: !!companyId },
-  )
+  const { data, isLoading, isError } =
+    api.company.getCompany.useQuery<CompanyData>(
+      { id: companyId },
+      { refetchOnWindowFocus: false, retry: false, enabled: !!companyId },
+    )
 
   if (isLoading) {
     return (
@@ -51,20 +53,30 @@ const Company = () => {
     <div className="mb-20 mt-8 flex flex-col px-12 ">
       <BackButton />
       <div className="flex flex-col items-center">
-        <HighlightedTitle title={data.name} size="large" color="clementine" />
+        <HighlightedTitle
+          title={data[0]?.name ?? 'Not Found'}
+          size="large"
+          color="clementine"
+        />
       </div>
       <div className="mb-6 flex flex-row items-center justify-between xl:px-20">
         <div className={tagGroupStyle}>
           <Tag title="sector" className={tagStyle} />
-          <div className={noteStyle}>{data[1].name}</div>
-
-          <ToolTip title={data[1].name} details={data[1].details} />
+          <div className={noteStyle}>{data[1]?.name ?? 'Not Found'}</div>
+          <ToolTip
+            title={data[1]?.name ?? 'Not Found'}
+            details={data[1]?.details ?? 'Not Found'}
+          />
+          ,
         </div>
         <div className={tagGroupStyle}>
           <Tag title="industry" className={tagStyle} />
-          <div className={noteStyle}>{data[2].name}</div>
+          <div className={noteStyle}>{data[2]?.name ?? 'Not Found'}</div>
 
-          <ToolTip title={data[2].name} details={data[2].details} />
+          <ToolTip
+            title={data[2]?.name ?? 'Not Found'}
+            details={data[2]?.details ?? 'Not Found'}
+          />
         </div>
         <div className={tagGroupStyle}>
           <Tag title="net asset value" className={tagStyle} />
@@ -100,7 +112,7 @@ const Company = () => {
         color="brightTeal"
       />
 
-      {!!companyId && data.ticker && (
+      {!!companyId && data[0]?.ticker && (
         <>
           <Tag
             title="Yahoo Finance"
@@ -110,9 +122,9 @@ const Company = () => {
         </>
       )}
 
-      {data.energy && (
+      {data[0]?.energy && (
         <div className="flex flex-row">
-          <EnergyRadialChart energyData={data.energy} />
+          <EnergyRadialChart energyData={data[0]?.energy} />
           <p>the text box will go here</p>
         </div>
       )}
