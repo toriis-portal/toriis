@@ -183,13 +183,14 @@ model Emission {
 }
 
 model ReviewRequest {
-  id      String     @id @default(auto()) @map("_id") @db.ObjectId
-  dataset Collection
-  updates Json[]
-  status  Status     @default(PENDING)
-  comment String?
-  user    User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId  String     @db.ObjectId
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  dataset   Collection
+  updates   Json[]
+  status    Status     @default(PENDING)
+  comment   String?
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String     @db.ObjectId
+  createdAt DateTime   @default(now())
 }
 
 model WhitelistedUser {
