@@ -12,29 +12,31 @@ interface ModalProps {
 export const LeaveContinueModal: FC<ModalProps> = ({ onLeave, onContinue }) => {
   return (
     <>
-      <div className="flex h-[250px] w-[500px] flex-col items-center justify-evenly rounded-xl border-[1px] border-black py-8 text-center text-base">
-        <p className="text-lg font-semibold text-pumpkin">
-          Are you sure you want to move to another page?
-        </p>
+      <div className="fixed inset-0 z-10 flex h-full w-full items-center justify-center bg-[rgba(0,0,0,.5)]">
+        <div className="mt-12 flex h-[250px] w-[500px] flex-col items-center justify-evenly rounded-xl border-[1px] border-black bg-white py-8 text-center text-base">
+          <p className="text-lg font-semibold text-pumpkin">
+            Are you sure you want to move to another page?
+          </p>
 
-        <p className="mx-20 font-medium text-black">
-          Moving to another page before requesting review can cause changes to
-          be lost.
-        </p>
+          <p className="mx-20 font-medium text-black">
+            Moving to another page before requesting review can cause changes to
+            be lost.
+          </p>
 
-        <div className="flex h-[34px] flex-row gap-8 font-[400] text-white">
-          <button
-            className="w-[155px] rounded-full bg-clementine"
-            onClick={onLeave}
-          >
-            Leave Page
-          </button>
-          <button
-            className="w-[155px] rounded-full bg-cobalt"
-            onClick={onContinue}
-          >
-            Continue Editing
-          </button>
+          <div className="flex h-[34px] flex-row gap-8 font-[400] text-white">
+            <button
+              className="w-[155px] rounded-full bg-clementine"
+              onClick={onLeave}
+            >
+              Leave Page
+            </button>
+            <button
+              className="w-[155px] rounded-full bg-cobalt"
+              onClick={onContinue}
+            >
+              Continue Editing
+            </button>
+          </div>
         </div>
       </div>
     </>

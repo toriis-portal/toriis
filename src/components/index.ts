@@ -36,7 +36,8 @@ import Tag from './Text/Tag'
 import InvestmentTable from './Table/InvestmentTable'
 //Tooltips
 import ToolTip from './Tooltips/ToolTip'
-
+//Modals
+import LeaveContinueModal from './Modals/LeaveContinueModal'
 export {
   AuthButton,
   ListItem,
@@ -57,6 +58,7 @@ export {
   ShadowTitle,
   ReadMoreButton,
   InvestmentTable,
+  LeaveContinueModal,
   SearchBar,
   BackButton,
   CompanyCard,
