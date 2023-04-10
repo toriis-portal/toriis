@@ -46,10 +46,6 @@ const Company = () => {
         <HighlightedTitle title={data.name} size="large" color="clementine" />
       </div>
 
-      <CompanyDetailsAccordion
-        content={data.description ? data.description : ''}
-      />
-
       <div className="flex justify-center">
         <div className="inline-flex pr-10">
           <Tag title="sector" className="bg-cobalt text-white" />
@@ -97,6 +93,10 @@ const Company = () => {
           </ToolTip>
         </div>
       </div>
+
+      {data.description && (
+        <CompanyDetailsAccordion content={data.description} />
+      )}
       <HighlightedTitle
         title="Investment Visualizations"
         size="medium"
