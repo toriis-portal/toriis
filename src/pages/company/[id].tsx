@@ -13,23 +13,7 @@ import {
 import { api } from '../../utils/api'
 import type { IndustryEntry } from '../../types'
 
-// export const getServerSideProps = async () => {
-//   const contentClient = new ContentWrapper()
-//   const industryEntries = await contentClient.get('industry')
-//   console.log(`Industry: ${industryEntries[0]}`)
-//   return {
-//     props: {
-//       industryEntries,
-//     },
-//   }
-// }
-
-interface CompanyProps {
-  industryEntries: IndustryEntry[]
-}
-
-const Company: FC<CompanyProps> = ({ industryEntries }) => {
-  console.log(industryEntries)
+const Company: FC = () => {
   const companyId = (useRouter().query.id as string) ?? ''
 
   const { data, isLoading, isError } = api.company.getCompany.useQuery(
@@ -65,21 +49,15 @@ const Company: FC<CompanyProps> = ({ industryEntries }) => {
       <div className="flex justify-center">
         <div className="inline-flex pr-10">
           <Tag title="sector" className="bg-cobalt text-white" />
-          <div className="pr-2  pl-2 font-medium">industrials</div>
+          <div className="pr-2  pl-2 font-medium">{data[1].name}</div>
 
-          <ToolTip
-            title="Industrial Sector"
-            details="The industrial sector includes companies involved directly in the production of capital goods such as electrical or industrial machinery, or in the provision of transportation services and infrastructure."
-          />
+          <ToolTip title={data[1].name} details={data[1].details} />
         </div>
         <div className="inline-flex pr-10">
           <Tag title="industry" className="bg-cobalt text-white" />
-          <div className="pr-2 pl-2 font-medium">bank diversity</div>
+          <div className="pr-2 pl-2 font-medium">{data[2].name}</div>
 
-          <ToolTip
-            title="Bank Diversity Industry"
-            details="A subset of sector, still looking for good info for each industry"
-          />
+          <ToolTip title={data[2].name} details={data[2].details} />
         </div>
         <div className="inline-flex pr-10">
           <Tag title="net asset sum" className="bg-cobalt text-white" />

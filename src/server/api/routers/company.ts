@@ -40,7 +40,6 @@ export const companyRouter = createTRPCRouter({
 
       const industryEntries = await contentClient.get('industry')
       let industryEntry: IndustryEntry = { name: '', details: '' }
-      // console.log(`Industry: ${industryEntries[0].details}`)
       industryEntries.map((item: IndustryEntry) => {
         if (item.name == company['industry']) {
           industryEntry = item
@@ -49,7 +48,6 @@ export const companyRouter = createTRPCRouter({
 
       let sectorEntry: SectorEntry = { name: '', details: '' }
       const sectorEntries = await contentClient.get('sector')
-      console.log(company)
       sectorEntries.map((item: SectorEntry) => {
         if (
           item.name ==
