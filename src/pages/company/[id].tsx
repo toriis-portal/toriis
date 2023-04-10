@@ -8,6 +8,7 @@ import {
   InvestmentTable,
   ToolTip,
   Tag,
+  CompanyDetailsAccordion,
   EnergyRadialChart,
   BackButton,
 } from '../../components'
@@ -98,6 +99,10 @@ const Company = () => {
           </ToolTip>
         </div>
       </div>
+
+      {data.description && (
+        <CompanyDetailsAccordion content={data.description} />
+      )}
       <HighlightedTitle
         title="Investment Visualizations"
         size="medium"
