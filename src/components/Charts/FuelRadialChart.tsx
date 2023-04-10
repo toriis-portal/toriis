@@ -21,28 +21,39 @@ interface FuelTypes {
   otherNonRenewable?: number | null
 }
 
+/**
+ * Gets the labels that have a non-null or non-zero value
+ *
+ * @param fuels - Fuel object to parse
+ * @returns Labels that exist on the object
+ */
+const getLabels = (fuels: Fuel) => {
+  const labels: string[] = []
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { id, companyId, year, ...rest } = fuels
+  Object.keys(rest).forEach((key) => {
+    if (
+      rest[key as keyof FuelTypes] !== null &&
+      rest[key as keyof FuelTypes] !== 0 &&
+      key != 'totalConsumption'
+    ) {
+      labels.push(FuelEnum[key as keyof typeof FuelEnum])
+    }
+  })
+
+  return labels
+}
+
+/**
+ * Renders radial chart for fuel data
+ * @param source - Fuel object to parse and render
+ * @returns - Radial chart
+ */
 const FuelRadialChart: FC<{ source: Fuel | null }> = ({ source }) => {
   const [series, setSeries] = useState([0, 0, 0, 0])
   const getPercentage = (value: number, total: number) => {
     return Math.round((value / total) * 100)
-  }
-
-  const getLabels = (fuels: Fuel) => {
-    const labels: string[] = []
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { id, companyId, year, ...rest } = fuels
-    Object.keys(rest).forEach((key) => {
-      if (
-        rest[key as keyof FuelTypes] !== null &&
-        rest[key as keyof FuelTypes] !== 0 &&
-        key != 'totalConsumption'
-      ) {
-        labels.push(FuelEnum[key as keyof typeof FuelEnum])
-      }
-    })
-
-    return labels
   }
 
   useEffect(() => {
@@ -52,6 +63,14 @@ const FuelRadialChart: FC<{ source: Fuel | null }> = ({ source }) => {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { totalConsumption, id, companyId, year, ...rest } = source
+
+    /**
+     * Gets the percentages of each item for the existing values on the fuels object
+     *
+     * @param fuels - fuel object to parse
+     * @param total - total consumption of the fuel
+     * @returns Percentages of each fuel item
+     */
     const getExistingPercentages = (fuels: FuelTypes, total: number) => {
       const seriesPercentages: number[] = []
 
@@ -62,17 +81,19 @@ const FuelRadialChart: FC<{ source: Fuel | null }> = ({ source }) => {
 
       return seriesPercentages
     }
+
     if (source) {
       setSeries(getExistingPercentages(rest, totalConsumption ?? 1))
     }
   }, [source])
 
-  if (!source)
+  if (!source) {
     return (
       <div className="text-center">
         <Spinner color="info" />
       </div>
     )
+  }
 
   const options: ApexOptions = {
     chart: {
