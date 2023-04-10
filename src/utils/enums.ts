@@ -29,3 +29,15 @@ export const netAssetValEnum = {
   '15M-20M': [15e6, 20e6],
   '20M+': [20e6, Number.MAX_SAFE_INTEGER],
 }
+
+export const FuelEnum = {
+  biodiesels: 'Biodiesels',
+  biogases: 'Biogases',
+  coal: 'Coal',
+  oil: 'Oil',
+  gas: 'Gas',
+  otherBiomass: 'Other Biomass',
+  sustainableBiomass: 'Sustainable Biomass',
+  otherRenewable: 'Other Renewable',
+  otherNonRenewable: 'Other Non-Renewable',
+}

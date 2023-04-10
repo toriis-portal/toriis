@@ -2,43 +2,72 @@ import { useEffect, useState } from 'react'
 import type { FC } from 'react'
 import type { ApexOptions } from 'apexcharts'
 import dynamic from 'next/dynamic'
-import { useRouter } from 'next/router'
 import { Spinner } from 'flowbite-react'
+import type { Fuel } from '@prisma/client'
 
-import { api } from '../../utils/api'
+import { FuelEnum } from '../../utils/enums'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
-const RadialFuelChart: FC = () => {
-  const router = useRouter()
-  const source = api.company.getFossilFuelsByCompany.useQuery(
-    { companyId: (router?.query?.id ?? '') as string },
-    {
-      refetchOnWindowFocus: false,
-    },
-  )
-  const totalConsumption = source?.data?.totalConsumption ?? 1
+interface FuelTypes {
+  biodiesels?: number | null
+  biogases?: number | null
+  coal?: number | null
+  oil?: number | null
+  gas?: number | null
+  otherBiomass?: number | null
+  sustainableBiomass?: number | null
+  otherRenewable?: number | null
+  otherNonRenewable?: number | null
+}
 
+const FuelRadialChart: FC<{ source: Fuel | null }> = ({ source }) => {
   const [series, setSeries] = useState([0, 0, 0, 0])
   const getPercentage = (value: number, total: number) => {
     return Math.round((value / total) * 100)
   }
 
+  const getLabels = (fuels: Fuel) => {
+    const labels: string[] = []
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { id, companyId, year, ...rest } = fuels
+    Object.keys(rest).forEach((key) => {
+      if (
+        rest[key as keyof FuelTypes] !== null &&
+        rest[key as keyof FuelTypes] !== 0 &&
+        key != 'totalConsumption'
+      ) {
+        labels.push(FuelEnum[key as keyof typeof FuelEnum])
+      }
+    })
+
+    return labels
+  }
+
   useEffect(() => {
-    if (source.data) {
-      const seriesPercentages = Object.values(source.data)
-        .map((value) => {
-          if (typeof value === 'number')
-            return getPercentage(value, totalConsumption)
-          else return 0
-        })
-        .slice(0, 4)
-
-      setSeries(seriesPercentages)
+    if (!source) {
+      return
     }
-  }, [source.data, totalConsumption])
 
-  if (!source.data)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { totalConsumption, id, companyId, year, ...rest } = source
+    const getExistingPercentages = (fuels: FuelTypes, total: number) => {
+      const seriesPercentages: number[] = []
+
+      Object.values(fuels).forEach((value) => {
+        if (typeof value == 'number' && value !== 0)
+          return seriesPercentages.push(getPercentage(value, total))
+      })
+
+      return seriesPercentages
+    }
+    if (source) {
+      setSeries(getExistingPercentages(rest, totalConsumption ?? 1))
+    }
+  }, [source])
+
+  if (!source)
     return (
       <div className="text-center">
         <Spinner color="info" />
@@ -47,7 +76,6 @@ const RadialFuelChart: FC = () => {
 
   const options: ApexOptions = {
     chart: {
-      height: 350,
       type: 'radialBar',
     },
     plotOptions: {
@@ -62,7 +90,7 @@ const RadialFuelChart: FC = () => {
         },
       },
     },
-    labels: ['Coal', 'Oil', 'Gas', 'Sustainable Biomass'],
+    labels: getLabels(source),
     legend: {
       position: 'bottom',
       show: true,
@@ -71,15 +99,17 @@ const RadialFuelChart: FC = () => {
 
   return (
     <>
-      <Chart
-        options={options}
-        series={series}
-        type="radialBar"
-        height="auto"
-        width="50%"
-      />
+      {getLabels(source).length > 0 && (
+        <Chart
+          options={options}
+          series={series}
+          type="radialBar"
+          height="auto"
+          width="50%"
+        />
+      )}
     </>
   )
 }
 
-export default RadialFuelChart
+export default FuelRadialChart

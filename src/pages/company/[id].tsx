@@ -1,4 +1,3 @@
-import type { Investment } from '@prisma/client'
 import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
 
@@ -8,9 +7,9 @@ import {
   ToolTip,
   Tag,
   BackButton,
+  FuelRadialChart,
 } from '../../components'
 import { api } from '../../utils/api'
-import FuelRadialChart from '../../components/Charts/FuelRadialChart'
 
 const Company = () => {
   const companyId = (useRouter().query.id as string) ?? ''
@@ -93,12 +92,13 @@ const Company = () => {
           </ToolTip>
         </div>
       </div>
+
       <HighlightedTitle
         title="Investment Visualizations"
         size="medium"
         color="brightTeal"
       />
-      <FuelRadialChart />
+      <FuelRadialChart source={data?.fuel} />
       <HighlightedTitle
         title="Investment Details"
         size="medium"

@@ -12,6 +12,7 @@ import ESGTag from './Card/ESGTag'
 import NetAssetTag from './Card/NetAssetTag'
 // Charts
 import LandingDonutChart from './Charts/LandingDonutChart'
+import FuelRadialChart from './Charts/FuelRadialChart'
 // Displays
 import ListItem from './Displays/ListItem'
 import Carousel from './Displays/Carousel/Carousel'
@@ -62,4 +63,5 @@ export {
   Tag,
   FinancialCaseAccordion,
   ToolTip,
+  FuelRadialChart,
 }
