@@ -15,7 +15,7 @@ interface companySectorCount {
 }
 
 const LandingDonutChart: FC = () => {
-  const source = api.company.sumBySector.useQuery(undefined, {
+  const source = api.company.getNetAssetValBySector.useQuery(undefined, {
     refetchOnWindowFocus: false,
   })
 

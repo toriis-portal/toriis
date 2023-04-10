@@ -1,15 +1,22 @@
 import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
+import clsx from 'clsx'
 
+import FinanceBrushChart from '../../components/Charts/FinanceBrushChart'
 import {
   HighlightedTitle,
   InvestmentTable,
   ToolTip,
   Tag,
+  EnergyRadialChart,
   BackButton,
   FuelRadialChart,
 } from '../../components'
 import { api } from '../../utils/api'
+
+const tagGroupStyle = clsx('flex-col lg:inline-flex lg:flex-row')
+const noteStyle = clsx('lg:px-2 font-medium truncate')
+const tagStyle = clsx('bg-cobalt text-white')
 
 const Company = () => {
   const companyId = (useRouter().query.id as string) ?? ''
@@ -45,36 +52,36 @@ const Company = () => {
       <div className="flex flex-col items-center">
         <HighlightedTitle title={data.name} size="large" color="clementine" />
       </div>
-      <div className="flex justify-center">
-        <div className="inline-flex pr-10">
-          <Tag title="sector" className="bg-cobalt text-white" />
-          <div className="pr-2  pl-2 font-medium">industrials</div>
+      <div className="mb-6 flex flex-row items-center justify-between xl:px-20">
+        <div className={tagGroupStyle}>
+          <Tag title="sector" className={tagStyle} />
+          <div className={noteStyle}>industrials</div>
 
           <ToolTip
             title="Industrial Sector"
             details="The industrial sector includes companies involved directly in the production of capital goods such as electrical or industrial machinery, or in the provision of transportation services and infrastructure."
           />
         </div>
-        <div className="inline-flex pr-10">
-          <Tag title="industry" className="bg-cobalt text-white" />
-          <div className="pr-2 pl-2 font-medium">bank diversity</div>
+        <div className={tagGroupStyle}>
+          <Tag title="industry" className={tagStyle} />
+          <div className={noteStyle}>bank diversity</div>
 
           <ToolTip
             title="Bank Diversity Industry"
             details="A subset of sector, still looking for good info for each industry"
           />
         </div>
-        <div className="inline-flex pr-10">
-          <Tag title="net asset value" className="bg-cobalt text-white" />
-          <div className="pr-2 pl-2 font-medium">500k</div>
+        <div className={tagGroupStyle}>
+          <Tag title="net asset value" className={tagStyle} />
+          <div className={noteStyle}>500k</div>
           <ToolTip
             title="Net Asset Value"
             details="Calculated as the sum market values for each corporate bond for <company_name> "
           />
         </div>
-        <div className="inline-flex">
-          <Tag title="environmental grade" className="bg-cobalt text-white" />
-          <div className="pr-2 pl-2">
+        <div className={tagGroupStyle}>
+          <Tag title="environmental grade" className={tagStyle} />
+          <div className={noteStyle}>
             <Tag title="AAA" className="bg-brightTeal text-white" />
           </div>
           <ToolTip>
@@ -99,12 +106,32 @@ const Company = () => {
         color="brightTeal"
       />
       <FuelRadialChart source={data?.fuel} />
+
+      {!!companyId && data.ticker && (
+        <>
+          <Tag
+            title="Yahoo Finance"
+            className="w-4 rounded-md bg-clementine text-white"
+          />
+          <FinanceBrushChart companyId={companyId} />
+        </>
+      )}
+
+      {data.energy && (
+        <div className="flex flex-row">
+          <EnergyRadialChart energyData={data.energy} />
+          <p>the text box will go here</p>
+        </div>
+      )}
+
       <HighlightedTitle
         title="Investment Details"
         size="medium"
         color="brightTeal"
       />
-      <InvestmentTable companyId={companyId} />
+      <div className="flex w-full flex-row items-center justify-center">
+        <InvestmentTable companyId={companyId} />
+      </div>
     </div>
   )
 }

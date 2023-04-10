@@ -1,11 +1,10 @@
 import type { FC } from 'react'
 import type { Company, EnvGrade } from '@prisma/client'
 import Link from 'next/link'
+import clsx from 'clsx'
 
 import { sectorEnum } from '../../utils/enums'
-import Tag from '../../components/Text/Tag'
-import NetAssetTag from '../../components/Card/NetAssetTag'
-import ESGTag from '../../components/Card/ESGTag'
+import { Tag, NetAssetTag, ESGTag } from '../'
 
 export interface CardProps {
   companyInfo: { ESG: EnvGrade | undefined } & { company: Company }
@@ -14,7 +13,15 @@ export interface CardProps {
 const CompanyCard: FC<CardProps> = ({ companyInfo }) => {
   return (
     <Link href={`/company/${companyInfo.company.id}`}>
-      <div className="flex flex-col gap-[1.5vw] rounded-xl border-[0.5px] border-darkTeal bg-white px-[2.6vw] pt-[2vw] pb-[1.3vw] shadow-[0_4px_4px_0] shadow-lightShadow hover:-m-[3.2px] hover:border-4 hover:border-cobalt">
+      <div
+        className={clsx(
+          'flex flex-col gap-[1.5vw] rounded-xl bg-white px-[2.6vw] pt-[2vw] pb-[1.3vw]',
+          'border-[0.5px] border-darkTeal shadow-[0_4px_4px_0] shadow-lightShadow',
+          'hover:-m-[3.2px] hover:border-4 hover:border-cobalt',
+          'overflow-x-scroll',
+          'md:overflow-hidden',
+        )}
+      >
         <div className="flex flex-row justify-between text-[28px] font-medium text-black">
           {companyInfo.company.name}
           <Tag
