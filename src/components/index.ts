@@ -21,6 +21,7 @@ import Carousel from './Displays/Carousel/Carousel'
 // Accordions
 import RequestAccordion from './Accordions/RequestAccordion'
 import FinancialCaseAccordion from './Accordions/FinancialCaseAccordion'
+import CompanyDetailsAccordion from './Accordions/CompanyDetailsAccordion'
 // Nav
 import PrimaryNavBar from './Nav/PrimaryNavBar'
 import SecondaryNavBar from './Nav/SecondaryNavBar'
@@ -67,5 +68,6 @@ export {
   FinancialCaseAccordion,
   ToolTip,
   FuelRadialChart,
+  CompanyDetailsAccordion,
   EnergyRadialChart,
 }
