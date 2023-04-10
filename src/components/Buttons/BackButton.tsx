@@ -15,13 +15,13 @@ const BackButton: FC = () => {
       onClick={handleClick}
       className={clsx(
         clsx(
-          'flex w-[5rem] place-content-center items-center justify-center font-klima text-[1.1rem]',
+          'flex w-fit place-content-center items-center justify-center p-4 font-inter text-lg',
           'shadow-gray shadow-lg',
           'rounded-3xl border-[0.05rem] border-black py-1 ',
         ),
       )}
     >
-      <ArrowSmallLeftIcon className="mr-1 inline w-[1rem] stroke-current stroke-1" />
+      <ArrowSmallLeftIcon className="mr-1.5 inline w-[1rem] stroke-current stroke-1" />
       <p> Back</p>
     </button>
   )
