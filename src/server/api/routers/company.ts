@@ -125,8 +125,8 @@ export const companyRouter = createTRPCRouter({
       const industryEntries: ContentfulCollection<IndustryEntry> =
         await contentClient.get('industry')
       let industryEntry: IndustryEntry | { name: string; details: string } = {
-        name: '',
-        details: '',
+        name: 'NA',
+        details: 'NA',
       }
 
       const foundItem = industryEntries.items.find((item: IndustryEntry) => {
@@ -140,7 +140,7 @@ export const companyRouter = createTRPCRouter({
         industryEntry = foundItem.fields as IndustryEntry
       }
 
-      const sectorName = sectorEnum[company.sector]
+      const sectorName = sectorEnum[company.sector] as Sector
       let sectorEntry: SectorEntry = {
         name: '',
         details: {
