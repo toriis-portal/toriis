@@ -18,6 +18,7 @@ import {
   Tag,
   EnergyRadialChart,
   BackButton,
+  CompanyDetailsAccordion,
 } from '../../components'
 import { api } from '../../utils/api'
 import type { IndustryEntry, SectorEntry } from '../../types'
@@ -84,98 +85,102 @@ const Company = () => {
   }
 
   return (
-    <>
-      <div className="mb-20 mt-8 flex flex-col px-12 ">
-        <BackButton />
-        <div className="flex flex-col items-center">
-          <HighlightedTitle
-            title={data.company.name}
-            size="large"
-            color="clementine"
+    <div className="mb-20 mt-8 flex flex-col px-12 ">
+      <BackButton />
+      <div className="flex flex-col items-center">
+        <HighlightedTitle
+          title={data.company.name}
+          size="large"
+          color="clementine"
+        />
+      </div>
+      <div className="mb-6 flex flex-row items-center justify-between xl:px-20">
+        <div className={tagGroupStyle}>
+          <Tag title="sector" className={tagStyle} />
+          <div className={noteStyle}>{sectorEntry.name}</div>
+          <ToolTip
+            title={sectorEntry.name}
+            details={documentToReactComponents(
+              sectorEntry.details,
+              contentfulOptions,
+            )}
           />
         </div>
-        <div className="mb-6 flex flex-row items-center justify-between xl:px-20">
-          <div className={tagGroupStyle}>
-            <Tag title="sector" className={tagStyle} />
-            <div className={noteStyle}>{sectorEntry.name}</div>
-            <ToolTip
-              title={sectorEntry.name}
-              details={documentToReactComponents(
-                sectorEntry.details,
-                contentfulOptions,
-              )}
-            />
-          </div>
-          <div className={tagGroupStyle}>
-            <Tag title="industry" className={tagStyle} />
-            <div className={noteStyle}>{industryEntry.name}</div>
+        <div className={tagGroupStyle}>
+          <Tag title="industry" className={tagStyle} />
+          <div className={noteStyle}>{industryEntry.name}</div>
 
-            <ToolTip
-              title={industryEntry.name}
-              details={industryEntry.details}
-            />
-          </div>
-          <div className={tagGroupStyle}>
-            <Tag title="net asset value" className={tagStyle} />
-            <div className={noteStyle}>500k</div>
-            <ToolTip
-              title="Net Asset Value"
-              details={`Calculated as the sum market values for each corporate bond for ${company.name}`}
-            />
-          </div>
-          <div className={tagGroupStyle}>
-            <Tag title="environmental grade" className={tagStyle} />
-            <div className={noteStyle}>
-              <Tag title="AAA" className="bg-brightTeal text-white" />
-            </div>
-            <ToolTip>
-              <div>
-                Average environmental grade for sector <b>Industrials</b>:
-                <Tag title="CCC" className="bg-clementine text-white" />
-                <br />
-                Environmental grade: ESG refers to a set of values used to
-                screen potential investments: Environmental, Social and
-                Governance. An ESG score measures how sustainably a company is
-                conducting business based on their environmental impact
-                calculated from their carbon emissions, energy consumption and
-                climate change action. It also addresses
-              </div>
-            </ToolTip>
-          </div>
+          <ToolTip title={industryEntry.name} details={industryEntry.details} />
         </div>
-        <HighlightedTitle
-          title="Investment Visualizations"
-          size="medium"
-          color="brightTeal"
-        />
-
-        {!!companyId && data.company.ticker && (
-          <>
-            <Tag
-              title="Yahoo Finance"
-              className="w-4 rounded-md bg-clementine text-white"
-            />
-            <FinanceBrushChart companyId={companyId} />
-          </>
-        )}
-
-        {data.company.energy && (
-          <div className="flex flex-row">
-            <EnergyRadialChart energyData={data.company.energy} />
-            <p>the text box will go here</p>
+        <div className={tagGroupStyle}>
+          <Tag title="net asset value" className={tagStyle} />
+          <div className={noteStyle}>500k</div>
+          <ToolTip
+            title="Net Asset Value"
+            details={`Calculated as the sum market values for each corporate bond for ${company.name}`}
+          />
+        </div>
+        <div className={tagGroupStyle}>
+          <Tag title="environmental grade" className={tagStyle} />
+          <div className={noteStyle}>
+            <Tag title="AAA" className="bg-brightTeal text-white" />
           </div>
-        )}
-
-        <HighlightedTitle
-          title="Investment Details"
-          size="medium"
-          color="brightTeal"
-        />
-        <div className="flex w-full flex-row items-center justify-center">
-          <InvestmentTable companyId={companyId} />
+          <ToolTip>
+            <div>
+              Average environmental grade for sector <b>Industrials</b>:
+              <Tag title="CCC" className="bg-clementine text-white" />
+              <br />
+              Environmental grade: ESG refers to a set of values used to screen
+              potential investments: Environmental, Social and Governance. An
+              ESG score measures how sustainably a company is conducting
+              business based on their environmental impact calculated from their
+              carbon emissions, energy consumption and climate change action. It
+              also addresses
+            </div>
+          </ToolTip>
         </div>
       </div>
-    </>
+      <HighlightedTitle
+        title="Investment Visualizations"
+        size="medium"
+        color="brightTeal"
+      />
+
+      {data.company.description && (
+        <CompanyDetailsAccordion content={data.company.description} />
+      )}
+      <HighlightedTitle
+        title="Investment Visualizations"
+        size="medium"
+        color="brightTeal"
+      />
+
+      {!!companyId && data.company.ticker && (
+        <>
+          <Tag
+            title="Yahoo Finance"
+            className="w-4 rounded-md bg-clementine text-white"
+          />
+          <FinanceBrushChart companyId={companyId} />
+        </>
+      )}
+
+      {data.company.energy && (
+        <div className="flex flex-row">
+          <EnergyRadialChart energyData={data.company.energy} />
+          <p>the text box will go here</p>
+        </div>
+      )}
+
+      <HighlightedTitle
+        title="Investment Details"
+        size="medium"
+        color="brightTeal"
+      />
+      <div className="flex w-full flex-row items-center justify-center">
+        <InvestmentTable companyId={companyId} />
+      </div>
+    </div>
   )
 }
 
