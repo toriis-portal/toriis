@@ -1,4 +1,3 @@
-import type { Investment } from '@prisma/client'
 import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
 
@@ -9,6 +8,7 @@ import {
   Tag,
   EmissionBarChart,
   BackButton,
+  ScopeCard,
 } from '../../components'
 import { api } from '../../utils/api'
 
@@ -39,7 +39,15 @@ const Company = () => {
       </div>
     )
   }
+const labels = ['Scope 1 Estimate', 'Scope 2 Estimate', 'Scope 3 Estimate']
+const scopeValues = [data.emission?.scopeOne ?? 0, data.emission?.scopeTwo ?? 0, data.emission?.scopeThree ?? 0];
 
+const emissionData = scopeValues.map((value, index) => ({
+  x: labels[index],
+  y: value,
+}));
+
+const NonzeroEmission = emissionData.reduce((accumulator, item) => accumulator + item.y, 0) > 0;
   return (
     <div className="mb-20 mt-8 flex flex-col px-12 ">
       <BackButton />
@@ -93,7 +101,7 @@ const Company = () => {
           </ToolTip>
         </div>
       </div>
-      {data.emission && (
+      {NonzeroEmission && (
         <div className="pt-5">
           <HighlightedTitle
             title="Investment Visualizations"
@@ -106,9 +114,9 @@ const Company = () => {
           />
           <div className="grid grid-cols-4 flex-col items-center justify-center align-middle">
             <div className="col-span-2">
-              <EmissionBarChart companyId={companyId} />
+              <EmissionBarChart emissionData = {emissionData} />
             </div>
-            <div className=" col-span-2 ml-20 rounded-xl bg-lightClementine p-4 font-inter text-base leading-snug">
+            <ScopeCard>
               <a
                 href="https://en.wikipedia.org/wiki/Carbon_accounting"
                 target="_blank"
@@ -179,7 +187,7 @@ const Company = () => {
               <br />
               <br />
               source: <u>fjkdshfjaksdhfjashdfajkdhfajdhfjk</u>
-            </div>
+            </ScopeCard>
           </div>
         </div>
       )}
