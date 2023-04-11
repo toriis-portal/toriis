@@ -35,5 +35,11 @@ export const envGradeToColor = (grade: string | undefined) => {
 }
 
 export const formatDate = (date: Date) => {
-  return date.getMonth().toString() + "/" + date.getDate().toString() + "/" + date.getFullYear().toString()
+  return (
+    date.getMonth().toString() +
+    '/' +
+    date.getDate().toString() +
+    '/' +
+    date.getFullYear().toString()
+  )
 }

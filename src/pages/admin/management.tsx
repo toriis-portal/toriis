@@ -10,22 +10,42 @@ const AdminAdminPage: FC = () => {
   const { data: session, status } = useSession()
   const { push } = useRouter()
 
+  const deleteUsersMutation = api.user.deleteManyUsers.useMutation()
+
+  const handleDeleteUsers = () => {
+    const ids: string[] = []
+    deleteUsersMutation.mutate({ ids })
+  }
+
+  const { data } = api.user.getAllUsers.useQuery(undefined, {
+    refetchOnWindowFocus: false,
+  })
+
   useEffect(() => {
     if (status === 'unauthenticated') {
       void push('/auth/error')
     }
   }, [push, status])
 
-  const {data} = api.user.getAllUsers.useQuery(undefined, {
-    refetchOnWindowFocus: false,
-  })
+  return (
+    session && (
+      <div>
+        <h1>Administration Management</h1>
+        <AdminListTable className="w-3/4" users={data} />
 
-  console.log(data)
+        <button
+          onClick={handleDeleteUsers}
+          disabled={deleteUsersMutation.isLoading}
+        >
+          boom boom
+        </button>
 
-  return <>
-  <div>{session && <h1>Administration Management</h1>}</div>
-  <AdminListTable className="w-3/4" users={data}/>
-  </>
+        {deleteUsersMutation.error && (
+          <p>Something went wrong! {deleteUsersMutation.error.message}</p>
+        )}
+      </div>
+    )
+  )
 }
 
 export default AdminAdminPage
