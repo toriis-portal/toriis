@@ -7,6 +7,7 @@ import type { Fuel } from '@prisma/client'
 
 import { FuelEnum } from '../../utils/enums'
 
+const MIN_VALUE = 0.005
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 interface FuelTypes {
@@ -31,12 +32,14 @@ const getLabels = (fuels: Fuel) => {
   const labels: string[] = []
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { id, companyId, year, ...rest } = fuels
+  const { totalConsumption, id, companyId, year, ...rest } = fuels
   Object.keys(rest).forEach((key) => {
     if (
       rest[key as keyof FuelTypes] !== null &&
       rest[key as keyof FuelTypes] !== 0 &&
-      key != 'totalConsumption'
+      key != 'totalConsumption' &&
+      totalConsumption &&
+      (rest[key as keyof FuelTypes] ?? 0) / totalConsumption >= 0.005
     ) {
       labels.push(FuelEnum[key as keyof typeof FuelEnum])
     }
@@ -75,7 +78,11 @@ const FuelRadialChart: FC<{ source: Fuel | null }> = ({ source }) => {
       const seriesPercentages: number[] = []
 
       Object.values(fuels).forEach((value) => {
-        if (typeof value == 'number' && value !== 0)
+        if (
+          typeof value == 'number' &&
+          value !== 0 &&
+          value / total >= MIN_VALUE
+        )
           return seriesPercentages.push(getPercentage(value, total))
       })
 
