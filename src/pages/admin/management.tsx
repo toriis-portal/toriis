@@ -9,11 +9,11 @@ const AdminAdminPage: FC = () => {
   const { data: session, status } = useSession()
   const { push } = useRouter()
 
-  const mutation = api.user.deleteManyUsers.useMutation() // TODO: check about options here
+  const deleteUsersMutation = api.user.deleteManyUsers.useMutation()
 
   const handleDeleteUsers = () => {
-    const ids = ['642f52c92767e2315fce2fd6', '642f52ec2767e2315fce2fda'] // = ['lizatest1']
-    mutation.mutate({ ids })
+    const ids: string[] = []
+    deleteUsersMutation.mutate({ ids })
   }
 
   useEffect(() => {
@@ -27,12 +27,15 @@ const AdminAdminPage: FC = () => {
       <div>
         <h1>Administration Management</h1>
 
-        <button onClick={handleDeleteUsers} disabled={mutation.isLoading}>
+        <button
+          onClick={handleDeleteUsers}
+          disabled={deleteUsersMutation.isLoading}
+        >
           boom boom
         </button>
 
-        {mutation.error && (
-          <p>Something went wrong! {mutation.error.message}</p>
+        {deleteUsersMutation.error && (
+          <p>Something went wrong! {deleteUsersMutation.error.message}</p>
         )}
       </div>
     )

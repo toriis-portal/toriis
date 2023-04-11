@@ -22,7 +22,7 @@ export const userRouter = createTRPCRouter({
         })
       }
     }),
-  deleteManyUsers: protectedProcedure // TODO: check
+  deleteManyUsers: protectedProcedure
     .input(z.object({ ids: z.array(z.string()) }))
     .mutation(async ({ input, ctx }) => {
       const deleteUsers = await ctx.prisma.user.deleteMany({
