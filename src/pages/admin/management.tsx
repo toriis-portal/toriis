@@ -24,7 +24,7 @@ const AdminAdminPage: FC = () => {
 
   return <>
   <div>{session && <h1>Administration Management</h1>}</div>
-  <AdminListTable users={data}/>
+  <AdminListTable className="w-3/4" users={data}/>
   </>
 }
 
