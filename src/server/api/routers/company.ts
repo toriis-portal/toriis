@@ -3,20 +3,13 @@ import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import type { Company, Investment } from '@prisma/client'
 import yahooFinance from 'yahoo-finance2'
+import type { ContentfulCollection } from 'contentful'
+import { BLOCKS } from '@contentful/rich-text-types'
 
+import { sectorEnum } from '../../../utils/enums'
 import { ContentWrapper } from '../../../utils/content'
 import { createTRPCRouter, publicProcedure } from '../trpc'
-import type { IndustryEntry, SectorEntry } from '../../../types/index.js'
-
-const extractSortOrder = (
-  sort: string | undefined | null,
-): sort is 'asc' | 'desc' | undefined => {
-  if (sort === undefined || sort === 'asc' || sort === 'desc') {
-    return true
-  }
-
-  return false
-}
+import type { IndustryEntry, SectorEntry } from '../../../types'
 
 const createNetAssetValFilter = (range: number[]) => {
   return {
@@ -33,6 +26,7 @@ interface SortOrder {
     environmentGrade?: 'asc' | 'desc'
   }
 }
+
 type SortByString = 'asc' | 'desc'
 
 const sortStringZodType = z
@@ -119,7 +113,7 @@ export const companyRouter = createTRPCRouter({
           energy: true,
         },
       })
-      if (!company) {
+      if (!company || !company.sector) {
         throw new TRPCError({
           code: 'NOT_FOUND',
           message: 'Company not found',
@@ -128,29 +122,52 @@ export const companyRouter = createTRPCRouter({
 
       const contentClient = new ContentWrapper()
 
-      const industryEntries = await contentClient.get('industry')
-      let industryEntry: IndustryEntry = { name: '', details: '' }
-      industryEntries.map((item: IndustryEntry) => {
-        if (item.name == company['industry']) {
-          industryEntry = item
-        }
-      })
-
-      let sectorEntry: SectorEntry = { name: '', details: '' }
-      const sectorEntries = await contentClient.get('sector')
-      if (sectorEntries && Array.isArray(sectorEntries)) {
-        sectorEntries.map((item: SectorEntry) => {
-          if (
-            item.name ==
-            company['sector'].charAt(0).toUpperCase() +
-              company['sector'].slice(1).toLowerCase()
-          ) {
-            sectorEntry = item
-          }
-        })
+      const industryEntries: ContentfulCollection<IndustryEntry> =
+        await contentClient.get('industry')
+      let industryEntry: IndustryEntry | { name: string; details: string } = {
+        name: '',
+        details: '',
       }
 
-      return [company, sectorEntry, industryEntry]
+      const foundItem = industryEntries.items.find((item: IndustryEntry) => {
+        if ('fields' in item) {
+          return item.fields?.name === company.industry
+        }
+        return false
+      })
+
+      if (foundItem) {
+        industryEntry = foundItem.fields as IndustryEntry
+      }
+
+      const sectorName = sectorEnum[company.sector]
+      let sectorEntry: SectorEntry = {
+        name: '',
+        details: {
+          nodeType: BLOCKS.DOCUMENT,
+          data: {},
+          content: [],
+        },
+        fields: {
+          name: '',
+          details: {
+            nodeType: BLOCKS.DOCUMENT,
+            data: {},
+            content: [],
+          },
+        },
+      }
+
+      const sectorEntries: ContentfulCollection<SectorEntry> =
+        await contentClient.get('sector')
+      const foundEntry = sectorEntries.items.find((item: SectorEntry) => {
+        return item.fields?.name === sectorName
+      })
+      if (foundEntry && foundEntry.fields) {
+        sectorEntry = foundEntry.fields
+      }
+
+      return { company, sectorEntry, industryEntry }
     }),
 
   getCompanies: publicProcedure

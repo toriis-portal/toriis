@@ -1,4 +1,5 @@
 import type { Document } from '@contentful/rich-text-types'
+import type { RichTextData } from 'contentful'
 
 /* API Types */
 
@@ -50,9 +51,17 @@ export interface CaseEntry {
 export interface IndustryEntry {
   name: string
   details: string
+  fields?: {
+    name: string
+    details: string
+  }
 }
 
 export interface SectorEntry {
   name: string
-  details: string
+  details: Document
+  fields?: {
+    name: string
+    details: Document
+  }
 }
