@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import type { FC } from 'react'
 import { useEffect } from 'react'
 
+import { AdminListTable } from '../../components'
 import { api } from '../../utils/api'
 
 const AdminAdminPage: FC = () => {
@@ -16,6 +17,10 @@ const AdminAdminPage: FC = () => {
     deleteUsersMutation.mutate({ ids })
   }
 
+  const { data } = api.user.getAllUsers.useQuery(undefined, {
+    refetchOnWindowFocus: false,
+  })
+
   useEffect(() => {
     if (status === 'unauthenticated') {
       void push('/auth/error')
@@ -26,6 +31,7 @@ const AdminAdminPage: FC = () => {
     session && (
       <div>
         <h1>Administration Management</h1>
+        <AdminListTable className="w-3/4" users={data} />
 
         <button
           onClick={handleDeleteUsers}

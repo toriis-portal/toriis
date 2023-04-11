@@ -11,7 +11,9 @@ import CompanyCard from './Card/CompanyCard'
 import ESGTag from './Card/ESGTag'
 import NetAssetTag from './Card/NetAssetTag'
 // Charts
+import EnergyRadialChart from './Charts/EnergyRadialChart'
 import LandingDonutChart from './Charts/LandingDonutChart'
+import FinanceBrushChart from './Charts/FinanceBrushChart'
 // Displays
 import ListItem from './Displays/ListItem'
 import Carousel from './Displays/Carousel/Carousel'
@@ -31,6 +33,7 @@ import CapitalizedTitle from './Text/CapitalizedTitle'
 import ShadowTitle from './Text/ShadowTitle'
 import Tag from './Text/Tag'
 // Tables
+import AdminListTable from './Table/AdminListTable'
 import InvestmentTable from './Table/InvestmentTable'
 //Tooltips
 import ToolTip from './Tooltips/ToolTip'
@@ -48,6 +51,7 @@ export {
   Carousel,
   Select,
   LandingDonutChart,
+  FinanceBrushChart,
   CapitalizedTitle,
   RequestAccordion,
   SecondaryNavBar,
@@ -62,4 +66,6 @@ export {
   Tag,
   FinancialCaseAccordion,
   ToolTip,
+  EnergyRadialChart,
+  AdminListTable,
 }

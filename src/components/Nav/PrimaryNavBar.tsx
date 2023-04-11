@@ -9,7 +9,7 @@ import toriisimg from '../../../public/toriis.png'
 
 const PrimaryNavBar: FC = () => {
   return (
-    <div className="px-4 sm:px-6">
+    <div className="px-4">
       <Navbar fluid={true} rounded={true}>
         <Link href="/home">
           <Image
