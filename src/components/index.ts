@@ -12,14 +12,17 @@ import ESGTag from './Card/ESGTag'
 import NetAssetTag from './Card/NetAssetTag'
 import ScopeCard from './Card/ScopeCard'
 // Charts
+import EnergyRadialChart from './Charts/EnergyRadialChart'
 import LandingDonutChart from './Charts/LandingDonutChart'
 import EmissionBarChart from './Charts/EmissionBarChart'
+import FinanceBrushChart from './Charts/FinanceBrushChart'
 // Displays
 import ListItem from './Displays/ListItem'
 import Carousel from './Displays/Carousel/Carousel'
 // Accordions
 import RequestAccordion from './Accordions/RequestAccordion'
 import FinancialCaseAccordion from './Accordions/FinancialCaseAccordion'
+import CompanyDetailsAccordion from './Accordions/CompanyDetailsAccordion'
 // Nav
 import PrimaryNavBar from './Nav/PrimaryNavBar'
 import SecondaryNavBar from './Nav/SecondaryNavBar'
@@ -50,6 +53,7 @@ export {
   Carousel,
   Select,
   LandingDonutChart,
+  FinanceBrushChart,
   CapitalizedTitle,
   RequestAccordion,
   SecondaryNavBar,
@@ -66,4 +70,6 @@ export {
   ToolTip,
   EmissionBarChart,
   ScopeCard,
+  CompanyDetailsAccordion,
+  EnergyRadialChart,
 }

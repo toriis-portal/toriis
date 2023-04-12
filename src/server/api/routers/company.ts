@@ -1,7 +1,8 @@
 import { EnvGrade, Sector } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
-import type { Investment } from '@prisma/client'
+import type { Company, Investment } from '@prisma/client'
+import yahooFinance from 'yahoo-finance2'
 
 import { createTRPCRouter, publicProcedure } from '../trpc'
 
@@ -67,6 +68,40 @@ const createSortOrder = (
 }
 
 export const companyRouter = createTRPCRouter({
+  getCompanyFinanceData: publicProcedure
+    .input(
+      z.object({ id: z.string(), options: z.object({ period1: z.string() }) }),
+    )
+    .query(async ({ ctx, input }) => {
+      const options = input.options
+
+      const company: Company | null = await ctx.prisma.company.findUnique({
+        where: {
+          id: input.id,
+        },
+      })
+
+      if (!company) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Error fetching company',
+        })
+      }
+
+      const companyTicker: string | null = company.ticker
+
+      if (!companyTicker) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'No Ticker Found',
+        })
+      }
+
+      const companyFinanceData = yahooFinance.historical(companyTicker, options)
+
+      return companyFinanceData
+    }),
+
   getCompany: publicProcedure
     .input(
       z.object({
@@ -80,6 +115,7 @@ export const companyRouter = createTRPCRouter({
         },
         include: {
           emission: true,
+          energy: true,
         },
       })
       if (!company) {
@@ -90,6 +126,7 @@ export const companyRouter = createTRPCRouter({
       }
       return company
     }),
+
   getCompanies: publicProcedure
     .input(
       z.object({
@@ -105,7 +142,7 @@ export const companyRouter = createTRPCRouter({
       }),
     )
     .query(async ({ input, ctx }) => {
-      const limit = input.limit ?? 9
+      const limit = input.limit ?? 10
       const { cursor } = input
 
       const netAssetValFilter = input.filterByNetAssetVal?.map((range) =>
@@ -134,7 +171,7 @@ export const companyRouter = createTRPCRouter({
           industry: {
             in: input.filterByIndustry,
           },
-          ...(input.filterByEnvGrade
+          ...(input.filterByEnvGrade || input.sortByEnvGrade
             ? {
                 ESG: {
                   environmentGrade: {
@@ -168,7 +205,8 @@ export const companyRouter = createTRPCRouter({
         nextCursor,
       }
     }),
-  sumBySector: publicProcedure.query(({ ctx }) => {
+
+  getNetAssetValBySector: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.company.groupBy({
       by: ['sector'],
       _sum: {
