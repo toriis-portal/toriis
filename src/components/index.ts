@@ -10,6 +10,7 @@ import LoadMoreButton from './Buttons/LoadMoreButton'
 import CompanyCard from './Card/CompanyCard'
 import ESGTag from './Card/ESGTag'
 import NetAssetTag from './Card/NetAssetTag'
+import ScopeCard from './Card/ScopeCard'
 // Charts
 import LandingDonutChart from './Charts/LandingDonutChart'
 import EmissionBarChart from './Charts/EmissionBarChart'
@@ -64,4 +65,5 @@ export {
   FinancialCaseAccordion,
   ToolTip,
   EmissionBarChart,
+  ScopeCard,
 }

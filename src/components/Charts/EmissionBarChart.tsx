@@ -1,32 +1,26 @@
 import type { FC } from 'react'
 import dynamic from 'next/dynamic'
-import { Spinner } from 'flowbite-react'
-
-import { api } from '../../utils/api'
+import type { Emission } from '@prisma/client'
+interface EmissionBarChartProps {
+    emissionData: Emission
+  }
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
-const EmissionBarChart: FC<{ companyId: string }> = ({ companyId }) => {
-  const source = api.company.getCompanyScope.useQuery(
-    { companyId },
-    {
-      refetchOnWindowFocus: false,
-    },
-  )
-
-  if (!source.data)
-    return (
-      <div className="text-center">
-        <Spinner color="info" />
-      </div>
-    )
+const EmissionBarChart: FC<EmissionBarChartProps> = ({ emissionData }) => {
+  
   const labels = ['Scope 1 Estimate', 'Scope 2 Estimate', 'Scope 3 Estimate']
+const scopeValues = [emissionData?.scopeOne ?? 0, emissionData?.scopeTwo ?? 0, emissionData?.scopeThree ?? 0];
+
+const emissions = scopeValues.map((value, index) => ({
+  x: labels[index],
+  y: value,
+}));
+
   const series = [
     {
-      data: Object.entries(source.data).map(([x, y], index) => ({
-        x: labels[index],
-        y,
-      })),
+      data: emissions,
+      name: "Emission Amount"
     },
   ]
 
