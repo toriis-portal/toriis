@@ -39,15 +39,10 @@ const Company = () => {
       </div>
     )
   }
-const labels = ['Scope 1 Estimate', 'Scope 2 Estimate', 'Scope 3 Estimate']
-const scopeValues = [data.emission?.scopeOne ?? 0, data.emission?.scopeTwo ?? 0, data.emission?.scopeThree ?? 0];
 
-const emissionData = scopeValues.map((value, index) => ({
-  x: labels[index],
-  y: value,
-}));
 
-const NonzeroEmission = emissionData.reduce((accumulator, item) => accumulator + item.y, 0) > 0;
+  const NonzeroEmission = (data.emission?.scopeOne ?? 0) + (data.emission?.scopeTwo ?? 0) + (data.emission?.scopeThree ?? 0) > 0;
+
   return (
     <div className="mb-20 mt-8 flex flex-col px-12 ">
       <BackButton />
@@ -114,7 +109,7 @@ const NonzeroEmission = emissionData.reduce((accumulator, item) => accumulator +
           />
           <div className="grid grid-cols-4 flex-col items-center justify-center align-middle">
             <div className="col-span-2">
-              <EmissionBarChart emissionData = {emissionData} />
+              {data.emission && <EmissionBarChart emissionData = {data.emission} />}
             </div>
             <ScopeCard>
               <a
