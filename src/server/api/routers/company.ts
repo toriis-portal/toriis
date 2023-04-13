@@ -3,8 +3,6 @@ import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import type { Company, Investment } from '@prisma/client'
 import yahooFinance from 'yahoo-finance2'
-import type { ContentfulCollection } from 'contentful'
-import { BLOCKS } from '@contentful/rich-text-types'
 
 import { sectorEnum } from '../../../utils/enums'
 import { ContentWrapper } from '../../../utils/content'
