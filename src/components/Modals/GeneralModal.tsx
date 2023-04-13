@@ -8,11 +8,12 @@ interface GeneralModalProps {
 }
 
 export const GeneralModal: FC<GeneralModalProps> = ({
-  isOpen = true,
+  isOpen,
   styles,
   children,
 }) => {
-  const defaultModalStyles = 'rounded-xl border-[1px] border-black bg-white '
+  const defaultModalStyles =
+    'z-20 rounded-xl border-[1px] border-black bg-white '
   const modalStyles: string = styles
     ? defaultModalStyles + styles
     : defaultModalStyles
