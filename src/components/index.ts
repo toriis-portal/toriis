@@ -14,6 +14,7 @@ import DataCard from './Card/DataCard'
 // Charts
 import EnergyRadialChart from './Charts/EnergyRadialChart'
 import LandingDonutChart from './Charts/LandingDonutChart'
+import FuelRadialChart from './Charts/FuelRadialChart'
 import EmissionBarChart from './Charts/EmissionBarChart'
 import FinanceBrushChart from './Charts/FinanceBrushChart'
 // Displays
@@ -68,6 +69,7 @@ export {
   Tag,
   FinancialCaseAccordion,
   ToolTip,
+  FuelRadialChart,
   EmissionBarChart,
   DataCard,
   CompanyDetailsAccordion,

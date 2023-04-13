@@ -114,6 +114,7 @@ export const companyRouter = createTRPCRouter({
           id: input.id,
         },
         include: {
+          fuel: true,
           emission: true,
           energy: true,
         },
