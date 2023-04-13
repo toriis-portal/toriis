@@ -1,5 +1,5 @@
 import { createClient } from 'contentful'
-import type { ContentfulClientApi, ContentTypeCollection } from 'contentful'
+import type { ContentfulClientApi } from 'contentful'
 
 import { env } from '../env.mjs'
 import type {

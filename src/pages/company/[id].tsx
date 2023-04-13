@@ -1,7 +1,6 @@
 import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
 import clsx from 'clsx'
-// import { Company } from '@prisma/client'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
 import { INLINES } from '@contentful/rich-text-types'
