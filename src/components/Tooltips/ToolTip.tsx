@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 interface TitleProps {
   title?: string
-  details?: string
+  details?: string | React.ReactNode
   children?: React.ReactNode
 }
 
