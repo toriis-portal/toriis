@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import type { FC } from 'react'
 import { useEffect } from 'react'
 
+import ContentfulButton from '../../components/Buttons/ContentfulButton'
 const AdminWebPage: FC = () => {
   const { data: session, status } = useSession()
   const { push } = useRouter()
@@ -13,7 +14,14 @@ const AdminWebPage: FC = () => {
     }
   }, [push, status])
 
-  return <div>{session && <h1>Website Management</h1>}</div>
+  return (
+    <>
+      <div className="h-screen w-screen">
+        {session && <h1>Website Management</h1>}
+        <ContentfulButton />
+      </div>
+    </>
+  )
 }
 
 export default AdminWebPage
