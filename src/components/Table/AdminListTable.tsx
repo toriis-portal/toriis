@@ -8,12 +8,14 @@ import { formatDate } from '../../utils/helpers'
 
 interface AdminUsers {
   users: User[] | undefined
+  edit: boolean
+  onTrash: (id: string) => void
+  onUndo: (id: string) => void
+  tempDeleted: string[]
   className?: string
 }
 
-const AdminListTable: FC<AdminUsers> = ({ users, className }) => {
-  const edit = true
-  const recentDelete = false
+const AdminListTable: FC<AdminUsers> = ({ users, className, edit, onTrash, onUndo, tempDeleted }) => {
 
   return (
     <div
@@ -35,28 +37,35 @@ const AdminListTable: FC<AdminUsers> = ({ users, className }) => {
         </div>
 
         {users?.map((user, num) => {
+            const deletePressed = tempDeleted.indexOf(user.id) > -1
           return (
             <div
               key={num}
               className="flex w-full flex-row items-center justify-center"
             >
               <div className="mt-4 flex w-10/12 flex-row items-center gap-1 border-b-[1px] border-darkGray pb-4 pl-6">
-                <p className="basis-1/3 truncate text-xl font-medium">
+                <p className={clsx("basis-1/3 truncate text-xl font-medium",
+                deletePressed && "text-lightGray",
+                !deletePressed && "text-black")}>
                   {user.email}
                 </p>
-                <p className="basis-1/3 truncate text-xl font-medium">
+                <p className={clsx("basis-1/3 truncate text-xl font-medium",
+                deletePressed && "text-lightGray",
+                !deletePressed && "text-black")}>
                   {user.name}
                 </p>
-                <p className="basis-1/6 text-base text-medGray">
+                <p className={clsx("basis-1/6 text-base",
+                deletePressed && "text-lightGray",
+                !deletePressed && "text-medGray")}>
                   {formatDate(user.createdAt)}
                 </p>
                 <div className="flex basis-1/6 flex-col items-center">
-                  <Checkbox className="h-6 w-6" disabled={!edit}></Checkbox>
+                  <Checkbox className="h-6 w-6" disabled={!edit || deletePressed}></Checkbox>
                 </div>
               </div>
-              <button onClick={undefined}>
+              <button onClick={() => deletePressed ? onUndo(user.id) : onTrash(user.id)}>
                 {edit &&
-                  (recentDelete ? (
+                  (deletePressed ? (
                     <ArrowUturnLeftIcon className="ml-8 h-auto w-6 stroke-2" />
                   ) : (
                     <TrashIcon className="ml-8 h-auto w-6 stroke-2" />
