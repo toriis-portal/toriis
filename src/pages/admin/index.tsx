@@ -3,6 +3,8 @@ import { useRouter } from 'next/router'
 import type { FC } from 'react'
 import { useEffect } from 'react'
 
+import {AdminBox} from '../../components/index'
+
 const AdminPage: FC = () => {
   const { data: session, status } = useSession()
   const { push } = useRouter()
@@ -15,7 +17,24 @@ const AdminPage: FC = () => {
 
   console.log(session?.user)
 
-  return <div>{session && <h1>Administration Control</h1>}</div>
+  return (
+    <div>
+      {session && <h1>Administration Controls</h1>
+      }
+      <div className = "flexbox mb-2 items-center">
+        <div>
+        <AdminBox title="Administration Management" description="Invite new administrators, manage current admins, and manage mailing list of current admins who have the ability to approve new admins" />
+        </div>
+        <div>
+        <AdminBox title="Administration Management" description="Invite new administrators, manage current admins, and manage mailing list of current admins who have the ability to approve new admins" />
+        </div>
+        <div>
+        <AdminBox title="Administration Management" description="Invite new administrators, manage current admins, and manage mailing list of current admins who have the ability to approve new admins" />
+        </div>
+        </div>
+      
+    </div>
+    )
 }
 
 export default AdminPage
