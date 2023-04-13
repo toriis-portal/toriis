@@ -109,7 +109,7 @@ const Company = () => {
         size="medium"
         color="brightTeal"
       />
-      <FuelRadialChart source={data?.fuel} />
+      {data?.fuel && <FuelRadialChart source={data.fuel} />}
 
       {!!companyId && data.ticker && (
         <>

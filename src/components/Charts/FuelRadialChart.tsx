@@ -10,17 +10,7 @@ import { FuelEnum } from '../../utils/enums'
 const MIN_VALUE = 0.005
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
-interface FuelTypes {
-  biodiesels?: number | null
-  biogases?: number | null
-  coal?: number | null
-  oil?: number | null
-  gas?: number | null
-  otherBiomass?: number | null
-  sustainableBiomass?: number | null
-  otherRenewable?: number | null
-  otherNonRenewable?: number | null
-}
+type FuelTypes = Omit<Fuel, 'id' | 'companyId' | 'year' | 'totalConsumption'>
 
 /**
  * Gets the labels that have a non-null or non-zero value
@@ -53,7 +43,7 @@ const getLabels = (fuels: Fuel) => {
  * @param source - Fuel object to parse and render
  * @returns - Radial chart
  */
-const FuelRadialChart: FC<{ source: Fuel | null }> = ({ source }) => {
+const FuelRadialChart: FC<{ source: Fuel }> = ({ source }) => {
   const [series, setSeries] = useState([0, 0, 0, 0])
   const getPercentage = (value: number, total: number) => {
     return Math.round((value / total) * 100)
