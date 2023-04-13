@@ -38,6 +38,7 @@ import InvestmentTable from './Table/InvestmentTable'
 //Tooltips
 import ToolTip from './Tooltips/ToolTip'
 //Modals
+import GeneralModal from './Modals/GeneralModal'
 import LeaveConfirmationModal from './Modals/LeaveConfirmationModal'
 export {
   AuthButton,
@@ -59,6 +60,7 @@ export {
   ShadowTitle,
   ReadMoreButton,
   InvestmentTable,
+  GeneralModal,
   LeaveConfirmationModal,
   SearchBar,
   BackButton,
