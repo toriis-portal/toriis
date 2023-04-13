@@ -111,9 +111,10 @@ export const companyRouter = createTRPCRouter({
         },
         include: {
           energy: true,
+          ESG: true,
         },
       })
-      if (!company || !company.sector) {
+      if (!company) {
         throw new TRPCError({
           code: 'NOT_FOUND',
           message: 'Company not found',
@@ -122,50 +123,34 @@ export const companyRouter = createTRPCRouter({
 
       const contentClient = new ContentWrapper()
 
-      const industryEntries: ContentfulCollection<IndustryEntry> =
-        await contentClient.get('industry')
-      let industryEntry: IndustryEntry | { name: string; details: string } = {
+      const industryEntries: IndustryEntry[] = await contentClient.get(
+        'industry',
+      )
+
+      let industryEntry: IndustryEntry = {
         name: 'NA',
         details: 'NA',
       }
 
-      const foundItem = industryEntries.items.find((item: IndustryEntry) => {
-        if ('fields' in item) {
-          return item.fields?.name === company.industry
+      industryEntries.map((item: IndustryEntry) => {
+        if (item.name === company.industry) {
+          industryEntry = item
         }
-        return false
       })
 
-      if (foundItem) {
-        industryEntry = foundItem.fields as IndustryEntry
-      }
+      const sectorName = (
+        company.sector
+          ? sectorEnum[company.sector as keyof typeof sectorEnum]
+          : 'NA'
+      ) as Sector
 
-      const sectorName = sectorEnum[company.sector] as Sector
-      let sectorEntry: SectorEntry = {
-        name: '',
-        details: {
-          nodeType: BLOCKS.DOCUMENT,
-          data: {},
-          content: [],
-        },
-        fields: {
-          name: '',
-          details: {
-            nodeType: BLOCKS.DOCUMENT,
-            data: {},
-            content: [],
-          },
-        },
-      }
-
-      const sectorEntries: ContentfulCollection<SectorEntry> =
-        await contentClient.get('sector')
-      const foundEntry = sectorEntries.items.find((item: SectorEntry) => {
-        return item.fields?.name === sectorName
+      const sectorEntries: SectorEntry[] = await contentClient.get('sector')
+      let sectorEntry: SectorEntry | undefined
+      sectorEntries.map((item: SectorEntry) => {
+        if (item.name === sectorName) {
+          sectorEntry = item
+        }
       })
-      if (foundEntry && foundEntry.fields) {
-        sectorEntry = foundEntry.fields
-      }
 
       return { company, sectorEntry, industryEntry }
     }),

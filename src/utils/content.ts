@@ -30,19 +30,10 @@ export class ContentWrapper {
     })
   }
 
-  // get<T> = async (entity: string) : Promise<T> => {
-  //   const client = this.client
-
-  //   const entries = await client.getEntries({
-  //     content_type: entity,
-  //   })
-  //   return entries
-  // }
-
   async get<T>(entity: string): Promise<T> {
     const client = this.client
     const entries = await client.getEntries({ content_type: entity })
-    return entries as unknown as T
+    return entries.items.map((item) => item.fields) as unknown as T
   }
 
   getSingleHomePageEntry = async (entity: string) => {

@@ -1,7 +1,7 @@
 import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
 import clsx from 'clsx'
-import { Company } from '@prisma/client'
+// import { Company } from '@prisma/client'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
 import { INLINES } from '@contentful/rich-text-types'
@@ -21,7 +21,8 @@ import {
   CompanyDetailsAccordion,
 } from '../../components'
 import { api } from '../../utils/api'
-import type { IndustryEntry, SectorEntry } from '../../types'
+import type { CompanyData } from '../../types'
+import { envGradeToColor } from '../../utils/helpers'
 
 const tagGroupStyle = clsx('flex-col lg:inline-flex lg:flex-row')
 const noteStyle = clsx('lg:px-2 font-medium truncate')
@@ -29,11 +30,6 @@ const tagStyle = clsx('bg-cobalt text-white')
 
 const Company = () => {
   const companyId = (useRouter().query.id as string) ?? ''
-  interface CompanyData {
-    company: Company
-    sector: SectorEntry
-    industry: IndustryEntry
-  }
 
   const { data, isLoading, isError } =
     api.company.getCompany.useQuery<CompanyData>(
@@ -64,12 +60,12 @@ const Company = () => {
   const contentfulOptions = {
     renderNode: {
       [INLINES.HYPERLINK]: (node: Block | Inline, children: any) => {
-        const url =
-          'uri' in node.data && typeof node.data.uri == 'string'
-            ? node.data.uri
-            : '#'
         return (
-          <a href={url} target="_blank" rel="noopener noreferrer">
+          <a
+            href={node.data.uri as string}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {children}
             <ArrowUpRightIcon className="align-self-start ml-0.5 inline h-4 w-4 stroke-current stroke-1" />
           </a>
@@ -90,7 +86,7 @@ const Company = () => {
         <BackButton />
         <div className="flex flex-col items-center">
           <HighlightedTitle
-            title={data.company.name}
+            title={company.name}
             size="large"
             color="clementine"
           />
@@ -127,7 +123,12 @@ const Company = () => {
           <div className={tagGroupStyle}>
             <Tag title="environmental grade" className={tagStyle} />
             <div className={noteStyle}>
-              <Tag title="AAA" className="bg-brightTeal text-white" />
+              <Tag
+                title={company.ESG ? company.ESG?.environmentGrade : 'N/A'}
+                className={`${envGradeToColor(
+                  company.ESG ? company.ESG?.environmentGrade : 'N/A',
+                )} text-white`}
+              />
             </div>
             <ToolTip>
               <div>
@@ -144,8 +145,8 @@ const Company = () => {
             </ToolTip>
           </div>
         </div>
-        {data.company.description && (
-          <CompanyDetailsAccordion content={data.company.description} />
+        {company.description && (
+          <CompanyDetailsAccordion content={company.description} />
         )}
         <HighlightedTitle
           title="Investment Visualizations"
@@ -153,7 +154,7 @@ const Company = () => {
           color="brightTeal"
         />
 
-        {!!companyId && data.company.ticker && (
+        {!!companyId && company.ticker && (
           <>
             <Tag
               title="Yahoo Finance"
@@ -163,9 +164,9 @@ const Company = () => {
           </>
         )}
 
-        {data.company.energy && (
+        {company.energy && (
           <div className="flex flex-row">
-            <EnergyRadialChart energyData={data.company.energy} />
+            <EnergyRadialChart energyData={company.energy} />
             <p>the text box will go here</p>
           </div>
         )}
