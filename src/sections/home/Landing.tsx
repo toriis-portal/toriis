@@ -34,12 +34,6 @@ const Landing: FC<{ text: Document }> = ({ text }) => {
 
   // as well as a setState() function for closing the modal (used for both continue and leave)
   const setIsOpen = () => setModal(!modal)
-
-  // functionality for leaving page should NOT include the setState() function
-  // const leave = () => {
-  //   window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-  // }
-
   return (
     <>
       <div className="flex flex-col items-center justify-center">

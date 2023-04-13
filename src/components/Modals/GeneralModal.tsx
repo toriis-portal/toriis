@@ -3,23 +3,24 @@ import type { FC } from 'react'
 
 interface GeneralModalProps {
   isOpen: boolean // state variable for displaying modal
-  styles: string
-  children: JSX.Element | undefined | null
+  styles?: string
+  children?: JSX.Element | undefined | null
 }
 
 export const GeneralModal: FC<GeneralModalProps> = ({
   isOpen = true,
-  styles = '',
+  styles,
   children,
 }) => {
-  const defaultStyles =
-    'h-1/4 w-1/4 rounded-xl border-[1px] border-black bg-white '
-  const modalStyles = defaultStyles + styles
+  const defaultModalStyles = 'rounded-xl border-[1px] border-black bg-white '
+  const modalStyles: string = styles
+    ? defaultModalStyles + styles
+    : defaultModalStyles
   return (
     <>
       {isOpen && (
         <div className="fixed inset-0 z-10 flex h-full w-full items-center justify-center bg-[rgba(0,0,0,.5)]">
-          <div className={modalStyles}>{!!children && children}</div>
+          <div className={modalStyles}>{children}</div>
         </div>
       )}
     </>
