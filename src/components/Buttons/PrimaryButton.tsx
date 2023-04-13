@@ -5,19 +5,20 @@ import clsx from 'clsx'
 
 interface PrimaryButtonProps {
   text: string
-  link: string
+  link?: string
+  onClick?: () => void
 }
 
-const PrimaryButton: FC<PrimaryButtonProps> = ({ text, link }) => {
-  return (
+const PrimaryButton: FC<PrimaryButtonProps> = ({ text, link, onClick }) => {
+  return (link ? 
     <div>
-      <Link href={link}>
+      <Link href={link || "#"}>
         <div>
           <button
             className={clsx(
               'font-klima text-[18px] font-semibold',
               'rounded border-2 border-solid border-cobalt',
-              'rounded bg-lightBlue px-5 py-1 font-semibold',
+              'rounded bg-lightBlue px-5 py-1',
               'shadow-[-8px_8px_0px_0px] shadow-cobalt',
               'hover:shadow-[-5px_5px_0px_0px] hover:shadow-cobalt',
             )}
@@ -27,6 +28,22 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({ text, link }) => {
           </button>
         </div>
       </Link>
+    </div>
+    :
+    <div>
+      <div>
+        <button onClick={onClick || undefined}
+          className={clsx(
+            'font-klima text-[18px] font-medium',
+            'rounded border-2 border-solid border-cobalt',
+            'rounded bg-lightBlue px-20 py-3',
+            'shadow-[-8px_8px_0px_0px] shadow-cobalt',
+            'hover:shadow-[-5px_5px_0px_0px] hover:shadow-cobalt',
+          )}
+        >
+          {text}
+        </button>
+      </div>
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 
-import { AdminListTable, Tag } from '../../components'
+import { AdminListTable, HighlightedTitle, PrimaryButton, Tag } from '../../components'
 import { api } from '../../utils/api'
 
 const AdminAdminPage: FC = () => {
@@ -22,6 +22,9 @@ const AdminAdminPage: FC = () => {
   },})
 
   const handleEdit = () => {
+    if(edit){
+      setUsersToDelete([])
+    }
     setEdit(!edit)
   }
 
@@ -42,13 +45,15 @@ const AdminAdminPage: FC = () => {
 
   return (
     session && (
-      <div>
-        <h1>Administration Management</h1>
-        <div className="flex flex-row justify-between w-3/4">
-          <div className="mb-8">
-            admin list a billion results
+      <div className="flex flex-col gap-5 first-letter:w-full items-center">
+        <div className="flex flex-row justify-between w-3/4 mt-20">
+          <div className="flex flex-row gap-1 basis-1/2 justify-start items-start -mb-[12px]">
+            <HighlightedTitle title="Administrative List" size="medium" color="clementine" />
+            <p className="text-medGray ml-2 mt-2.5">
+                {"("}{data?.length || 0}{" Results )"}  
+            </p>
           </div>
-          <button className="self-end pb-2" onClick={handleEdit}>
+          <button className="self-end" onClick={handleEdit}>
             {edit
             ? <Tag title="edit" className="bg-black text-white border border-black font-normal"/>
             : <u><Tag title="edit" className="bg-lightBlue text-black border border-black font-normal"/></u>
@@ -63,14 +68,10 @@ const AdminAdminPage: FC = () => {
           onUndo={(currentId) => {setUsersToDelete(usersToDelete.filter(id => id !== currentId))}}
           tempDeleted={usersToDelete}
         />
-        {edit && <button
-          onClick={() => {
-            void handleDeleteUsers()  
-          }}
-          disabled={deleteUsersMutation.isLoading}
-        >
-          delet this
-        </button>}
+        <div className="pt-6">
+          {(!deleteUsersMutation.isLoading && edit) && 
+            <PrimaryButton text="  Update  " onClick={handleDeleteUsers}/>}
+        </div>
 
         {deleteUsersMutation.error && (
           <p>Something went wrong! {deleteUsersMutation.error.message}</p>
