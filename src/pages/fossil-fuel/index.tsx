@@ -1,6 +1,7 @@
 import type { FC } from 'react'
+import * as React from 'react'
 
-import { PrimaryNavBar, ToTopButton } from '../../components'
+import { PrimaryNavBar, SecondaryNavBar, ToTopButton } from '../../components'
 import { ContentWrapper } from '../../utils/content'
 import { FinancialCase } from '../../sections'
 import type { CaseEntry } from '../../types'
@@ -19,13 +20,51 @@ interface FossilFuelProps {
   caseEntries: CaseEntry[]
 }
 
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace JSX {
+    interface IntrinsicElements {
+      'climate-clock': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement>,
+        HTMLElement
+      >
+    }
+  }
+}
+
 const FossilFuelPage: FC<FossilFuelProps> = ({ caseEntries }) => {
+  const navItems = [
+    {
+      path: 'universityIllinoisInvestments ',
+      text: 'University of Illinois Investments ',
+    },
+    {
+      path: 'dirtyIndustryUIUCSupports',
+      text: 'The Dirty Industry UIUC Supports',
+    },
+    { path: 'whyFossilFuelsBad?', text: 'Why are fossil fuels bad?' },
+    { path: 'whatWarmingMeans:', text: 'What 1.5 C Warming Means:' },
+    {
+      path: 'caseInstitutionalDivestment',
+      text: 'The Case for Institutional Divestment',
+    },
+    { path: 'schoolsDivested', text: 'Schools That Have Divested' },
+    {
+      path: 'institutionsDivested ',
+      text: 'Institutions That Have Divested ',
+    },
+  ]
   return (
     <>
       <PrimaryNavBar />
+      <SecondaryNavBar navItems={navItems} />
       <ToTopButton />
       <div id="financialCase" className="pt-20">
         <FinancialCase entries={caseEntries} />
+      </div>
+      <div className="mx-auto w-[79rem] items-center">
+        <script src="https://climateclock.world/widget-v2.js" async></script>
+        <climate-clock />
       </div>
     </>
   )
