@@ -15,13 +15,17 @@ import {
   InvestmentTable,
   ToolTip,
   Tag,
+  EmissionBarChart,
+  CompanyDetailsAccordion,
   EnergyRadialChart,
   BackButton,
-  CompanyDetailsAccordion,
+  FuelRadialChart,
+  DataCard,
 } from '../../components'
 import { api } from '../../utils/api'
 import type { CompanyData } from '../../types'
 import { envGradeToColor } from '../../utils/helpers'
+import { assetAmountToString } from '../../utils/helpers'
 
 const tagGroupStyle = clsx('flex-col lg:inline-flex lg:flex-row')
 const noteStyle = clsx('lg:px-2 font-medium truncate')
@@ -44,7 +48,13 @@ const Company = () => {
     )
   }
 
-  if (isError || !data) {
+  if (
+    isError ||
+    !data ||
+    !data.industryEntry ||
+    !data.sectorEntry ||
+    !data.company
+  ) {
     return (
       <div className="flex flex-col items-center p-12">
         <HighlightedTitle
@@ -74,10 +84,6 @@ const Company = () => {
   }
 
   const { company, sectorEntry, industryEntry } = data
-
-  if (!company || !sectorEntry || !industryEntry) {
-    throw new Error(`Data not found`)
-  }
 
   return (
     <>
@@ -113,7 +119,9 @@ const Company = () => {
           </div>
           <div className={tagGroupStyle}>
             <Tag title="net asset value" className={tagStyle} />
-            <div className={noteStyle}>500k</div>
+            <div className={noteStyle}>
+              {assetAmountToString(company.netAssetVal)}
+            </div>
             <ToolTip
               title="Net Asset Value"
               details={`Calculated as the sum market values for each corporate bond for ${company.name}`}
@@ -178,6 +186,136 @@ const Company = () => {
         <div className="flex w-full flex-row items-center justify-center">
           <InvestmentTable companyId={companyId} />
         </div>
+      </div>
+      {company.description && (
+        <CompanyDetailsAccordion content={company.description} />
+      )}
+      <HighlightedTitle
+        title="Investment Visualizations"
+        size="medium"
+        color="brightTeal"
+      />
+      <Tag
+        title="CDP-Fuel"
+        className="round-s ml-6 mb-5 bg-clementine text-white"
+      />
+      {company?.fuel && <FuelRadialChart source={company.fuel} />}
+      {company.emission && (
+        <div>
+          <Tag
+            title="Carbon Accounting"
+            className="round-s ml-6 mb-5 bg-clementine text-white"
+          />
+          <div className="mb-4 flex items-center">
+            <div className="w-1/2">
+              <EmissionBarChart emissionData={company.emission} />
+            </div>
+            <div className="ml-20 w-1/2 ">
+              <DataCard>
+                <a
+                  href="https://en.wikipedia.org/wiki/Carbon_accounting"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <b>
+                    <u>Carbon accounting</u>
+                  </b>
+                </a>{' '}
+                methods serve as a framework for organizations to measure how
+                much carbon they emit. Standard carbon accounting frameworks
+                divide emissions into three scopes.{' '}
+                <a
+                  href="https://www.epa.gov/climateleadership/scope-1-and-scope-2-inventory-guidance"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <u>Scope 1 and 2</u>
+                </a>{' '}
+                metrics quantify the greenhouse gas emissions caused by the
+                operations of an organization. Scope 1 emissions are the direct
+                greenhouse gas emissions that occur from the operations of
+                organization units such as facilities and transportation.{' '}
+                <a
+                  href="https://www.epa.gov/climateleadership/scope-3-inventory-guidance"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <u>Scope 3</u>
+                </a>{' '}
+                metrics quantify the carbon footprint of an organization&#39;s
+                products in the value chain. For example, the Scope 3 emissions
+                of an organization that owns a natural gas pipeline includes the
+                emission caused by the burning of the gas that is transported
+                and sold by said organization. The{' '}
+                <a href="https://www.wri.org/" target="_blank" rel="noreferrer">
+                  <u>World Resource Institute</u>
+                </a>{' '}
+                and{' '}
+                <a
+                  href="https://www.wbcsd.org/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <u>WBCSD</u>
+                </a>{' '}
+                provide the{' '}
+                <a
+                  href="https://ghgprotocol.org/sites/default/files/standards/Corporate-Value-Chain-Accounting-Reporing-Standard_041613_2.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <u>standard for scope emissions reporting</u>
+                </a>
+                .
+                <br />
+                <br />
+                The Scope 1, 2 and 3 emissions presented are sources from
+                Bloomberg Finance L.P. via the University of Illinois-Urbana
+                Champaign Licence, 2023. Bloomberg Finance relies on
+                self-reported scope emission data when available, and uses
+                robust{' '}
+                <a
+                  href="https://bloomberg.com/professional/blog/bloombergs-greenhouse-gas-emissions-estimates-model-a-summary-of-challenges-and-modeling-solutions/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <u>machine learning models</u>
+                </a>{' '}
+                to estimate scope emissions when an organization does not
+                provide emissions data.
+                <br />
+                <br />
+                <br />
+                source: <u>fjkdshfjaksdhfjashdfajkdhfajdhfjk</u>
+              </DataCard>
+            </div>
+          </div>
+        </div>
+      )}
+      {!!companyId && company.ticker && (
+        <>
+          <Tag
+            title="Yahoo Finance"
+            className="w-4 rounded-md bg-clementine text-white"
+          />
+          <FinanceBrushChart companyId={companyId} />
+        </>
+      )}
+
+      {company.energy && (
+        <div className="flex flex-row">
+          <EnergyRadialChart energyData={company.energy} />
+          <p>the text box will go here</p>
+        </div>
+      )}
+
+      <HighlightedTitle
+        title="Investment Details"
+        size="medium"
+        color="brightTeal"
+      />
+      <div className="flex w-full flex-row items-center justify-center">
+        <InvestmentTable companyId={companyId} />
       </div>
     </>
   )

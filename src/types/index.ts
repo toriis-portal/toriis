@@ -1,5 +1,5 @@
 import type { Document } from '@contentful/rich-text-types'
-import type { Company } from '@prisma/client'
+import type { Company, Emission, Fuel } from '@prisma/client'
 
 /* API Types */
 

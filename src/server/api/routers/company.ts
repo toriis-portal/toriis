@@ -17,6 +17,40 @@ const createNetAssetValFilter = (range: number[]) => {
     },
   }
 }
+const contentClient = new ContentWrapper()
+
+const getIndustryEntry = async (company: Company) => {
+  const industryEntries: IndustryEntry[] = await contentClient.get('industry')
+
+  let industryEntry: IndustryEntry = {
+    name: 'NA',
+    details: 'NA',
+  }
+
+  industryEntries.map((item: IndustryEntry) => {
+    if (item.name === company.industry) {
+      industryEntry = item
+    }
+  })
+
+  return industryEntry
+}
+
+const getSectorEntry = async (company: Company) => {
+  const sectorName = (
+    company.sector ? sectorEnum[company.sector] : 'NA'
+  ) as Sector
+
+  const sectorEntries: SectorEntry[] = await contentClient.get('sector')
+  let sectorEntry: SectorEntry | undefined
+  sectorEntries.map((item: SectorEntry) => {
+    if (item.name === sectorName) {
+      sectorEntry = item
+    }
+  })
+
+  return sectorEntry
+}
 
 interface SortOrder {
   netAssetVal?: 'asc' | 'desc'
@@ -108,6 +142,8 @@ export const companyRouter = createTRPCRouter({
           id: input.id,
         },
         include: {
+          fuel: true,
+          emission: true,
           energy: true,
           ESG: true,
         },
@@ -119,36 +155,9 @@ export const companyRouter = createTRPCRouter({
         })
       }
 
-      const contentClient = new ContentWrapper()
+      const industryEntry = await getIndustryEntry(company)
 
-      const industryEntries: IndustryEntry[] = await contentClient.get(
-        'industry',
-      )
-
-      let industryEntry: IndustryEntry = {
-        name: 'NA',
-        details: 'NA',
-      }
-
-      industryEntries.map((item: IndustryEntry) => {
-        if (item.name === company.industry) {
-          industryEntry = item
-        }
-      })
-
-      const sectorName = (
-        company.sector
-          ? sectorEnum[company.sector as keyof typeof sectorEnum]
-          : 'NA'
-      ) as Sector
-
-      const sectorEntries: SectorEntry[] = await contentClient.get('sector')
-      let sectorEntry: SectorEntry | undefined
-      sectorEntries.map((item: SectorEntry) => {
-        if (item.name === sectorName) {
-          sectorEntry = item
-        }
-      })
+      const sectorEntry = await getSectorEntry(company)
 
       return { company, sectorEntry, industryEntry }
     }),
