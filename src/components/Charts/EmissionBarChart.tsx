@@ -1,11 +1,12 @@
 import type { FC } from 'react'
 import dynamic from 'next/dynamic'
 import type { Emission } from '@prisma/client'
+
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
+
 interface EmissionBarChartProps {
   emissionData: Emission
 }
-
-const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 const EmissionBarChart: FC<EmissionBarChartProps> = ({ emissionData }) => {
   const labels = ['Scope 1 Estimate', 'Scope 2 Estimate', 'Scope 3 Estimate']
