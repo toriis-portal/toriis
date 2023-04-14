@@ -6,20 +6,26 @@ import clsx from 'clsx'
 interface PrimaryButtonProps {
   text: string
   link: string
+  buttonStyles?: string
 }
 
-const PrimaryButton: FC<PrimaryButtonProps> = ({ text, link }) => {
+const PrimaryButton: FC<PrimaryButtonProps> = ({
+  text,
+  link,
+  buttonStyles = '',
+}) => {
   return (
     <div>
       <Link href={link}>
         <div>
           <button
             className={clsx(
-              'flex items-center justify-center text-center font-klima text-[18px] font-semibold',
+              'font-klima text-[18px] font-semibold',
               'rounded border-2 border-solid border-cobalt',
               'rounded bg-lightBlue px-5 py-1 font-semibold',
               'shadow-[-8px_8px_0px_0px] shadow-cobalt',
               'hover:shadow-[-5px_5px_0px_0px] hover:shadow-cobalt',
+              buttonStyles,
             )}
           >
             {text}{' '}
