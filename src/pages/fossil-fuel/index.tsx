@@ -5,6 +5,7 @@ import { PrimaryNavBar, SecondaryNavBar, ToTopButton } from '../../components'
 import { ContentWrapper } from '../../utils/content'
 import { FinancialCase } from '../../sections'
 import type { CaseEntry } from '../../types'
+import ClimateClock from '../../components/Displays/ClimateClock/ClimateClock'
 
 export const getServerSideProps = async () => {
   const contentClient = new ContentWrapper()
@@ -18,18 +19,6 @@ export const getServerSideProps = async () => {
 
 interface FossilFuelProps {
   caseEntries: CaseEntry[]
-}
-
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace JSX {
-    interface IntrinsicElements {
-      'climate-clock': React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement>,
-        HTMLElement
-      >
-    }
-  }
 }
 
 const FossilFuelPage: FC<FossilFuelProps> = ({ caseEntries }) => {
@@ -62,10 +51,7 @@ const FossilFuelPage: FC<FossilFuelProps> = ({ caseEntries }) => {
       <div id="financialCase" className="pt-20">
         <FinancialCase entries={caseEntries} />
       </div>
-      <div className="mx-auto w-[79rem] items-center">
-        <script src="https://climateclock.world/widget-v2.js" async></script>
-        <climate-clock />
-      </div>
+      <ClimateClock />
     </>
   )
 }
