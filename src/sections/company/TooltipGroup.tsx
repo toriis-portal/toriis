@@ -21,12 +21,14 @@ interface CompanyTooltipGroupProps {
   company: Company & { ESG: ESG | null }
   sectorEntry: SectorEntry
   industryEntry: IndustryEntry
+  className?: string
 }
 
 const CompanyTooltipGroup: FC<CompanyTooltipGroupProps> = ({
   company,
   sectorEntry,
   industryEntry,
+  className,
 }) => {
   const contentfulOptions = {
     renderNode: {
@@ -46,7 +48,12 @@ const CompanyTooltipGroup: FC<CompanyTooltipGroupProps> = ({
   }
 
   return (
-    <div className="mx-8 flex flex-wrap items-center justify-between">
+    <div
+      className={clsx(
+        'mx-8 flex flex-wrap items-center justify-between',
+        className,
+      )}
+    >
       <div className={tagGroupStyle}>
         <Tag title="sector" className={tagStyle} />
         <div className={noteStyle}>{sectorEntry.name}</div>

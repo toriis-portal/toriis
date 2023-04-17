@@ -89,16 +89,25 @@ const Company = () => {
           company={company}
           sectorEntry={sectorEntry}
           industryEntry={industryEntry}
+          className="mb-10"
         />
         {company.description && (
-          <CompanyDetailsAccordion content={company.description} />
+          <CompanyDetailsAccordion
+            content={company.description}
+            className="mb-10"
+          />
         )}
-        <HighlightedTitle
-          title="Investment Visualizations"
-          size="medium"
-          color="brightTeal"
-        />
-        <div className="mx-4">
+        {(company.emission ||
+          company.fuel ||
+          company.energy ||
+          company.ticker) && (
+          <HighlightedTitle
+            title="Investment Visualizations"
+            size="medium"
+            color="brightTeal"
+          />
+        )}
+        <div className="mx-4 mb-4">
           {company.emission && (
             <ChartGroup
               title="Carbon Accounting"
