@@ -1,6 +1,6 @@
-import { EnvGrade, Sector } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
+import { EnvGrade, Sector } from '@prisma/client'
 import type { Company, Investment } from '@prisma/client'
 import yahooFinance from 'yahoo-finance2'
 
@@ -42,7 +42,11 @@ const getSectorEntry = async (company: Company) => {
   ) as Sector
 
   const sectorEntries: SectorEntry[] = await contentClient.get('sector')
-  let sectorEntry: SectorEntry | undefined
+
+  let sectorEntry: SectorEntry = {
+    name: 'NA',
+  }
+
   sectorEntries.map((item: SectorEntry) => {
     if (item.name === sectorName) {
       sectorEntry = item
@@ -155,9 +159,9 @@ export const companyRouter = createTRPCRouter({
         })
       }
 
-      const industryEntry = await getIndustryEntry(company)
+      const industryEntry: IndustryEntry = await getIndustryEntry(company)
 
-      const sectorEntry = await getSectorEntry(company)
+      const sectorEntry: SectorEntry = await getSectorEntry(company)
 
       return { company, sectorEntry, industryEntry }
     }),
