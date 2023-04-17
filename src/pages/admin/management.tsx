@@ -9,6 +9,7 @@ PrimaryButton} from '../../components'
 const AdminAdminPage: FC = () => {
   const { data: session, status } = useSession()
   const { push } = useRouter()
+  
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -29,11 +30,12 @@ const AdminAdminPage: FC = () => {
         </div>
         <div className="flex justify-center">
             <div className=" w-1/2 flex mr-12 ">
-
                 <input
                     type="text"
                     className=" px-4 py-3 w-full bg-white border rounded-md"
                     placeholder="Invite Gmail"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
                 />
             </div>
 

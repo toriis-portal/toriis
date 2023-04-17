@@ -23,3 +23,36 @@ export const userRouter = createTRPCRouter({
       }
     }),
 })
+
+export const addWhitelistedUser = createTRPCRouter({
+  add: protectedProcedure
+    .input(z.object({
+      email: z.string(),
+    }))
+    .mutation(async ({ input, ctx }) => {
+      const existingUser = await ctx.prisma.whitelistedUser.findUnique({
+        where: {
+          email: input.email,
+        },
+      });
+
+      if (existingUser) {
+        // User already exists in the whitelist
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'User is already in the whitelist',
+        });
+      }
+
+      await ctx.prisma.whitelistedUser.create({
+        data: {
+          email: input.email,
+        },
+      });
+
+      return {
+        success: true,
+        message: 'User added to whitelist',
+      };
+    }),
+});
