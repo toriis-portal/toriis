@@ -14,9 +14,9 @@ const ToolTip: FC<TitleProps> = ({ title, details, children }) => {
   const [isShown, setIsShown] = useState(false)
 
   return (
-    <div className="group relative z-40 flex w-fit justify-center">
+    <div className="group relative flex w-fit justify-center">
       <button
-        className={clsx('bg-primary rounded', 'text-base text-black')}
+        className={clsx('bg-primary rounded', 'z-10 text-base text-black ')}
         onMouseEnter={() => setIsShown(true)}
         onMouseLeave={(e) => {
           if (
@@ -27,14 +27,14 @@ const ToolTip: FC<TitleProps> = ({ title, details, children }) => {
           }
         }}
       >
-        <InformationCircleIcon className="w-6 " />
+        <InformationCircleIcon className="w-6" />
       </button>
       {isShown && (
         <div
           className={clsx(
             'border-light text-body-color absolute top-12 left-1/2',
             '-translate-x-1/2 rounded-xl border border-black bg-white',
-            'w-60 p-5 text-sm leading-4',
+            'z-40 w-60 p-5 text-sm leading-4',
           )}
           onMouseEnter={() => setIsShown(true)}
           onMouseLeave={(e) => {
