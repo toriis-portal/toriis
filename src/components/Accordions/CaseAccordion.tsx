@@ -6,17 +6,16 @@ import {
   ArrowUpRightIcon,
 } from '@heroicons/react/24/solid'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import { INLINES } from '@contentful/rich-text-types'
+import { BLOCKS, INLINES } from '@contentful/rich-text-types'
 import type {
   Block,
   Inline,
 } from '@contentful/rich-text-types/dist/types/types'
 import clsx from 'clsx'
 
-import { ReadMoreButton } from '../index'
 import type { CaseEntry } from '../../types'
 
-const FinancialCaseAccordion: FC<{ content: CaseEntry }> = ({ content }) => {
+const CaseAccordion: FC<{ content: CaseEntry }> = ({ content }) => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => {
     setOpen(!open)
@@ -24,6 +23,15 @@ const FinancialCaseAccordion: FC<{ content: CaseEntry }> = ({ content }) => {
 
   const contentfulOptions = {
     renderNode: {
+      [BLOCKS.DOCUMENT]: (node: any, children: any) => {
+        return (
+          <>
+            {!open && Array.isArray(children) && children.length > 0
+              ? children[0]
+              : children}
+          </>
+        )
+      },
       [INLINES.HYPERLINK]: (node: Block | Inline, children: any) => {
         const url =
           'uri' in node.data && typeof node.data.uri == 'string'
@@ -70,23 +78,10 @@ const FinancialCaseAccordion: FC<{ content: CaseEntry }> = ({ content }) => {
           <PlusIcon className="mr-10 inline h-9 w-7 stroke-current stroke-2" />
         )}
       </button>
-      {open && (
-        <div className="font-regular mx-12 flex flex-col gap-2 border-t-2 border-cobalt pt-6 font-inter text-base text-black">
-          {documentToReactComponents(content.details, contentfulOptions)}
-          <div className="flex pt-[7px] pb-5">
-            {content.url && (
-              <ReadMoreButton
-                isOpen={false}
-                handleOpen={() => {
-                  return
-                }}
-                link={content.url}
-              />
-            )}
-          </div>
-        </div>
-      )}
+      <div className="font-regular mx-12 flex flex-col gap-2 border-t-2 border-cobalt pt-6 pb-9 font-inter text-base text-black">
+        {documentToReactComponents(content.details, contentfulOptions)}
+      </div>
     </div>
   )
 }
-export default FinancialCaseAccordion
+export default CaseAccordion

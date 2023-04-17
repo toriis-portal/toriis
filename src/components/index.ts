@@ -22,7 +22,7 @@ import ListItem from './Displays/ListItem'
 import Carousel from './Displays/Carousel/Carousel'
 // Accordions
 import RequestAccordion from './Accordions/RequestAccordion'
-import FinancialCaseAccordion from './Accordions/FinancialCaseAccordion'
+import CaseAccordion from './Accordions/CaseAccordion'
 import CompanyDetailsAccordion from './Accordions/CompanyDetailsAccordion'
 // Nav
 import PrimaryNavBar from './Nav/PrimaryNavBar'
@@ -67,7 +67,7 @@ export {
   ESGTag,
   NetAssetTag,
   Tag,
-  FinancialCaseAccordion,
+  CaseAccordion,
   ToolTip,
   FuelRadialChart,
   EmissionBarChart,
