@@ -17,7 +17,7 @@ const UpdateData: FC = () => {
 
   const navItems = [
     { path: '', text: 'Update Database', active: true },
-    { path: '../content', text: 'Update Text Content', active: false },
+    { path: 'content', text: 'Update Text Content', active: false },
   ]
 
   return (
