@@ -22,7 +22,7 @@ const AdminPage: FC = () => {
       <div>
         <div className="flex flex-row items-center	justify-between px-10">
           <div className="h-10">
-            <BackButton customLink="/home" customText="Back To Home" />
+            <BackButton customLink="/home" customText="Back To Toriis" />
           </div>
           <div className="mt-10">
             <HighlightedTitle
