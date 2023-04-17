@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import type { FC } from 'react'
 import { useEffect } from 'react'
 
-const AdminPage: FC = () => {
+const RequestPage: FC = () => {
   const { data: session, status } = useSession()
   const { push } = useRouter()
 
@@ -13,7 +13,7 @@ const AdminPage: FC = () => {
     }
   }, [push, status])
 
-  return <div>{session && <h1>Administration Control</h1>}</div>
+  return <div>{session && <h1>Request Management</h1>}</div>
 }
 
-export default AdminPage
+export default RequestPage

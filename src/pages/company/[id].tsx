@@ -1,22 +1,39 @@
 import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
-import clsx from 'clsx'
+import { Company } from '@prisma/client'
 
 import FinanceBrushChart from '../../components/Charts/FinanceBrushChart'
 import {
   HighlightedTitle,
   InvestmentTable,
-  ToolTip,
-  Tag,
+  EmissionBarChart,
   CompanyDetailsAccordion,
   EnergyRadialChart,
   BackButton,
+  FuelRadialChart,
+  DataCard,
 } from '../../components'
 import { api } from '../../utils/api'
+import { CompanyTooltipGroup, ChartGroup } from '../../sections'
 
-const tagGroupStyle = clsx('flex-col lg:inline-flex lg:flex-row')
-const noteStyle = clsx('lg:px-2 font-medium truncate')
-const tagStyle = clsx('bg-cobalt text-white')
+/**
+ * Get the direction of the charts so that they alternate between left and right
+ *
+ * @param company the company to get the chart directions for
+ * @returns a dictionary of chart names and if they should be on the left
+ */
+const getChartDirections = (company: Company) => {
+  const charts = ['emission', 'fuel', 'energy', 'ticker']
+  const directionDict: { [key: string]: boolean } = {}
+  let count = 0
+  for (const chart of charts) {
+    if (company[chart as keyof Company]) {
+      directionDict[chart] = count % 2 === 0
+      count++
+    }
+  }
+  return directionDict
+}
 
 const Company = () => {
   const companyId = (useRouter().query.id as string) ?? ''
@@ -34,7 +51,13 @@ const Company = () => {
     )
   }
 
-  if (isError || !data) {
+  if (
+    isError ||
+    !data ||
+    !data.industryEntry ||
+    !data.sectorEntry ||
+    !data.company
+  ) {
     return (
       <div className="flex flex-col items-center p-12">
         <HighlightedTitle
@@ -46,95 +69,93 @@ const Company = () => {
     )
   }
 
+  const { company, sectorEntry, industryEntry } = data
+  const chartDirections = getChartDirections(company)
+
   return (
-    <div className="mb-20 mt-8 flex flex-col px-12 ">
-      <BackButton />
-      <div className="flex flex-col items-center">
-        <HighlightedTitle title={data.name} size="large" color="clementine" />
+    <>
+      <div className="mt-6 ml-8">
+        <BackButton />
       </div>
-      <div className="mb-6 flex flex-row items-center justify-between xl:px-20">
-        <div className={tagGroupStyle}>
-          <Tag title="sector" className={tagStyle} />
-          <div className={noteStyle}>industrials</div>
+      <div className="mb-20 flex flex-col px-12 lg:px-24">
+        <div className="flex flex-col items-center">
+          <HighlightedTitle
+            title={company.name}
+            size="large"
+            color="clementine"
+          />
+        </div>
+        <CompanyTooltipGroup
+          company={company}
+          sectorEntry={sectorEntry}
+          industryEntry={industryEntry}
+          className="mb-10"
+        />
+        {company.description && (
+          <CompanyDetailsAccordion
+            content={company.description}
+            className="mb-10"
+          />
+        )}
+        {(company.emission ||
+          company.fuel ||
+          company.energy ||
+          company.ticker) && (
+          <HighlightedTitle
+            title="Investment Visualizations"
+            size="medium"
+            color="brightTeal"
+          />
+        )}
+        <div className="mx-4 mb-4">
+          {company.emission && (
+            <ChartGroup
+              title="Carbon Accounting"
+              chart={<EmissionBarChart emissionData={company.emission} />}
+              interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
+              chartOnLeft={chartDirections['emission']}
+              chartSize="md"
+            />
+          )}
+          {company.fuel && (
+            <ChartGroup
+              title="CDP-Fuel"
+              chart={<FuelRadialChart source={company.fuel} />}
+              interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
+              chartOnLeft={chartDirections['fuel']}
+              chartSize="md"
+            />
+          )}
+          {company.energy && (
+            <ChartGroup
+              title="CDP-Energy"
+              chart={<EnergyRadialChart energyData={company.energy} />}
+              interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
+              chartOnLeft={chartDirections['energy']}
+              chartSize="sm"
+            />
+          )}
+          {company.ticker && (
+            <ChartGroup
+              title="Yahoo Finance"
+              chart={<FinanceBrushChart companyId={companyId} />}
+              interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
+              chartOnLeft={chartDirections['ticker']}
+              chartSize="lg"
+            />
+          )}
+        </div>
 
-          <ToolTip
-            title="Industrial Sector"
-            details="The industrial sector includes companies involved directly in the production of capital goods such as electrical or industrial machinery, or in the provision of transportation services and infrastructure."
-          />
-        </div>
-        <div className={tagGroupStyle}>
-          <Tag title="industry" className={tagStyle} />
-          <div className={noteStyle}>bank diversity</div>
-
-          <ToolTip
-            title="Bank Diversity Industry"
-            details="A subset of sector, still looking for good info for each industry"
-          />
-        </div>
-        <div className={tagGroupStyle}>
-          <Tag title="net asset value" className={tagStyle} />
-          <div className={noteStyle}>500k</div>
-          <ToolTip
-            title="Net Asset Value"
-            details="Calculated as the sum market values for each corporate bond for <company_name> "
-          />
-        </div>
-        <div className={tagGroupStyle}>
-          <Tag title="environmental grade" className={tagStyle} />
-          <div className={noteStyle}>
-            <Tag title="AAA" className="bg-brightTeal text-white" />
-          </div>
-          <ToolTip>
-            <div>
-              Average environmental grade for sector <b>Industrials</b>:
-              <Tag title="CCC" className="bg-clementine text-white" />
-              <br />
-              Environmental grade: ESG refers to a set of values used to screen
-              potential investments: Environmental, Social and Governance. An
-              ESG score measures how sustainably a company is conducting
-              business based on their environmental impact calculated from their
-              carbon emissions, energy consumption and climate change action. It
-              also addresses
-            </div>
-          </ToolTip>
+        <HighlightedTitle
+          title="Investment Details"
+          size="medium"
+          color="brightTeal"
+        />
+        <div className="flex w-full flex-row items-center justify-center">
+          <InvestmentTable companyId={companyId} />
         </div>
       </div>
-
-      {data.description && (
-        <CompanyDetailsAccordion content={data.description} />
-      )}
-      <HighlightedTitle
-        title="Investment Visualizations"
-        size="medium"
-        color="brightTeal"
-      />
-
-      {!!companyId && data.ticker && (
-        <>
-          <Tag
-            title="Yahoo Finance"
-            className="w-4 rounded-md bg-clementine text-white"
-          />
-          <FinanceBrushChart companyId={companyId} />
-        </>
-      )}
-
-      {data.energy && (
-        <div className="flex flex-row">
-          <EnergyRadialChart energyData={data.energy} />
-          <p>the text box will go here</p>
-        </div>
-      )}
-
-      <HighlightedTitle
-        title="Investment Details"
-        size="medium"
-        color="brightTeal"
-      />
-      <div className="flex w-full flex-row items-center justify-center">
-        <InvestmentTable companyId={companyId} />
-      </div>
-    </div>
+    </>
   )
 }
 
