@@ -25,25 +25,25 @@ const ChartGroup: FC<ChartGroupProps> = ({
         className="mb-1 w-4 rounded-md bg-clementine text-white"
       />
       <div
-        className={clsx('mb-8 flex items-center', {
+        className={clsx('mb-8 flex items-center gap-4', {
           'flex-row': chartOnLeft,
           'flex-row-reverse': !chartOnLeft,
         })}
       >
         <div
-          className={clsx('mx-2', {
+          className={clsx({
             'w-2/5': chartSize === 'sm',
             'w-1/2': chartSize === 'md',
-            'w-2/3': chartSize === 'lg',
+            'w-4/5': chartSize === 'lg',
           })}
         >
           {chart}
         </div>
         <div
-          className={clsx('mx-2', {
+          className={clsx({
             'w-3/5': chartSize === 'sm',
             'w-1/2': chartSize === 'md',
-            'w-1/3': chartSize === 'lg',
+            'w-1/4': chartSize === 'lg',
           })}
         >
           {interpretation}

@@ -46,7 +46,7 @@ const CompanyTooltipGroup: FC<CompanyTooltipGroupProps> = ({
   }
 
   return (
-    <div className="flex flex-row items-center justify-between">
+    <div className="mx-8 flex flex-wrap items-center justify-between">
       <div className={tagGroupStyle}>
         <Tag title="sector" className={tagStyle} />
         <div className={noteStyle}>{sectorEntry.name}</div>

@@ -77,44 +77,44 @@ const Company = () => {
           size="medium"
           color="brightTeal"
         />
-        {company.emission && (
-          <ChartGroup
-            title="Carbon Accounting"
-            chart={<EmissionBarChart emissionData={company.emission} />}
-            interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
-            chartOnLeft={true}
-            chartSize="md"
-          />
-        )}
-        {company.fuel && (
-          <ChartGroup
-            title="CDP-Fuel"
-            chart={<FuelRadialChart source={company.fuel} />}
-            interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
-            chartOnLeft={false}
-            chartSize="md"
-          />
-        )}
-
-        {company.energy && (
-          <ChartGroup
-            title="CDP-Energy"
-            chart={<EnergyRadialChart energyData={company.energy} />}
-            interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
-            chartOnLeft={true}
-            chartSize="sm"
-          />
-        )}
-
-        {company.ticker && (
-          <ChartGroup
-            title="Yahoo Finance"
-            chart={<FinanceBrushChart companyId={companyId} />}
-            interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
-            chartOnLeft={false}
-            chartSize="lg"
-          />
-        )}
+        <div className="mx-4">
+          {company.emission && (
+            <ChartGroup
+              title="Carbon Accounting"
+              chart={<EmissionBarChart emissionData={company.emission} />}
+              interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
+              chartOnLeft={true}
+              chartSize="md"
+            />
+          )}
+          {company.fuel && (
+            <ChartGroup
+              title="CDP-Fuel"
+              chart={<FuelRadialChart source={company.fuel} />}
+              interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
+              chartOnLeft={false}
+              chartSize="md"
+            />
+          )}
+          {company.energy && (
+            <ChartGroup
+              title="CDP-Energy"
+              chart={<EnergyRadialChart energyData={company.energy} />}
+              interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
+              chartOnLeft={true}
+              chartSize="sm"
+            />
+          )}
+          {company.ticker && (
+            <ChartGroup
+              title="Yahoo Finance"
+              chart={<FinanceBrushChart companyId={companyId} />}
+              interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
+              chartOnLeft={false}
+              chartSize="lg"
+            />
+          )}
+        </div>
 
         <HighlightedTitle
           title="Investment Details"
