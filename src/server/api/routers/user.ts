@@ -22,10 +22,8 @@ export const userRouter = createTRPCRouter({
         })
       }
     }),
-})
 
-export const addWhitelistedUser = createTRPCRouter({
-  add: protectedProcedure
+    addWhitelistedUser: protectedProcedure
     .input(z.object({
       email: z.string(),
     }))
@@ -55,4 +53,4 @@ export const addWhitelistedUser = createTRPCRouter({
         message: 'User added to whitelist',
       };
     }),
-});
+})
