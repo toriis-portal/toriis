@@ -10,6 +10,7 @@ import LoadMoreButton from './Buttons/LoadMoreButton'
 import CompanyCard from './Card/CompanyCard'
 import ESGTag from './Card/ESGTag'
 import NetAssetTag from './Card/NetAssetTag'
+import AdminBox from './Card/AdminBox'
 import DataCard from './Card/DataCard'
 // Charts
 import EnergyRadialChart from './Charts/EnergyRadialChart'
@@ -78,4 +79,5 @@ export {
   DataCard,
   CompanyDetailsAccordion,
   EnergyRadialChart,
+  AdminBox,
 }
