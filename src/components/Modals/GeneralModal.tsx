@@ -3,7 +3,7 @@ import type { FC } from 'react'
 import clsx from 'clsx'
 
 interface GeneralModalProps {
-  isOpen: boolean // state variable for displaying modal
+  isOpen: boolean
   className?: string
   children?: React.ReactNode
 }
