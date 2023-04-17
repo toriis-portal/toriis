@@ -12,7 +12,7 @@ export const ContentfulButton: FC = () => {
         <PrimaryButton
           text="Go to Contentful"
           link="https://app.contentful.com/spaces/gslvrj5c21wx/"
-          buttonStyles="flex items-center justify-center text-center gap-2 !px-10"
+          className="flex items-center justify-center gap-2 !px-10 text-center"
         />
       </div>
     </div>
