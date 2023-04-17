@@ -1,5 +1,5 @@
 import type { Document } from '@contentful/rich-text-types'
-import type { Company, Emission, Fuel } from '@prisma/client'
+import type { Company, ESG } from '@prisma/client'
 
 /* API Types */
 
@@ -50,16 +50,10 @@ export interface CaseEntry {
 
 export interface IndustryEntry {
   name: string
-  details: string
+  details?: string
 }
 
 export interface SectorEntry {
   name: string
-  details: Document
-}
-
-export interface CompanyData {
-  company: Company
-  sector: SectorEntry
-  industry: IndustryEntry
+  details?: Document
 }
