@@ -19,21 +19,19 @@ const AdminPage: FC = () => {
 
   return (
     session && (
-      <div>
-        <div className="flex flex-row items-center	justify-between px-10">
-          <div className="h-10">
-            <BackButton customLink="/home" customText="Back To Toriis" />
-          </div>
-          <div className="mt-10">
-            <HighlightedTitle
-              title="Administration Control"
-              size="large"
-              color="clementine"
-            ></HighlightedTitle>
-          </div>
-          <div className="flex w-fit flex-col justify-center">
-            <AuthButton />
-          </div>
+      <div className="flex flex-row items-center justify-between border-b-[3px] border-cobalt px-10">
+        <div className="h-10">
+          <BackButton customLink="/home" customText="Back To Toriis" />
+        </div>
+        <div className="mt-10">
+          <HighlightedTitle
+            title="Administration Control"
+            size="large"
+            color="clementine"
+          ></HighlightedTitle>
+        </div>
+        <div className="flex w-fit flex-col justify-center">
+          <AuthButton />
         </div>
       </div>
     )
