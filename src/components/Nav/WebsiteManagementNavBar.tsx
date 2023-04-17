@@ -19,7 +19,7 @@ const WebsiteManagementNavBar: FC<{ navItems: NavItem[] }> = ({ navItems }) => {
         {navItems.map((navItem: NavItem, i: number) => {
           return (
             <Link key={i} href={navItem.path}>
-              <p className="text-[22px]">{navItem.text}</p>
+              <p className="text-[22px] font-medium">{navItem.text}</p>
               <div
                 className={`relative right-[1.3rem] z-0 h-2 ${
                   navItem.active ? 'bg-clementine' : ''
