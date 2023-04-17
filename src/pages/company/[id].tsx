@@ -1,5 +1,6 @@
 import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
+import { Company } from '@prisma/client'
 
 import FinanceBrushChart from '../../components/Charts/FinanceBrushChart'
 import {
@@ -14,6 +15,25 @@ import {
 } from '../../components'
 import { api } from '../../utils/api'
 import { CompanyTooltipGroup, ChartGroup } from '../../sections'
+
+/**
+ * Get the direction of the charts so that they alternate between left and right
+ *
+ * @param company the company to get the chart directions for
+ * @returns a dictionary of chart names and if they should be on the left
+ */
+const getChartDirections = (company: Company) => {
+  const charts = ['emission', 'fuel', 'energy', 'ticker']
+  const directionDict: { [key: string]: boolean } = {}
+  let count = 0
+  for (const chart of charts) {
+    if (company[chart as keyof Company]) {
+      directionDict[chart] = count % 2 === 0
+      count++
+    }
+  }
+  return directionDict
+}
 
 const Company = () => {
   const companyId = (useRouter().query.id as string) ?? ''
@@ -50,6 +70,7 @@ const Company = () => {
   }
 
   const { company, sectorEntry, industryEntry } = data
+  const chartDirections = getChartDirections(company)
 
   return (
     <>
@@ -83,7 +104,7 @@ const Company = () => {
               title="Carbon Accounting"
               chart={<EmissionBarChart emissionData={company.emission} />}
               interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
-              chartOnLeft={true}
+              chartOnLeft={chartDirections['emission']}
               chartSize="md"
             />
           )}
@@ -92,7 +113,7 @@ const Company = () => {
               title="CDP-Fuel"
               chart={<FuelRadialChart source={company.fuel} />}
               interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
-              chartOnLeft={false}
+              chartOnLeft={chartDirections['fuel']}
               chartSize="md"
             />
           )}
@@ -101,7 +122,7 @@ const Company = () => {
               title="CDP-Energy"
               chart={<EnergyRadialChart energyData={company.energy} />}
               interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
-              chartOnLeft={true}
+              chartOnLeft={chartDirections['energy']}
               chartSize="sm"
             />
           )}
@@ -110,7 +131,7 @@ const Company = () => {
               title="Yahoo Finance"
               chart={<FinanceBrushChart companyId={companyId} />}
               interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
-              chartOnLeft={false}
+              chartOnLeft={chartDirections['ticker']}
               chartSize="lg"
             />
           )}

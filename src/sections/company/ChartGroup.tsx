@@ -7,7 +7,7 @@ interface ChartGroupProps {
   title: string
   chart: React.ReactNode
   interpretation: React.ReactNode
-  chartOnLeft: boolean
+  chartOnLeft: boolean | undefined
   chartSize: 'sm' | 'md' | 'lg'
 }
 
