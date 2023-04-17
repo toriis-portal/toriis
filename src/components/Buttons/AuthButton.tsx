@@ -54,7 +54,7 @@ const AuthButton: FC = () => {
           </div>
           {session ? (
             <div>
-              <Link href="/admin/data">
+              <Link href="/admin/website">
                 <button className={buttonStyle}>Manage Website</button>
               </Link>
               <Link href="/admin/management">
