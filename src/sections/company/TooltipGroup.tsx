@@ -23,11 +23,11 @@ interface CompanyTooltipGroupProps {
   industryEntry: IndustryEntry
 }
 
-const CompanyTooltipGroup: FC<{ companyData: CompanyTooltipGroupProps }> = ({
-  companyData,
+const CompanyTooltipGroup: FC<CompanyTooltipGroupProps> = ({
+  company,
+  sectorEntry,
+  industryEntry,
 }) => {
-  const { company, sectorEntry, industryEntry } = companyData
-
   const contentfulOptions = {
     renderNode: {
       [INLINES.HYPERLINK]: (node: Block | Inline, children: any) => {
@@ -46,7 +46,7 @@ const CompanyTooltipGroup: FC<{ companyData: CompanyTooltipGroupProps }> = ({
   }
 
   return (
-    <div className="mb-6 flex flex-row items-center justify-between xl:px-20">
+    <div className="flex flex-row items-center justify-between">
       <div className={tagGroupStyle}>
         <Tag title="sector" className={tagStyle} />
         <div className={noteStyle}>{sectorEntry.name}</div>

@@ -5,7 +5,6 @@ import FinanceBrushChart from '../../components/Charts/FinanceBrushChart'
 import {
   HighlightedTitle,
   InvestmentTable,
-  Tag,
   EmissionBarChart,
   CompanyDetailsAccordion,
   EnergyRadialChart,
@@ -14,7 +13,7 @@ import {
   DataCard,
 } from '../../components'
 import { api } from '../../utils/api'
-import CompanyTooltipGroup from '../../sections/company/TooltipGroup'
+import { CompanyTooltipGroup, ChartGroup } from '../../sections'
 
 const Company = () => {
   const companyId = (useRouter().query.id as string) ?? ''
@@ -54,8 +53,10 @@ const Company = () => {
 
   return (
     <>
-      <div className="mb-20 mt-8 flex flex-col px-12 ">
+      <div className="mt-6 ml-8">
         <BackButton />
+      </div>
+      <div className="mb-20 flex flex-col px-12 lg:px-24">
         <div className="flex flex-col items-center">
           <HighlightedTitle
             title={company.name}
@@ -63,7 +64,11 @@ const Company = () => {
             color="clementine"
           />
         </div>
-        <CompanyTooltipGroup companyData={data} />
+        <CompanyTooltipGroup
+          company={company}
+          sectorEntry={sectorEntry}
+          industryEntry={industryEntry}
+        />
         {company.description && (
           <CompanyDetailsAccordion content={company.description} />
         )}
@@ -72,46 +77,44 @@ const Company = () => {
           size="medium"
           color="brightTeal"
         />
-
         {company.emission && (
-          <div>
-            <Tag
-              title="Carbon Accounting"
-              className="round-s ml-6 mb-5 bg-clementine text-white"
-            />
-            <div className="mb-4 flex items-center">
-              <div className="w-1/2">
-                <EmissionBarChart emissionData={company.emission} />
-              </div>
-              <div className="ml-20 w-1/2 ">
-                <DataCard>Jooslin is your fav PM</DataCard>
-              </div>
-            </div>
-          </div>
+          <ChartGroup
+            title="Carbon Accounting"
+            chart={<EmissionBarChart emissionData={company.emission} />}
+            interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
+            chartOnLeft={true}
+            chartSize="md"
+          />
         )}
-
-        {!!companyId && company.ticker && (
-          <>
-            <Tag
-              title="Yahoo Finance"
-              className="w-4 rounded-md bg-clementine text-white"
-            />
-            <FinanceBrushChart companyId={companyId} />
-          </>
+        {company.fuel && (
+          <ChartGroup
+            title="CDP-Fuel"
+            chart={<FuelRadialChart source={company.fuel} />}
+            interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
+            chartOnLeft={false}
+            chartSize="md"
+          />
         )}
 
         {company.energy && (
-          <div className="flex flex-row">
-            <EnergyRadialChart energyData={company.energy} />
-            <p>the text box will go here</p>
-          </div>
+          <ChartGroup
+            title="CDP-Energy"
+            chart={<EnergyRadialChart energyData={company.energy} />}
+            interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
+            chartOnLeft={true}
+            chartSize="sm"
+          />
         )}
 
-        <Tag
-          title="CDP-Fuel"
-          className="round-s ml-6 mb-5 bg-clementine text-white"
-        />
-        {company?.fuel && <FuelRadialChart source={company.fuel} />}
+        {company.ticker && (
+          <ChartGroup
+            title="Yahoo Finance"
+            chart={<FinanceBrushChart companyId={companyId} />}
+            interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
+            chartOnLeft={false}
+            chartSize="lg"
+          />
+        )}
 
         <HighlightedTitle
           title="Investment Details"
