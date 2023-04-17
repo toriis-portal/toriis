@@ -19,6 +19,7 @@ const CompanyCard: FC<CardProps> = ({ companyInfo }) => {
           'border-[0.5px] border-darkTeal shadow-[0_4px_4px_0] shadow-lightShadow',
           'hover:-m-[3.2px] hover:border-4 hover:border-cobalt',
           'overflow-x-scroll',
+          'md:overflow-hidden',
         )}
       >
         <div className="flex flex-row justify-between text-[28px] font-medium text-black">
