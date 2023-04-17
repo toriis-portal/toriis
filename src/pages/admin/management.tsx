@@ -3,35 +3,53 @@ import { useRouter } from 'next/router'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 
-import { AdminListTable, HighlightedTitle, PrimaryButton, Tag } from '../../components'
+import {
+  AdminListTable,
+  HighlightedTitle,
+  PrimaryButton,
+  Tag,
+} from '../../components'
 import { api } from '../../utils/api'
 
 const AdminAdminPage: FC = () => {
   const { data: session, status } = useSession()
   const { push } = useRouter()
 
-
   const [usersToDelete, setUsersToDelete] = useState<string[]>([])
+  const [usersEmailUpdate, setUsersEmailUpdate] = useState<string[]>([])
   const [edit, setEdit] = useState(false)
 
-  const deleteUsersMutation = api.user.deleteManyUsers.useMutation({ async onSuccess() {
-    console.log("success")
-    setUsersToDelete([])
-    await refetch()
-    console.log("deleted")
-  },})
+  const deleteUsersMutation = api.user.deleteManyUsers.useMutation({
+    async onSuccess() {
+      console.log('success')
+      setUsersToDelete([])
+      await refetch()
+      console.log('deleted')
+    },
+  })
+
+  const updateEmailsMutation = api.user.updateUserEmailPreference.useMutation({
+    async onSuccess() {
+      console.log('success2')
+      setUsersEmailUpdate([])
+      await refetch()
+      console.log('updated')
+    },
+  })
 
   const handleEdit = () => {
-    if(edit){
+    if (edit) {
       setUsersToDelete([])
     }
     setEdit(!edit)
   }
 
-  const handleDeleteUsers = () => {
-    const ids: string[] = usersToDelete
+  const handleUpdateUsers = () => {
+    let ids: string[] = usersEmailUpdate
+    updateEmailsMutation.mutate({ ids })
+    ids = usersToDelete
     deleteUsersMutation.mutate({ ids })
-  } 
+  }
 
   const { data, refetch } = api.user.getAllUsers.useQuery(undefined, {
     refetchOnWindowFocus: false,
@@ -45,32 +63,59 @@ const AdminAdminPage: FC = () => {
 
   return (
     session && (
-      <div className="flex flex-col gap-5 first-letter:w-full items-center">
-        <div className="flex flex-row justify-between w-3/4 mt-20">
-          <div className="flex flex-row gap-1 basis-1/2 justify-start items-start -mb-[12px]">
-            <HighlightedTitle title="Administrative List" size="medium" color="clementine" />
-            <p className="text-medGray ml-2 mt-2.5">
-                {"("}{data?.length || 0}{" Results )"}  
+      <div className="flex flex-col items-center gap-5 first-letter:w-full">
+        <div className="mt-20 flex w-3/4 flex-row justify-between">
+          <div className="-mb-[12px] flex basis-1/2 flex-row items-start justify-start gap-1">
+            <HighlightedTitle
+              title="Administrative List"
+              size="medium"
+              color="clementine"
+            />
+            <p className="ml-2 mt-2.5 text-medGray">
+              {'('}
+              {data?.length || 0}
+              {' Results )'}
             </p>
           </div>
           <button className="self-end" onClick={handleEdit}>
-            {edit
-            ? <Tag title="edit" className="bg-black text-white border border-black font-normal"/>
-            : <u><Tag title="edit" className="bg-lightBlue text-black border border-black font-normal"/></u>
-            }
+            {edit ? (
+              <Tag
+                title="edit"
+                className="border border-black bg-black font-normal text-white"
+              />
+            ) : (
+              <u>
+                <Tag
+                  title="edit"
+                  className="border border-black bg-lightBlue font-normal text-black"
+                />
+              </u>
+            )}
           </button>
         </div>
-        <AdminListTable 
-          className="w-3/4" 
-          users={data} 
+        <AdminListTable
+          className="w-3/4"
+          users={data}
           edit={edit}
-          onTrash={(currentId) => {setUsersToDelete([...usersToDelete, currentId])}}
-          onUndo={(currentId) => {setUsersToDelete(usersToDelete.filter(id => id !== currentId))}}
+          onTrash={(currentId) => {
+            setUsersToDelete([...usersToDelete, currentId])
+          }}
+          onUndo={(currentId) => {
+            setUsersToDelete(usersToDelete.filter((id) => id !== currentId))
+          }}
+          onCheck={(currentId) => {
+            setUsersEmailUpdate(
+              !usersEmailUpdate.includes(currentId)
+                ? [...usersEmailUpdate, currentId]
+                : usersEmailUpdate.filter((id) => id !== currentId),
+            )
+          }}
           tempDeleted={usersToDelete}
         />
         <div className="pt-6">
-          {(!deleteUsersMutation.isLoading && edit) && 
-            <PrimaryButton text="  Update  " onClick={handleDeleteUsers}/>}
+          {!deleteUsersMutation.isLoading &&
+            !updateEmailsMutation.isLoading &&
+            edit && <PrimaryButton text="Update" onClick={handleUpdateUsers} />}
         </div>
 
         {deleteUsersMutation.error && (

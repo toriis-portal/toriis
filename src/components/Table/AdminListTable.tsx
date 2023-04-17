@@ -11,12 +11,20 @@ interface AdminUsers {
   edit: boolean
   onTrash: (id: string) => void
   onUndo: (id: string) => void
+  onCheck: (id: string) => void
   tempDeleted: string[]
   className?: string
 }
 
-const AdminListTable: FC<AdminUsers> = ({ users, className, edit, onTrash, onUndo, tempDeleted }) => {
-
+const AdminListTable: FC<AdminUsers> = ({
+  users,
+  className,
+  edit,
+  onTrash,
+  onUndo,
+  onCheck,
+  tempDeleted,
+}) => {
   return (
     <div
       className={`${
@@ -37,33 +45,54 @@ const AdminListTable: FC<AdminUsers> = ({ users, className, edit, onTrash, onUnd
         </div>
 
         {users?.map((user, num) => {
-            const deletePressed = tempDeleted.indexOf(user.id) > -1
+          const deletePressed = tempDeleted.indexOf(user.id) > -1
           return (
             <div
               key={num}
               className="flex w-full flex-row items-center justify-center"
             >
               <div className="mt-4 flex w-10/12 flex-row items-center gap-1 border-b-[1px] border-darkGray pb-4 pl-6">
-                <p className={clsx("basis-1/3 truncate text-xl font-medium",
-                deletePressed && "text-lightGray",
-                !deletePressed && "text-black")}>
+                <p
+                  className={clsx(
+                    'basis-1/3 truncate text-xl font-medium',
+                    deletePressed && 'text-lightGray',
+                    !deletePressed && 'text-black',
+                  )}
+                >
                   {user.email}
                 </p>
-                <p className={clsx("basis-1/3 truncate text-xl font-medium",
-                deletePressed && "text-lightGray",
-                !deletePressed && "text-black")}>
+                <p
+                  className={clsx(
+                    'basis-1/3 truncate text-xl font-medium',
+                    deletePressed && 'text-lightGray',
+                    !deletePressed && 'text-black',
+                  )}
+                >
                   {user.name}
                 </p>
-                <p className={clsx("basis-1/6 text-base",
-                deletePressed && "text-lightGray",
-                !deletePressed && "text-medGray")}>
+                <p
+                  className={clsx(
+                    'basis-1/6 text-base',
+                    deletePressed && 'text-lightGray',
+                    !deletePressed && 'text-medGray',
+                  )}
+                >
                   {formatDate(user.createdAt)}
                 </p>
                 <div className="flex basis-1/6 flex-col items-center">
-                  <Checkbox className="h-6 w-6" disabled={!edit || deletePressed}></Checkbox>
+                  <Checkbox
+                    onClick={() => onCheck(user.id)}
+                    defaultChecked={user.shouldEmail}
+                    className="h-6 w-6"
+                    disabled={!edit || deletePressed}
+                  ></Checkbox>
                 </div>
               </div>
-              <button onClick={() => deletePressed ? onUndo(user.id) : onTrash(user.id)}>
+              <button
+                onClick={() =>
+                  deletePressed ? onUndo(user.id) : onTrash(user.id)
+                }
+              >
                 {edit &&
                   (deletePressed ? (
                     <ArrowUturnLeftIcon className="ml-8 h-auto w-6 stroke-2" />

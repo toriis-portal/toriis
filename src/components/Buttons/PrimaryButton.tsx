@@ -10,9 +10,9 @@ interface PrimaryButtonProps {
 }
 
 const PrimaryButton: FC<PrimaryButtonProps> = ({ text, link, onClick }) => {
-  return (link ? 
+  return link ? (
     <div>
-      <Link href={link || "#"}>
+      <Link href={link || '#'}>
         <div>
           <button
             className={clsx(
@@ -29,10 +29,11 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({ text, link, onClick }) => {
         </div>
       </Link>
     </div>
-    :
+  ) : (
     <div>
       <div>
-        <button onClick={onClick || undefined}
+        <button
+          onClick={onClick || undefined}
           className={clsx(
             'font-klima text-[18px] font-medium',
             'rounded border-2 border-solid border-cobalt',
