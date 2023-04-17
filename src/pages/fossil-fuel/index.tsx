@@ -24,6 +24,9 @@ const FossilFuelPage: FC<FossilFuelProps> = ({ caseEntries }) => {
     <>
       <PrimaryNavBar />
       <ToTopButton />
+      <div id="dirtyCompanies" className="pt-20">
+        <h1>placeholder</h1>
+      </div>
       <div id="financialCase" className="pt-20">
         <FinancialCase entries={caseEntries} />
       </div>
