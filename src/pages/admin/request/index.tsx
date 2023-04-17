@@ -7,7 +7,7 @@ import type { JSONObject } from 'superjson/dist/types'
 
 import { api } from '../../utils/api'
 
-const ReviewPage: FC = () => {
+const RequestPage: FC = () => {
   const { data: session, status } = useSession()
   const { push } = useRouter()
 
@@ -42,4 +42,4 @@ const ReviewPage: FC = () => {
   )
 }
 
-export default ReviewPage
+export default RequestPage
