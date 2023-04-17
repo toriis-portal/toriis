@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 
-import { PrimaryNavBar, ToTopButton } from '../../components'
+import { PrimaryNavBar, ToTopButton, HighlightedTitle } from '../../components'
 import { ContentWrapper } from '../../utils/content'
 import { FinancialCase } from '../../sections'
 import type { CaseEntry } from '../../types'
@@ -24,6 +24,13 @@ const FossilFuelPage: FC<FossilFuelProps> = ({ caseEntries }) => {
     <>
       <PrimaryNavBar />
       <ToTopButton />
+      <div className="flex justify-center">
+        <HighlightedTitle
+          title="Fossil Fuels"
+          size="large"
+          color="clementine"
+        />
+      </div>
       <div id="financialCase" className="pt-20">
         <FinancialCase entries={caseEntries} />
       </div>
