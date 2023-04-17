@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import type { FC } from 'react'
 import { useState } from 'react'
 
@@ -5,10 +6,12 @@ import { ReadMoreButton } from '../index'
 
 interface CompanyDetailsAccordionProps {
   content: string
+  className?: string
 }
 
 const CompanyDetailsAccordion: FC<CompanyDetailsAccordionProps> = ({
   content,
+  className,
 }) => {
   const [folded, setFolded] = useState(true)
 
@@ -24,7 +27,12 @@ const CompanyDetailsAccordion: FC<CompanyDetailsAccordionProps> = ({
   }
 
   return (
-    <div className="my-10 rounded-[10px] border-[3px]  border-cobalt bg-lightBlue px-10 py-5">
+    <div
+      className={clsx(
+        'rounded-[10px] border-[3px] border-cobalt bg-lightBlue px-10 py-5',
+        className,
+      )}
+    >
       <p>{folded ? truncated : content}</p>
       <div className={`flex px-6 ${contentLengthTooLong ? '' : 'hidden'}`}>
         <ReadMoreButton

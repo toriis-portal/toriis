@@ -13,7 +13,7 @@ const EmissionBarChart: FC<EmissionBarChartProps> = ({ emissionData }) => {
   const scopeValues = [
     emissionData?.scopeOne ?? 0,
     emissionData?.scopeTwo ?? 0,
-    emissionData?.scopeThree ?? 0,
+    emissionData?.scopeThree ?? 0.000001,
   ]
 
   const emissions = scopeValues.map((value, index) => ({
@@ -29,6 +29,11 @@ const EmissionBarChart: FC<EmissionBarChartProps> = ({ emissionData }) => {
   ]
 
   const options = {
+    tooltip: {
+      y: {
+        formatter: (value: number) => `${value} Metric tons CO2e`,
+      },
+    },
     plotOptions: {
       bar: {
         horizontal: true,

@@ -123,7 +123,7 @@ const FuelRadialChart: FC<{ source: Fuel }> = ({ source }) => {
           series={series}
           type="radialBar"
           height="auto"
-          width="50%"
+          width="100%"
         />
       )}
     </>

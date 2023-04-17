@@ -1,20 +1,13 @@
-import { EnvGrade, Sector } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
+import { EnvGrade, Sector } from '@prisma/client'
 import type { Company, Investment } from '@prisma/client'
 import yahooFinance from 'yahoo-finance2'
 
+import { sectorEnum } from '../../../utils/enums'
+import { ContentWrapper } from '../../../utils/content'
 import { createTRPCRouter, publicProcedure } from '../trpc'
-
-const extractSortOrder = (
-  sort: string | undefined | null,
-): sort is 'asc' | 'desc' | undefined => {
-  if (sort === undefined || sort === 'asc' || sort === 'desc') {
-    return true
-  }
-
-  return false
-}
+import type { IndustryEntry, SectorEntry } from '../../../types'
 
 const createNetAssetValFilter = (range: number[]) => {
   return {
@@ -24,6 +17,44 @@ const createNetAssetValFilter = (range: number[]) => {
     },
   }
 }
+const contentClient = new ContentWrapper()
+
+const getIndustryEntry = async (company: Company) => {
+  const industryEntries: IndustryEntry[] = await contentClient.get('industry')
+
+  let industryEntry: IndustryEntry = {
+    name: 'NA',
+    details: 'NA',
+  }
+
+  industryEntries.map((item: IndustryEntry) => {
+    if (item.name === company.industry) {
+      industryEntry = item
+    }
+  })
+
+  return industryEntry
+}
+
+const getSectorEntry = async (company: Company) => {
+  const sectorName = (
+    company.sector ? sectorEnum[company.sector] : 'NA'
+  ) as Sector
+
+  const sectorEntries: SectorEntry[] = await contentClient.get('sector')
+
+  let sectorEntry: SectorEntry = {
+    name: 'NA',
+  }
+
+  sectorEntries.map((item: SectorEntry) => {
+    if (item.name === sectorName) {
+      sectorEntry = item
+    }
+  })
+
+  return sectorEntry
+}
 
 interface SortOrder {
   netAssetVal?: 'asc' | 'desc'
@@ -31,6 +62,7 @@ interface SortOrder {
     environmentGrade?: 'asc' | 'desc'
   }
 }
+
 type SortByString = 'asc' | 'desc'
 
 const sortStringZodType = z
@@ -117,6 +149,7 @@ export const companyRouter = createTRPCRouter({
           fuel: true,
           emission: true,
           energy: true,
+          ESG: true,
         },
       })
       if (!company) {
@@ -125,7 +158,12 @@ export const companyRouter = createTRPCRouter({
           message: 'Company not found',
         })
       }
-      return company
+
+      const industryEntry: IndustryEntry = await getIndustryEntry(company)
+
+      const sectorEntry: SectorEntry = await getSectorEntry(company)
+
+      return { company, sectorEntry, industryEntry }
     }),
 
   getCompanies: publicProcedure
