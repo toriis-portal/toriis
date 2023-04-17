@@ -26,13 +26,13 @@ interface FossilFuelProps {
 
 const FossilFuelPage: FC<FossilFuelProps> = ({ caseEntries }) => {
   const navItems = [
-    { path: '', text: 'University of Illinois Investments' },
-    { path: '', text: 'The Dirty Industry UIUC Supports' },
-    { path: '', text: 'Why Are Fossil Fuels Bad' },
-    { path: '', text: 'What 1.5C Warning Means' },
+    { path: 'uofiInvestments', text: 'University of Illinois Investments' },
+    { path: 'dirtyIndustry', text: 'The Dirty Industry UIUC Supports' },
+    { path: 'whyFossilFuelsAreBad', text: 'Why Are Fossil Fuels Bad' },
+    { path: 'warning', text: 'What 1.5C Warning Means' },
     { path: 'financialCase', text: 'The Case For Institutional Divestments' },
-    { path: '', text: 'Schools That Have Divested ' },
-    { path: '', text: 'Institutions That Have Divested' },
+    { path: 'divestedSchools', text: 'Schools That Have Divested ' },
+    { path: 'divestedInstitutions', text: 'Institutions That Have Divested' },
   ]
 
   return (
@@ -47,9 +47,20 @@ const FossilFuelPage: FC<FossilFuelProps> = ({ caseEntries }) => {
         />
       </div>
       <SecondaryNavBar navItems={navItems} />
+
+      {/* Placeholders for fossil fuel page sections: */}
+      <div id="uofiInvestments" className="pt-20"></div>
+      <div id="dirtyIndustry" className="pt-20"></div>
+      <div id="whyFossilFuelsAreBad" className="pt-20"></div>
+      <div id="warning" className="pt-20"></div>
+
       <div id="financialCase" className="pt-20">
         <FinancialCase entries={caseEntries} />
       </div>
+
+      {/* More placeholders for fossil fuel page sections: */}
+      <div id="divestedSchools" className="pt-20"></div>
+      <div id="divestedInstitutions" className="pt-20"></div>
     </>
   )
 }
