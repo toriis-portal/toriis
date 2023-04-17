@@ -23,6 +23,7 @@ import FinancialCaseAccordion from './Accordions/FinancialCaseAccordion'
 // Nav
 import PrimaryNavBar from './Nav/PrimaryNavBar'
 import SecondaryNavBar from './Nav/SecondaryNavBar'
+import WebsiteManagementNavBar from './Nav/WebsiteManagementNavBar'
 // Selects
 import Select from './Selects/Select'
 import SearchBar from './Selects/SearchBar'
@@ -66,4 +67,5 @@ export {
   FinancialCaseAccordion,
   ToolTip,
   EnergyRadialChart,
+  WebsiteManagementNavBar,
 }

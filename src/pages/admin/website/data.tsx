@@ -3,6 +3,8 @@ import { useRouter } from 'next/router'
 import type { FC } from 'react'
 import { useEffect } from 'react'
 
+import { WebsiteManagementNavBar } from '../../../components'
+
 const UpdateData: FC = () => {
   const { data: session, status } = useSession()
   const { push } = useRouter()
@@ -13,7 +15,18 @@ const UpdateData: FC = () => {
     }
   }, [push, status])
 
-  return <div>{session && <h1>Update Databaset</h1>}</div>
+  const navItems = [
+    { path: '', text: 'Update Database', active: true },
+    { path: '../content', text: 'Update Text Content', active: false },
+  ]
+
+  return (
+    session && (
+      <div>
+        <WebsiteManagementNavBar navItems={navItems} />
+      </div>
+    )
+  )
 }
 
 export default UpdateData

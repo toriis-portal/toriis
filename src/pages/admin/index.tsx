@@ -28,7 +28,7 @@ const AdminPage: FC = () => {
             title="Administration Control"
             size="large"
             color="clementine"
-          ></HighlightedTitle>
+          />
         </div>
         <div className="flex w-fit flex-col justify-center">
           <AuthButton />
