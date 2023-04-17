@@ -75,5 +75,5 @@ export {
   DataCard,
   CompanyDetailsAccordion,
   EnergyRadialChart,
-  AdminBox
+  AdminBox,
 }
