@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 const ReviewPage: FC = () => {
   const { data: session, status } = useSession()
   const { push } = useRouter()
+  const requestId = (useRouter().query.id as string) ?? ''
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -13,7 +14,7 @@ const ReviewPage: FC = () => {
     }
   }, [push, status])
 
-  return <div>{session && <h1>Request Management</h1>}</div>
+  return <div>{session && <h1>Review a Request with id {requestId}</h1>}</div>
 }
 
 export default ReviewPage
