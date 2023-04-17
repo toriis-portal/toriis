@@ -21,19 +21,15 @@ const AdminAdminPage: FC = () => {
 
   const deleteUsersMutation = api.user.deleteManyUsers.useMutation({
     async onSuccess() {
-      console.log('success')
       setUsersToDelete([])
       await refetch()
-      console.log('deleted')
     },
   })
 
   const updateEmailsMutation = api.user.updateUserEmailPreference.useMutation({
     async onSuccess() {
-      console.log('success2')
       setUsersEmailUpdate([])
       await refetch()
-      console.log('updated')
     },
   })
 
@@ -45,10 +41,8 @@ const AdminAdminPage: FC = () => {
   }
 
   const handleUpdateUsers = () => {
-    let ids: string[] = usersEmailUpdate
-    updateEmailsMutation.mutate({ ids })
-    ids = usersToDelete
-    deleteUsersMutation.mutate({ ids })
+    updateEmailsMutation.mutate({ ids: usersEmailUpdate })
+    deleteUsersMutation.mutate({ ids: usersToDelete })
   }
 
   const { data, refetch } = api.user.getAllUsers.useQuery(undefined, {
@@ -120,6 +114,9 @@ const AdminAdminPage: FC = () => {
 
         {deleteUsersMutation.error && (
           <p>Something went wrong! {deleteUsersMutation.error.message}</p>
+        )}
+        {updateEmailsMutation.error && (
+          <p>Something went wrong! {updateEmailsMutation.error.message}</p>
         )}
       </div>
     )
