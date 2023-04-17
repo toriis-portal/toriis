@@ -3,19 +3,19 @@ import type { FC } from 'react'
 
 interface GeneralModalProps {
   isOpen: boolean // state variable for displaying modal
-  styles?: string
-  children?: JSX.Element | undefined | null
+  className?: string
+  children?: React.ReactNode
 }
 
 export const GeneralModal: FC<GeneralModalProps> = ({
   isOpen,
-  styles,
+  className,
   children,
 }) => {
   const defaultModalStyles =
     'z-20 rounded-xl border-[1px] border-black bg-white '
-  const modalStyles: string = styles
-    ? defaultModalStyles + styles
+  const modalStyles: string = className
+    ? defaultModalStyles + className
     : defaultModalStyles
   return (
     <>
