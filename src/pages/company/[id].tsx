@@ -1,6 +1,8 @@
 import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
 import { Company } from '@prisma/client'
+import type { GetServerSideProps } from 'next'
+import { createClient } from 'contentful'
 
 import FinanceBrushChart from '../../components/Charts/FinanceBrushChart'
 import {
@@ -15,6 +17,7 @@ import {
 } from '../../components'
 import { api } from '../../utils/api'
 import { CompanyTooltipGroup, ChartGroup } from '../../sections'
+import type { CompanyDetailsEntry } from '../../types'
 
 /**
  * Get the direction of the charts so that they alternate between left and right

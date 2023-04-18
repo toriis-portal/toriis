@@ -1,3 +1,5 @@
+import { StringDecoder } from 'string_decoder'
+
 import type { Document } from '@contentful/rich-text-types'
 import type { Company, ESG } from '@prisma/client'
 
@@ -54,6 +56,11 @@ export interface IndustryEntry {
 }
 
 export interface SectorEntry {
+  name: string
+  details?: Document
+}
+
+export interface CompanyDetailsEntry {
   name: string
   details?: Document
 }
