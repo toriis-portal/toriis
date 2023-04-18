@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 
-import { PrimaryNavBar, ToTopButton, ClimateClock } from '../../components'
+import { PrimaryNavBar, ToTopButton } from '../../components'
 import { ContentWrapper } from '../../utils/content'
 import { FinancialCase } from '../../sections'
 import type { CaseEntry } from '../../types'
@@ -27,7 +27,6 @@ const FossilFuelPage: FC<FossilFuelProps> = ({ caseEntries }) => {
       <div id="financialCase" className="pt-20">
         <FinancialCase entries={caseEntries} />
       </div>
-      <ClimateClock />
     </>
   )
 }

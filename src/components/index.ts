@@ -21,7 +21,6 @@ import FinanceBrushChart from './Charts/FinanceBrushChart'
 // Displays
 import ListItem from './Displays/ListItem'
 import Carousel from './Displays/Carousel/Carousel'
-import ClimateClock from './Displays/ClimateClock/ClimateClock'
 // Accordions
 import RequestAccordion from './Accordions/RequestAccordion'
 import FinancialCaseAccordion from './Accordions/FinancialCaseAccordion'
@@ -76,6 +75,5 @@ export {
   DataCard,
   CompanyDetailsAccordion,
   EnergyRadialChart,
-  ClimateClock,
   AdminBox,
 }
