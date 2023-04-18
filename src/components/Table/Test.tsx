@@ -1,4 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import type { Company } from '@prisma/client'
+
+import { api } from '../../utils/api'
+import { INDUSTRIES } from '../../utils/constants'
 
 import { DynamicTable, PaginatedDynamicTable } from './DynamicTable'
 
@@ -43,27 +47,54 @@ const data = [
 ]
 
 export const Test = () => {
+  const [skip, setSkip] = useState(0)
+  const { data, isLoading } = api.company.getCompaniesBySkipTake.useQuery({
+    skip: skip,
+    take: 10,
+  })
+
+  const originalRows = useMemo(() => data?.items ?? [], [data?.items])
   const [rows, setRows] = useState<
-    ((typeof data)[0] & { changedEntries: (keyof (typeof data)[0])[] })[]
-  >(() => data.map((row) => ({ ...row, changedEntries: [] })))
+    (Company & {
+      changedEntries: (keyof Company)[]
+    })[]
+  >(() => originalRows.map((row) => ({ ...row, changedEntries: [] })))
 
-  const originalRows = JSON.parse(JSON.stringify(data)) as typeof data
+  useEffect(() => {
+    const cleanedRows = originalRows.map((row) => {
+      return {
+        ...row,
+        changedEntries: [],
+      }
+    })
+    setRows(cleanedRows)
+  }, [data, isLoading, originalRows, setRows])
 
+  // const originalRows = JSON.parse(JSON.stringify(data)) as typeof data
   const handleChange = (
-    row: (typeof data)[0],
+    row: Company,
     updatedEntry: {
-      key: keyof (typeof data)[0]
+      key: keyof Company
       value: string | number
     },
   ) => {
     setRows((prevRows) => {
       const newRows = prevRows.map((prevRow) => {
-        if (prevRow._id === row._id) {
+        if (prevRow.id === row.id) {
           // if the new data matches the data in copied, remove it from keys
+          const updatedEntries = (
+            originalRows
+              ? originalRows.find(
+                  (dataRow: { id: string }) => dataRow.id === row.id,
+                )
+              : []
+          ) as Company | []
+
           if (
-            originalRows.find((dataRow) => dataRow._id === row._id)?.[
-              updatedEntry.key
-            ] === updatedEntry.value
+            updatedEntries &&
+            !Array.isArray(updatedEntries) &&
+            updatedEntries?.id &&
+            updatedEntries[updatedEntry.key] === updatedEntry.value
           ) {
             return {
               ...prevRow,
@@ -87,46 +118,86 @@ export const Test = () => {
       return newRows
     })
   }
+  const industryKeyValue = INDUSTRIES.map((industry) => ({
+    value: industry,
+    label: industry,
+  }))
 
   return (
     <PaginatedDynamicTable
       paginated={{
-        page: 1,
+        page: skip / 10 + 1,
         pageCount: 10,
-        onPageChange: (page) => console.log(page),
+        onPageChange: (page) => setSkip((page - 1) * 10),
         rowCount: rows.length,
       }}
       rows={rows}
+      styles={{
+        table: 'w-full',
+      }}
       columns={[
         {
-          key: 'companyId',
-          label: 'Company ID',
+          key: 'name',
+          label: 'Name',
           isEditable: true,
           ctrl: {
             type: 'text',
-            render: (row) => row.companyId.$oid,
+            render: (row) => row.name,
           },
         },
         {
-          key: 'year',
-          label: 'Year',
-          isEditable: false,
+          key: 'ticker',
+          label: 'Ticker',
+          isEditable: true,
           ctrl: {
             type: 'text',
-            render: (row) => row.year,
+            render: (row) => row.ticker,
           },
         },
         {
-          key: 'coupon',
-          label: 'Coupon',
-          isEditable: false,
+          key: 'sector',
+          label: 'Sector',
+          isEditable: true,
+          ctrl: {
+            type: 'text',
+            render: (row) => row.sector,
+          },
+        },
+        {
+          key: 'industry',
+          label: 'Industry',
+          isEditable: true,
           ctrl: {
             type: 'select',
-            options: [
-              { value: 2.6, label: '2.6' },
-              { value: 2.95, label: '2.95' },
-            ],
-            render: (row) => row.coupon,
+            options: industryKeyValue,
+            render: (row) => row.industry,
+          },
+        },
+        {
+          key: 'description',
+          label: 'Description',
+          isEditable: true,
+          ctrl: {
+            type: 'text',
+            render: (row) => row.description,
+          },
+        },
+        {
+          key: 'netAssetVal',
+          label: 'Net Asset Value',
+          isEditable: true,
+          ctrl: {
+            type: 'text',
+            render: (row) => row.netAssetVal,
+          },
+        },
+        {
+          key: 'bloombergId',
+          label: 'Bloomberg ID',
+          isEditable: true,
+          ctrl: {
+            type: 'text',
+            render: (row) => row.bloombergId,
           },
         },
       ]}

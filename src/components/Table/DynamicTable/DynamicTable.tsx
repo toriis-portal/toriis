@@ -112,7 +112,7 @@ interface Props<TableRow> {
 export type DynamicTableProps<TableRow> = Props<TableRow>
 
 export interface BaseTableRowGeneric<TableRow> {
-  _id: string
+  id: string
   changedEntries: (keyof TableRow)[]
 }
 
@@ -203,7 +203,7 @@ export const DynamicTable = <TableRow extends BaseTableRowGeneric<TableRow>>({
       </thead>
       <tbody className={STYLES.body}>
         {rows.map((row) => (
-          <tr key={row._id} className={STYLES.row}>
+          <tr key={row.id} className={STYLES.row}>
             {columns.map((col) => (
               <td
                 key={String(col.key)}

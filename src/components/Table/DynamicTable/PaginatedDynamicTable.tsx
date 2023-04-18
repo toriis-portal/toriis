@@ -23,10 +23,11 @@ export const PaginatedDynamicTable = <
   paginated,
   ...tableProps
 }: Props<TableRow>) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { rowCount: _rowCount, pageCount, page, onPageChange } = paginated ?? {}
 
   return (
-    <div className="w-96">
+    <div>
       <DynamicTable {...tableProps} />
       <div className="flex">
         <ChevronLeftIcon
