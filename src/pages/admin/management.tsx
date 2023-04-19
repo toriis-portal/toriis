@@ -43,6 +43,7 @@ const AdminAdminPage: FC = () => {
   const handleUpdateUsers = () => {
     updateEmailsMutation.mutate({ ids: usersEmailUpdate })
     deleteUsersMutation.mutate({ ids: usersToDelete })
+    setEdit(false)
   }
 
   const { data, refetch } = api.user.getAllUsers.useQuery(undefined, {
@@ -68,7 +69,7 @@ const AdminAdminPage: FC = () => {
             <p className="ml-2 mt-2.5 text-medGray">
               {'('}
               {data?.length || 0}
-              {' Results )'}
+              {' Results)'}
             </p>
           </div>
           <button className="self-end" onClick={handleEdit}>
@@ -90,7 +91,7 @@ const AdminAdminPage: FC = () => {
         <AdminListTable
           className="w-3/4"
           users={data}
-          edit={edit}
+          editEnabled={edit}
           onTrash={(currentId) => {
             setUsersToDelete([...usersToDelete, currentId])
           }}

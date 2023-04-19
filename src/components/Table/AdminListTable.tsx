@@ -4,11 +4,17 @@ import { Checkbox } from 'flowbite-react'
 import clsx from 'clsx'
 import { TrashIcon, ArrowUturnLeftIcon } from '@heroicons/react/24/outline'
 
-import { formatDate } from '../../utils/helpers'
+const delIconStyle = clsx('ml-8 h-auto w-6 stroke-2')
+const delUserTextStyle = (deletePressed: boolean) =>
+  clsx(
+    'basis-1/3 truncate text-xl font-medium',
+    deletePressed && 'text-lightGray',
+    !deletePressed && 'text-black',
+  )
 
-interface AdminUsers {
+interface AdminTableProps {
   users: User[] | undefined
-  edit: boolean
+  editEnabled: boolean
   onTrash: (id: string) => void
   onUndo: (id: string) => void
   onCheck: (id: string) => void
@@ -16,10 +22,10 @@ interface AdminUsers {
   className?: string
 }
 
-const AdminListTable: FC<AdminUsers> = ({
+const AdminListTable: FC<AdminTableProps> = ({
   users,
   className,
-  edit,
+  editEnabled,
   onTrash,
   onUndo,
   onCheck,
@@ -34,15 +40,13 @@ const AdminListTable: FC<AdminUsers> = ({
     >
       <div className="w-full py-12">
         <div className="flex w-full flex-row items-center justify-center">
-          <div className="flex w-10/12 flex-row items-center gap-1 border-b-[1px] border-darkGray pb-4 pl-6">
-            <p className="basis-1/3 text-base text-medGray">Email</p>
-            <p className="basis-1/3 text-base text-medGray">Name</p>
-            <p className="basis-1/6 text-base text-medGray">Date added</p>
-            <p className="basis-1/6 text-center text-base text-medGray">
-              Email List
-            </p>
+          <div className="flex w-10/12 flex-row items-center gap-1 border-b-[1px] border-darkGray pb-4 pl-6 text-base text-medGray">
+            <p className="basis-1/3">Email</p>
+            <p className="basis-1/3">Name</p>
+            <p className="basis-1/6">Date added</p>
+            <p className="basis-1/6 text-center">Email List</p>
           </div>
-          {edit && <div className="ml-8 w-8"></div>}
+          {editEnabled && <div className="ml-8 w-8"></div>}
         </div>
 
         {users?.map((user, num) => {
@@ -53,24 +57,8 @@ const AdminListTable: FC<AdminUsers> = ({
               className="flex w-full flex-row items-center justify-center"
             >
               <div className="mt-4 flex w-10/12 flex-row items-center gap-1 border-b-[1px] border-darkGray pb-4 pl-6">
-                <p
-                  className={clsx(
-                    'basis-1/3 truncate text-xl font-medium',
-                    deletePressed && 'text-lightGray',
-                    !deletePressed && 'text-black',
-                  )}
-                >
-                  {user.email}
-                </p>
-                <p
-                  className={clsx(
-                    'basis-1/3 truncate text-xl font-medium',
-                    deletePressed && 'text-lightGray',
-                    !deletePressed && 'text-black',
-                  )}
-                >
-                  {user.name}
-                </p>
+                <p className={delUserTextStyle(deletePressed)}>{user.email}</p>
+                <p className={delUserTextStyle(deletePressed)}>{user.name}</p>
                 <p
                   className={clsx(
                     'basis-1/6 text-base',
@@ -78,14 +66,14 @@ const AdminListTable: FC<AdminUsers> = ({
                     !deletePressed && 'text-medGray',
                   )}
                 >
-                  {formatDate(user.createdAt)}
+                  {user.createdAt.toLocaleDateString()}
                 </p>
                 <div className="flex basis-1/6 flex-col items-center">
                   <Checkbox
                     onClick={() => onCheck(user.id)}
                     defaultChecked={user.shouldEmail}
                     className="h-6 w-6"
-                    disabled={!edit || deletePressed}
+                    disabled={!editEnabled || deletePressed}
                   ></Checkbox>
                 </div>
               </div>
@@ -94,11 +82,11 @@ const AdminListTable: FC<AdminUsers> = ({
                   deletePressed ? onUndo(user.id) : onTrash(user.id)
                 }
               >
-                {edit &&
+                {editEnabled &&
                   (deletePressed ? (
-                    <ArrowUturnLeftIcon className="ml-8 h-auto w-6 stroke-2" />
+                    <ArrowUturnLeftIcon className={delIconStyle} />
                   ) : (
-                    <TrashIcon className="ml-8 h-auto w-6 stroke-2" />
+                    <TrashIcon className={delIconStyle} />
                   ))}
               </button>
             </div>
