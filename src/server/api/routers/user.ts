@@ -1,6 +1,5 @@
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
-import type { Prisma } from '@prisma/client'
 
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 
@@ -43,28 +42,25 @@ export const userRouter = createTRPCRouter({
   updateUserEmailPreference: protectedProcedure
     .input(z.object({ ids: z.array(z.string()) }))
     .mutation(async ({ input, ctx }) => {
-      const promises: Prisma.PrismaPromise<Prisma.JsonObject>[] = input.ids.map(
-        (id) => {
-          return ctx.prisma.$runCommandRaw({
-            findAndModify: 'User',
-            query: { _id: { $oid: id } },
-            //$not doesn't work with "$value" in typescript because it tries to pass
-            //the raw string "$value" into $not instead of the boolean value that
-            //"$value" evaluates to. Using $cond seems to be the only workaround.
-            update: [
-              {
-                $set: {
-                  shouldEmail: {
-                    $cond: { if: '$shouldEmail', then: false, else: true },
-                  },
-                },
-              },
-            ],
-            new: true,
-            upsert: true,
-          })
-        },
-      )
+      const promises = input.ids.map(async (_id) => {
+        const currentEmailVal = await ctx.prisma.user.findUnique({
+          where: {
+            id: _id,
+          },
+          select: {
+            shouldEmail: true,
+          },
+        })
+
+        return ctx.prisma.user.update({
+          where: {
+            id: _id,
+          },
+          data: {
+            shouldEmail: !currentEmailVal?.shouldEmail,
+          },
+        })
+      })
       const updateEmailUsers = await Promise.all(promises)
       if (!updateEmailUsers) {
         throw new TRPCError({
