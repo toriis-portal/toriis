@@ -24,7 +24,7 @@ import Carousel from './Displays/Carousel/Carousel'
 import ClimateClock from './Displays/ClimateClock/ClimateClock'
 // Accordions
 import RequestAccordion from './Accordions/RequestAccordion'
-import FinancialCaseAccordion from './Accordions/FinancialCaseAccordion'
+import CaseAccordion from './Accordions/CaseAccordion'
 import CompanyDetailsAccordion from './Accordions/CompanyDetailsAccordion'
 // Nav
 import PrimaryNavBar from './Nav/PrimaryNavBar'
@@ -69,7 +69,7 @@ export {
   ESGTag,
   NetAssetTag,
   Tag,
-  FinancialCaseAccordion,
+  CaseAccordion,
   ToolTip,
   FuelRadialChart,
   EmissionBarChart,
