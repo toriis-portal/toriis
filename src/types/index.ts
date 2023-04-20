@@ -62,5 +62,5 @@ export interface SectorEntry {
 
 export interface CompanyDetailsEntry {
   name: string
-  details?: Document
+  description: Document
 }

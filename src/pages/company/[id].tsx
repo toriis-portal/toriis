@@ -1,9 +1,11 @@
 import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
 import { Company } from '@prisma/client'
-import type { GetServerSideProps } from 'next'
-import { createClient } from 'contentful'
+import type { FC } from 'react'
+import { MARKS, BLOCKS } from '@contentful/rich-text-types'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
+import { ContentWrapper } from '../../utils/content'
 import FinanceBrushChart from '../../components/Charts/FinanceBrushChart'
 import {
   HighlightedTitle,
@@ -18,6 +20,25 @@ import {
 import { api } from '../../utils/api'
 import { CompanyTooltipGroup, ChartGroup } from '../../sections'
 import type { CompanyDetailsEntry } from '../../types'
+
+export const getServerSideProps = async () => {
+  const contentClient = new ContentWrapper()
+  const companyDetails: CompanyDetailsEntry[] = await contentClient.get(
+    'companyDetailsPage',
+  )
+  console.log(companyDetails)
+  return {
+    props: {
+      yahooFinance: companyDetails[1],
+      carbonAccounting: companyDetails[0],
+    },
+  }
+}
+
+interface CompanyDetailsProps {
+  yahooFinance: CompanyDetailsEntry
+  carbonAccounting: CompanyDetailsEntry
+}
 
 /**
  * Get the direction of the charts so that they alternate between left and right
@@ -38,7 +59,24 @@ const getChartDirections = (company: Company) => {
   return directionDict
 }
 
-const Company = () => {
+const Company: FC<CompanyDetailsProps> = ({
+  yahooFinance,
+  carbonAccounting,
+}) => {
+  const contentfulOptions = {
+    renderMark: {
+      [MARKS.BOLD]: (text: any) => (
+        <span className="font-semibold underline decoration-clementine decoration-2 underline-offset-4">
+          {text}
+        </span>
+      ),
+    },
+    renderNode: {
+      [BLOCKS.PARAGRAPH]: (node: any, children: any) => (
+        <p className="mb-8">{children}</p>
+      ),
+    },
+  }
   const companyId = (useRouter().query.id as string) ?? ''
 
   const { data, isLoading, isError } = api.company.getCompany.useQuery(
@@ -115,7 +153,14 @@ const Company = () => {
             <ChartGroup
               title="Carbon Accounting"
               chart={<EmissionBarChart emissionData={company.emission} />}
-              interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
+              interpretation={
+                <DataCard>
+                  {documentToReactComponents(
+                    carbonAccounting.description,
+                    contentfulOptions,
+                  )}
+                </DataCard>
+              }
               chartOnLeft={chartDirections['emission']}
               chartSize="md"
             />
@@ -142,7 +187,14 @@ const Company = () => {
             <ChartGroup
               title="Yahoo Finance"
               chart={<FinanceBrushChart companyId={companyId} />}
-              interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
+              interpretation={
+                <DataCard>
+                  {documentToReactComponents(
+                    yahooFinance.description,
+                    contentfulOptions,
+                  )}
+                </DataCard>
+              }
               chartOnLeft={chartDirections['ticker']}
               chartSize="lg"
             />
