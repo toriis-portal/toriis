@@ -28,35 +28,32 @@ const Landing: FC<{ text: Document }> = ({ text }) => {
   }
 
   return (
-    <>
-      <div className="flex flex-col items-center justify-center">
-        <CapitalizedTitle />
-        <div className="flex flex-col items-center justify-center px-14 py-8 lg:flex-row">
-          <div className="basis-3/7">
-            <LandingDonutChart />
-            <div className="flex justify-center pt-2 font-inter text-xl font-semibold">
-              Assets Per Sector
-            </div>
+    <div className="flex flex-col items-center justify-center">
+      <CapitalizedTitle />
+      <div className="flex flex-col items-center justify-center px-14 py-8 lg:flex-row">
+        <div className="basis-3/7">
+          <LandingDonutChart />
+          <div className="flex justify-center pt-2 font-inter text-xl font-semibold">
+            Assets Per Sector
           </div>
-
-          <div className="basis-4/7">
-            <div className="mb-6 p-4 lg:pr-14">
-              {documentToReactComponents(text, contentfulOptions)}
-              <div className="flex flex-col gap-12 md:flex-row">
-                <PrimaryButton
-                  text="More About Fossil Fuels"
-                  link="/fossil-fuel"
-                />
-                <PrimaryButton
-                  text="Learn About Investment"
-                  link="/investments"
-                />
-              </div>
+        </div>
+        <div className="basis-4/7">
+          <div className="mb-6 p-4 lg:pr-14">
+            {documentToReactComponents(text, contentfulOptions)}
+            <div className="flex flex-col gap-12 md:flex-row">
+              <PrimaryButton
+                text="More About Fossil Fuels"
+                link="/fossil-fuel"
+              />
+              <PrimaryButton
+                text="Learn About Investment"
+                link="/investments"
+              />
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
