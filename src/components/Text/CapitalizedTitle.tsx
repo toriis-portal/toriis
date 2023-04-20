@@ -1,6 +1,8 @@
 import type { FC } from 'react'
 import clsx from 'clsx'
 
+import { fontOptions } from '../../utils/fontSizes'
+
 const titleText: string[] = [
   'Transparent',
   'and',
@@ -16,9 +18,10 @@ const CapitalizedTitle: FC = () => {
     return word.charAt(0) === word.charAt(0).toUpperCase()
   }
   const firstLetter = clsx(
-    'text-4xl first-letter:font-black first-letter:text-clementine font-medium',
+    fontOptions.h1,
+    'first-letter:font-black first-letter:text-clementine',
   )
-  const landingHeader = clsx('text-4xl font-medium')
+  const landingHeader = clsx(fontOptions.h1)
   return (
     <>
       <div className="flex flex-wrap place-content-center space-x-3 pt-10">
