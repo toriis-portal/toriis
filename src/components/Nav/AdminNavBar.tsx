@@ -21,8 +21,7 @@ const AdminNavBar: FC<{ adminPage: string }> = ({ adminPage }) => {
   let centerElem
   if (adminPage == 'websiteManagement') {
     centerElem = (
-      <div className="my-8 flex space-x-12">
-        {/* TODO: fix this height, should add up to 105 px */}
+      <div className="my-11 flex space-x-12">
         {navItems.map((navItem: NavItem, i: number) => {
           const isActive = path === '' + navItem.path
           console.log(path, '' + navItem.path, isActive)
