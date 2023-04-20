@@ -17,27 +17,23 @@ const ContentPage: FC = () => {
   }, [push, status])
 
   return (
-    <div>
-      {session && (
-        <>
-          <h1>Update Text Content</h1>
-          <div className="h-screen w-screen">
-            {session && <h1>Website Management</h1>}
+    <>
+      <h1 className="">Update Text Content</h1>
 
-            <div className="flex h-full w-full flex-col items-center justify-center gap-8">
-              <h2 className="font-klima font-semibold">
-                Manage site wide content through Contentful
-              </h2>
-              <PrimaryButton
-                text="Go to Contentful"
-                link={CONTENTFUL_LINK}
-                className="flex items-center justify-center gap-2 !px-10 text-center"
-              />
-            </div>
-          </div>
-        </>
+      {session && (
+        <div className="flex h-screen w-screen flex-col items-center justify-center gap-8">
+          <h2 className="font-klima font-semibold">
+            Manage site wide content through Contentful
+          </h2>
+
+          <PrimaryButton
+            text="Go to Contentful"
+            link={CONTENTFUL_LINK as string}
+            className="flex items-center justify-center gap-2 !px-10 text-center"
+          />
+        </div>
       )}
-    </div>
+    </>
   )
 }
 
