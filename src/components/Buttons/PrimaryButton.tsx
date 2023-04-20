@@ -13,7 +13,7 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({ text, link, onClick }) => {
   if (!!link) {
     return (
       <div>
-        <Link href={link || '#'}>
+        <Link href={link}>
           <div>
             <button
               className={clsx(
@@ -24,8 +24,8 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({ text, link, onClick }) => {
                 'hover:shadow-[-5px_5px_0px_0px] hover:shadow-cobalt',
               )}
             >
-              {text}{' '}
-              <ArrowRightIcon className="inline h-9 w-5 stroke-current stroke-1" />
+              {text}
+              <ArrowRightIcon className="ml-1 inline h-9 w-5 stroke-current stroke-1" />
             </button>
           </div>
         </Link>

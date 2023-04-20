@@ -72,13 +72,12 @@ const AdminListTable: FC<AdminTableProps> = ({
                 <div className="flex basis-1/6 flex-col items-center">
                   <Checkbox
                     onClick={() => onCheck(user.id)}
-                    defaultChecked={user.shouldEmail}
                     className="h-6 w-6"
                     disabled={!editEnabled || deletePressed}
                     checked={
-                      !editEnabled || !checkClicked
-                        ? user.shouldEmail
-                        : !user.shouldEmail
+                      editEnabled && checkClicked
+                        ? !user.shouldEmail
+                        : user.shouldEmail
                     }
                   ></Checkbox>
                 </div>
