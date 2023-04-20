@@ -20,8 +20,8 @@ const AdminPage: FC = () => {
     <div>
       {session && (
         <div className="h-screen">
-          <div className="flex flex-row items-center border-b-[3px] border-cobalt px-10">
-            <div className="mr-auto h-10">
+          <div className="flex items-center border-b-[3px] border-cobalt px-10">
+            <div className="mr-auto">
               <BackButton customLink="/home" customText="Back To Toriis" />
             </div>
             <div className="mr-auto mt-10 lg:-ml-36">
@@ -31,9 +31,7 @@ const AdminPage: FC = () => {
                 color="clementine"
               />
             </div>
-            <div className="flex w-fit flex-col justify-center">
-              <AuthButton />
-            </div>
+            <AuthButton />
           </div>
           <div className="flex h-5/6 flex-wrap items-center justify-around px-5">
             <AdminBox
