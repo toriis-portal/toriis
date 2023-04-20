@@ -115,7 +115,6 @@ model User {
   accounts        Account[]
   sessions        Session[]
   createdAt       DateTime         @default(now())
-  WhitelistedUser WhitelistedUser?
   Requests        Request[]
 }
 
@@ -201,6 +200,5 @@ model Request {
 model WhitelistedUser {
   id     String  @id @default(auto()) @map("_id") @db.ObjectId
   email  String  @unique
-  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String? @db.ObjectId
+  userId String? 
 }
