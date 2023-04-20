@@ -35,7 +35,7 @@ const AdminListTable: FC<AdminTableProps> = ({
   return (
     <div
       className={clsx(
-        'flex h-[450px] flex-col items-center overflow-y-scroll rounded-xl border border-black shadow-[inset_0_4px_4px_rgba(0,0,0,0.25)]',
+        'flex h-[450px] flex-col items-center overflow-y-auto rounded-xl border border-black shadow-[inset_0_4px_4px_rgba(0,0,0,0.25)]',
         className,
       )}
     >
