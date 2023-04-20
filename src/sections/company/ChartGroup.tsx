@@ -8,7 +8,7 @@ interface ChartGroupProps {
   chart: React.ReactNode
   interpretation: React.ReactNode
   chartOnLeft: boolean | undefined
-  chartSize: 'sm' | 'md' | 'lg'
+  chartSize: 'sm' | 'md' | 'lg' | 'mm'
 }
 
 const ChartGroup: FC<ChartGroupProps> = ({
@@ -33,6 +33,7 @@ const ChartGroup: FC<ChartGroupProps> = ({
         <div
           className={clsx({
             'w-2/5': chartSize === 'sm',
+            'w-[406rem]': chartSize === 'mm',
             'w-1/2': chartSize === 'md',
             'w-4/5': chartSize === 'lg',
           })}

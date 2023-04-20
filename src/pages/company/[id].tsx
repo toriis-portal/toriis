@@ -2,8 +2,9 @@ import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
 import { Company } from '@prisma/client'
 import type { FC } from 'react'
-import { MARKS, BLOCKS } from '@contentful/rich-text-types'
+import { MARKS, BLOCKS, INLINES } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
 
 import { ContentWrapper } from '../../utils/content'
 import FinanceBrushChart from '../../components/Charts/FinanceBrushChart'
@@ -26,11 +27,34 @@ export const getServerSideProps = async () => {
   const companyDetails: CompanyDetailsEntry[] = await contentClient.get(
     'companyDetailsPage',
   )
-  console.log(companyDetails)
+  const yahooFinance = companyDetails.find(
+    (item) => 'name' in item && item.name == 'YahooFinance',
+  )
+  const carbonAccounting = companyDetails.find(
+    (item) => 'name' in item && item.name == 'CarbonAccounting',
+  )
+  const renewableEnergy = companyDetails.find(
+    (item) => 'name' in item && item.name == 'RenewableEnergy',
+  )
+  const biodiesel = companyDetails.find(
+    (item) => 'BioDiesel' in item && item.name == 'Biodiesel',
+  )
+  const biogas = companyDetails.find(
+    (item) => 'Biogas' in item && item.name == 'Biogas',
+  )
+  const crudeOil = companyDetails.find(
+    (item) => 'CrudeOil' in item && item.name == 'CrudeOil',
+  )
+  const coal = companyDetails.find(
+    (item) => 'Coal' in item && item.name == 'Coal',
+  )
+  const oil = companyDetails.find((item) => 'Oil' in item && item.name == 'Oil')
+  console.log(yahooFinance)
   return {
     props: {
-      yahooFinance: companyDetails[1],
-      carbonAccounting: companyDetails[0],
+      yahooFinance: yahooFinance,
+      carbonAccounting: carbonAccounting,
+      renewableEnergy: renewableEnergy,
     },
   }
 }
@@ -38,6 +62,7 @@ export const getServerSideProps = async () => {
 interface CompanyDetailsProps {
   yahooFinance: CompanyDetailsEntry
   carbonAccounting: CompanyDetailsEntry
+  renewableEnergy: CompanyDetailsEntry
 }
 
 /**
@@ -62,21 +87,35 @@ const getChartDirections = (company: Company) => {
 const Company: FC<CompanyDetailsProps> = ({
   yahooFinance,
   carbonAccounting,
+  renewableEnergy,
 }) => {
   const contentfulOptions = {
     renderMark: {
       [MARKS.BOLD]: (text: any) => (
-        <span className="font-semibold underline decoration-clementine decoration-2 underline-offset-4">
+        <span className="font-semibold underline decoration-2 underline-offset-4">
           {text}
         </span>
       ),
     },
     renderNode: {
       [BLOCKS.PARAGRAPH]: (node: any, children: any) => (
-        <p className="mb-8">{children}</p>
+        <p className="align-center">{children}</p>
       ),
+      [INLINES.HYPERLINK]: (node: any, children: any) => {
+        return (
+          <a
+            href={node.data.uri as string}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {children}
+            <ArrowUpRightIcon className="align-self-start ml-0.5 inline h-4 w-4 stroke-current stroke-1" />
+          </a>
+        )
+      },
     },
   }
+
   const companyId = (useRouter().query.id as string) ?? ''
 
   const { data, isLoading, isError } = api.company.getCompany.useQuery(
@@ -178,7 +217,14 @@ const Company: FC<CompanyDetailsProps> = ({
             <ChartGroup
               title="CDP-Energy"
               chart={<EnergyRadialChart energyData={company.energy} />}
-              interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
+              interpretation={
+                <DataCard>
+                  {documentToReactComponents(
+                    renewableEnergy.description,
+                    contentfulOptions,
+                  )}
+                </DataCard>
+              }
               chartOnLeft={chartDirections['energy']}
               chartSize="sm"
             />
@@ -196,7 +242,7 @@ const Company: FC<CompanyDetailsProps> = ({
                 </DataCard>
               }
               chartOnLeft={chartDirections['ticker']}
-              chartSize="lg"
+              chartSize="mm"
             />
           )}
         </div>
