@@ -4,6 +4,8 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import clsx from 'clsx'
 
+import { fontOptions } from '../../utils/fontSizes'
+
 interface NavButtonProps {
   title: string
   link: string
@@ -15,12 +17,13 @@ const NavButton: FC<NavButtonProps> = ({ title, link }) => {
     <Link
       href={link}
       className={clsx(
-        'border-b-4 bg-white py-2 text-center font-klima text-[20px] font-medium text-black',
+        'border-b-4 bg-white py-2 text-center text-black',
         {
           'border-cobalt': isActive,
           'border-white': !isActive,
         },
         'hover:border-b-4 hover:border-cobalt hover:duration-100',
+        fontOptions.h3,
       )}
     >
       {title}
