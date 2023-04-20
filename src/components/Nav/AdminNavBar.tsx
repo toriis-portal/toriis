@@ -19,12 +19,24 @@ const AdminNavBar: FC<{ adminPage: string }> = ({ adminPage }) => {
   const path = useRouter().pathname
 
   let centerElem
+
+  if (adminPage == 'adminMain') {
+    centerElem = (
+      <div className="mt-10 lg:-ml-36">
+        <HighlightedTitle
+          title="Administration Control"
+          size="large"
+          color="clementine"
+        />
+      </div>
+    )
+  }
+
   if (adminPage == 'websiteManagement') {
     centerElem = (
       <div className="my-11 flex space-x-12 lg:-ml-20">
         {navItems.map((navItem: NavItem, i: number) => {
           const isActive = path === '' + navItem.path
-          console.log(path, '' + navItem.path, isActive)
           return (
             <Link key={i} href={navItem.path}>
               <p className="text-[22px] font-medium">{navItem.text}</p>
@@ -60,17 +72,6 @@ const AdminNavBar: FC<{ adminPage: string }> = ({ adminPage }) => {
     )
   }
 
-  if (adminPage == 'adminMain') {
-    centerElem = (
-      <div className="mt-10 lg:-ml-36">
-        <HighlightedTitle
-          title="Administration Control"
-          size="large"
-          color="clementine"
-        />
-      </div>
-    )
-  }
   return (
     <div className="flex items-center justify-between border-b-[3px] border-cobalt px-10">
       <div className="h-10">
