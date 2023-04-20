@@ -28,7 +28,7 @@ import CompanyDetailsAccordion from './Accordions/CompanyDetailsAccordion'
 // Nav
 import PrimaryNavBar from './Nav/PrimaryNavBar'
 import SecondaryNavBar from './Nav/SecondaryNavBar'
-import WebsiteManagementNavBar from './Nav/WebsiteManagementNavBar'
+import AdminNavBar from './Nav/AdminNavBar'
 // Selects
 import Select from './Selects/Select'
 import SearchBar from './Selects/SearchBar'
@@ -76,6 +76,6 @@ export {
   DataCard,
   CompanyDetailsAccordion,
   EnergyRadialChart,
-  WebsiteManagementNavBar,
+  AdminNavBar as AdminNavBar,
   AdminBox,
 }

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import type { FC } from 'react'
 import { useEffect } from 'react'
 
-import { WebsiteManagementNavBar } from '../../../components'
+import { AdminNavBar } from '../../../components'
 
 const UpdateData: FC = () => {
   const { data: session, status } = useSession()
@@ -18,7 +18,7 @@ const UpdateData: FC = () => {
   return (
     session && (
       <div>
-        <WebsiteManagementNavBar />
+        <AdminNavBar adminPage="websiteManagement" />
       </div>
     )
   )
