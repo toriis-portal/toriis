@@ -3,7 +3,9 @@ import React from 'react'
 import type { Document } from '@contentful/rich-text-types'
 import { MARKS, BLOCKS } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import clsx from 'clsx'
 
+import { fontOptions } from '../../utils/fontSizes'
 import {
   PrimaryButton,
   LandingDonutChart,
@@ -33,7 +35,7 @@ const Landing: FC<{ text: Document }> = ({ text }) => {
       <div className="flex flex-col items-center justify-center px-14 py-8 lg:flex-row">
         <div className="basis-3/7">
           <LandingDonutChart />
-          <div className="flex justify-center pt-2 font-inter text-xl font-semibold">
+          <div className={clsx('flex justify-center pt-2', fontOptions.bb)}>
             Assets Per Sector
           </div>
         </div>
