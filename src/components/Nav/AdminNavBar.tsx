@@ -53,6 +53,18 @@ const AdminNavBar: FC<{ adminPage: string }> = ({ adminPage }) => {
     )
   }
 
+  if (adminPage == 'adminManagement') {
+    centerElem = (
+      <div className="mt-10 lg:-ml-24">
+        <HighlightedTitle
+          title="Administrative Management"
+          size="large"
+          color="clementine"
+        />
+      </div>
+    )
+  }
+
   if (adminPage == 'adminMain') {
     centerElem = (
       <div className="mt-10 lg:-ml-36">

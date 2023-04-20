@@ -3,6 +3,8 @@ import { useRouter } from 'next/router'
 import type { FC } from 'react'
 import { useEffect } from 'react'
 
+import { AdminNavBar } from '../../components'
+
 const AdminAdminPage: FC = () => {
   const { data: session, status } = useSession()
   const { push } = useRouter()
@@ -13,7 +15,13 @@ const AdminAdminPage: FC = () => {
     }
   }, [push, status])
 
-  return <div>{session && <h1>Administration Management</h1>}</div>
+  return (
+    session && (
+      <div>
+        <AdminNavBar adminPage="adminManagement" />
+      </div>
+    )
+  )
 }
 
 export default AdminAdminPage
