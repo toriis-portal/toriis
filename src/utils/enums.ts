@@ -22,6 +22,12 @@ export const envGradeEnum = {
   CCC: 'CCC',
 }
 
+export const requestStatusEnum = {
+  PENDING: 'Pending',
+  APPROVED: 'Approved',
+  REJECTED: 'Rejected',
+}
+
 export const netAssetValEnum = {
   '0-5M': [0, 5e6],
   '5M-10M': [5e6, 10e6],
