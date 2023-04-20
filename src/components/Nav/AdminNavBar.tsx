@@ -21,19 +21,14 @@ const AdminNavBar: FC<{ adminPage: string }> = ({ adminPage }) => {
   let centerElem
   if (adminPage == 'websiteManagement') {
     centerElem = (
-      <div className="my-11 flex space-x-12">
+      <div className="my-11 flex space-x-12 lg:-ml-20">
         {navItems.map((navItem: NavItem, i: number) => {
           const isActive = path === '' + navItem.path
           console.log(path, '' + navItem.path, isActive)
           return (
             <Link key={i} href={navItem.path}>
               <p className="text-[22px] font-medium">{navItem.text}</p>
-              <div
-                className={clsx(
-                  'relative right-[1.3rem] z-0 h-2',
-                  isActive && 'bg-clementine',
-                )}
-              />
+              <div className={clsx('z-0 h-2', isActive && 'bg-clementine')} />
             </Link>
           )
         })}
