@@ -18,8 +18,6 @@ const ContentPage: FC = () => {
 
   return (
     <>
-      <h1 className="">Update Text Content</h1>
-
       {session && (
         <div className="flex h-screen w-screen flex-col items-center justify-center gap-8">
           <h2 className="font-klima font-semibold">
