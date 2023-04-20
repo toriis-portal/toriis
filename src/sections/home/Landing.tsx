@@ -3,9 +3,7 @@ import React from 'react'
 import type { Document } from '@contentful/rich-text-types'
 import { MARKS, BLOCKS } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import { useState } from 'react'
 
-import LeaveConfirmationModal from '../../components/Modals/LeaveConfirmationModal'
 import {
   PrimaryButton,
   LandingDonutChart,
@@ -29,24 +27,9 @@ const Landing: FC<{ text: Document }> = ({ text }) => {
     },
   }
 
-  // LeaveConfirmationModal requires a state variable to be passed in at parent level
-  const [modal, setModal] = useState(false)
-
-  // as well as a setState() function for closing the modal (used for both continue and leave)
-  const setIsOpen = () => setModal(!modal)
   return (
     <>
       <div className="flex flex-col items-center justify-center">
-        <div className="h-20 w-20" onClick={setIsOpen}>
-          Click Me To Open Modal
-        </div>
-
-        <LeaveConfirmationModal
-          isOpen={modal} // state variable
-          setIsOpen={setIsOpen} // set state variable
-          // onLeave={leave} // leave functionality ONLY, not setting state variable. Modal will handle
-        />
-
         <CapitalizedTitle />
         <div className="flex flex-col items-center justify-center px-14 py-8 lg:flex-row">
           <div className="basis-3/7">
@@ -55,6 +38,7 @@ const Landing: FC<{ text: Document }> = ({ text }) => {
               Assets Per Sector
             </div>
           </div>
+
           <div className="basis-4/7">
             <div className="mb-6 p-4 lg:pr-14">
               {documentToReactComponents(text, contentfulOptions)}
