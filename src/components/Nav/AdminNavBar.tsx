@@ -3,7 +3,7 @@ import { clsx } from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import { BackButton, AuthButton } from '..'
+import { BackButton, AuthButton, HighlightedTitle } from '..'
 
 interface NavItem {
   path: string
@@ -21,7 +21,8 @@ const AdminNavBar: FC<{ adminPage: string }> = ({ adminPage }) => {
   let centerElem
   if (adminPage == 'websiteManagement') {
     centerElem = (
-      <div className="flex space-x-12">
+      <div className="my-8 flex space-x-12">
+        {/* TODO: fix this height, should add up to 105 px */}
         {navItems.map((navItem: NavItem, i: number) => {
           const isActive = path === '' + navItem.path
           console.log(path, '' + navItem.path, isActive)
@@ -40,10 +41,38 @@ const AdminNavBar: FC<{ adminPage: string }> = ({ adminPage }) => {
       </div>
     )
   }
+
+  if (adminPage == 'requestManagement') {
+    centerElem = (
+      <div className="mt-10 lg:-ml-24">
+        <HighlightedTitle
+          title="Requests Management"
+          size="large"
+          color="clementine"
+        />
+      </div>
+    )
+  }
+
+  if (adminPage == 'adminMain') {
+    centerElem = (
+      <div className="mt-10 lg:-ml-36">
+        <HighlightedTitle
+          title="Administration Control"
+          size="large"
+          color="clementine"
+        />
+      </div>
+    )
+  }
   return (
-    <div className="flex items-center justify-between border-b-[3px] border-cobalt px-10 py-8">
+    <div className="flex items-center justify-between border-b-[3px] border-cobalt px-10">
       <div className="h-10">
-        <BackButton />
+        {adminPage == 'adminMain' ? (
+          <BackButton customLink="/home" customText="Back To Toriis" />
+        ) : (
+          <BackButton customLink="/admin" />
+        )}
       </div>
       {centerElem}
       <AuthButton />

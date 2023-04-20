@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import type { FC } from 'react'
 import { useEffect } from 'react'
 
-import { HighlightedTitle, BackButton, AuthButton } from '../../components'
+import { AdminNavBar } from '../../components'
 import { AdminBox } from '../../components/index'
 
 const AdminPage: FC = () => {
@@ -20,19 +20,7 @@ const AdminPage: FC = () => {
     <div>
       {session && (
         <div className="h-screen">
-          <div className="flex items-center border-b-[3px] border-cobalt px-10">
-            <div className="mr-auto">
-              <BackButton customLink="/home" customText="Back To Toriis" />
-            </div>
-            <div className="mr-auto mt-10 lg:-ml-36">
-              <HighlightedTitle
-                title="Administration Control"
-                size="large"
-                color="clementine"
-              />
-            </div>
-            <AuthButton />
-          </div>
+          <AdminNavBar adminPage="adminMain" />
           <div className="flex h-5/6 flex-wrap items-center justify-around px-5">
             <AdminBox
               title="Website Management"
