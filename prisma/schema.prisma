@@ -40,7 +40,7 @@ enum Dataset {
   Energy
 }
 
-enum Status {
+enum RequestStatus {
   PENDING
   APPROVED
   REJECTED
@@ -183,14 +183,14 @@ model Emission {
 }
 
 model Request {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
   dataset   Dataset
   updates   Json[]
-  status    Status   @default(PENDING)
+  status    RequestStatus @default(PENDING)
   comment   String?
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String   @db.ObjectId
-  createdAt DateTime @default(now())
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String        @db.ObjectId
+  createdAt DateTime      @default(now())
 }
 
 model WhitelistedUser {

@@ -1,9 +1,8 @@
-import { Request } from '@prisma/client'
+import type { Company } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import type { FC } from 'react'
 import { useEffect } from 'react'
-import type { JSONObject } from 'superjson/dist/types'
 
 import { api } from '../../../utils/api'
 
@@ -33,7 +32,9 @@ const RequestPage: FC = () => {
           <h1>Request Management</h1>
           {data.map((request) => (
             <div key={request.id}>
-              {(request.updates[0] as JSONObject)._id as string}
+              {(request.updates as Partial<Company>[]).map((update) => (
+                <p key={update.id}>{update.name}</p>
+              ))}
             </div>
           ))}
         </>
