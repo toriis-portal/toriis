@@ -7,9 +7,15 @@ interface PrimaryButtonProps {
   text: string
   link?: string
   onClick?: () => void
+  className?: string
 }
 
-const PrimaryButton: FC<PrimaryButtonProps> = ({ text, link, onClick }) => {
+const PrimaryButton: FC<PrimaryButtonProps> = ({
+  text,
+  link, 
+  onClick,
+  className = '',
+}) => {
   if (!!link) {
     return (
       <div>
@@ -22,7 +28,8 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({ text, link, onClick }) => {
                 'rounded bg-lightBlue px-5 py-1',
                 'shadow-[-8px_8px_0px_0px] shadow-cobalt',
                 'hover:shadow-[-5px_5px_0px_0px] hover:shadow-cobalt',
-              )}
+                className,
+            )}
             >
               {text}
               <ArrowRightIcon className="ml-1 inline h-9 w-5 stroke-current stroke-1" />
@@ -44,6 +51,7 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({ text, link, onClick }) => {
             'rounded bg-lightBlue px-20 py-3',
             'shadow-[-8px_8px_0px_0px] shadow-cobalt',
             'hover:shadow-[-5px_5px_0px_0px] hover:shadow-cobalt',
+            className
           )}
         >
           {text}
