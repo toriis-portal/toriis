@@ -8,27 +8,33 @@ import {
   ClimateClock,
 } from '../../components'
 import { ContentWrapper } from '../../utils/content'
-import { FinancialCase } from '../../sections'
-import type { CaseEntry } from '../../types'
+import { FinancialCase, DirtyIndustries } from '../../sections'
+import type { CaseEntry, DirtyCompanyEntry } from '../../types'
 
 export const getServerSideProps = async () => {
   const contentClient = new ContentWrapper()
   const caseEntries = await contentClient.get('case')
+  const dirtyCompanies = await contentClient.get('dirtyCompanies')
   return {
     props: {
       caseEntries,
+      dirtyCompanies,
     },
   }
 }
 
 interface FossilFuelProps {
   caseEntries: CaseEntry[]
+  dirtyCompanies: DirtyCompanyEntry[]
 }
 
-const FossilFuelPage: FC<FossilFuelProps> = ({ caseEntries }) => {
+const FossilFuelPage: FC<FossilFuelProps> = ({
+  caseEntries,
+  dirtyCompanies,
+}) => {
   const navItems = [
     { path: 'uofiInvestments', text: 'University of Illinois Investments' },
-    { path: 'dirtyIndustry', text: 'The Dirty Industry UIUC Supports' },
+    { path: 'dirtyIndustries', text: 'The Dirty Industry UIUC Supports' },
     { path: 'whyFossilFuelsAreBad', text: 'Why Are Fossil Fuels Bad' },
     { path: 'warning', text: 'What 1.5C Warning Means' },
     { path: 'financialCase', text: 'The Case For Institutional Divestments' },
@@ -40,9 +46,6 @@ const FossilFuelPage: FC<FossilFuelProps> = ({ caseEntries }) => {
     <>
       <PrimaryNavBar />
       <ToTopButton />
-      <div id="dirtyCompanies" className="pt-20">
-        <h1>placeholder</h1>
-      </div>
       <div className="flex justify-center">
         <HighlightedTitle
           title="Fossil Fuels"
@@ -53,8 +56,11 @@ const FossilFuelPage: FC<FossilFuelProps> = ({ caseEntries }) => {
       <SecondaryNavBar navItems={navItems} />
 
       {/* Placeholders for fossil fuel page sections: */}
+
       <div id="uofiInvestments" className="pt-20"></div>
-      <div id="dirtyIndustry" className="pt-20"></div>
+      <div id="dirtyIndustries" className="pt-20">
+        <DirtyIndustries companies={dirtyCompanies} />
+      </div>
       <div id="whyFossilFuelsAreBad" className="pt-20"></div>
       <div id="warning" className="pt-20"></div>
 

@@ -10,6 +10,7 @@ import ChartGroup from './company/ChartGroup'
 import CompanyTooltipGroup from './company/TooltipGroup'
 //Fossil Fuel Page
 import FinancialCase from './fossil-fuel/FinancialCase'
+import DirtyIndustries from './fossil-fuel/DirtyIndustries'
 
 export {
   InstitutionalDivestments,
@@ -21,4 +22,5 @@ export {
   FinancialCase,
   ChartGroup,
   CompanyTooltipGroup,
+  DirtyIndustries,
 }

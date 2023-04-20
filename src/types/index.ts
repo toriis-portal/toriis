@@ -48,6 +48,12 @@ export interface CaseEntry {
   url: string
 }
 
+export interface DirtyCompanyEntry {
+  companyName: string
+  details: Document
+  url: string
+}
+
 export interface IndustryEntry {
   name: string
   details?: string

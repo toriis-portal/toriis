@@ -21,6 +21,7 @@ import FinanceBrushChart from './Charts/FinanceBrushChart'
 // Displays
 import ListItem from './Displays/ListItem'
 import Carousel from './Displays/Carousel/Carousel'
+import Tabs from './Displays/Tabs/Tabs'
 import ClimateClock from './Displays/ClimateClock/ClimateClock'
 // Accordions
 import RequestAccordion from './Accordions/RequestAccordion'
@@ -56,6 +57,7 @@ export {
   ToTopButton,
   LoadMoreButton,
   Carousel,
+  Tabs,
   Select,
   LandingDonutChart,
   FinanceBrushChart,
