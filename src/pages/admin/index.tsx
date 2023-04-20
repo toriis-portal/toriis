@@ -20,11 +20,11 @@ const AdminPage: FC = () => {
     <div>
       {session && (
         <div className="h-screen">
-          <div className="flex flex-row items-center justify-between border-b-[3px] border-cobalt px-10">
-            <div className="h-10">
+          <div className="flex flex-row items-center border-b-[3px] border-cobalt px-10">
+            <div className="mr-auto h-10">
               <BackButton customLink="/home" customText="Back To Toriis" />
             </div>
-            <div className="mt-10">
+            <div className="mr-auto mt-10 lg:-ml-36">
               <HighlightedTitle
                 title="Administration Control"
                 size="large"
