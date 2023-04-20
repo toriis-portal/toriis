@@ -5,6 +5,7 @@ import type { FC } from 'react'
 import { useEffect } from 'react'
 
 import { api } from '../../../utils/api'
+import { RequestReviewTable } from '../../../components'
 
 const RequestPage: FC = () => {
   const { data: session, status } = useSession()
@@ -29,6 +30,7 @@ const RequestPage: FC = () => {
       {session && (
         <>
           <h1>Request Management</h1>
+          <RequestReviewTable requests={data} />
           {data.map((request) => (
             <div key={request.id}>
               {request.updates.map((update) => (

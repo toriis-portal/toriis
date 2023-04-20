@@ -41,6 +41,7 @@ import Tag from './Text/Tag'
 // Tables
 import AdminListTable from './Table/AdminListTable'
 import InvestmentTable from './Table/InvestmentTable'
+import RequestReviewTable from './Table/ReviewRequestTable'
 //Tooltips
 import ToolTip from './Tooltips/ToolTip'
 //Modals
@@ -84,4 +85,5 @@ export {
   ClimateClock,
   AdminBox,
   AdminListTable,
+  RequestReviewTable,
 }
