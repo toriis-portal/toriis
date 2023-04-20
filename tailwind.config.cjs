@@ -35,7 +35,7 @@ module.exports = {
       },
     },
     fontFamily: {
-      klima: ['Klima', 'Arial', 'Robotoo'],
+      klima: ['Klima', 'Arial', 'Roboto'],
       inter: ['Inter', 'Klima', 'Arial'],
     },
   },
