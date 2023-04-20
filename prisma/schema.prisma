@@ -32,7 +32,7 @@ enum EnvGrade {
   CCC
 }
 
-enum Collection {
+enum Dataset {
   Investment
   Company
   Fuel
@@ -112,7 +112,7 @@ model User {
   sessions        Session[]
   createdAt       DateTime         @default(now())
   WhitelistedUser WhitelistedUser?
-  ReviewRequest   ReviewRequest[]
+  Requests        Request[]
 }
 
 model VerificationToken {
@@ -182,15 +182,15 @@ model Emission {
   scopeThree Float?
 }
 
-model ReviewRequest {
-  id        String     @id @default(auto()) @map("_id") @db.ObjectId
-  dataset   Collection
+model Request {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  dataset   Dataset
   updates   Json[]
-  status    Status     @default(PENDING)
+  status    Status   @default(PENDING)
   comment   String?
-  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String     @db.ObjectId
-  createdAt DateTime   @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @db.ObjectId
+  createdAt DateTime @default(now())
 }
 
 model WhitelistedUser {

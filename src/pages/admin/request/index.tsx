@@ -1,11 +1,11 @@
-import { ReviewRequest } from '@prisma/client'
+import { Request } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import type { FC } from 'react'
 import { useEffect } from 'react'
 import type { JSONObject } from 'superjson/dist/types'
 
-import { api } from '../../utils/api'
+import { api } from '../../../utils/api'
 
 const RequestPage: FC = () => {
   const { data: session, status } = useSession()
