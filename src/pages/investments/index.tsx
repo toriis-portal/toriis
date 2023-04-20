@@ -275,12 +275,12 @@ const InvestmentPage: FC = () => {
                 className="flex w-11/12 flex-col gap-[1.5vw] min-[1130px]:w-10/12 xl:w-10/12"
               >
                 {page.items.map((company) => {
-                  const company2: { ESG: EnvGrade | undefined } & {
+                  const companyWithESG: { ESG: EnvGrade | undefined } & {
                     company: Company
                   } = { ESG: company?.ESG?.environmentGrade, company }
                   return (
                     <React.Fragment key={company.id}>
-                      <CompanyCard companyInfo={company2} />
+                      <CompanyCard companyInfo={companyWithESG} />
                     </React.Fragment>
                   )
                 })}
