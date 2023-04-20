@@ -52,12 +52,19 @@ export const userRouter = createTRPCRouter({
           },
         })
 
+        if (!currentEmailVal) {
+          throw new TRPCError({
+            code: 'INTERNAL_SERVER_ERROR',
+            message: `Failed to retrieve current user email value (id: ${_id})`,
+          })
+        }
+
         return ctx.prisma.user.update({
           where: {
             id: _id,
           },
           data: {
-            shouldEmail: !currentEmailVal?.shouldEmail,
+            shouldEmail: !currentEmailVal.shouldEmail,
           },
         })
       })

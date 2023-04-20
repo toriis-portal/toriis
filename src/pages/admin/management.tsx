@@ -36,6 +36,7 @@ const AdminAdminPage: FC = () => {
   const handleEdit = () => {
     if (edit) {
       setUsersToDelete([])
+      setUsersEmailUpdate([])
     }
     setEdit(!edit)
   }
@@ -60,16 +61,14 @@ const AdminAdminPage: FC = () => {
     session && (
       <div className="flex flex-col items-center gap-5 first-letter:w-full">
         <div className="mt-20 flex w-3/4 flex-row justify-between">
-          <div className="-mb-[12px] flex basis-1/2 flex-row items-start justify-start gap-1">
+          <div className="-mb-[12px] flex flex-row items-start justify-start gap-1">
             <HighlightedTitle
               title="Administrative List"
               size="medium"
               color="clementine"
             />
             <p className="ml-2 mt-2.5 text-medGray">
-              {'('}
-              {data?.length || 0}
-              {' Results)'}
+              {`(${data?.length || 0} Results)`}
             </p>
           </div>
           <button className="self-end" onClick={handleEdit}>
@@ -106,6 +105,7 @@ const AdminAdminPage: FC = () => {
             )
           }}
           tempDeleted={usersToDelete}
+          tempChecked={usersEmailUpdate}
         />
         <div className="pt-6">
           {!deleteUsersMutation.isLoading &&

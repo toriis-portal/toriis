@@ -6,11 +6,10 @@ import { TrashIcon, ArrowUturnLeftIcon } from '@heroicons/react/24/outline'
 
 const delIconStyle = clsx('ml-8 h-auto w-6 stroke-2')
 const delUserTextStyle = (deletePressed: boolean) =>
-  clsx(
-    'basis-1/3 truncate text-xl font-medium',
-    deletePressed && 'text-lightGray',
-    !deletePressed && 'text-black',
-  )
+  clsx('basis-1/3 truncate text-xl font-medium', {
+    'text-lightGray': deletePressed,
+    'text-black': !deletePressed,
+  })
 
 interface AdminTableProps {
   users: User[] | undefined
@@ -19,6 +18,7 @@ interface AdminTableProps {
   onUndo: (id: string) => void
   onCheck: (id: string) => void
   tempDeleted: string[]
+  tempChecked: string[]
   className?: string
 }
 
@@ -30,6 +30,7 @@ const AdminListTable: FC<AdminTableProps> = ({
   onUndo,
   onCheck,
   tempDeleted,
+  tempChecked,
 }) => {
   return (
     <div
@@ -51,6 +52,7 @@ const AdminListTable: FC<AdminTableProps> = ({
 
         {users?.map((user, num) => {
           const deletePressed = tempDeleted.indexOf(user.id) > -1
+          const checkClicked = tempChecked.indexOf(user.id) > -1
           return (
             <div
               key={num}
@@ -60,11 +62,10 @@ const AdminListTable: FC<AdminTableProps> = ({
                 <p className={delUserTextStyle(deletePressed)}>{user.email}</p>
                 <p className={delUserTextStyle(deletePressed)}>{user.name}</p>
                 <p
-                  className={clsx(
-                    'basis-1/6 text-base',
-                    deletePressed && 'text-lightGray',
-                    !deletePressed && 'text-medGray',
-                  )}
+                  className={clsx('basis-1/6 text-base', {
+                    'text-lightGray': deletePressed,
+                    'text-medGray': !deletePressed,
+                  })}
                 >
                   {user.createdAt.toLocaleDateString()}
                 </p>
@@ -74,6 +75,11 @@ const AdminListTable: FC<AdminTableProps> = ({
                     defaultChecked={user.shouldEmail}
                     className="h-6 w-6"
                     disabled={!editEnabled || deletePressed}
+                    checked={
+                      !editEnabled || !checkClicked
+                        ? user.shouldEmail
+                        : !user.shouldEmail
+                    }
                   ></Checkbox>
                 </div>
               </div>
