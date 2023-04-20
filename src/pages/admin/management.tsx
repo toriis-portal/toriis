@@ -14,12 +14,12 @@ const AdminAdminPage: FC = () => {
   const [email, setEmail] = useState<string>('')
   const mutation = api.user.addWhitelistedUser.useMutation({
     retry: false,
-    // onSuccess: () => void push('/admin'),
+    onSuccess: () => {
+      // void push('/admin'),
+    }
   })
-
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
-
     mutation.mutate({ email: email });
   };
 
@@ -28,8 +28,6 @@ const AdminAdminPage: FC = () => {
       void push('/auth/error')
     }
   }, [push, status])
-
-  console.log(mutation)
   return (
     <div>
     {session && 
@@ -52,13 +50,16 @@ const AdminAdminPage: FC = () => {
                     onChange={(event) => setEmail(event.target.value)}
                 />
             </div>
-            <button type="submit">
+            {/* <button type="submit">
                 <PrimaryButton
                 text="Invite"
                 link=""
                 hasArrow={false}
                 className="px-5 w-48 text-base py-2 font-medium"/>
-            </button>
+            </button> */}
+            <button type="submit" className="px-5 w-48 text-base py-2 font-medium">
+            Invite
+          </button>
         </div>
       </form>    
       </div>}

@@ -49,6 +49,7 @@ export const userRouter = createTRPCRouter({
       });
 
       return {
+
         success: true,
         message: 'User added to whitelist',
       };

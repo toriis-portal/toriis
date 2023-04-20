@@ -185,5 +185,5 @@ model WhitelistedUser {
   id     String  @id @default(auto()) @map("_id") @db.ObjectId
   email  String  @unique
   user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String? @unique @db.ObjectId
+  userId String? @db.ObjectId
 }
