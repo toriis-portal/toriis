@@ -15,15 +15,10 @@ const UpdateContent: FC = () => {
     }
   }, [push, status])
 
-  const navItems = [
-    { path: 'data', text: 'Update Database', active: false },
-    { path: '', text: 'Update Text Content', active: true },
-  ]
-
   return (
     session && (
       <div>
-        <WebsiteManagementNavBar navItems={navItems} />
+        <WebsiteManagementNavBar />
       </div>
     )
   )
