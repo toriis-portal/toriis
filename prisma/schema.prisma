@@ -3,6 +3,10 @@ generator client {
   previewFeatures = ["clientExtensions", "orderByNulls"]
 }
 
+generator json {
+  provider = "prisma-json-types-generator"
+}
+
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
@@ -185,6 +189,7 @@ model Emission {
 model Request {
   id        String        @id @default(auto()) @map("_id") @db.ObjectId
   dataset   Dataset
+  /// [UpdateTypes]
   updates   Json[]
   status    RequestStatus @default(PENDING)
   comment   String?

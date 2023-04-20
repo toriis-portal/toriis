@@ -23,16 +23,15 @@ const RequestPage: FC = () => {
 
   if (isLoading || !data) return <div>Loading...</div>
 
-  console.log(data)
-
   return (
     <div>
+      {/* Place holder, for demo purposes only */}
       {session && (
         <>
           <h1>Request Management</h1>
           {data.map((request) => (
             <div key={request.id}>
-              {(request.updates as Partial<Company>[]).map((update) => (
+              {request.updates.map((update) => (
                 <p key={update.id}>{update.name}</p>
               ))}
             </div>
