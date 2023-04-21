@@ -36,25 +36,32 @@ export const getServerSideProps = async () => {
   const renewableEnergy = companyDetails.find(
     (item) => 'name' in item && item.name == 'RenewableEnergy',
   )
-  const biodiesel = companyDetails.find(
-    (item) => 'BioDiesel' in item && item.name == 'Biodiesel',
-  )
-  const biogas = companyDetails.find(
-    (item) => 'Biogas' in item && item.name == 'Biogas',
-  )
-  const crudeOil = companyDetails.find(
-    (item) => 'CrudeOil' in item && item.name == 'CrudeOil',
-  )
-  const coal = companyDetails.find(
-    (item) => 'Coal' in item && item.name == 'Coal',
-  )
-  const oil = companyDetails.find((item) => 'Oil' in item && item.name == 'Oil')
-  console.log(yahooFinance)
+  const fuelDetails: (CompanyDetailsEntry | undefined)[] = []
+  const fuelTypes = [
+    'Biodiesel',
+    'Biogas',
+    'CrudeOil',
+    'Coal',
+    'Oil',
+    'Gas',
+    'Biomass',
+    'SustainableBiomass',
+  ]
+
+  fuelTypes.map((fuelName) => {
+    fuelDetails.push(
+      companyDetails.find((item) => 'name' in item && item.name == fuelName),
+    )
+  })
+
+  console.log(fuelDetails)
+
   return {
     props: {
       yahooFinance: yahooFinance,
       carbonAccounting: carbonAccounting,
       renewableEnergy: renewableEnergy,
+      fuelDetails: fuelDetails,
     },
   }
 }
@@ -63,6 +70,7 @@ interface CompanyDetailsProps {
   yahooFinance: CompanyDetailsEntry
   carbonAccounting: CompanyDetailsEntry
   renewableEnergy: CompanyDetailsEntry
+  fuelDetails: (CompanyDetailsEntry | undefined)[]
 }
 
 /**
@@ -88,6 +96,7 @@ const Company: FC<CompanyDetailsProps> = ({
   yahooFinance,
   carbonAccounting,
   renewableEnergy,
+  fuelDetails,
 }) => {
   const contentfulOptions = {
     renderMark: {
@@ -115,7 +124,6 @@ const Company: FC<CompanyDetailsProps> = ({
       },
     },
   }
-
   const companyId = (useRouter().query.id as string) ?? ''
 
   const { data, isLoading, isError } = api.company.getCompany.useQuery(
@@ -152,6 +160,18 @@ const Company: FC<CompanyDetailsProps> = ({
   const { company, sectorEntry, industryEntry } = data
   const chartDirections = getChartDirections(company)
 
+  function grabFuelData() {
+    let fuelData = ' '
+    fuelDetails.map((fuelItem) => {
+      company.fuel &&
+        company.fuel.map((item) => {
+          if (item === fuelItem?.name) {
+            fuelData += fuelItem?.description
+          }
+        })
+    })
+    return fuelData
+  }
   return (
     <>
       <div className="mt-6 ml-8">
@@ -208,7 +228,7 @@ const Company: FC<CompanyDetailsProps> = ({
             <ChartGroup
               title="CDP-Fuel"
               chart={<FuelRadialChart source={company.fuel} />}
-              interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
+              interpretation={<DataCard>{grabFuelData()}</DataCard>}
               chartOnLeft={chartDirections['fuel']}
               chartSize="md"
             />
