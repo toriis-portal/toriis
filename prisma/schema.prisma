@@ -107,16 +107,16 @@ model Session {
 }
 
 model User {
-  id              String           @id @default(auto()) @map("_id") @db.ObjectId
-  name            String?
-  email           String?          @unique
-  emailVerified   DateTime?
-  image           String?
-  accounts        Account[]
-  sessions        Session[]
-  createdAt       DateTime         @default(now())
-  shouldEmail     Boolean          @default(true)
-  Requests        Request[]
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  createdAt     DateTime  @default(now())
+  shouldEmail   Boolean   @default(true)
+  Requests      Request[]
 }
 
 model VerificationToken {
@@ -201,5 +201,5 @@ model Request {
 model WhitelistedUser {
   id     String  @id @default(auto()) @map("_id") @db.ObjectId
   email  String  @unique
-  userId String? 
+  userId String?
 }

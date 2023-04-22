@@ -18,7 +18,7 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
   onClick,
   className = '',
   hasArrow = true,
-  type = undefined
+  type = undefined,
 }) => {
   if (!!link) {
     return (

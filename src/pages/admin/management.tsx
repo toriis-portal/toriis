@@ -8,7 +8,7 @@ import {
   HighlightedTitle,
   PrimaryButton,
   Tag,
-  InviteAdminBar
+  InviteAdminBar,
 } from '../../components'
 import { api } from '../../utils/api'
 
@@ -123,7 +123,7 @@ const AdminAdminPage: FC = () => {
           {updateEmailsMutation.error && (
             <p>Something went wrong! {updateEmailsMutation.error.message}</p>
           )}
-          <div className="w-3/4 mb-20">
+          <div className="mb-20 w-3/4">
             <div className="-mb-[12px] flex flex-row items-start justify-start">
               <HighlightedTitle
                 title="Invite Administrators"
