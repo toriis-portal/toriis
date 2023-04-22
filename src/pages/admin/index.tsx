@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import type { FC } from 'react'
 import { useEffect } from 'react'
 
+import { AdminNavBar } from '../../components'
 import { AdminBox } from '../../components/index'
 
 const AdminPage: FC = () => {
@@ -19,8 +20,8 @@ const AdminPage: FC = () => {
     <div>
       {session && (
         <div className="h-screen">
-          <h1>Administration Controls</h1>
-          <div className="flex h-5/6 flex-wrap items-center justify-around px-5">
+          <AdminNavBar />
+          <div className="mt-4 flex h-5/6 flex-wrap items-center justify-around px-5">
             <AdminBox
               title="Website Management"
               link="/admin/website/data"
