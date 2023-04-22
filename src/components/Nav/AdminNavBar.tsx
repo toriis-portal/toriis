@@ -76,6 +76,17 @@ const AdminNavBar: FC = () => {
     )
   }
 
+  if (/^\/admin\/request\/.+/.test(path)) {
+    centerElem = (
+      <HighlightedTitle
+        title="Review Database Requests"
+        size="large"
+        color="clementine"
+        padded={false}
+      />
+    )
+  }
+
   return (
     <div className="flex items-center  border-b-[3px] border-cobalt px-10">
       <div className="h-10 basis-1/4">

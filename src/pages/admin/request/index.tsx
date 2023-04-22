@@ -1,4 +1,3 @@
-import type { Company } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import type { FC } from 'react'
@@ -29,9 +28,7 @@ const RequestPage: FC = () => {
       {/* Place holder, for demo purposes only */}
       {session && (
         <>
-          <div>
-            <AdminNavBar />
-          </div>
+          <AdminNavBar />
           {data.map((request) => (
             <div key={request.id}>
               {request.updates.map((update) => (

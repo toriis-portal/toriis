@@ -21,7 +21,7 @@ const AdminPage: FC = () => {
       {session && (
         <div className="h-screen">
           <AdminNavBar />
-          <div className="flex h-5/6 flex-wrap items-center justify-around px-5">
+          <div className="mt-4 flex h-5/6 flex-wrap items-center justify-around px-5">
             <AdminBox
               title="Website Management"
               link="/admin/website/data"
