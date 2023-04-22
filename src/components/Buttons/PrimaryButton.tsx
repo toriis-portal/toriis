@@ -34,7 +34,9 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
               )}
             >
               {text}
-              {hasArrow && <ArrowRightIcon className="ml-1 inline h-9 w-5 stroke-current stroke-1" />}
+              {hasArrow && (
+                <ArrowRightIcon className="ml-1 inline h-9 w-5 stroke-current stroke-1" />
+              )}
             </button>
           </div>
         </Link>

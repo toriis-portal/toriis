@@ -20,9 +20,9 @@ const AdminAdminPage: FC = () => {
   const [edit, setEdit] = useState(false)
 
   const isValidEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(email)
+  }
   const deleteUsersMutation = api.user.deleteManyUsers.useMutation({
     async onSuccess() {
       setUsersToDelete([])
@@ -56,10 +56,12 @@ const AdminAdminPage: FC = () => {
   })
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault()
-    {isValidEmail(email) && mutation.mutate({ email: email })}
+    {
+      isValidEmail(email) && mutation.mutate({ email: email })
+    }
   }
 
-  const handleClick = (event: React.SyntheticEvent) => {
+  const handleClick = (): void => {
     handleSubmit(event)
   }
 
@@ -75,96 +77,98 @@ const AdminAdminPage: FC = () => {
 
   return (
     session && (
-      <div>
-      <div className="flex flex-col items-center gap-5 first-letter:w-full">
-        <div className="mt-20 flex w-3/4 flex-row justify-between">
-          <div className="-mb-[12px] flex flex-row items-start justify-start gap-1">
-            <HighlightedTitle
-              title="Administrative List"
-              size="medium"
-              color="clementine"
-            />
-            <p className="ml-2 mt-2.5 text-medGray">
-              {`(${data?.length || 0} Results)`}
-            </p>
-          </div>
-          <button className="self-end" onClick={handleEdit}>
-            {edit ? (
-              <Tag
-                title="edit"
-                className="border border-black bg-black font-normal text-white"
+      <div >
+        <div className="flex flex-col items-center gap-5 first-letter:w-full">
+          <div className="mt-20 flex w-3/4 flex-row justify-between">
+            <div className="-mb-[12px] flex flex-row items-start justify-start gap-1">
+              <HighlightedTitle
+                title="Administrative List"
+                size="medium"
+                color="clementine"
               />
-            ) : (
-              <u>
+              <p className="ml-2 mt-2.5 text-medGray">
+                {`(${data?.length || 0} Results)`}
+              </p>
+            </div>
+            <button className="self-end" onClick={handleEdit}>
+              {edit ? (
                 <Tag
                   title="edit"
-                  className="border border-black bg-lightBlue font-normal text-black"
+                  className="border border-black bg-black font-normal text-white"
                 />
-              </u>
-            )}
-          </button>
-        </div>
-        <AdminListTable
-          className="w-3/4"
-          users={data}
-          editEnabled={edit}
-          onTrash={(currentId) => {
-            setUsersToDelete([...usersToDelete, currentId])
-          }}
-          onUndo={(currentId) => {
-            setUsersToDelete(usersToDelete.filter((id) => id !== currentId))
-          }}
-          onCheck={(currentId) => {
-            setUsersEmailUpdate(
-              !usersEmailUpdate.includes(currentId)
-                ? [...usersEmailUpdate, currentId]
-                : usersEmailUpdate.filter((id) => id !== currentId),
-            )
-          }}
-          tempDeleted={usersToDelete}
-          tempChecked={usersEmailUpdate}
-        />
-        <div className="pt-6">
-          {!deleteUsersMutation.isLoading &&
-            !updateEmailsMutation.isLoading &&
-            edit && <PrimaryButton text="Update" onClick={handleUpdateUsers} />}
-        </div>
+              ) : (
+                <u>
+                  <Tag
+                    title="edit"
+                    className="border border-black bg-lightBlue font-normal text-black"
+                  />
+                </u>
+              )}
+            </button>
+          </div>
+          <AdminListTable
+            className="w-3/4"
+            users={data}
+            editEnabled={edit}
+            onTrash={(currentId) => {
+              setUsersToDelete([...usersToDelete, currentId])
+            }}
+            onUndo={(currentId) => {
+              setUsersToDelete(usersToDelete.filter((id) => id !== currentId))
+            }}
+            onCheck={(currentId) => {
+              setUsersEmailUpdate(
+                !usersEmailUpdate.includes(currentId)
+                  ? [...usersEmailUpdate, currentId]
+                  : usersEmailUpdate.filter((id) => id !== currentId),
+              )
+            }}
+            tempDeleted={usersToDelete}
+            tempChecked={usersEmailUpdate}
+          />
+          <div className="pt-6">
+            {!deleteUsersMutation.isLoading &&
+              !updateEmailsMutation.isLoading &&
+              edit && (
+                <PrimaryButton text="Update" onClick={handleUpdateUsers} />
+              )}
+          </div>
 
-        {deleteUsersMutation.error && (
-          <p>Something went wrong! {deleteUsersMutation.error.message}</p>
-        )}
-        {updateEmailsMutation.error && (
-          <p>Something went wrong! {updateEmailsMutation.error.message}</p>
-        )}
+          {deleteUsersMutation.error && (
+            <p>Something went wrong! {deleteUsersMutation.error.message}</p>
+          )}
+          {updateEmailsMutation.error && (
+            <p>Something went wrong! {updateEmailsMutation.error.message}</p>
+          )}
         </div>
-        <div className="-mb-[12px] flex flex-row items-start justify-start gap-1">
-
-        <HighlightedTitle
+        <div className="pl-44">
+          <HighlightedTitle
             title="Invite Administrators"
             size="medium"
             color="clementine"
-        />
+          />
         </div>
         <form onSubmit={handleSubmit}>
-             <div className="flex justify-center">
-             <div className=" mr-20 pb-10 flex w-[56%]">
-                <input
-                   type="text"
-                   className=" w-full rounded-md border bg-white px-4 py-4"
-                   placeholder="Invite Gmail"
-                   value={email}
-                   onChange={(event) => setEmail(event.target.value)}
-                />
-              </div>
-                 <PrimaryButton
-                 text="Invite"
-                link=""
-                 hasArrow={false}
-                 onClick={handleClick}
-                 className="px-5 w-48 text-base py-2 font-medium"/>
-             </div>
-           </form>
-       </div>
+          <div className="flex justify-center">
+            <div className=" mr-20 flex w-[56%] pb-10">
+              <input
+                type="text"
+                className=" w-full rounded-md border bg-white px-4 py-4"
+                placeholder="Invite Gmail"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+            </div>
+            <PrimaryButton
+              text="Invite"
+              link=""
+              hasArrow={false}
+              onClick={handleClick}
+              className="w-48 px-5 py-2 text-base font-medium"
+            />
+          </div>
+        </form>
+      </div>
     )
   )
 }
