@@ -9,6 +9,7 @@ interface PrimaryButtonProps {
   onClick?: () => void
   className?: string
   hasArrow?: boolean
+  type?: 'submit' | 'button' | 'reset' | undefined
 }
 
 const PrimaryButton: FC<PrimaryButtonProps> = ({
@@ -17,6 +18,7 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
   onClick,
   className = '',
   hasArrow = true,
+  type = undefined
 }) => {
   if (!!link) {
     return (
@@ -24,6 +26,7 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
         <Link href={link}>
           <div>
             <button
+              type={type}
               className={clsx(
                 'font-klima text-[18px] font-semibold',
                 'rounded border-2 border-solid border-cobalt',

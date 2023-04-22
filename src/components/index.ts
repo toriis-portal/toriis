@@ -32,7 +32,7 @@ import SecondaryNavBar from './Nav/SecondaryNavBar'
 // Selects
 import Select from './Selects/Select'
 import SearchBar from './Selects/SearchBar'
-import InviteAdminSearchBar from './Selects/InviteAdminSearchBar'
+import InviteAdminBar from './Selects/InviteAdminBar'
 // Text
 import NumberCircle from './Text/NumberCircle'
 import HighlightedTitle from './Text/HighlightedTitle'
@@ -85,5 +85,5 @@ export {
   ClimateClock,
   AdminBox,
   AdminListTable,
-  InviteAdminSearchBar,
+  InviteAdminBar,
 }
