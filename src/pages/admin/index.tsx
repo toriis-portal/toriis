@@ -20,7 +20,7 @@ const AdminPage: FC = () => {
     <div>
       {session && (
         <div className="h-screen">
-          <AdminNavBar adminPage="adminMain" />
+          <AdminNavBar />
           <div className="flex h-5/6 flex-wrap items-center justify-around px-5">
             <AdminBox
               title="Website Management"

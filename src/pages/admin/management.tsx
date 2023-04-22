@@ -18,7 +18,7 @@ const AdminAdminPage: FC = () => {
   return (
     session && (
       <div>
-        <AdminNavBar adminPage="adminManagement" />
+        <AdminNavBar />
       </div>
     )
   )

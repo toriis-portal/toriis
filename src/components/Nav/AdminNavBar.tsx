@@ -15,12 +15,12 @@ const navItems = [
   { path: '/admin/website/content', text: 'Update Text Content' },
 ]
 
-const AdminNavBar: FC<{ adminPage: string }> = ({ adminPage }) => {
+const AdminNavBar: FC = () => {
   const path = useRouter().pathname
 
   let centerElem
 
-  if (adminPage == 'adminMain') {
+  if (path == '/admin') {
     centerElem = (
       <div className="mt-10 lg:-ml-36">
         <HighlightedTitle
@@ -32,7 +32,7 @@ const AdminNavBar: FC<{ adminPage: string }> = ({ adminPage }) => {
     )
   }
 
-  if (adminPage == 'websiteManagement') {
+  if (path == '/admin/website/data' || path == '/admin/website/content') {
     centerElem = (
       <div className="my-11 flex space-x-12 lg:-ml-20">
         {navItems.map((navItem: NavItem, i: number) => {
@@ -48,7 +48,7 @@ const AdminNavBar: FC<{ adminPage: string }> = ({ adminPage }) => {
     )
   }
 
-  if (adminPage == 'requestManagement') {
+  if (path == '/admin/request') {
     centerElem = (
       <div className="mt-10 lg:-ml-24">
         <HighlightedTitle
@@ -60,7 +60,7 @@ const AdminNavBar: FC<{ adminPage: string }> = ({ adminPage }) => {
     )
   }
 
-  if (adminPage == 'adminManagement') {
+  if (path == '/admin/management') {
     centerElem = (
       <div className="mt-10 lg:-ml-24">
         <HighlightedTitle
@@ -75,7 +75,7 @@ const AdminNavBar: FC<{ adminPage: string }> = ({ adminPage }) => {
   return (
     <div className="flex items-center justify-between border-b-[3px] border-cobalt px-10">
       <div className="h-10">
-        {adminPage == 'adminMain' ? (
+        {path == '/admin' ? (
           <BackButton customLink="/home" customText="Back To Toriis" />
         ) : (
           <BackButton customLink="/admin" />

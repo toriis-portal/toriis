@@ -18,7 +18,7 @@ const UpdateData: FC = () => {
   return (
     session && (
       <div>
-        <AdminNavBar adminPage="websiteManagement" />
+        <AdminNavBar />
       </div>
     )
   )

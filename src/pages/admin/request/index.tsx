@@ -30,7 +30,7 @@ const RequestPage: FC = () => {
       {session && (
         <>
           <div>
-            <AdminNavBar adminPage="requestManagement" />
+            <AdminNavBar />
           </div>
           {data.map((request) => (
             <div key={request.id}>

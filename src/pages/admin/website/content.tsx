@@ -21,7 +21,7 @@ const UpdateContent: FC = () => {
       {session && (
         <div>
           <div>
-            <AdminNavBar adminPage="websiteManagement" />
+            <AdminNavBar />
           </div>
           <div className="flex w-screen flex-col items-center justify-center gap-8 pt-72">
             <h2 className="font-klima font-semibold">
