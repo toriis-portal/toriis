@@ -4,12 +4,18 @@ interface TitleProps {
   title: string
   size: 'medium' | 'large'
   color: string
+  padded?: boolean
 }
 
-const HighlightedTitle: FC<TitleProps> = ({ title, size, color }) => {
+const HighlightedTitle: FC<TitleProps> = ({
+  title,
+  size,
+  color,
+  padded = true,
+}) => {
   return (
     <>
-      <div className="mb-12 ml-[1.4rem] w-fit">
+      <div className={clsx('ml-[1.4rem] w-fit', padded && 'mb-12 ')}>
         <div
           className={clsx(
             'relative z-0',

@@ -26,14 +26,16 @@ const AdminNavBar: FC = () => {
         title="Administration Control"
         size="large"
         color="clementine"
+        padded={false}
       />
     )
   }
 
   if (path == '/admin/website/data' || path == '/admin/website/content') {
     centerElem = (
-      <div className="mb-11 flex space-x-12">
+      <div className="mt-3 flex space-x-12">
         {navItems.map((navItem: NavItem, i: number) => {
+          const isActive = path === '' + navItem.path
           return (
             <Link key={i} href={navItem.path}>
               <p
@@ -58,6 +60,7 @@ const AdminNavBar: FC = () => {
         title="Requests Management"
         size="large"
         color="clementine"
+        padded={false}
       />
     )
   }
@@ -68,6 +71,7 @@ const AdminNavBar: FC = () => {
         title="Administrative Management"
         size="large"
         color="clementine"
+        padded={false}
       />
     )
   }
@@ -81,7 +85,9 @@ const AdminNavBar: FC = () => {
           <BackButton customLink="/admin" />
         )}
       </div>
-      <div className="mt-10 flex basis-2/4 justify-center">{centerElem}</div>
+      <div className="mb-10 mt-6 flex basis-2/4 justify-center">
+        {centerElem}
+      </div>
       <div className="flex basis-1/4 justify-end">
         <AuthButton />
       </div>
