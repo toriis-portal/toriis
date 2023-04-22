@@ -88,3 +88,5 @@ export const INDUSTRIES = [
   'Utilities—Regulated Gas',
   'Waste Management',
 ]
+
+export const CONTENTFUL_LINK = 'https://app.contentful.com/spaces/gslvrj5c21wx/'
