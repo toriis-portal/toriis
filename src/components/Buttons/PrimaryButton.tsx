@@ -8,6 +8,7 @@ interface PrimaryButtonProps {
   link?: string
   onClick?: () => void
   className?: string
+  hasArrow?: boolean
 }
 
 const PrimaryButton: FC<PrimaryButtonProps> = ({
@@ -15,6 +16,7 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
   link,
   onClick,
   className = '',
+  hasArrow = true,
 }) => {
   if (!!link) {
     return (
@@ -32,7 +34,7 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
               )}
             >
               {text}
-              <ArrowRightIcon className="ml-1 inline h-9 w-5 stroke-current stroke-1" />
+              {hasArrow && <ArrowRightIcon className="ml-1 inline h-9 w-5 stroke-current stroke-1" />}
             </button>
           </div>
         </Link>
