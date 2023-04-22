@@ -33,7 +33,58 @@ export const requestRouter = createTRPCRouter({
           })
         }
       } else {
-        // Do something else
+        // Go through updates to update the database
+
+        const request = await ctx.prisma.request.findUnique({
+          where: {
+            id: input.id,
+          },
+        })
+
+        if (!request) {
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: 'Request not found',
+          })
+        }
+
+        const allUpdateItems = request.updates
+        const updateAll = await Promise.all(
+          allUpdateItems.map(async (updateItem) => {
+            console.log(updateItem)
+            await ctx.prisma.company.update({
+              where: {
+                id: updateItem.id,
+              },
+              data: {
+                updateItem, // TODO: fix this
+              },
+            })
+          }),
+        )
+
+        if (!updateAll) {
+          throw new TRPCError({
+            code: 'INTERNAL_SERVER_ERROR',
+            message: 'Failed to update company',
+          })
+        }
+
+        const approvedRequest = await ctx.prisma.request.update({
+          where: {
+            id: input.id,
+          },
+          data: {
+            status: RequestStatus.APPROVED,
+          },
+        })
+
+        if (!approvedRequest) {
+          throw new TRPCError({
+            code: 'INTERNAL_SERVER_ERROR',
+            message: 'Failed to approve request',
+          })
+        }
       }
     }),
 })
