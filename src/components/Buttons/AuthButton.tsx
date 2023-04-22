@@ -60,7 +60,7 @@ const AuthButton: FC = () => {
               <Link href="/admin/management">
                 <button className={buttonStyle}>Manage Administration</button>
               </Link>
-              <Link href="/admin/review">
+              <Link href="/admin/request">
                 <button className={buttonStyle}>Request Management</button>
               </Link>
               <button

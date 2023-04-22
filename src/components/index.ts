@@ -21,9 +21,10 @@ import FinanceBrushChart from './Charts/FinanceBrushChart'
 // Displays
 import ListItem from './Displays/ListItem'
 import Carousel from './Displays/Carousel/Carousel'
+import ClimateClock from './Displays/ClimateClock/ClimateClock'
 // Accordions
 import RequestAccordion from './Accordions/RequestAccordion'
-import FinancialCaseAccordion from './Accordions/FinancialCaseAccordion'
+import CaseAccordion from './Accordions/CaseAccordion'
 import CompanyDetailsAccordion from './Accordions/CompanyDetailsAccordion'
 // Nav
 import PrimaryNavBar from './Nav/PrimaryNavBar'
@@ -38,10 +39,13 @@ import CapitalizedTitle from './Text/CapitalizedTitle'
 import ShadowTitle from './Text/ShadowTitle'
 import Tag from './Text/Tag'
 // Tables
+import AdminListTable from './Table/AdminListTable'
 import InvestmentTable from './Table/InvestmentTable'
 //Tooltips
 import ToolTip from './Tooltips/ToolTip'
-
+//Modals
+import GeneralModal from './Modals/GeneralModal'
+import LeaveConfirmationModal from './Modals/LeaveConfirmationModal'
 export {
   AuthButton,
   ListItem,
@@ -62,18 +66,22 @@ export {
   ShadowTitle,
   ReadMoreButton,
   InvestmentTable,
+  GeneralModal,
+  LeaveConfirmationModal,
   SearchBar,
   BackButton,
   CompanyCard,
   ESGTag,
   NetAssetTag,
   Tag,
-  FinancialCaseAccordion,
+  CaseAccordion,
   ToolTip,
   FuelRadialChart,
   EmissionBarChart,
   DataCard,
   CompanyDetailsAccordion,
   EnergyRadialChart,
+  ClimateClock,
   AdminBox,
+  AdminListTable,
 }
