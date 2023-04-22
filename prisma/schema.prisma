@@ -115,6 +115,7 @@ model User {
   accounts        Account[]
   sessions        Session[]
   createdAt       DateTime         @default(now())
+  shouldEmail     Boolean          @default(true)
   WhitelistedUser WhitelistedUser?
   Requests        Request[]
 }

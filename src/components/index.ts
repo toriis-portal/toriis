@@ -40,6 +40,7 @@ import CapitalizedTitle from './Text/CapitalizedTitle'
 import ShadowTitle from './Text/ShadowTitle'
 import Tag from './Text/Tag'
 // Tables
+import AdminListTable from './Table/AdminListTable'
 import InvestmentTable from './Table/InvestmentTable'
 //Tooltips
 import ToolTip from './Tooltips/ToolTip'
@@ -84,4 +85,5 @@ export {
   AdminNavBar,
   ClimateClock,
   AdminBox,
+  AdminListTable,
 }
