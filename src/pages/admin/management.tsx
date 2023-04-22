@@ -3,70 +3,124 @@ import { useRouter } from 'next/router'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 
-import { HighlightedTitle, PrimaryButton } from '../../components'
+import {
+  AdminListTable,
+  HighlightedTitle,
+  PrimaryButton,
+  Tag,
+} from '../../components'
 import { api } from '../../utils/api'
 
 const AdminAdminPage: FC = () => {
   const { data: session, status } = useSession()
   const { push } = useRouter()
-  const [email, setEmail] = useState<string>('')
-  const mutation = api.user.addWhitelistedUser.useMutation({
-    retry: false,
-    onSuccess: () => {
-      // void push('/admin'),
+
+  const [usersToDelete, setUsersToDelete] = useState<string[]>([])
+  const [usersEmailUpdate, setUsersEmailUpdate] = useState<string[]>([])
+  const [edit, setEdit] = useState(false)
+
+  const deleteUsersMutation = api.user.deleteManyUsers.useMutation({
+    async onSuccess() {
+      setUsersToDelete([])
+      await refetch()
     },
   })
-  const handleSubmit = (event: React.SyntheticEvent) => {
-    event.preventDefault()
-    mutation.mutate({ email: email })
+
+  const updateEmailsMutation = api.user.updateUserEmailPreference.useMutation({
+    async onSuccess() {
+      setUsersEmailUpdate([])
+      await refetch()
+    },
+  })
+
+  const handleEdit = () => {
+    if (edit) {
+      setUsersToDelete([])
+      setUsersEmailUpdate([])
+    }
+    setEdit(!edit)
   }
+
+  const handleUpdateUsers = () => {
+    updateEmailsMutation.mutate({ ids: usersEmailUpdate })
+    deleteUsersMutation.mutate({ ids: usersToDelete })
+    setEdit(false)
+  }
+
+  const { data, refetch } = api.user.getAllUsers.useQuery(undefined, {
+    refetchOnWindowFocus: false,
+  })
 
   useEffect(() => {
     if (status === 'unauthenticated') {
       void push('/auth/error')
     }
   }, [push, status])
+
   return (
-    <div>
-      {session && (
-        <div>
-          <h1>Administration Management</h1>
-          <div className="pl-56 pt-10">
+    session && (
+      <div className="flex flex-col items-center gap-5 first-letter:w-full">
+        <div className="mt-20 flex w-3/4 flex-row justify-between">
+          <div className="-mb-[12px] flex flex-row items-start justify-start gap-1">
             <HighlightedTitle
-              title="Invite Administrators"
+              title="Administrative List"
               size="medium"
               color="clementine"
             />
+            <p className="ml-2 mt-2.5 text-medGray">
+              {`(${data?.length || 0} Results)`}
+            </p>
           </div>
-          <form onSubmit={handleSubmit}>
-            <div className="flex justify-center">
-              <div className=" mr-12 flex w-1/2 ">
-                <input
-                  type="text"
-                  className=" w-full rounded-md border bg-white px-4 py-3"
-                  placeholder="Invite Gmail"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
+          <button className="self-end" onClick={handleEdit}>
+            {edit ? (
+              <Tag
+                title="edit"
+                className="border border-black bg-black font-normal text-white"
+              />
+            ) : (
+              <u>
+                <Tag
+                  title="edit"
+                  className="border border-black bg-lightBlue font-normal text-black"
                 />
-              </div>
-              {/* <button type="submit">
-                <PrimaryButton
-                text="Invite"
-                link=""
-                hasArrow={false}
-                className="px-5 w-48 text-base py-2 font-medium"/>
-            </button> */}
-              <button
-                type="submit"
-                className="w-48 px-5 py-2 text-base font-medium"
-              >
-                Invite
-              </button>
-            </div>
-          </form>
+              </u>
+            )}
+          </button>
         </div>
-      )}
-    </div>
+        <AdminListTable
+          className="w-3/4"
+          users={data}
+          editEnabled={edit}
+          onTrash={(currentId) => {
+            setUsersToDelete([...usersToDelete, currentId])
+          }}
+          onUndo={(currentId) => {
+            setUsersToDelete(usersToDelete.filter((id) => id !== currentId))
+          }}
+          onCheck={(currentId) => {
+            setUsersEmailUpdate(
+              !usersEmailUpdate.includes(currentId)
+                ? [...usersEmailUpdate, currentId]
+                : usersEmailUpdate.filter((id) => id !== currentId),
+            )
+          }}
+          tempDeleted={usersToDelete}
+          tempChecked={usersEmailUpdate}
+        />
+        <div className="pt-6">
+          {!deleteUsersMutation.isLoading &&
+            !updateEmailsMutation.isLoading &&
+            edit && <PrimaryButton text="Update" onClick={handleUpdateUsers} />}
+        </div>
+
+        {deleteUsersMutation.error && (
+          <p>Something went wrong! {deleteUsersMutation.error.message}</p>
+        )}
+        {updateEmailsMutation.error && (
+          <p>Something went wrong! {updateEmailsMutation.error.message}</p>
+        )}
+      </div>
+    )
   )
 }
 
