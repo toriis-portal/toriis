@@ -22,19 +22,17 @@ const AdminNavBar: FC = () => {
 
   if (path == '/admin') {
     centerElem = (
-      <div className="mt-10 lg:-ml-36">
-        <HighlightedTitle
-          title="Administration Control"
-          size="large"
-          color="clementine"
-        />
-      </div>
+      <HighlightedTitle
+        title="Administration Control"
+        size="large"
+        color="clementine"
+      />
     )
   }
 
   if (path == '/admin/website/data' || path == '/admin/website/content') {
     centerElem = (
-      <div className="my-11 flex space-x-12 lg:-ml-20">
+      <div className="mb-11 flex space-x-12">
         {navItems.map((navItem: NavItem, i: number) => {
           const isActive = path === '' + navItem.path
           return (
@@ -50,39 +48,37 @@ const AdminNavBar: FC = () => {
 
   if (path == '/admin/request') {
     centerElem = (
-      <div className="mt-10 lg:-ml-24">
-        <HighlightedTitle
-          title="Requests Management"
-          size="large"
-          color="clementine"
-        />
-      </div>
+      <HighlightedTitle
+        title="Requests Management"
+        size="large"
+        color="clementine"
+      />
     )
   }
 
   if (path == '/admin/management') {
     centerElem = (
-      <div className="mt-10 lg:-ml-24">
-        <HighlightedTitle
-          title="Administrative Management"
-          size="large"
-          color="clementine"
-        />
-      </div>
+      <HighlightedTitle
+        title="Administrative Management"
+        size="large"
+        color="clementine"
+      />
     )
   }
 
   return (
-    <div className="flex items-center justify-between border-b-[3px] border-cobalt px-10">
-      <div className="h-10">
+    <div className="flex items-center  border-b-[3px] border-cobalt px-10">
+      <div className="h-10 basis-1/4">
         {path == '/admin' ? (
           <BackButton customLink="/home" customText="Back To Toriis" />
         ) : (
           <BackButton customLink="/admin" />
         )}
       </div>
-      {centerElem}
-      <AuthButton />
+      <div className="mt-10 flex basis-2/4 justify-center">{centerElem}</div>
+      <div className="flex basis-1/4 justify-end">
+        <AuthButton />
+      </div>
     </div>
   )
 }
