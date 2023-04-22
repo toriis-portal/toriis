@@ -17,6 +17,7 @@ interface GlobalStateEntry {
 
 export const Test = () => {
   const [skip, setSkip] = useState(0)
+  const [isSelect, setIsSelect] = useState(false)
   const [curColumn, setCurColumn] = useState<keyof Company>('name')
   const [curRow, setCurRow] = useState<Company | null>(null)
   const [textBoxContent, setTextBoxContent] = useState('')
@@ -239,12 +240,18 @@ export const Test = () => {
         onSelectChange={(row, updatedEntry) => handleChange(row, updatedEntry)}
         onRowEntryClick={(row, col) => {
           setTextBoxContent(row[col.key]?.toString() ?? '')
-          setCurRow(row)
-          setCurColumn(col.key)
+          if (col.ctrl.type !== 'text') {
+            setIsSelect(true)
+          } else {
+            setIsSelect(false)
+            setCurRow(row)
+            setCurColumn(col.key)
+          }
         }}
       />
       <input
         value={textBoxContent}
+        disabled={isSelect}
         onChange={(e) => {
           setTextBoxContent(e.target.value)
           if (curRow) {
@@ -252,6 +259,8 @@ export const Test = () => {
           }
         }}
       ></input>
+
+      <button>Request changes</button>
     </>
   )
 }

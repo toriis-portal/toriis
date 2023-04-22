@@ -22,10 +22,28 @@ export const envGradeEnum = {
   CCC: 'CCC',
 }
 
+export const requestStatusEnum = {
+  PENDING: 'Pending',
+  APPROVED: 'Approved',
+  REJECTED: 'Rejected',
+}
+
 export const netAssetValEnum = {
   '0-5M': [0, 5e6],
   '5M-10M': [5e6, 10e6],
   '10M-15M': [10e6, 15e6],
   '15M-20M': [15e6, 20e6],
   '20M+': [20e6, Number.MAX_SAFE_INTEGER],
+}
+
+export const FuelEnum = {
+  biodiesels: 'Biodiesels',
+  biogases: 'Biogases',
+  coal: 'Coal',
+  oil: 'Oil',
+  gas: 'Gas',
+  otherBiomass: 'Other Biomass',
+  sustainableBiomass: 'Sustainable Biomass',
+  otherRenewable: 'Other Renewable',
+  otherNonRenewable: 'Other Non-Renewable',
 }

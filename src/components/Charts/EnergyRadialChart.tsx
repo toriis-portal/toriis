@@ -45,7 +45,7 @@ const EnergyRadialChart: FC<EnergyRadialChartProps> = ({ energyData }) => {
         options={options}
         series={data}
         type="radialBar"
-        width="155%"
+        width="100%"
         height="auto"
       />
     </>

@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 
-import { HighlightedTitle, FinancialCaseAccordion } from '../../components'
+import { HighlightedTitle, CaseAccordion } from '../../components'
 import type { CaseEntry } from '../../types'
 
 const FinancialCase: FC<{ entries: CaseEntry[] }> = ({ entries }) => {
@@ -13,7 +13,7 @@ const FinancialCase: FC<{ entries: CaseEntry[] }> = ({ entries }) => {
       />
       {entries.map((entry, index) => (
         <div key={index}>
-          <FinancialCaseAccordion content={entry} />
+          <CaseAccordion content={entry} />
         </div>
       ))}
     </div>

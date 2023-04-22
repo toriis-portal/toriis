@@ -1,3 +1,4 @@
+import { requestRouter } from './routers/request'
 import { createTRPCRouter } from './trpc'
 import { companyRouter } from './routers/company'
 import { esgRouter } from './routers/esg'
@@ -12,6 +13,7 @@ export const appRouter = createTRPCRouter({
   company: companyRouter,
   user: userRouter,
   cronjob: esgRouter,
+  request: requestRouter,
 })
 
 // export type definition of API
