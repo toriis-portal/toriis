@@ -77,7 +77,7 @@ const AdminAdminPage: FC = () => {
 
   return (
     session && (
-      <div >
+      <div>
         <div className="flex flex-col items-center gap-5 first-letter:w-full">
           <div className="mt-20 flex w-3/4 flex-row justify-between">
             <div className="-mb-[12px] flex flex-row items-start justify-start gap-1">
