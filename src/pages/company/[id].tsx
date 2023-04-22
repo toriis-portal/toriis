@@ -1,11 +1,14 @@
 import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
+import type { Fuel } from '@prisma/client'
 import { Company } from '@prisma/client'
 import type { FC } from 'react'
 import { MARKS, BLOCKS, INLINES } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
+import type { Document } from '@contentful/rich-text-types'
 
+import { FuelEnum } from '../../utils/enums'
 import { ContentWrapper } from '../../utils/content'
 import FinanceBrushChart from '../../components/Charts/FinanceBrushChart'
 import {
@@ -54,8 +57,6 @@ export const getServerSideProps = async () => {
     )
   })
 
-  console.log(fuelDetails)
-
   return {
     props: {
       yahooFinance: yahooFinance,
@@ -92,6 +93,41 @@ const getChartDirections = (company: Company) => {
   return directionDict
 }
 
+type FuelTypes = Omit<Fuel, 'id' | 'companyId' | 'year' | 'totalConsumption'>
+
+const getLabels = (
+  fuels: Fuel,
+  fuelDetails: (CompanyDetailsEntry | undefined)[],
+) => {
+  const labels: string[] = []
+  const labelsText: Document[] = []
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { totalConsumption, id, companyId, year, ...rest } = fuels
+  Object.keys(rest).forEach((key) => {
+    if (
+      rest[key as keyof FuelTypes] !== null &&
+      rest[key as keyof FuelTypes] !== 0 &&
+      key != 'totalConsumption' &&
+      totalConsumption &&
+      (rest[key as keyof FuelTypes] ?? 0) / totalConsumption >= 0.005
+    ) {
+      labels.push(FuelEnum[key as keyof typeof FuelEnum])
+    }
+  })
+
+  console.log(labels)
+  labels.map((label) => {
+    const filtered = fuelDetails.findIndex(
+      (item) => 'name' in item && item.name == label,
+    )
+    labelsText.push(fuelDetails[filtered]?.description)
+  })
+
+  console.log(labelsText)
+  return labelsText
+}
+
 const Company: FC<CompanyDetailsProps> = ({
   yahooFinance,
   carbonAccounting,
@@ -124,6 +160,12 @@ const Company: FC<CompanyDetailsProps> = ({
       },
     },
   }
+  // const [fuelLabels, setFuelLabels] = useState<string[]>([])
+
+  // function updateLabels(labels: string[]) {
+  //   setFuelLabels([...fuelLabels, ...labels])
+  // }
+
   const companyId = (useRouter().query.id as string) ?? ''
 
   const { data, isLoading, isError } = api.company.getCompany.useQuery(
@@ -160,18 +202,18 @@ const Company: FC<CompanyDetailsProps> = ({
   const { company, sectorEntry, industryEntry } = data
   const chartDirections = getChartDirections(company)
 
-  function grabFuelData() {
-    let fuelData = ' '
-    fuelDetails.map((fuelItem) => {
-      company.fuel &&
-        company.fuel.map((item) => {
-          if (item === fuelItem?.name) {
-            fuelData += fuelItem?.description
-          }
-        })
-    })
-    return fuelData
-  }
+  // function grabFuelData() {
+  //   let fuelData = ' '
+  //   fuelDetails.map((fuelItem) => {
+  //     company.fuel &&
+  //       company.fuel.map((item) => {
+  //         if (item === fuelItem?.name) {
+  //           fuelData += fuelItem?.description
+  //         }
+  //       })
+  //   })
+  //   return fuelData
+  // }
   return (
     <>
       <div className="mt-6 ml-8">
@@ -228,7 +270,23 @@ const Company: FC<CompanyDetailsProps> = ({
             <ChartGroup
               title="CDP-Fuel"
               chart={<FuelRadialChart source={company.fuel} />}
-              interpretation={<DataCard>{grabFuelData()}</DataCard>}
+              interpretation={getLabels(company.fuel, fuelDetails).map(
+                (label, key) => (
+                  <DataCard key={key}>
+                    {documentToReactComponents(label, contentfulOptions)}
+                  </DataCard>
+                ),
+              )}
+              // interpretation={
+              //   <DataCard>
+              //     {getLabels(
+              //       company.fuel,
+              //       fuelDetails.map((label) => {
+              //         documentToReactComponents(label, contentfulOptions)
+              //       }),
+              //     )}
+              //   </DataCard>
+              // }
               chartOnLeft={chartDirections['fuel']}
               chartSize="md"
             />
