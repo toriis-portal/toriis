@@ -8,6 +8,7 @@ import {
   HighlightedTitle,
   PrimaryButton,
   Tag,
+  InviteAdminSearchBar
 } from '../../components'
 import { api } from '../../utils/api'
 
@@ -19,10 +20,6 @@ const AdminAdminPage: FC = () => {
   const [usersEmailUpdate, setUsersEmailUpdate] = useState<string[]>([])
   const [edit, setEdit] = useState(false)
 
-  const isValidEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    return emailRegex.test(email)
-  }
   const deleteUsersMutation = api.user.deleteManyUsers.useMutation({
     async onSuccess() {
       setUsersToDelete([])
@@ -49,22 +46,6 @@ const AdminAdminPage: FC = () => {
     updateEmailsMutation.mutate({ ids: usersEmailUpdate })
     deleteUsersMutation.mutate({ ids: usersToDelete })
     setEdit(false)
-  }
-  const [email, setEmail] = useState<string>('')
-  const mutation = api.user.addWhitelistedUser.useMutation({
-    retry: false,
-  })
-  const handleSubmit = (event: React.SyntheticEvent) => {
-    event.preventDefault()
-    {
-      isValidEmail(email) && mutation.mutate({ email: email })
-    }
-  }
-
-  const handleClick = (event?: React.SyntheticEvent) => {
-    if (event) {
-      handleSubmit(event)
-    }
   }
 
   const { data, refetch } = api.user.getAllUsers.useQuery(undefined, {
@@ -150,26 +131,7 @@ const AdminAdminPage: FC = () => {
             color="clementine"
           />
         </div>
-        <form onSubmit={handleSubmit}>
-          <div className="flex justify-center">
-            <div className=" mr-20 flex w-[56%] pb-10">
-              <input
-                type="text"
-                className=" w-full rounded-md border bg-white px-4 py-4"
-                placeholder="Invite Gmail"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-              />
-            </div>
-            <PrimaryButton
-              text="Invite"
-              link=""
-              hasArrow={false}
-              onClick={handleClick}
-              className="w-48 px-5 py-2 text-base font-medium"
-            />
-          </div>
-        </form>
+       <InviteAdminSearchBar />
       </div>
     )
   )
