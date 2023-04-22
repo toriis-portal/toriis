@@ -95,10 +95,7 @@ const getChartDirections = (company: Company) => {
 
 type FuelTypes = Omit<Fuel, 'id' | 'companyId' | 'year' | 'totalConsumption'>
 
-const getLabels = (
-  fuels: Fuel,
-  fuelDetails: (CompanyDetailsEntry | undefined)[],
-) => {
+const getLabels = (fuels: Fuel, fuelDetails: CompanyDetailsEntry[]) => {
   const labels: string[] = []
   const labelsText: Document[] = []
 
@@ -116,16 +113,26 @@ const getLabels = (
     }
   })
 
-  console.log(labels)
   labels.map((label) => {
-    const filtered = fuelDetails.findIndex(
-      (item) => 'name' in item && item.name == label,
+    const item = fuelDetails.find(
+      (item) => item && 'name' in item && item.name == label,
     )
-    labelsText.push(fuelDetails[filtered]?.description)
+
+    if (item && item.description) {
+      labelsText.push(item.description)
+    }
   })
 
-  console.log(labelsText)
-  return labelsText
+  const mergedDocument: Document = labelsText.reduce(
+    (merged, document) => ({
+      nodeType: BLOCKS.DOCUMENT,
+      content: merged.content.concat(document.content),
+      data: {},
+    }),
+    { nodeType: BLOCKS.DOCUMENT, content: [], data: {} },
+  )
+
+  return mergedDocument
 }
 
 const Company: FC<CompanyDetailsProps> = ({
@@ -160,11 +167,6 @@ const Company: FC<CompanyDetailsProps> = ({
       },
     },
   }
-  // const [fuelLabels, setFuelLabels] = useState<string[]>([])
-
-  // function updateLabels(labels: string[]) {
-  //   setFuelLabels([...fuelLabels, ...labels])
-  // }
 
   const companyId = (useRouter().query.id as string) ?? ''
 
@@ -202,18 +204,6 @@ const Company: FC<CompanyDetailsProps> = ({
   const { company, sectorEntry, industryEntry } = data
   const chartDirections = getChartDirections(company)
 
-  // function grabFuelData() {
-  //   let fuelData = ' '
-  //   fuelDetails.map((fuelItem) => {
-  //     company.fuel &&
-  //       company.fuel.map((item) => {
-  //         if (item === fuelItem?.name) {
-  //           fuelData += fuelItem?.description
-  //         }
-  //       })
-  //   })
-  //   return fuelData
-  // }
   return (
     <>
       <div className="mt-6 ml-8">
@@ -270,23 +260,17 @@ const Company: FC<CompanyDetailsProps> = ({
             <ChartGroup
               title="CDP-Fuel"
               chart={<FuelRadialChart source={company.fuel} />}
-              interpretation={getLabels(company.fuel, fuelDetails).map(
-                (label, key) => (
-                  <DataCard key={key}>
-                    {documentToReactComponents(label, contentfulOptions)}
-                  </DataCard>
-                ),
-              )}
-              // interpretation={
-              //   <DataCard>
-              //     {getLabels(
-              //       company.fuel,
-              //       fuelDetails.map((label) => {
-              //         documentToReactComponents(label, contentfulOptions)
-              //       }),
-              //     )}
-              //   </DataCard>
-              // }
+              interpretation={
+                <DataCard>
+                  {documentToReactComponents(
+                    getLabels(
+                      company.fuel,
+                      fuelDetails as CompanyDetailsEntry[],
+                    ),
+                    contentfulOptions,
+                  )}
+                </DataCard>
+              }
               chartOnLeft={chartDirections['fuel']}
               chartSize="md"
             />
