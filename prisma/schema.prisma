@@ -37,11 +37,11 @@ enum EnvGrade {
 }
 
 enum Dataset {
-  Investment
-  Company
-  Fuel
-  Emission
-  Energy
+  INVESTMENT
+  COMPANY
+  FUEL
+  EMISSION
+  ENERGY
 }
 
 enum RequestStatus {

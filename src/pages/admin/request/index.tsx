@@ -30,14 +30,16 @@ const RequestPage: FC = () => {
       {session && (
         <>
           <h1>Request Management</h1>
-          <RequestReviewTable requests={data} />
-          {data.map((request) => (
-            <div key={request.id}>
-              {request.updates.map((update) => (
-                <p key={update.id}>{update.name}</p>
-              ))}
-            </div>
-          ))}
+          <div className="flex flex-col items-center">
+            <RequestReviewTable requests={data} className={'w-5/6'} />
+            {data.map((request) => (
+              <div key={request.id}>
+                {request.updates.map((update) => (
+                  <p key={update.id}>{update.name}</p>
+                ))}
+              </div>
+            ))}
+          </div>
         </>
       )}
     </div>
