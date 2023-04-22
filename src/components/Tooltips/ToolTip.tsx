@@ -13,19 +13,27 @@ interface TitleProps {
 const ToolTip: FC<TitleProps> = ({ title, details, children }) => {
   const [isShown, setIsShown] = useState(false)
 
+  function handleMouseLeave({
+    relatedTarget,
+    currentTarget,
+  }: {
+    relatedTarget: EventTarget | null
+    currentTarget: EventTarget
+  }) {
+    if (
+      relatedTarget &&
+      !(currentTarget as Element).contains(relatedTarget as Node)
+    ) {
+      setIsShown(false)
+    }
+  }
+
   return (
     <div className="group relative flex w-fit justify-center">
       <button
         className={clsx('bg-primary rounded', 'z-10 text-base text-black ')}
         onMouseEnter={() => setIsShown(true)}
-        onMouseLeave={(e) => {
-          if (
-            e.relatedTarget &&
-            !e.currentTarget.contains(e.relatedTarget as Node)
-          ) {
-            setIsShown(false)
-          }
-        }}
+        onMouseLeave={handleMouseLeave}
       >
         <InformationCircleIcon className="w-6" />
       </button>
@@ -37,14 +45,7 @@ const ToolTip: FC<TitleProps> = ({ title, details, children }) => {
             'z-40 w-60 p-5 text-sm leading-4',
           )}
           onMouseEnter={() => setIsShown(true)}
-          onMouseLeave={(e) => {
-            if (
-              e.relatedTarget &&
-              !e.currentTarget.contains(e.relatedTarget as Node)
-            ) {
-              setIsShown(false)
-            }
-          }}
+          onMouseLeave={handleMouseLeave}
         >
           <span
             className={clsx(
