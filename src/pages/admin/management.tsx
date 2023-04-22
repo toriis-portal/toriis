@@ -8,6 +8,7 @@ import {
   HighlightedTitle,
   PrimaryButton,
   Tag,
+  InviteAdminBar,
 } from '../../components'
 import { api } from '../../utils/api'
 import { AdminNavBar } from '../../components'
@@ -110,7 +111,7 @@ const AdminAdminPage: FC = () => {
             tempDeleted={usersToDelete}
             tempChecked={usersEmailUpdate}
           />
-          <div className="pt-6">
+          <div className="mb-4">
             {!deleteUsersMutation.isLoading &&
               !updateEmailsMutation.isLoading &&
               edit && (
@@ -124,6 +125,17 @@ const AdminAdminPage: FC = () => {
           {updateEmailsMutation.error && (
             <p>Something went wrong! {updateEmailsMutation.error.message}</p>
           )}
+
+          <div className="mb-20 w-3/4">
+            <div className="-mb-[12px] flex flex-row items-start justify-start">
+              <HighlightedTitle
+                title="Invite Administrators"
+                size="medium"
+                color="clementine"
+              />
+            </div>
+            <InviteAdminBar />
+          </div>
         </div>
       </>
     )

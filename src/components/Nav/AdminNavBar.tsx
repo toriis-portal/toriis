@@ -33,14 +33,14 @@ const AdminNavBar: FC = () => {
 
   if (path == '/admin/website/data' || path == '/admin/website/content') {
     centerElem = (
-      <div className="mt-3 flex space-x-12">
+      <div className="mt-3 flex space-x-8 lg:space-x-12">
         {navItems.map((navItem: NavItem, i: number) => {
-          const isActive = path === '' + navItem.path
+          const isActive = path === navItem.path
           return (
             <Link key={i} href={navItem.path}>
               <p
                 className={clsx(
-                  'text-[22px] font-medium',
+                  'whitespace-nowrap text-[22px] font-medium',
                   isActive &&
                     'underline decoration-clementine decoration-4 underline-offset-8',
                 )}
@@ -85,7 +85,7 @@ const AdminNavBar: FC = () => {
           <BackButton customLink="/admin" />
         )}
       </div>
-      <div className="mb-10 mt-6 flex basis-2/4 justify-center">
+      <div className="mb-8 mt-5 flex basis-2/4 justify-center">
         {centerElem}
       </div>
       <div className="flex basis-1/4 justify-end">

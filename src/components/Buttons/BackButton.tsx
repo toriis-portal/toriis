@@ -27,9 +27,9 @@ const BackButton: FC<BackButtonProps> = ({
       onClick={handleClick}
       className={clsx(
         clsx(
-          'flex w-fit place-content-center items-center justify-center p-4 font-inter text-lg',
+          'flex w-fit place-content-center items-center justify-center truncate p-4 font-inter text-sm lg:text-lg',
           'shadow-gray shadow-lg',
-          'rounded-3xl border-[0.05rem] border-black py-1 ',
+          'rounded-3xl border-[0.05rem] border-black py-1',
         ),
       )}
     >
