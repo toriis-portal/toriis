@@ -19,7 +19,7 @@ const AdminAdminPage: FC = () => {
   const [usersEmailUpdate, setUsersEmailUpdate] = useState<string[]>([])
   const [edit, setEdit] = useState(false)
 
-  const isValidEmail = (email) => {
+  const isValidEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     return emailRegex.test(email)
   }
@@ -61,8 +61,10 @@ const AdminAdminPage: FC = () => {
     }
   }
 
-  const handleClick = (): void => {
-    handleSubmit(event)
+  const handleClick = (event?: React.SyntheticEvent) => {
+    if (event) {
+      handleSubmit(event)
+    }
   }
 
   const { data, refetch } = api.user.getAllUsers.useQuery(undefined, {
