@@ -15,30 +15,37 @@ interface Paginated {
 
 interface Props<TableRow> extends DynamicTableProps<TableRow> {
   paginated: Paginated
+  capturePageChanges?: (page: number) => void
 }
 
 export const PaginatedDynamicTable = <
   TableRow extends BaseTableRowGeneric<TableRow>,
 >({
   paginated,
+  capturePageChanges,
   ...tableProps
 }: Props<TableRow>) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { rowCount: _rowCount, pageCount, page, onPageChange } = paginated ?? {}
+
+  const handlePageChange = (page: number, changeBy: number) => {
+    onPageChange(page + changeBy)
+    capturePageChanges?.(page)
+  }
 
   return (
     <div>
       <DynamicTable {...tableProps} />
       <div className="flex">
         <ChevronLeftIcon
-          onClick={() => onPageChange(page - 1)}
+          onClick={() => handlePageChange(page, -1)}
           className="h-5 w-5"
         />
         <div className="flex">
           {page} / {pageCount}
         </div>
         <ChevronRightIcon
-          onClick={() => onPageChange(page + 1)}
+          onClick={() => handlePageChange(page, 1)}
           className="h-5 w-5"
         />
       </div>

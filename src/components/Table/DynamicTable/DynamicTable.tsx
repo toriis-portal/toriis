@@ -99,7 +99,7 @@ interface Props<TableRow> {
   rows: TableRow[]
   columns: Column<TableRow>[]
   styles?: TableStyles
-  onRowEntryClick?: (row: TableRow) => void
+  onRowEntryClick?: (row: TableRow, col: Column<TableRow>) => void
   onSelectChange?: (
     row: TableRow,
     updatedEntry: {
@@ -213,7 +213,7 @@ export const DynamicTable = <TableRow extends BaseTableRowGeneric<TableRow>>({
                 <TableCell
                   row={row}
                   col={col}
-                  onClick={onRowEntryClick}
+                  onClick={() => onRowEntryClick && onRowEntryClick(row, col)}
                   onChange={onSelectChange}
                 />
               </td>
