@@ -46,6 +46,14 @@ const AdminAdminPage: FC = () => {
     deleteUsersMutation.mutate({ ids: usersToDelete })
     setEdit(false)
   }
+  const [email, setEmail] = useState<string>('')
+  const mutation = api.user.addWhitelistedUser.useMutation({
+    retry: false,
+  })
+  const handleSubmit = (event: React.SyntheticEvent) => {
+    event.preventDefault()
+    mutation.mutate({ email: email })
+  }
 
   const { data, refetch } = api.user.getAllUsers.useQuery(undefined, {
     refetchOnWindowFocus: false,
@@ -59,66 +67,103 @@ const AdminAdminPage: FC = () => {
 
   return (
     session && (
-      <div className="flex flex-col items-center gap-5 first-letter:w-full">
-        <div className="mt-20 flex w-3/4 flex-row justify-between">
-          <div className="-mb-[12px] flex flex-row items-start justify-start gap-1">
-            <HighlightedTitle
-              title="Administrative List"
-              size="medium"
-              color="clementine"
-            />
-            <p className="ml-2 mt-2.5 text-medGray">
-              {`(${data?.length || 0} Results)`}
-            </p>
-          </div>
-          <button className="self-end" onClick={handleEdit}>
-            {edit ? (
-              <Tag
-                title="edit"
-                className="border border-black bg-black font-normal text-white"
+      <div>
+        <div className="flex flex-col items-center gap-5 first-letter:w-full">
+          <div className="mt-20 flex w-3/4 flex-row justify-between">
+            <div className="-mb-[12px] flex flex-row items-start justify-start gap-1">
+              <HighlightedTitle
+                title="Administrative List"
+                size="medium"
+                color="clementine"
               />
-            ) : (
-              <u>
+              <p className="ml-2 mt-2.5 text-medGray">
+                {`(${data?.length || 0} Results)`}
+              </p>
+            </div>
+            <button className="self-end" onClick={handleEdit}>
+              {edit ? (
                 <Tag
                   title="edit"
-                  className="border border-black bg-lightBlue font-normal text-black"
+                  className="border border-black bg-black font-normal text-white"
                 />
-              </u>
-            )}
-          </button>
-        </div>
-        <AdminListTable
-          className="w-3/4"
-          users={data}
-          editEnabled={edit}
-          onTrash={(currentId) => {
-            setUsersToDelete([...usersToDelete, currentId])
-          }}
-          onUndo={(currentId) => {
-            setUsersToDelete(usersToDelete.filter((id) => id !== currentId))
-          }}
-          onCheck={(currentId) => {
-            setUsersEmailUpdate(
-              !usersEmailUpdate.includes(currentId)
-                ? [...usersEmailUpdate, currentId]
-                : usersEmailUpdate.filter((id) => id !== currentId),
-            )
-          }}
-          tempDeleted={usersToDelete}
-          tempChecked={usersEmailUpdate}
-        />
-        <div className="pt-6">
-          {!deleteUsersMutation.isLoading &&
-            !updateEmailsMutation.isLoading &&
-            edit && <PrimaryButton text="Update" onClick={handleUpdateUsers} />}
-        </div>
+              ) : (
+                <u>
+                  <Tag
+                    title="edit"
+                    className="border border-black bg-lightBlue font-normal text-black"
+                  />
+                </u>
+              )}
+            </button>
+          </div>
+          <AdminListTable
+            className="w-3/4"
+            users={data}
+            editEnabled={edit}
+            onTrash={(currentId) => {
+              setUsersToDelete([...usersToDelete, currentId])
+            }}
+            onUndo={(currentId) => {
+              setUsersToDelete(usersToDelete.filter((id) => id !== currentId))
+            }}
+            onCheck={(currentId) => {
+              setUsersEmailUpdate(
+                !usersEmailUpdate.includes(currentId)
+                  ? [...usersEmailUpdate, currentId]
+                  : usersEmailUpdate.filter((id) => id !== currentId),
+              )
+            }}
+            tempDeleted={usersToDelete}
+            tempChecked={usersEmailUpdate}
+          />
+          <div className="pt-6">
+            {!deleteUsersMutation.isLoading &&
+              !updateEmailsMutation.isLoading &&
+              edit && (
+                <PrimaryButton text="Update" onClick={handleUpdateUsers} />
+              )}
+          </div>
 
-        {deleteUsersMutation.error && (
-          <p>Something went wrong! {deleteUsersMutation.error.message}</p>
-        )}
-        {updateEmailsMutation.error && (
-          <p>Something went wrong! {updateEmailsMutation.error.message}</p>
-        )}
+          {deleteUsersMutation.error && (
+            <p>Something went wrong! {deleteUsersMutation.error.message}</p>
+          )}
+          {updateEmailsMutation.error && (
+            <p>Something went wrong! {updateEmailsMutation.error.message}</p>
+          )}
+        </div>
+        <div className="-mb-[12px] flex flex-row items-start justify-start gap-1">
+          <HighlightedTitle
+            title="Invite Administrators"
+            size="medium"
+            color="clementine"
+          />
+        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="flex justify-center">
+            <div className=" mr-12 flex w-1/2 ">
+              <input
+                type="text"
+                className=" w-full rounded-md border bg-white px-4 py-3"
+                placeholder="Invite Gmail"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+            </div>
+            {/* <button type="submit">
+                 <PrimaryButton
+                 text="Invite"
+                link=""
+                 hasArrow={false}
+                 className="px-5 w-48 text-base py-2 font-medium"/>
+             </button> */}
+            <button
+              type="submit"
+              className="w-48 px-5 py-2 text-base font-medium"
+            >
+              Invite
+            </button>
+          </div>
+        </form>
       </div>
     )
   )

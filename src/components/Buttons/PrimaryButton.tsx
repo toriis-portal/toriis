@@ -12,7 +12,7 @@ interface PrimaryButtonProps {
 
 const PrimaryButton: FC<PrimaryButtonProps> = ({
   text,
-  link, 
+  link,
   onClick,
   className = '',
 }) => {
@@ -29,7 +29,7 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
                 'shadow-[-8px_8px_0px_0px] shadow-cobalt',
                 'hover:shadow-[-5px_5px_0px_0px] hover:shadow-cobalt',
                 className,
-            )}
+              )}
             >
               {text}
               <ArrowRightIcon className="ml-1 inline h-9 w-5 stroke-current stroke-1" />
@@ -51,7 +51,7 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
             'rounded bg-lightBlue px-20 py-3',
             'shadow-[-8px_8px_0px_0px] shadow-cobalt',
             'hover:shadow-[-5px_5px_0px_0px] hover:shadow-cobalt',
-            className
+            className,
           )}
         >
           {text}
