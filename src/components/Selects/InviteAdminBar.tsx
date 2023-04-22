@@ -34,7 +34,6 @@ const InviteAdminBar: FC = () => {
         </div>
         <PrimaryButton
           text="Invite"
-          link=""
           type="submit"
           hasArrow={false}
           className="w-48 px-5 py-2 text-base font-medium"
