@@ -22,6 +22,7 @@ export const userRouter = createTRPCRouter({
         })
       }
     }),
+
   deleteManyUsers: protectedProcedure
     .input(z.object({ ids: z.array(z.string()) }))
     .mutation(async ({ input, ctx }) => {
@@ -39,6 +40,7 @@ export const userRouter = createTRPCRouter({
         })
       }
     }),
+
   updateUserEmailPreference: protectedProcedure
     .input(z.object({ ids: z.array(z.string()) }))
     .mutation(async ({ input, ctx }) => {
@@ -77,8 +79,41 @@ export const userRouter = createTRPCRouter({
       }
       return updateEmailUsers
     }),
+
   getAllUsers: protectedProcedure.query(async ({ ctx }) => {
     const users = await ctx.prisma.user.findMany()
     return users
   }),
+
+  addWhitelistedUser: protectedProcedure
+    .input(
+      z.object({
+        email: z.string(),
+      }),
+    )
+    .mutation(async ({ input, ctx }) => {
+      const existingUser = await ctx.prisma.whitelistedUser.findUnique({
+        where: {
+          email: input.email,
+        },
+      })
+
+      if (existingUser) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'User is already in the whitelist',
+        })
+      }
+
+      await ctx.prisma.whitelistedUser.create({
+        data: {
+          email: input.email,
+        },
+      })
+
+      return {
+        success: true,
+        message: 'User added to whitelist',
+      }
+    }),
 })
