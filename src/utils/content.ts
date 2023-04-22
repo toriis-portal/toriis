@@ -58,6 +58,8 @@ export class ContentWrapper {
         return (entries as RefuteResponseEntry[]).sort(
           (a, b) => a.order - b.order,
         )
+      case 'link':
+        return (entries as LinkEntry[]).filter((entry) => entry.type === "Link")
       case 'list':
         return (entries as ListEntry[]).sort((a, b) => a.order - b.order)
       case 'info':

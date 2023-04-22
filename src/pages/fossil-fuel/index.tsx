@@ -6,9 +6,10 @@ import {
   HighlightedTitle,
   SecondaryNavBar,
   ClimateClock,
+  CompanyDetailsAccordion,
 } from '../../components'
 import { ContentWrapper } from '../../utils/content'
-import { FinancialCase } from '../../sections'
+import { FinancialCase, InstitutionalDivestments } from '../../sections'
 import type { CaseEntry } from '../../types'
 
 export const getServerSideProps = async () => {
@@ -26,6 +27,7 @@ interface FossilFuelProps {
 }
 
 const FossilFuelPage: FC<FossilFuelProps> = ({ caseEntries }) => {
+  const content = "A temperature increase of 2 °C by the year 2100 would mean 5 times the floods, storms, drought and heat waves as there are now. This means increased risks of local species extinction, catastrophic biodiversity loss and great detriment to food security. Terrestrial, wetland and ocean ecosystems that serve all life, including humans will experience severe changes to everyday life. Human migration and climate refugee situations are already underway.\n \nIn 2018 the IPCC reported with high confidence that any increase in global temperatures, even by tenths of a degree, will affect human health negatively. They project increased cases of heat-related illness and mortality, malaria, dengue, and undernutrition. Fossil fuel related emissions account for about 65% of the excess mortality rate attributable to air pollution.\nThese risks increase for those living in urban areas as well as impoverished and disadvantaged communities.\n It is vital we put in the effort to bolster environmental justice for groups that are hit by the effects of climate change the hardest."
   const navItems = [
     { path: 'uofiInvestments', text: 'University of Illinois Investments' },
     { path: 'dirtyIndustry', text: 'The Dirty Industry UIUC Supports' },
@@ -63,6 +65,15 @@ const FossilFuelPage: FC<FossilFuelProps> = ({ caseEntries }) => {
       <div id="divestedSchools" className="pt-20"></div>
       <div id="divestedInstitutions" className="pt-20"></div>
       <ClimateClock />
+      <div className = "bg-lightClementine w-full my-20 p-20">
+        <HighlightedTitle
+          title="What 1.5 C Warming Means"
+          size="medium"
+          color="clementine"
+        />
+        <CompanyDetailsAccordion content = {content} className='bg-white'></CompanyDetailsAccordion>
+        {/* <InstitutionalDivestments/> */}
+      </div>
     </>
   )
 }
