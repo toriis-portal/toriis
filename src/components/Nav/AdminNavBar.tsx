@@ -34,11 +34,17 @@ const AdminNavBar: FC = () => {
     centerElem = (
       <div className="mb-11 flex space-x-12">
         {navItems.map((navItem: NavItem, i: number) => {
-          const isActive = path === '' + navItem.path
           return (
             <Link key={i} href={navItem.path}>
-              <p className="text-[22px] font-medium">{navItem.text}</p>
-              <div className={clsx('z-0 h-2', isActive && 'bg-clementine')} />
+              <p
+                className={clsx(
+                  'text-[22px] font-medium',
+                  isActive &&
+                    'underline decoration-clementine decoration-4 underline-offset-8',
+                )}
+              >
+                {navItem.text}
+              </p>
             </Link>
           )
         })}
