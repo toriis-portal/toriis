@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
-import type { Company } from '@prisma/client'
+import type { Company, Sector } from '@prisma/client'
+import { useSession } from 'next-auth/react'
 
 import { api } from '../../utils/api'
 import { INDUSTRIES } from '../../utils/constants'
@@ -10,10 +11,12 @@ const PAGE_SIZE = 20
 
 interface GlobalStateEntry {
   key: keyof Company
-  value: string | number | null
+  value: string | number | Sector
   id: string
   page: number
 }
+
+type CompanyWithChangedEntries = Company & { changedEntries: (keyof Company)[] }
 
 export const Test = () => {
   const [skip, setSkip] = useState(0)
@@ -28,6 +31,7 @@ export const Test = () => {
   const [globalStateEntries, SetGlobalStateEntries] = useState<
     GlobalStateEntry[]
   >([])
+  const { data: session, status } = useSession()
 
   const originalRows = useMemo(() => data?.items ?? [], [data?.items])
   const [rows, setRows] = useState<
@@ -40,6 +44,15 @@ export const Test = () => {
       changedEntries: [],
     })),
   )
+
+  const submitRequest = () =>
+    api.request.createRequest.useQuery({
+      dataset: 'Company',
+      updates: globalStateEntries,
+      status: 'PENDING',
+      userId: session?.user.id ?? '',
+      createdAt: new Date().toISOString(),
+    })
 
   useEffect(() => {
     const cleanedRows = originalRows.map((row) => {
@@ -62,11 +75,44 @@ export const Test = () => {
         (entry) => entry.id === row.id && entry.page === skip / PAGE_SIZE + 1,
       )
       if (globalStateEntry) {
-        return {
+        const newRow: CompanyWithChangedEntries = {
           ...row,
-          // [globalStateEntry.key]: globalStateEntry.value,
           changedEntries: globalStateEntry.map((entry) => entry.key),
         }
+
+        globalStateEntry.forEach((entry) => {
+          if (entry.key in newRow) {
+            // Hack to get around type check failure for newRow[entry.key] = entry.value
+            switch (entry.key) {
+              case 'id':
+                newRow['id'] = entry.value as string
+                break
+              case 'name':
+                newRow['name'] = entry.value as string
+                break
+              case 'ticker':
+                newRow['ticker'] = entry.value as string
+                break
+              case 'sector':
+                newRow['sector'] = entry.value as Sector
+                break
+              case 'industry':
+                newRow['industry'] = entry.value as string
+                break
+              case 'netAssetVal':
+                newRow['netAssetVal'] = entry.value as number
+                break
+              case 'description':
+                newRow['description'] = entry.value as string
+                break
+              case 'bloombergId':
+                newRow['bloombergId'] = entry.value as string
+                break
+            }
+          }
+        })
+
+        return newRow
       }
       return row
     })
@@ -146,7 +192,7 @@ export const Test = () => {
                 row.changedEntries.forEach((key) => {
                   newEntries.push({
                     key: key,
-                    value: row[key],
+                    value: row[key] ?? '',
                     id: row.id,
                     page: page,
                   })
@@ -260,7 +306,7 @@ export const Test = () => {
         }}
       ></input>
 
-      <button>Request changes</button>
+      <button onClick={submitRequest}>Request changes</button>
     </>
   )
 }
