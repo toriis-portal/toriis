@@ -39,6 +39,19 @@ export const userRouter = createTRPCRouter({
           message: 'Failed to delete users',
         })
       }
+      const deleteWhitelist = await ctx.prisma.whitelistedUser.deleteMany({
+        where: {
+          userId: {
+            in: input.ids,
+          },
+        },
+      })
+      if (!deleteWhitelist) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to delete user from whitelist',
+        })
+      }
     }),
 
   updateUserEmailPreference: protectedProcedure
