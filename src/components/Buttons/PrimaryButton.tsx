@@ -8,13 +8,17 @@ interface PrimaryButtonProps {
   link?: string
   onClick?: () => void
   className?: string
+  hasArrow?: boolean
+  type?: 'submit' | 'button' | 'reset' | undefined
 }
 
 const PrimaryButton: FC<PrimaryButtonProps> = ({
   text,
-  link, 
+  link,
   onClick,
   className = '',
+  hasArrow = true,
+  type = undefined,
 }) => {
   if (!!link) {
     return (
@@ -22,6 +26,7 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
         <Link href={link}>
           <div>
             <button
+              type={type}
               className={clsx(
                 'font-klima text-[18px] font-semibold',
                 'rounded border-2 border-solid border-cobalt',
@@ -29,10 +34,12 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
                 'shadow-[-8px_8px_0px_0px] shadow-cobalt',
                 'hover:shadow-[-5px_5px_0px_0px] hover:shadow-cobalt',
                 className,
-            )}
+              )}
             >
               {text}
-              <ArrowRightIcon className="ml-1 inline h-9 w-5 stroke-current stroke-1" />
+              {hasArrow && (
+                <ArrowRightIcon className="ml-1 inline h-9 w-5 stroke-current stroke-1" />
+              )}
             </button>
           </div>
         </Link>
@@ -51,7 +58,7 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
             'rounded bg-lightBlue px-20 py-3',
             'shadow-[-8px_8px_0px_0px] shadow-cobalt',
             'hover:shadow-[-5px_5px_0px_0px] hover:shadow-cobalt',
-            className
+            className,
           )}
         >
           {text}
