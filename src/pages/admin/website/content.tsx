@@ -22,7 +22,7 @@ const UpdateContent: FC = () => {
         <div>
           <AdminNavBar />
           <div className="flex w-screen flex-col items-center justify-center gap-8 pt-72">
-            <h2 className="font-klima font-semibold">
+            <h2 className="bb font-bold">
               Manage site wide content through Contentful
             </h2>
 
