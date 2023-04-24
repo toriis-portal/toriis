@@ -17,7 +17,7 @@ const Tabs: FC<{ tabDetails: TabDetails[] }> = ({ tabDetails }) => {
 
   return (
     <div className="px-12">
-      {/* Tab headers, move to separate component? */}
+      {/* Tab headers:*/}
       <div className="flex flex-row space-x-1.5">
         {tabDetails.map((details, i) => {
           return (
@@ -28,20 +28,21 @@ const Tabs: FC<{ tabDetails: TabDetails[] }> = ({ tabDetails }) => {
         })}
       </div>
 
-      {/* Tab body, move to separate component? */}
-      <div className="flex flex-col items-center justify-center rounded-b-lg rounded-tr-lg bg-clementine/20 px-16">
+      {/* Tab body: */}
+      <div className="flex flex-col items-center justify-center rounded-b-lg rounded-tr-lg bg-clementine/20 px-16 pb-8">
         <p className="py-11 text-[22px]">{tabDetails[activeIdx]?.title}</p>
         {tabDetails[activeIdx]?.content}
-        <Link
-          href={tabDetails[activeIdx]?.url ?? ''}
-          rel="noopener noreferrer"
-          target="_blank"
-          className="mt-14 mb-7 self-end rounded-3xl bg-clementine py-1.5 px-5 underline underline-offset-2"
-        >
-          Read More
-          <ArrowUpRightIcon className="inline h-4 pl-1" />
-        </Link>
-        {/* TODO: default url?? ^ */}
+        {tabDetails[activeIdx]?.url && (
+          <Link
+            href={tabDetails[activeIdx]?.url ?? ''}
+            rel="noopener noreferrer"
+            target="_blank"
+            className="mt-14 self-end rounded-3xl bg-clementine py-1.5 px-5 underline underline-offset-2"
+          >
+            Read More
+            <ArrowUpRightIcon className="inline h-4 pl-1" />
+          </Link>
+        )}
       </div>
     </div>
   )
