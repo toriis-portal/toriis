@@ -28,6 +28,11 @@ const config = {
         destination: '/home',
         permanent: true,
       },
+      {
+        source: '/admin/website',
+        destination: '/admin/website/data',
+        permanent: true,
+      },
     ]
   },
 }
