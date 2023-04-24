@@ -2,8 +2,6 @@ import type { FC } from 'react'
 import { Link } from 'react-scroll'
 import clsx from 'clsx'
 
-import { fontOptions } from '../../utils/fontSizes'
-
 interface NavItem {
   path: string
   text: string
@@ -25,7 +23,7 @@ const SecondaryNavBar: FC<{ navItems: NavItem[] }> = ({ navItems }) => {
                 spy={true}
                 smooth={true}
                 duration={500}
-                className={clsx(navStyle, fontOptions.bb)}
+                className={clsx(navStyle, 'bb')}
               >
                 {dataKey.text}
               </Link>

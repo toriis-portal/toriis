@@ -3,8 +3,6 @@ import { ArrowRightIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 import clsx from 'clsx'
 
-import { fontOptions } from '../../utils/fontSizes'
-
 interface PrimaryButtonProps {
   text: string
   link?: string
@@ -28,9 +26,8 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
                 'rounded border-2 border-solid border-cobalt',
                 'rounded bg-lightBlue px-5 py-1',
                 'shadow-[-8px_8px_0px_0px] shadow-cobalt',
-                'hover:shadow-[-5px_5px_0px_0px] hover:shadow-cobalt',
+                'bb hover:shadow-cobalt first-letter:hover:shadow-[-5px_5px_0px_0px]',
                 className,
-                fontOptions.bb,
               )}
             >
               {text}
@@ -51,9 +48,8 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
             'rounded border-2 border-solid border-cobalt',
             'rounded bg-lightBlue px-20 py-3',
             'shadow-[-8px_8px_0px_0px] shadow-cobalt',
-            'hover:shadow-[-5px_5px_0px_0px] hover:shadow-cobalt',
+            'bb hover:shadow-[-5px_5px_0px_0px] hover:shadow-cobalt',
             className,
-            fontOptions.bb,
           )}
         >
           {text}
