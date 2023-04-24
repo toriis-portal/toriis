@@ -35,6 +35,7 @@ import SearchBar from './Selects/SearchBar'
 // Text
 import NumberCircle from './Text/NumberCircle'
 import HighlightedTitle from './Text/HighlightedTitle'
+import LimitedPopupBox from './Text/LimitedPopupBox'
 import CapitalizedTitle from './Text/CapitalizedTitle'
 import ShadowTitle from './Text/ShadowTitle'
 import Tag from './Text/Tag'
@@ -86,4 +87,5 @@ export {
   AdminBox,
   AdminListTable,
   RequestReviewTable,
+  LimitedPopupBox,
 }

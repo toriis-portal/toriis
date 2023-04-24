@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import { useRef, useEffect } from 'react'
 
 import { datasetEnum } from '../../utils/enums'
+import LimitedPopupBox from '../Text/LimitedPopupBox'
 
 interface RequestTableProps {
   requests: Request[] | undefined
@@ -25,8 +26,8 @@ const RequestReviewTable: FC<RequestTableProps> = ({ requests, className }) => {
           </tr>
         </thead>
         <tbody>
-          {requests?.map((request) => {
-            return request.updates.map((update) => {
+          {requests?.map((request, request_idx) => {
+            return request.updates.map((update, update_idx) => {
               return (
                 <tr
                   key={update.id}
@@ -38,10 +39,10 @@ const RequestReviewTable: FC<RequestTableProps> = ({ requests, className }) => {
                   <td className="w-[15%] text-darkTeal">
                     {datasetEnum[request.dataset]}
                   </td>
-                  <td className="w-[55%] border border-lightGray p-1 pr-3">
-                    <p ref={commentRef} className="truncate">
-                      {request.comment}
-                    </p>
+                  <td className="w-[55%]">
+                    {request.comment && (
+                      <LimitedPopupBox text={request.comment} />
+                    )}
                   </td>
                   <td className={clsx('w-[15%] text-right')}>Show More!</td>
                 </tr>
