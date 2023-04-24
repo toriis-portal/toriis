@@ -31,7 +31,7 @@ const ToolTip: FC<TitleProps> = ({ title, details, children }) => {
   return (
     <div className="group relative flex w-fit justify-center">
       <button
-        className={clsx('bg-primary rounded', 'z-10 text-base text-black ')}
+        className={clsx('bg-primary z-10 rounded text-base text-black')}
         onMouseEnter={() => setIsShown(true)}
         onMouseLeave={handleMouseLeave}
       >
@@ -58,7 +58,7 @@ const ToolTip: FC<TitleProps> = ({ title, details, children }) => {
             children
           ) : (
             <>
-              <div className=" font-semibold">{title}:</div>
+              <div className="font-semibold">{title}:</div>
               {details}
             </>
           )}
