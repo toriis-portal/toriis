@@ -203,7 +203,7 @@ export const Select: FC<SelectProps> = ({
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={clsx(
-          'flex w-full items-center overflow-hidden rounded-full border border-solid',
+          'bb flex w-full items-center overflow-hidden rounded-full border border-solid',
           {
             'justify-centerborder-darkTeal float-right h-10 w-fit border-black':
               !isFilter,
@@ -296,16 +296,14 @@ export const Select: FC<SelectProps> = ({
               <ul className="m-auto flex w-11/12 flex-col gap-5">
                 {Object.entries(options).map(([key, value]) => (
                   <li key={key} className="text-black">
-                    <span className="text-xl">{key}</span>
+                    <span className="bb">{key}</span>
                     <ul className="mt-2 flex flex-col gap-2">
                       {value.filter(handleSearchFilter).map((option) => (
                         <li
                           key={option}
                           className="flex items-center text-black"
                         >
-                          <span className="text-sm max-sm:text-[3px]">
-                            {option}
-                          </span>
+                          <span className="r2">{option}</span>
                           <input
                             onChange={() =>
                               handleGroupChange(`${key}-${option}`)
@@ -323,7 +321,7 @@ export const Select: FC<SelectProps> = ({
             )}
             {updateControl?.type === 'on-apply' && (
               <button
-                className="m-[auto] mt-5 flex w-9/12 justify-center rounded-full bg-black text-sm text-white"
+                className="r1 m-[auto] mt-5 flex w-9/12 justify-center rounded-full bg-black text-white"
                 onClick={handleApply}
               >
                 Apply

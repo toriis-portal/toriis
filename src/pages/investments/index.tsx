@@ -247,7 +247,7 @@ const InvestmentPage: FC = () => {
                   ? 'Recommendations'
                   : 'Results'}
               </p>
-              <p className="text-medGray">
+              <p className="bb text-medGray">
                 {'('}
                 {data?.pages
                   ? (data.pages.length - 1) * limit +
