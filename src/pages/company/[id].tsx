@@ -77,8 +77,8 @@ const Company = () => {
       <div className="mt-6 ml-8">
         <BackButton />
       </div>
-      <div className="mb-20 flex flex-col px-12 lg:px-24">
-        <div className="flex flex-col items-center">
+      <div className="mb-20 flex flex-col flex-wrap px-12 lg:px-24">
+        <div className="flex flex-col items-center ">
           <HighlightedTitle
             title={company.name}
             size="large"
