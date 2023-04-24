@@ -1,6 +1,9 @@
 import clsx from 'clsx'
 import type { FC, ReactNode } from 'react'
 import React, { useState } from 'react'
+import { number } from 'zod'
+
+import TabHeader from './TabHeader'
 
 interface TabDetails {
   index: number
@@ -10,15 +13,19 @@ interface TabDetails {
 }
 
 const Tabs: FC<{ tabDetails: TabDetails[] }> = ({ tabDetails }) => {
+  const [activeIdx, setActiveIndx] = useState(0)
+
+  const handleClick = (i: number) => {
+    setActiveIndx(i)
+  }
+
   return (
     <div className="flex items-center px-12">
-      <div className="flex flex-row">
+      <div className="flex flex-row space-x-1.5">
         {/* Tab headers, move to separate component? */}
         {tabDetails.map((details, i) => {
           return (
-            <div key={i}>
-              {/* Tab header, move to separate component? */} {details.title}
-            </div>
+            <TabHeader key={i} title={details.title} active={active_idx == i} />
           )
         })}
       </div>
