@@ -47,7 +47,7 @@ const TimelineItem: FC<TimlineItemProps> = ({ data, isLeft }) => {
                 <TimelineTick isLeft={isLeft} />
 
                 <div className="basis-3/12 rounded-lg bg-darkTeal py-2">
-                  <p className="m-0 text-center text-4xl text-white">
+                  <p className="t1 m-0 px-2 text-center font-normal text-white">
                     {item.year}
                   </p>
                 </div>
@@ -59,7 +59,7 @@ const TimelineItem: FC<TimlineItemProps> = ({ data, isLeft }) => {
                 })}
               >
                 <p
-                  className={clsx('text-xl text-black', {
+                  className={clsx('bb text-black', {
                     'mr-6 pr-10 text-right': isLeft,
                     'ml-6 pl-10 text-left': !isLeft,
                   })}
@@ -101,7 +101,7 @@ const TimelineSection: FC<{ entries: TimelineEntry[] }> = ({ entries }) => {
         size="large"
         color="clementine"
       />
-      <div className="relative mx-[5%] my-10 min-h-screen border-spacing-1 text-6xl">
+      <div className="relative mx-[5%] my-10 min-h-screen border-spacing-1">
         <div className="absolute box-border h-full w-1/2 border-spacing-1 border-r-8 border-clementine"></div>
         <div className="flex flex-row">
           <div className="pr-.5 flex w-1/2 flex-col">
