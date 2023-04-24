@@ -10,23 +10,34 @@ import {
 } from '../../components'
 import { ContentWrapper } from '../../utils/content'
 import { FinancialCase, InstitutionalDivestments } from '../../sections'
-import type { CaseEntry } from '../../types'
+import type { CaseEntry,  LinkEntry,
+  ListEntry,} from '../../types'
 
 export const getServerSideProps = async () => {
   const contentClient = new ContentWrapper()
+  const homeEntries = await contentClient.getAllFossilFuelPageEntries()
+  const divestmentLinkEntries = homeEntries['link']
+  const divestmentListEntries = homeEntries['list']
   const caseEntries = await contentClient.get('case')
   return {
     props: {
       caseEntries,
+      divestmentListEntries,
+      divestmentLinkEntries,
     },
   }
 }
 
 interface FossilFuelProps {
   caseEntries: CaseEntry[]
+  divestmentListEntries: ListEntry[]
+  divestmentLinkEntries: LinkEntry[]
+  
 }
 
-const FossilFuelPage: FC<FossilFuelProps> = ({ caseEntries }) => {
+const FossilFuelPage: FC<FossilFuelProps> = ({ caseEntries, divestmentLinkEntries, divestmentListEntries }) => {
+  console.log(divestmentLinkEntries)
+
   const content = "A temperature increase of 2 °C by the year 2100 would mean 5 times the floods, storms, drought and heat waves as there are now. This means increased risks of local species extinction, catastrophic biodiversity loss and great detriment to food security. Terrestrial, wetland and ocean ecosystems that serve all life, including humans will experience severe changes to everyday life. Human migration and climate refugee situations are already underway.\n \nIn 2018 the IPCC reported with high confidence that any increase in global temperatures, even by tenths of a degree, will affect human health negatively. They project increased cases of heat-related illness and mortality, malaria, dengue, and undernutrition. Fossil fuel related emissions account for about 65% of the excess mortality rate attributable to air pollution.\nThese risks increase for those living in urban areas as well as impoverished and disadvantaged communities.\n It is vital we put in the effort to bolster environmental justice for groups that are hit by the effects of climate change the hardest."
   const navItems = [
     { path: 'uofiInvestments', text: 'University of Illinois Investments' },
@@ -37,7 +48,6 @@ const FossilFuelPage: FC<FossilFuelProps> = ({ caseEntries }) => {
     { path: 'divestedSchools', text: 'Schools That Have Divested ' },
     { path: 'divestedInstitutions', text: 'Institutions That Have Divested' },
   ]
-
   return (
     <>
       <PrimaryNavBar />
@@ -73,6 +83,12 @@ const FossilFuelPage: FC<FossilFuelProps> = ({ caseEntries }) => {
         />
         <CompanyDetailsAccordion content = {content} className='bg-white'></CompanyDetailsAccordion>
         {/* <InstitutionalDivestments/> */}
+        <div id="institutionalDivestment" className="pt-20">
+          <InstitutionalDivestments
+            linkEntries={divestmentLinkEntries}
+            listEntries={divestmentListEntries}
+          />
+        </div>
       </div>
     </>
   )
