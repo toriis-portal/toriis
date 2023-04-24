@@ -61,13 +61,13 @@ const AdminAdminPage: FC = () => {
     session && (
       <div className="flex flex-col items-center gap-5 first-letter:w-full">
         <div className="mt-20 flex w-3/4 flex-row justify-between">
-          <div className="-mb-[12px] flex flex-row items-start justify-start gap-1">
+          <div className="-mb-[12px] flex flex-row items-start gap-1">
             <HighlightedTitle
               title="Administrative List"
               size="medium"
               color="clementine"
             />
-            <p className="ml-2 mt-2.5 text-medGray">
+            <p className="bb ml-2 mt-3.5 text-medGray">
               {`(${data?.length || 0} Results)`}
             </p>
           </div>
