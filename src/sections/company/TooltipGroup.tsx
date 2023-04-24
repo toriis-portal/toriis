@@ -13,8 +13,8 @@ import { Tag, ToolTip } from '../../components'
 import { envGradeToColor, assetAmountToString } from '../../utils/helpers'
 import type { SectorEntry, IndustryEntry } from '../../types'
 
-const tagGroupStyle = clsx('flex-col lg:inline-flex lg:flex-row')
-const noteStyle = clsx('lg:px-2 font-medium truncate')
+const tagGroupStyle = clsx('items-center flex-col lg:inline-flex lg:flex-row')
+const noteStyle = clsx('lg:px-2 bb font-medium truncate my-1')
 const tagStyle = clsx('bg-cobalt text-white')
 
 interface CompanyTooltipGroupProps {

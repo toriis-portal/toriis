@@ -28,7 +28,7 @@ const ToolTip: FC<TitleProps> = ({ title, details, children }) => {
             className={clsx(
               'border-light text-body-color absolute top-12 left-1/2',
               '-translate-x-1/2 rounded-xl border border-black bg-white',
-              'w-60 p-5 text-sm leading-4',
+              'r1 w-60 p-5 leading-4',
             )}
           >
             <span
@@ -42,7 +42,7 @@ const ToolTip: FC<TitleProps> = ({ title, details, children }) => {
               children
             ) : (
               <>
-                <div className=" font-semibold">{title}:</div>
+                <div className="font-semibold">{title}:</div>
                 {details}
               </>
             )}
