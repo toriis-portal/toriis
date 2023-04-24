@@ -8,10 +8,10 @@ const AuthErrorPage: FC = () => {
 
   return (
     <div className="flex h-full flex-col items-center justify-center p-20 font-klima">
-      <p className="font-medium">
+      <p className="bb font-bold">
         Sorry, you do not have permission to login as an administrator.
       </p>
-      <p className="p-10">
+      <p className="bb py-10">
         Please check your email and{' '}
         <span
           className={linkStyle}

@@ -36,8 +36,8 @@ const NewUserPage: FC = () => {
     <>
       {session && (
         <div className="flex h-full flex-col items-center justify-center p-20 font-klima">
-          <p className="font-medium">Welcome to TORIIS Portal!</p>
-          <p className="p-10">
+          <p className="bb font-bold">Welcome to TORIIS Portal!</p>
+          <p className="bb py-10">
             Redirecting you to{' '}
             <Link
               href="/admin"
