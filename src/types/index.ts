@@ -1,4 +1,5 @@
 import type { Document } from '@contentful/rich-text-types'
+import type { Company, ESG } from '@prisma/client'
 
 /* API Types */
 
@@ -39,4 +40,20 @@ export interface TimelineEntry {
 export interface Info {
   landing: Document
   refuteUisResponse: Document
+}
+
+export interface CaseEntry {
+  title: string
+  details: Document
+  url: string
+}
+
+export interface IndustryEntry {
+  name: string
+  details?: string
+}
+
+export interface SectorEntry {
+  name: string
+  details?: Document
 }

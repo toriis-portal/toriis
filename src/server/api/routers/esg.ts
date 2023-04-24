@@ -12,12 +12,11 @@ interface ErrorMessage {
   message?: string
 }
 
-const MAX_API_CALLS = 50
+const MAX_API_CALLS = 40
 const consumeExternalApi = async <T>(
   url: string,
 ): Promise<T | ErrorMessage> => {
   const res = await fetch(url, { method: 'GET' })
-  console.log('res', res)
   return (await res.json()) as T
 }
 
@@ -136,7 +135,7 @@ export const esgRouter = createTRPCRouter({
     }
 
     const cleanedCompanies = companiesRaw.map(
-      (company: { _id: { $oid: string }; ticker: string }) => {
+      (company: { _id: { $oid: string }; ticker: string | null }) => {
         return {
           id: company._id.$oid,
           ticker: company.ticker,
@@ -147,7 +146,7 @@ export const esgRouter = createTRPCRouter({
     // Retrieves ESG data from API
     const companiesESG = await Promise.all(
       cleanedCompanies.map(async (company) => {
-        if (company.ticker !== 'NO_TICKER_FOUND') {
+        if (company.ticker !== null) {
           const url = `https://esgapiservice.com/api/authorization/search?q=${
             company.ticker
           }&token=${process.env.ESG_API_KEY ?? ''}`

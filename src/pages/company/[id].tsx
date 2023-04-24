@@ -1,48 +1,160 @@
-import type { Investment } from '@prisma/client'
+import { Spinner } from 'flowbite-react'
+import { useRouter } from 'next/router'
+import { Company } from '@prisma/client'
 
-import InvestmentTable from '../../components/Table/InvestmentTable'
+import FinanceBrushChart from '../../components/Charts/FinanceBrushChart'
+import {
+  HighlightedTitle,
+  InvestmentTable,
+  EmissionBarChart,
+  CompanyDetailsAccordion,
+  EnergyRadialChart,
+  BackButton,
+  FuelRadialChart,
+  DataCard,
+} from '../../components'
+import { api } from '../../utils/api'
+import { CompanyTooltipGroup, ChartGroup } from '../../sections'
 
-const TEST_INVESTMENTS: Investment[] = [
-  {
-    id: '1',
-    companyId: 'Test Company 1',
-    rawName: 'Test Investment 1',
-    coupon: 0.1,
-    maturityDate: new Date('2021-01-01'),
-    quantity: 200,
-    costVal: 1000,
-    marketVal: 2000,
-    year: 2021,
-  },
-  {
-    id: '2',
-    companyId: 'Test Company 2',
-    rawName: 'Test Investment 2',
-    coupon: 0.2,
-    maturityDate: new Date('2021-01-02'),
-    quantity: 300,
-    costVal: 2000,
-    marketVal: 4000,
-    year: 2023,
-  },
-  {
-    id: '3',
-    companyId: 'Test Company 3',
-    rawName: 'Test Investment 3',
-    coupon: 0.3,
-    maturityDate: new Date('2021-01-03'),
-    quantity: 100,
-    costVal: 3000,
-    marketVal: 6000,
-    year: 2022,
-  },
-]
+/**
+ * Get the direction of the charts so that they alternate between left and right
+ *
+ * @param company the company to get the chart directions for
+ * @returns a dictionary of chart names and if they should be on the left
+ */
+const getChartDirections = (company: Company) => {
+  const charts = ['emission', 'fuel', 'energy', 'ticker']
+  const directionDict: { [key: string]: boolean } = {}
+  let count = 0
+  for (const chart of charts) {
+    if (company[chart as keyof Company]) {
+      directionDict[chart] = count % 2 === 0
+      count++
+    }
+  }
+  return directionDict
+}
 
 const Company = () => {
+  const companyId = (useRouter().query.id as string) ?? ''
+
+  const { data, isLoading, isError } = api.company.getCompany.useQuery(
+    { id: companyId },
+    { refetchOnWindowFocus: false, retry: false, enabled: !!companyId },
+  )
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center px-12">
+        <Spinner color="info" />
+      </div>
+    )
+  }
+
+  if (
+    isError ||
+    !data ||
+    !data.industryEntry ||
+    !data.sectorEntry ||
+    !data.company
+  ) {
+    return (
+      <div className="flex flex-col items-center p-12">
+        <HighlightedTitle
+          title="Company Not Found"
+          size="large"
+          color="clementine"
+        />
+      </div>
+    )
+  }
+
+  const { company, sectorEntry, industryEntry } = data
+  const chartDirections = getChartDirections(company)
+
   return (
     <>
-      <InvestmentTable investments={TEST_INVESTMENTS} />
-      <button>Load more</button>
+      <div className="mt-6 ml-8">
+        <BackButton />
+      </div>
+      <div className="mb-20 flex flex-col flex-wrap px-12 lg:px-24">
+        <div className="flex flex-col items-center ">
+          <HighlightedTitle
+            title={company.name}
+            size="large"
+            color="clementine"
+          />
+        </div>
+        <CompanyTooltipGroup
+          company={company}
+          sectorEntry={sectorEntry}
+          industryEntry={industryEntry}
+          className="mb-10"
+        />
+        {company.description && (
+          <CompanyDetailsAccordion
+            content={company.description}
+            className="mb-10"
+          />
+        )}
+        {(company.emission ||
+          company.fuel ||
+          company.energy ||
+          company.ticker) && (
+          <HighlightedTitle
+            title="Investment Visualizations"
+            size="medium"
+            color="brightTeal"
+          />
+        )}
+        <div className="mx-4 mb-4">
+          {company.emission && (
+            <ChartGroup
+              title="Carbon Accounting"
+              chart={<EmissionBarChart emissionData={company.emission} />}
+              interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
+              chartOnLeft={chartDirections['emission']}
+              chartSize="md"
+            />
+          )}
+          {company.fuel && (
+            <ChartGroup
+              title="CDP-Fuel"
+              chart={<FuelRadialChart source={company.fuel} />}
+              interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
+              chartOnLeft={chartDirections['fuel']}
+              chartSize="md"
+            />
+          )}
+          {company.energy && (
+            <ChartGroup
+              title="CDP-Energy"
+              chart={<EnergyRadialChart energyData={company.energy} />}
+              interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
+              chartOnLeft={chartDirections['energy']}
+              chartSize="sm"
+            />
+          )}
+          {company.ticker && (
+            <ChartGroup
+              title="Yahoo Finance"
+              chart={<FinanceBrushChart companyId={companyId} />}
+              interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
+              chartOnLeft={chartDirections['ticker']}
+              chartSize="lg"
+            />
+          )}
+        </div>
+
+        <HighlightedTitle
+          title="Investment Details"
+          size="medium"
+          color="brightTeal"
+        />
+        <div className="flex w-full flex-row items-center justify-center">
+          <InvestmentTable companyId={companyId} />
+        </div>
+      </div>
     </>
   )
 }

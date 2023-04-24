@@ -3,6 +3,10 @@ generator client {
   previewFeatures = ["clientExtensions", "orderByNulls"]
 }
 
+generator json {
+  provider = "prisma-json-types-generator"
+}
+
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
@@ -20,7 +24,6 @@ enum Sector {
   CONSUMER_DEFENSIVE
   REAL_ESTATE
   BASIC_MATERIALS
-  NONE                   @map("") // This is workaround for string mapping in enums in prisma
 }
 
 enum EnvGrade {
@@ -31,6 +34,20 @@ enum EnvGrade {
   BB
   B
   CCC
+}
+
+enum Dataset {
+  INVESTMENT
+  COMPANY
+  FUEL
+  EMISSION
+  ENERGY
+}
+
+enum RequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
 }
 
 model Investment {
@@ -49,14 +66,18 @@ model Investment {
 model Company {
   id               String             @id @default(auto()) @map("_id") @db.ObjectId
   name             String
-  ticker           String
+  ticker           String?
   sector           Sector?
   industry         String?
-  netAssetSum      Float
+  netAssetVal      Float
   investment       Investment[]
   description      String?
-  ESG              ESG[]
+  ESG              ESG?
   ESGInvalidTicker ESGInvalidTicker[]
+  bloombergId      String?
+  fuel             Fuel?
+  energy           Energy?
+  emission         Emission?
 }
 
 model Account {
@@ -93,6 +114,9 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  createdAt     DateTime  @default(now())
+  shouldEmail   Boolean   @default(true)
+  Requests      Request[]
 }
 
 model VerificationToken {
@@ -106,7 +130,7 @@ model VerificationToken {
 model ESG {
   id               String   @id @default(auto()) @map("_id") @db.ObjectId
   company          Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  companyId        String   @db.ObjectId
+  companyId        String   @unique @db.ObjectId
   environmentScore Int
   environmentGrade EnvGrade
   environmentLevel String
@@ -121,4 +145,61 @@ model ESGInvalidTicker {
   id        String  @id @default(auto()) @map("_id") @db.ObjectId
   company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId String  @db.ObjectId
+}
+
+model Fuel {
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  company            Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId          String  @unique @db.ObjectId
+  year               Int
+  totalConsumption   Float?
+  biodiesels         Float?
+  biogases           Float?
+  crudeOil           Float?
+  coal               Float?
+  oil                Float?
+  gas                Float?
+  otherBiomass       Float?
+  sustainableBiomass Float?
+  otherRenewable     Float?
+  otherNonRenewable  Float?
+}
+
+model Energy {
+  id                           String  @id @default(auto()) @map("_id") @db.ObjectId
+  company                      Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId                    String  @unique @db.ObjectId
+  year                         Int?
+  totalConsumption             Float?
+  totalRenewableConsumption    Float?
+  totalNonRenewableConsumption Float?
+}
+
+model Emission {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  company    Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId  String    @unique @db.ObjectId
+  date       DateTime?
+  version    Int?
+  scopeOne   Float?
+  scopeTwo   Float?
+  scopeThree Float?
+}
+
+model Request {
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
+  dataset   Dataset
+  /// [UpdateTypes]
+  updates   Json[]
+  status    RequestStatus @default(PENDING)
+  comment   String?
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String        @db.ObjectId
+  createdAt DateTime      @default(now())
+}
+
+model WhitelistedUser {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  email  String  @unique
+  userId String?
 }

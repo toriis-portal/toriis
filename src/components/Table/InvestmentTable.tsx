@@ -3,7 +3,11 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import type { Investment } from '@prisma/client'
 import clsx from 'clsx'
+import { Spinner } from 'flowbite-react'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid'
+
+import { api } from '../../utils/api'
+import LoadMoreButton from '../Buttons/LoadMoreButton'
 interface ChevronFilterProps {
   text: string
   onClickUp: VoidFunction
@@ -17,7 +21,7 @@ const ChevronFilter: FC<ChevronFilterProps> = ({
 }) => {
   return (
     <>
-      <div className="flex flex-row justify-center gap-1">
+      <div className="flex flex-row items-center justify-center gap-1">
         <p className="mx-2 my-auto max-w-fit text-white">{text}</p>
         <div className="flex flex-col">
           <button onClick={onClickUp}>
@@ -40,109 +44,141 @@ const ChevronFilter: FC<ChevronFilterProps> = ({
   )
 }
 
-const tableHeaderMiddleStyle = clsx('w-1/12 border-x-2 border-white')
-const tableRowStyle = clsx('border-x-2 border-clementine text-center')
+const tableHeaderMiddleStyle = clsx('border-x-2 min-w-10 border-white p-3')
+const tableRowStyle = clsx(
+  'border-x-2 border-clementine text-center p-4 min-w-[8rem] truncate',
+)
 
-const InvestmentTable: FC<{ investments: Investment[] }> = ({
-  investments,
-}) => {
-  const [sortBy, setSortBy] = useState<[keyof Investment, boolean]>([
-    'rawName',
-    true,
-  ])
-  const [sortedInvestments, setSortedInvestments] =
-    useState<Investment[]>(investments)
+const InvestmentTable: FC<{ companyId: string }> = (companyId) => {
+  const [selectedSort, setSelectedSort] = useState<
+    [keyof Investment, 'asc' | 'desc' | undefined]
+  >(['rawName', undefined])
+  const limit = 5
+  const {
+    fetchNextPage,
+    isLoading,
+    hasNextPage,
+    isFetchingNextPage,
+    data,
+    refetch,
+  } = api.company.getInvestmentByCompany.useInfiniteQuery(
+    {
+      limit: limit,
+      companyId: companyId.companyId,
+      sortKey: selectedSort[0],
+      sortOrder: selectedSort[1],
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+      refetchOnWindowFocus: false,
+      cacheTime: 0,
+    },
+  )
 
   useEffect(() => {
-    const sortedCopy = [...investments]
-    setSortedInvestments(
-      sortedCopy.sort((a, b) => {
-        const [sortKey, isAscending] = sortBy
-        if (isAscending) {
-          return a[sortKey] > b[sortKey] ? 1 : -1
-        } else {
-          return a[sortKey] > b[sortKey] ? -1 : 1
-        }
-      }),
+    const refetchData = async () => {
+      await refetch()
+    }
+  }, [refetch, selectedSort])
+
+  if (!data || isLoading) {
+    return (
+      <div className="text-center">
+        <Spinner />
+      </div>
     )
-  }, [investments, sortBy])
+  }
 
   return (
-    <table className="m-10 table-fixed border-2 border-clementine">
-      <thead>
-        <tr className="bg-clementine text-white">
-          <th className="w-1/6">
-            <ChevronFilter
-              onClickUp={() => setSortBy(['rawName', true])}
-              onClickDown={() => setSortBy(['rawName', false])}
-              text="Investment"
-            />
-          </th>
-          <th className={tableHeaderMiddleStyle}>
-            <ChevronFilter
-              onClickUp={() => setSortBy(['coupon', true])}
-              onClickDown={() => setSortBy(['coupon', false])}
-              text="Coupon"
-            />
-          </th>
-          <th className={tableHeaderMiddleStyle}>
-            <ChevronFilter
-              onClickUp={() => setSortBy(['maturityDate', true])}
-              onClickDown={() => setSortBy(['maturityDate', false])}
-              text="Maturity Date"
-            />
-          </th>
-          <th className={tableHeaderMiddleStyle}>
-            <ChevronFilter
-              onClickUp={() => setSortBy(['quantity', true])}
-              onClickDown={() => setSortBy(['quantity', false])}
-              text="Quantity"
-            />
-          </th>
-          <th className={tableHeaderMiddleStyle}>
-            <ChevronFilter
-              onClickUp={() => setSortBy(['costVal', true])}
-              onClickDown={() => setSortBy(['costVal', false])}
-              text="Cost Value"
-            />
-          </th>
-          <th className={tableHeaderMiddleStyle}>
-            <ChevronFilter
-              onClickUp={() => setSortBy(['marketVal', true])}
-              onClickDown={() => setSortBy(['marketVal', false])}
-              text="Market Value"
-            />
-          </th>
-          <th className="w-1/12">
-            <ChevronFilter
-              onClickUp={() => setSortBy(['year', true])}
-              onClickDown={() => setSortBy(['year', false])}
-              text="Year"
-            />
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {sortedInvestments.map((investment: Investment, index: number) => {
-          return (
-            <tr
-              key={investment.id}
-              className={clsx({ 'bg-lightClementine': index % 2 == 1 })}
-            >
-              <td className="p-4 text-center">{investment.rawName}</td>
-              <td className={tableRowStyle}>{investment.coupon}</td>
-              <td className={tableRowStyle}>
-                {investment.maturityDate.toISOString()}
-              </td>
-              <td className={tableRowStyle}>{investment.quantity}</td>
-              <td className={tableRowStyle}>{investment.costVal}</td>
-              <td className={tableRowStyle}>{investment.marketVal}</td>
-              <td className={tableRowStyle}>{investment.year}</td>
-            </tr>
-          )
-        })}
-      </tbody>
-    </table>
+    <div className="overflow-x-scroll">
+      <table className="mx-8 table-fixed border-2 border-clementine">
+        <thead>
+          <tr className="bg-clementine text-white">
+            <th>
+              <ChevronFilter
+                onClickUp={() => setSelectedSort(['rawName', 'asc'])}
+                onClickDown={() => setSelectedSort(['rawName', 'desc'])}
+                text="Investment"
+              />
+            </th>
+            <th className={tableHeaderMiddleStyle}>
+              <ChevronFilter
+                onClickUp={() => setSelectedSort(['coupon', 'asc'])}
+                onClickDown={() => setSelectedSort(['coupon', 'desc'])}
+                text="Coupon"
+              />
+            </th>
+            <th className={tableHeaderMiddleStyle}>
+              <ChevronFilter
+                onClickUp={() => setSelectedSort(['maturityDate', 'asc'])}
+                onClickDown={() => setSelectedSort(['maturityDate', 'desc'])}
+                text="Maturity Date"
+              />
+            </th>
+            <th className={tableHeaderMiddleStyle}>
+              <ChevronFilter
+                onClickUp={() => setSelectedSort(['quantity', 'asc'])}
+                onClickDown={() => setSelectedSort(['quantity', 'desc'])}
+                text="Quantity"
+              />
+            </th>
+            <th className={tableHeaderMiddleStyle}>
+              <ChevronFilter
+                onClickUp={() => setSelectedSort(['costVal', 'asc'])}
+                onClickDown={() => setSelectedSort(['costVal', 'desc'])}
+                text="Cost Value"
+              />
+            </th>
+            <th className={tableHeaderMiddleStyle}>
+              <ChevronFilter
+                onClickUp={() => setSelectedSort(['marketVal', 'asc'])}
+                onClickDown={() => setSelectedSort(['marketVal', 'desc'])}
+                text="Market Value"
+              />
+            </th>
+            <th className="w-1/12">
+              <ChevronFilter
+                onClickUp={() => setSelectedSort(['year', 'asc'])}
+                onClickDown={() => setSelectedSort(['year', 'desc'])}
+                text="Year"
+              />
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {data?.pages.map((page, pageIndex) => {
+            return page.items.map((item, itemIndex) => {
+              return (
+                <tr
+                  key={item.id}
+                  className={clsx({
+                    'bg-lightClementine': (pageIndex + itemIndex) % 2 == 1,
+                  })}
+                >
+                  <td className={tableRowStyle}>{item.rawName}</td>
+                  <td className={tableRowStyle}>{item.coupon}</td>
+                  <td className={tableRowStyle}>
+                    {item.maturityDate.toLocaleDateString()}
+                  </td>
+                  <td className={tableRowStyle}>{item.quantity}</td>
+                  <td className={tableRowStyle}>{item.costVal}</td>
+                  <td className={tableRowStyle}>{item.marketVal}</td>
+                  <td className={tableRowStyle}>{item.year}</td>
+                </tr>
+              )
+            })
+          })}
+        </tbody>
+      </table>
+      <div className="text-center">
+        <LoadMoreButton
+          onClick={() => {
+            void fetchNextPage()
+          }}
+          disabled={!hasNextPage || isFetchingNextPage}
+        ></LoadMoreButton>
+      </div>
+    </div>
   )
 }
 

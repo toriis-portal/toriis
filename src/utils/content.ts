@@ -1,5 +1,5 @@
 import { createClient } from 'contentful'
-import type { ContentfulClientApi, ContentTypeCollection } from 'contentful'
+import type { ContentfulClientApi } from 'contentful'
 
 import { env } from '../env.mjs'
 import type {
@@ -30,7 +30,13 @@ export class ContentWrapper {
     })
   }
 
-  get = async (entity: string) => {
+  async get<T>(entity: string): Promise<T> {
+    const client = this.client
+    const entries = await client.getEntries({ content_type: entity })
+    return entries.items.map((item) => item.fields) as unknown as T
+  }
+
+  getSingleHomePageEntry = async (entity: string) => {
     const client = this.client
 
     const entries = await client.getEntries({
@@ -73,7 +79,7 @@ export class ContentWrapper {
     > = {}
     await Promise.all(
       homePageEntryTypes.map(async (entity) => {
-        const results = await this.get(entity)
+        const results = await this.getSingleHomePageEntry(entity)
         homePageEntryMap[entity] = results
       }),
     )

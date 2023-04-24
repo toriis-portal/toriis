@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { FC } from 'react'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/24/solid'
+import clsx from 'clsx'
 
 type Options = string[] | Record<string, string[]>
 
@@ -9,14 +10,14 @@ interface SelectProps {
   options: Options
   onClose?: () => void
   onOpen?: () => void
-  // onChange?: (value: string[]) => void
-  // type?: 'on-change' | 'on-apply'
   updateControl?: {
     type: 'on-change' | 'on-apply'
     cb: (value: string[]) => void
   }
   isSearchable?: boolean
-  containerHeight?: string
+  isFilter?: boolean
+  containerHeight?: string // Only handles 1/4, 1/2, 3/4
+  shortText?: string
 }
 
 /**
@@ -28,6 +29,44 @@ interface SelectProps {
 const isStringArray = (options: Options): options is string[] =>
   Array.isArray(options)
 
+const SelectChevron: FC<{ isFilter: boolean; isOpen: boolean }> = ({
+  isFilter,
+  isOpen,
+}) => {
+  return (
+    <span
+      className={clsx(
+        'flex h-full items-center justify-center',
+        {
+          'bg-lightBlue': isFilter,
+          'bg-black': !isFilter,
+        },
+        {
+          '-rotate-90': isFilter,
+        },
+        {
+          'px-3': !isFilter,
+          'px-0': isFilter,
+        },
+      )}
+    >
+      <ChevronDownIcon
+        className={clsx(
+          'ease h-5 w-5 transform duration-300',
+          {
+            'rotate-180': isOpen && !isFilter,
+            'rotate-90': isOpen && isFilter,
+          },
+          {
+            'fill-white stroke-white': !isFilter,
+            'fill-black stroke-black': isFilter,
+          },
+        )}
+      />
+    </span>
+  )
+}
+
 export const Select: FC<SelectProps> = ({
   text,
   onClose,
@@ -35,23 +74,53 @@ export const Select: FC<SelectProps> = ({
   updateControl,
   options,
   isSearchable = false,
+  isFilter = false,
   containerHeight,
+  shortText,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [selected, setSelected] = useState<string[]>([])
   const [searchQuery, setSearchQuery] = useState('')
+  const [textOption, setTextOption] = useState<string>(text)
+
+  const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (isOpen) {
       onOpen?.()
+      setSearchQuery('')
     }
   }, [isOpen, onOpen])
 
   useEffect(() => {
     if (!isOpen) {
       onClose?.()
+      setSearchQuery('')
     }
   }, [isOpen, onClose])
+
+  useEffect(() => {
+    window.innerWidth < 1200 && shortText
+      ? setTextOption(shortText)
+      : setTextOption(text)
+  }, [shortText, text])
+
+  useEffect(() => {
+    const checkIfClickedOutside = (e: MouseEvent) => {
+      // If the menu is open and the clicked target is not within the menu,
+      // then close the menu
+      if (isOpen && ref.current && !ref.current.contains(e.target as Node)) {
+        setIsOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', checkIfClickedOutside)
+
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener('mousedown', checkIfClickedOutside)
+    }
+  }, [isOpen])
 
   /**
    * Updates the selected state and calls the onChange callback
@@ -120,49 +189,102 @@ export const Select: FC<SelectProps> = ({
    * @returns true if value includes searchQuery or searchQuery is empty, else false
    */
   const handleSearchFilter = (value: string) =>
-    searchQuery !== '' ? value.includes(searchQuery) : true
+    searchQuery !== ''
+      ? value.toLowerCase().includes(searchQuery.toLowerCase())
+      : true
 
   return (
-    <div className="relative ml-10 w-72">
+    <div
+      ref={updateControl?.type == 'on-change' ? ref : null}
+      className={clsx('relative', {
+        'flex-grow basis-0': isFilter,
+      })}
+    >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="float-right flex h-10 w-fit items-center justify-center overflow-hidden rounded-full border  border-solid border-darkTeal"
+        className={clsx(
+          'flex w-full items-center overflow-hidden rounded-full border border-solid',
+          {
+            'justify-centerborder-darkTeal float-right h-10 w-fit border-black':
+              !isFilter,
+            'h-8 border-cobalt': isFilter,
+          },
+        )}
       >
-        <span className="mx-5 flex h-full w-fit items-center justify-center bg-white">
-          <span className="text-black">{text}</span>
+        <span
+          className={clsx(
+            'flex h-full w-fit flex-initial items-center justify-center bg-white px-5',
+            { 'basis-1/4': isFilter },
+          )}
+        >
+          <span
+            className={clsx('w-full text-black', {
+              'text-md overflow-hidden whitespace-nowrap font-inter': isFilter,
+            })}
+          >
+            {textOption}
+          </span>
         </span>
-        <span className="flex h-full items-center justify-center bg-black px-3">
-          <ChevronDownIcon
-            className={`ease h-5 w-5 transform fill-white stroke-white duration-300 ${
-              isOpen ? 'rotate-180' : ''
-            }`}
-          />
+        <div className={clsx({ 'basis-1/2': isFilter })} />
+        <span
+          className={clsx(
+            'float-right h-full basis-1/4 items-center justify-center px-3',
+            {
+              'bg-lightBlue': isFilter,
+              'bg-black': !isFilter,
+            },
+          )}
+        >
+          <SelectChevron isFilter={isFilter} isOpen={isOpen} />
         </span>
       </button>
 
       {isOpen && (
-        <div className="absolute top-14 left-0 w-full rounded-md border-[0.5px] border-solid border-cobalt bg-white p-5 shadow-md">
+        <div
+          className={clsx(
+            'absolute left-0 z-10 transform rounded-md border-[0.5px] border-solid border-cobalt bg-white  shadow-md',
+            {
+              'w-60 -translate-x-20 translate-y-14 p-5': !isFilter,
+              'w-full translate-y-2 p-4': isFilter,
+            },
+          )}
+        >
           {isSearchable && (
             <div className="relative mb-5">
               <input
                 onChange={(e) => setSearchQuery(e.currentTarget.value)}
                 type="text"
-                className="relative h-7 w-full border border-solid border-black px-3 py-1 pl-8 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                placeholder="Search..."
+                className={clsx(
+                  'border-width-1 relative h-7 w-full rounded border border-solid border-black px-3 py-1 pl-8 focus:outline-none focus:ring-2 focus:ring-blue-400',
+                )}
+                placeholder="Search"
               />
-              <MagnifyingGlassIcon className="absolute top-1.5 left-2 h-4 w-4" />
+              <MagnifyingGlassIcon className="absolute top-1.5 left-2 h-4 w-4 fill-darkGray" />
             </div>
           )}
           <div
-            className={`${
-              containerHeight ? `max-h-[${containerHeight}]` : 'max-h-fit'
-            } w-full overflow-x-visible overflow-y-scroll p-0`}
+            className={clsx('overflow-y-auto overflow-x-visible p-0', {
+              'max-h-fit': !containerHeight,
+              'max-h-1/4': containerHeight == '1/4',
+              'max-h-1/2': containerHeight == '1/2',
+              'max-h-3/4': containerHeight == '3/4',
+            })}
           >
             {isStringArray(options) ? (
-              <ul className="m-auto flex w-11/12 flex-col gap-4">
+              <ul
+                className={clsx('m-auto flex w-5/6 flex-col', {
+                  'gap-4': !isFilter,
+                  'gap-1': isFilter,
+                })}
+              >
                 {options.filter(handleSearchFilter).map((option) => (
-                  <li key={option} className="flex items-center text-black">
-                    <span>{option}</span>
+                  <li
+                    key={option}
+                    className="mt-1 flex items-center text-black"
+                  >
+                    <span className={clsx({ 'font-inter text-sm': isFilter })}>
+                      {option}
+                    </span>
                     <input
                       onChange={() => handleChange(option)}
                       type="checkbox"
@@ -183,7 +305,9 @@ export const Select: FC<SelectProps> = ({
                           key={option}
                           className="flex items-center text-black"
                         >
-                          <span>{option}</span>
+                          <span className="text-sm max-sm:text-[3px]">
+                            {option}
+                          </span>
                           <input
                             onChange={() =>
                               handleGroupChange(`${key}-${option}`)

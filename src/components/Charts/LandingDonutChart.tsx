@@ -1,10 +1,11 @@
 import type { FC } from 'react'
 import dynamic from 'next/dynamic'
-import { Sector } from '@prisma/client'
+import type { Sector } from '@prisma/client'
 import { Spinner } from 'flowbite-react'
 
 import { api } from '../../utils/api'
 import { sectorEnum } from '../../utils/enums'
+import { assetAmountToString } from '../../utils/helpers'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -14,7 +15,7 @@ interface companySectorCount {
 }
 
 const LandingDonutChart: FC = () => {
-  const source = api.company.countBySector.useQuery(undefined, {
+  const source = api.company.getNetAssetValBySector.useQuery(undefined, {
     refetchOnWindowFocus: false,
   })
 
@@ -25,10 +26,12 @@ const LandingDonutChart: FC = () => {
       </div>
     )
 
-  const pairs: companySectorCount[] = source.data.map((data) => ({
-    label: data.sector as Sector,
-    count: data._count.sector,
-  }))
+  const pairs: companySectorCount[] = source.data
+    .filter((data) => data._sum.netAssetVal !== null)
+    .map((data) => ({
+      label: data.sector as Sector,
+      count: data._sum.netAssetVal as number,
+    }))
 
   /*
     This function cleans our input array of sectors by aggregating all sectors under a threshold,
@@ -36,17 +39,17 @@ const LandingDonutChart: FC = () => {
   */
   function cleanData(arr: companySectorCount[]) {
     const total = arr.reduce((sum, item) => sum + item.count, 0)
-    const threshold = total * 0.05
+    const threshold = total * 0.04
 
     const filtered = arr
-      .filter((item) => item.count >= threshold && item.label != Sector.NONE)
+      .filter((item) => item.count >= threshold && item.label != null)
       .map((item) => ({
         label: sectorEnum[item.label as Sector],
         count: item.count,
       }))
 
     const newCount = arr
-      .filter((item) => item.count < threshold || item.label === Sector.NONE)
+      .filter((item) => item.count < threshold || item.label === null)
       .reduce((sum, item) => sum + item.count, 0)
 
     filtered.push({ label: 'Other', count: newCount })
@@ -56,10 +59,19 @@ const LandingDonutChart: FC = () => {
 
   const labels: string[] = cleanData(pairs).map((dataKey) => dataKey.label)
 
-  const counts: number[] = cleanData(pairs).map((dataKey) => dataKey.count)
+  const sums: number[] = cleanData(pairs).map((dataKey) =>
+    Math.round(dataKey.count),
+  )
 
   const options = {
     labels: labels,
+    tooltip: {
+      y: {
+        formatter: function (val: number) {
+          return '$' + assetAmountToString(val)
+        },
+      },
+    },
     fontFamily: 'Klima',
     legend: { show: false },
     colors: ['#FFA902', '#FF6112', '#17292E', '#0F81E8'],
@@ -82,7 +94,7 @@ const LandingDonutChart: FC = () => {
     <>
       <Chart
         options={options}
-        series={counts}
+        series={sums}
         type="donut"
         width="100%"
         height="auto"
