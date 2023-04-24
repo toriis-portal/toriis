@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import type { FC, ReactNode } from 'react'
 import React, { useState } from 'react'
 import Link from 'next/link'
@@ -28,6 +27,7 @@ const Tabs: FC<{ tabDetails: TabDetails[] }> = ({ tabDetails }) => {
           )
         })}
       </div>
+
       {/* Tab body, move to separate component? */}
       <div className="flex flex-col items-center justify-center rounded-b-lg rounded-tr-lg bg-clementine/20 px-16">
         <p className="py-11 text-[22px]">{tabDetails[activeIdx]?.title}</p>

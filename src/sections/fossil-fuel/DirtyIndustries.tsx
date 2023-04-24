@@ -26,8 +26,6 @@ interface contentfulDocumentList {
 const DirtyIndustries: FC<{ companies: DirtyCompanyEntry[] }> = ({
   companies,
 }) => {
-  // console.log(companies)
-
   const contentfulOptions = {
     renderNode: {
       [BLOCKS.DOCUMENT]: (node: any, children: any) => {
@@ -39,14 +37,14 @@ const DirtyIndustries: FC<{ companies: DirtyCompanyEntry[] }> = ({
           children.length > 0 &&
           containsProps(children[0])
 
-        return (
+        return canDeconstructChildren && containsProps(children[0]) ? (
           <ul className="list-disc">
-            {canDeconstructChildren &&
-              containsProps(children[0]) &&
-              children[0].props.children.map((elem, i) => (
-                <li key={i}>{elem}</li>
-              ))}
+            {children[0].props.children.map((elem, i) => (
+              <li key={i}>{elem}</li>
+            ))}
           </ul>
+        ) : (
+          <>{children}</>
         )
       },
       [INLINES.HYPERLINK]: (node: Block | Inline, children: any) => {

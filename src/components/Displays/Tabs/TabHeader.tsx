@@ -19,8 +19,9 @@ const TabHeader: FC<{ title: string; active: boolean }> = ({
       )}
     >
       <p
-        className={clsx('py-3.5 px-4', {
-          'border-b-2 border-clementine': active,
+        className={clsx('border-b-2 py-3.5 px-4 ', {
+          'border-lightBlue': !active,
+          'border-clementine': active,
         })}
       >
         {active ? title : truncatedTitle}
