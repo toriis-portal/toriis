@@ -219,7 +219,7 @@ export const Select: FC<SelectProps> = ({
         >
           <span
             className={clsx('w-full text-black', {
-              'text-md overflow-hidden whitespace-nowrap font-inter': isFilter,
+              'bb overflow-hidden whitespace-nowrap font-inter': isFilter,
             })}
           >
             {textOption}
@@ -282,9 +282,7 @@ export const Select: FC<SelectProps> = ({
                     key={option}
                     className="mt-1 flex items-center text-black"
                   >
-                    <span className={clsx({ 'font-inter text-sm': isFilter })}>
-                      {option}
-                    </span>
+                    <span className={clsx({ r2: isFilter })}>{option}</span>
                     <input
                       onChange={() => handleChange(option)}
                       type="checkbox"
