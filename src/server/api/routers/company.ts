@@ -23,8 +23,8 @@ const getIndustryEntry = async (company: Company) => {
   const industryEntries: IndustryEntry[] = await contentClient.get('industry')
 
   let industryEntry: IndustryEntry = {
-    name: 'NA',
-    details: 'NA',
+    name: 'N/A',
+    details: 'N/A',
   }
 
   industryEntries.map((item: IndustryEntry) => {
@@ -44,7 +44,7 @@ const getSectorEntry = async (company: Company) => {
   const sectorEntries: SectorEntry[] = await contentClient.get('sector')
 
   let sectorEntry: SectorEntry = {
-    name: 'NA',
+    name: 'N/A',
   }
 
   sectorEntries.map((item: SectorEntry) => {
