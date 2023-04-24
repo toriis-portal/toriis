@@ -1,11 +1,11 @@
-import type { FC, ReactNode } from 'react'
+import type { ReactNode } from 'react'
+import type { FC } from 'react'
 import { BLOCKS, INLINES } from '@contentful/rich-text-types'
 import type {
   Block,
   Inline,
 } from '@contentful/rich-text-types/dist/types/types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
 
 import { HighlightedTitle, Tabs } from '../../components'
 import type { DirtyCompanyEntry } from '../../types'
@@ -17,20 +17,36 @@ interface TabDetails {
   url: string
 }
 
+interface contentfulDocumentList {
+  props: {
+    children: ReactNode[]
+  }
+}
+
 const DirtyIndustries: FC<{ companies: DirtyCompanyEntry[] }> = ({
   companies,
 }) => {
-  console.log(companies)
+  // console.log(companies)
 
   const contentfulOptions = {
     renderNode: {
       [BLOCKS.DOCUMENT]: (node: any, children: any) => {
+        function containsProps(object: any): object is contentfulDocumentList {
+          return 'props' in object
+        }
+        const canDeconstructChildren =
+          Array.isArray(children) &&
+          children.length > 0 &&
+          containsProps(children[0])
+
         return (
-          <>
-            {Array.isArray(children) && children.length > 0
-              ? children[0]
-              : children}
-          </>
+          <ul className="list-disc">
+            {canDeconstructChildren &&
+              containsProps(children[0]) &&
+              children[0].props.children.map((elem, i) => (
+                <li key={i}>{elem}</li>
+              ))}
+          </ul>
         )
       },
       [INLINES.HYPERLINK]: (node: Block | Inline, children: any) => {
@@ -41,7 +57,6 @@ const DirtyIndustries: FC<{ companies: DirtyCompanyEntry[] }> = ({
         return (
           <a href={url} target="_blank" rel="noopener noreferrer">
             {children}
-            <ArrowUpRightIcon className="align-self-start ml-0.5 inline h-4 w-4 stroke-current stroke-1" />
           </a>
         )
       },
