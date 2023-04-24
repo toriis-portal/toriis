@@ -15,17 +15,15 @@ interface TabDetails {
 const Tabs: FC<{ tabDetails: TabDetails[] }> = ({ tabDetails }) => {
   const [activeIdx, setActiveIndx] = useState(0)
 
-  const handleClick = (i: number) => {
-    setActiveIndx(i)
-  }
-
   return (
     <div className="flex items-center px-12">
+      {/* Tab headers, move to separate component? */}
       <div className="flex flex-row space-x-1.5">
-        {/* Tab headers, move to separate component? */}
         {tabDetails.map((details, i) => {
           return (
-            <TabHeader key={i} title={details.title} active={active_idx == i} />
+            <button key={i} onClick={() => setActiveIndx(i)}>
+              <TabHeader title={details.title} active={activeIdx == i} />
+            </button>
           )
         })}
       </div>
