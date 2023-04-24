@@ -27,7 +27,7 @@ const DirtyIndustries: FC<{ companies: DirtyCompanyEntry[] }> = ({
       [BLOCKS.DOCUMENT]: (node: any, children: any) => {
         return (
           <>
-            {!open && Array.isArray(children) && children.length > 0
+            {Array.isArray(children) && children.length > 0
               ? children[0]
               : children}
           </>
