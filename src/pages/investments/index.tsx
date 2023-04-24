@@ -240,7 +240,7 @@ const InvestmentPage: FC = () => {
         <div className="flex w-full flex-col items-center gap-5 self-center rounded-t-xl bg-lightBlue pb-14">
           <div className="mt-9 mb-4 flex flex-row items-center justify-between self-stretch px-[3.6%]">
             <div className="flex flex-col flex-wrap items-center md:flex-row md:gap-3.5">
-              <p className="text-xl font-medium min-[500px]:text-3xl sm:text-[32px]">
+              <p className="t2">
                 {lastSearchIsEmpty ||
                 (companySearchQuery == initialSearchQuery &&
                   filterOptions == initialFilterOptions)

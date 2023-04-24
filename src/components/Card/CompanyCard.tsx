@@ -22,7 +22,7 @@ const CompanyCard: FC<CardProps> = ({ companyInfo }) => {
           'md:overflow-hidden',
         )}
       >
-        <div className="flex flex-row justify-between text-[28px] font-medium text-black">
+        <div className="t3 flex flex-row justify-between font-medium text-black">
           {companyInfo.company.name}
           <Tag
             title="environmental grade"

@@ -47,7 +47,7 @@ const TimelineItem: FC<TimlineItemProps> = ({ data, isLeft }) => {
                 <TimelineTick isLeft={isLeft} />
 
                 <div className="basis-3/12 rounded-lg bg-darkTeal py-2">
-                  <p className="t1 m-0 px-2 text-center font-normal text-white">
+                  <p className="t2 m-0 px-2 text-center font-normal text-white">
                     {item.year}
                   </p>
                 </div>
