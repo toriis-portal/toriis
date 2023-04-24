@@ -17,6 +17,19 @@ export const requestRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      // Check if the request is not already approved or rejected
+      const request = await ctx.prisma.request.findUnique({
+        where: {
+          id: input.id,
+        },
+      })
+      if (!request || request.status !== RequestStatus.PENDING) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'This request cannot be rejected',
+        })
+      }
+      // Reject the request
       if (input.updateAction === 'reject') {
         const rejectedRequest = await ctx.prisma.request.update({
           where: {
@@ -33,32 +46,17 @@ export const requestRouter = createTRPCRouter({
           })
         }
       } else {
-        // Go through updates to update the database
-
-        const request = await ctx.prisma.request.findUnique({
-          where: {
-            id: input.id,
-          },
-        })
-
-        if (!request) {
-          throw new TRPCError({
-            code: 'NOT_FOUND',
-            message: 'Request not found',
-          })
-        }
-
+        // Approve the request and update corresponding entries
         const allUpdateItems = request.updates
         const updateAll = await Promise.all(
           allUpdateItems.map(async (updateItem) => {
-            console.log(updateItem)
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { id, ...updateItemWithoutId } = updateItem
             await ctx.prisma.company.update({
               where: {
                 id: updateItem.id,
               },
-              data: {
-                updateItem, // TODO: fix this
-              },
+              data: updateItemWithoutId,
             })
           }),
         )
