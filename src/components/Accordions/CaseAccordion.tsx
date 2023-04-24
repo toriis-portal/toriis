@@ -61,7 +61,7 @@ const CaseAccordion: FC<{ content: CaseEntry }> = ({ content }) => {
         )}
       >
         <p
-          className={clsx('inline p-4 text-lg font-medium lg:ml-6', {
+          className={clsx('t3 inline p-4 font-medium lg:ml-6', {
             'lg:ml-6': !open,
             '-ml-[1.5px] -mt-[1px] lg:ml-[22.5px]': open,
           })}
