@@ -34,13 +34,13 @@ export const getServerSideProps = async () => {
     'companyDetailsPage',
   )
   const yahooFinance = companyDetails.find(
-    (item) => item.name == 'YahooFinance',
+    (item) => item.name == 'Yahoo Finance',
   )
   const carbonAccounting = companyDetails.find(
-    (item) => item.name == 'CarbonAccounting',
+    (item) => item.name == 'Carbon Accounting',
   )
   const renewableEnergy = companyDetails.find(
-    (item) => item.name == 'RenewableEnergy',
+    (item) => item.name == 'Renewable Energy',
   )
   const fuelTypes = Object.values(FuelEnum)
   const fuelDetails = fuelTypes.map(
@@ -223,19 +223,19 @@ const Company: FC<CompanyDetailsProps> = ({
               }
               interpretation={
                 <DataCard>
-                  {labels.map((label) => {
+                  {labels.map((label, key) => {
                     const item = fuelDetails.find(
                       (item) => item && item.name == label,
                     )
                     if (item && item.description) {
                       return (
-                        <>
+                        <div key={key}>
                           {documentToReactComponents(
                             item.description,
                             contentfulOptions,
                           )}
                           <br />
-                        </>
+                        </div>
                       )
                     }
                   })}
