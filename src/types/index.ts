@@ -1,5 +1,3 @@
-import { StringDecoder } from 'string_decoder'
-
 import type { Document } from '@contentful/rich-text-types'
 import type { Company, ESG } from '@prisma/client'
 
