@@ -38,16 +38,13 @@ export const getServerSideProps = async () => {
   const yahooFinance = companyDetails.find(
     (item) => item.name == 'YahooFinance',
   )
-
   const carbonAccounting = companyDetails.find(
     (item) => item.name == 'CarbonAccounting',
   )
   const renewableEnergy = companyDetails.find(
     (item) => item.name == 'RenewableEnergy',
   )
-
   const fuelTypes = Object.values(FuelEnum)
-
   const fuelDetails = fuelTypes.map(
     (fuelName) => companyDetails.find((item) => item.name == fuelName) ?? null,
   )
@@ -95,16 +92,7 @@ const Company: FC<CompanyDetailsProps> = ({
   fuelDetails,
 }) => {
   const [labels, setLabels] = useState<string[]>([])
-
   const previousLabels = useRef<string[]>([])
-
-  const handleSetLabels = (newLabels: string[]) => {
-    if (JSON.stringify(newLabels) !== JSON.stringify(previousLabels.current)) {
-      setLabels(newLabels)
-      previousLabels.current = newLabels
-    }
-  }
-
   const contentfulOptions = {
     renderMark: {
       [MARKS.BOLD]: (text: any) => (
@@ -130,6 +118,12 @@ const Company: FC<CompanyDetailsProps> = ({
         )
       },
     },
+  }
+  const handleSetLabels = (newLabels: string[]) => {
+    if (JSON.stringify(newLabels) !== JSON.stringify(previousLabels.current)) {
+      setLabels(newLabels)
+      previousLabels.current = newLabels
+    }
   }
 
   const mergeLabels = () => {

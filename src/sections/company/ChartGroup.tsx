@@ -25,7 +25,7 @@ const ChartGroup: FC<ChartGroupProps> = ({
         className="mb-1 w-4 rounded-md bg-clementine text-white"
       />
       <div
-        className={clsx('mb-8 flex items-center gap-4', {
+        className={clsx('mb-8 mt-4 flex items-center gap-4', {
           'flex-row': chartOnLeft,
           'flex-row-reverse': !chartOnLeft,
         })}
