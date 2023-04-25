@@ -4,6 +4,7 @@ import type { ApexOptions } from 'apexcharts'
 import dynamic from 'next/dynamic'
 import { Spinner } from 'flowbite-react'
 import type { Fuel } from '@prisma/client'
+import { setLazyProp } from 'next/dist/server/api-utils'
 
 import { FuelEnum } from '../../utils/enums'
 
@@ -18,7 +19,7 @@ type FuelTypes = Omit<Fuel, 'id' | 'companyId' | 'year' | 'totalConsumption'>
  * @param fuels - Fuel object to parse
  * @returns Labels that exist on the object
  */
-const getLabels = (fuels: Fuel) => {
+const getLabels = (fuels: Fuel, setLabels: (labels: string[]) => void) => {
   const labels: string[] = []
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -35,7 +36,13 @@ const getLabels = (fuels: Fuel) => {
     }
   })
 
+  setLabels(labels)
   return labels
+}
+
+interface FuelRadialChartProps {
+  source: Fuel
+  setLabels: (labels: string[]) => void
 }
 
 /**
@@ -43,8 +50,9 @@ const getLabels = (fuels: Fuel) => {
  * @param source - Fuel object to parse and render
  * @returns - Radial chart
  */
-const FuelRadialChart: FC<{ source: Fuel }> = ({ source }) => {
+const FuelRadialChart: FC<FuelRadialChartProps> = ({ source, setLabels }) => {
   const [series, setSeries] = useState([0, 0, 0, 0])
+
   const getPercentage = (value: number, total: number) => {
     return Math.round((value / total) * 100)
   }
@@ -108,7 +116,7 @@ const FuelRadialChart: FC<{ source: Fuel }> = ({ source }) => {
         },
       },
     },
-    labels: getLabels(source),
+    labels: getLabels(source, setLabels),
     legend: {
       position: 'bottom',
       show: true,
@@ -117,7 +125,7 @@ const FuelRadialChart: FC<{ source: Fuel }> = ({ source }) => {
 
   return (
     <>
-      {getLabels(source).length > 0 && (
+      {getLabels(source, setLabels).length > 0 && (
         <Chart
           options={options}
           series={series}

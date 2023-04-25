@@ -7,6 +7,11 @@ import { MARKS, BLOCKS, INLINES } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
 import type { Document } from '@contentful/rich-text-types'
+import type {
+  Block,
+  Inline,
+} from '@contentful/rich-text-types/dist/types/types'
+import { useState, useRef } from 'react'
 
 import { FuelEnum } from '../../utils/enums'
 import { ContentWrapper } from '../../utils/content'
@@ -31,46 +36,36 @@ export const getServerSideProps = async () => {
     'companyDetailsPage',
   )
   const yahooFinance = companyDetails.find(
-    (item) => 'name' in item && item.name == 'YahooFinance',
+    (item) => item.name == 'YahooFinance',
   )
+
   const carbonAccounting = companyDetails.find(
-    (item) => 'name' in item && item.name == 'CarbonAccounting',
+    (item) => item.name == 'CarbonAccounting',
   )
   const renewableEnergy = companyDetails.find(
-    (item) => 'name' in item && item.name == 'RenewableEnergy',
+    (item) => item.name == 'RenewableEnergy',
   )
-  const fuelDetails: (CompanyDetailsEntry | undefined)[] = []
-  const fuelTypes = [
-    'Biodiesel',
-    'Biogas',
-    'CrudeOil',
-    'Coal',
-    'Oil',
-    'Gas',
-    'Biomass',
-    'SustainableBiomass',
-  ]
 
-  fuelTypes.map((fuelName) => {
-    fuelDetails.push(
-      companyDetails.find((item) => 'name' in item && item.name == fuelName),
-    )
-  })
+  const fuelTypes = Object.values(FuelEnum)
+
+  const fuelDetails = fuelTypes.map(
+    (fuelName) => companyDetails.find((item) => item.name == fuelName) ?? null,
+  )
 
   return {
     props: {
-      yahooFinance: yahooFinance,
-      carbonAccounting: carbonAccounting,
-      renewableEnergy: renewableEnergy,
+      yahooFinanceDetails: yahooFinance,
+      carbonAccountingDetails: carbonAccounting,
+      renewableEnergyDetails: renewableEnergy,
       fuelDetails: fuelDetails,
     },
   }
 }
 
 interface CompanyDetailsProps {
-  yahooFinance: CompanyDetailsEntry
-  carbonAccounting: CompanyDetailsEntry
-  renewableEnergy: CompanyDetailsEntry
+  yahooFinanceDetails: CompanyDetailsEntry
+  carbonAccountingDetails: CompanyDetailsEntry
+  renewableEnergyDetails: CompanyDetailsEntry
   fuelDetails: (CompanyDetailsEntry | undefined)[]
 }
 
@@ -93,54 +88,23 @@ const getChartDirections = (company: Company) => {
   return directionDict
 }
 
-type FuelTypes = Omit<Fuel, 'id' | 'companyId' | 'year' | 'totalConsumption'>
-
-const getLabels = (fuels: Fuel, fuelDetails: CompanyDetailsEntry[]) => {
-  const labels: string[] = []
-  const labelsText: Document[] = []
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { totalConsumption, id, companyId, year, ...rest } = fuels
-  Object.keys(rest).forEach((key) => {
-    if (
-      rest[key as keyof FuelTypes] !== null &&
-      rest[key as keyof FuelTypes] !== 0 &&
-      key != 'totalConsumption' &&
-      totalConsumption &&
-      (rest[key as keyof FuelTypes] ?? 0) / totalConsumption >= 0.005
-    ) {
-      labels.push(FuelEnum[key as keyof typeof FuelEnum])
-    }
-  })
-
-  labels.map((label) => {
-    const item = fuelDetails.find(
-      (item) => item && 'name' in item && item.name == label,
-    )
-
-    if (item && item.description) {
-      labelsText.push(item.description)
-    }
-  })
-
-  const mergedDocument: Document = labelsText.reduce(
-    (merged, document) => ({
-      nodeType: BLOCKS.DOCUMENT,
-      content: merged.content.concat(document.content),
-      data: {},
-    }),
-    { nodeType: BLOCKS.DOCUMENT, content: [], data: {} },
-  )
-
-  return mergedDocument
-}
-
 const Company: FC<CompanyDetailsProps> = ({
-  yahooFinance,
-  carbonAccounting,
-  renewableEnergy,
+  yahooFinanceDetails,
+  carbonAccountingDetails,
+  renewableEnergyDetails,
   fuelDetails,
 }) => {
+  const [labels, setLabels] = useState<string[]>([])
+
+  const previousLabels = useRef<string[]>([])
+
+  const handleSetLabels = (newLabels: string[]) => {
+    if (JSON.stringify(newLabels) !== JSON.stringify(previousLabels.current)) {
+      setLabels(newLabels)
+      previousLabels.current = newLabels
+    }
+  }
+
   const contentfulOptions = {
     renderMark: {
       [MARKS.BOLD]: (text: any) => (
@@ -153,7 +117,7 @@ const Company: FC<CompanyDetailsProps> = ({
       [BLOCKS.PARAGRAPH]: (node: any, children: any) => (
         <p className="align-center">{children}</p>
       ),
-      [INLINES.HYPERLINK]: (node: any, children: any) => {
+      [INLINES.HYPERLINK]: (node: Block | Inline, children: any) => {
         return (
           <a
             href={node.data.uri as string}
@@ -166,6 +130,29 @@ const Company: FC<CompanyDetailsProps> = ({
         )
       },
     },
+  }
+
+  const mergeLabels = () => {
+    const labelsText: Document[] = []
+
+    labels.map((label) => {
+      const item = fuelDetails.find((item) => item && item.name == label)
+
+      if (item && item.description) {
+        labelsText.push(item.description)
+      }
+    })
+
+    const mergedDocument: Document = labelsText.reduce(
+      (merged, document) => ({
+        nodeType: BLOCKS.DOCUMENT,
+        content: merged.content.concat(document.content),
+        data: {},
+      }),
+      { nodeType: BLOCKS.DOCUMENT, content: [], data: {} },
+    )
+
+    return mergedDocument
   }
 
   const companyId = (useRouter().query.id as string) ?? ''
@@ -247,7 +234,7 @@ const Company: FC<CompanyDetailsProps> = ({
               interpretation={
                 <DataCard>
                   {documentToReactComponents(
-                    carbonAccounting.description,
+                    carbonAccountingDetails.description,
                     contentfulOptions,
                   )}
                 </DataCard>
@@ -259,16 +246,15 @@ const Company: FC<CompanyDetailsProps> = ({
           {company.fuel && (
             <ChartGroup
               title="CDP-Fuel"
-              chart={<FuelRadialChart source={company.fuel} />}
+              chart={
+                <FuelRadialChart
+                  source={company.fuel}
+                  setLabels={handleSetLabels}
+                />
+              }
               interpretation={
                 <DataCard>
-                  {documentToReactComponents(
-                    getLabels(
-                      company.fuel,
-                      fuelDetails as CompanyDetailsEntry[],
-                    ),
-                    contentfulOptions,
-                  )}
+                  {documentToReactComponents(mergeLabels(), contentfulOptions)}
                 </DataCard>
               }
               chartOnLeft={chartDirections['fuel']}
@@ -282,7 +268,7 @@ const Company: FC<CompanyDetailsProps> = ({
               interpretation={
                 <DataCard>
                   {documentToReactComponents(
-                    renewableEnergy.description,
+                    renewableEnergyDetails.description,
                     contentfulOptions,
                   )}
                 </DataCard>
@@ -298,13 +284,13 @@ const Company: FC<CompanyDetailsProps> = ({
               interpretation={
                 <DataCard>
                   {documentToReactComponents(
-                    yahooFinance.description,
+                    yahooFinanceDetails.description,
                     contentfulOptions,
                   )}
                 </DataCard>
               }
               chartOnLeft={chartDirections['ticker']}
-              chartSize="mm"
+              chartSize="lg"
             />
           )}
         </div>
