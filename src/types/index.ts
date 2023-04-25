@@ -1,5 +1,11 @@
 import type { Document } from '@contentful/rich-text-types'
-import type { Company, ESG } from '@prisma/client'
+import type {
+  Company,
+  Emission,
+  Energy,
+  Fuel,
+  Investment,
+} from '@prisma/client'
 
 /* API Types */
 
@@ -8,6 +14,10 @@ export interface UncleanedESG {
   environment_score: number
   environment_level: string
 }
+
+export type UpdateType = Partial<
+  Company & Investment & Fuel & Emission & Energy
+>
 
 /* Contentful Types */
 

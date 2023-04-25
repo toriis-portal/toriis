@@ -3,12 +3,20 @@ import { z } from 'zod'
 import { RequestStatus } from '@prisma/client'
 
 import { createTRPCRouter, protectedProcedure } from '../trpc'
+import type { UpdateType } from '../../../types'
+import { datasetEnum } from '../../../utils/enums'
+
+type UpdateQuery = Omit<UpdateType, 'maturityDate' | 'date'> & {
+  maturityDate?: string
+  date?: string
+}
 
 export const requestRouter = createTRPCRouter({
   getAllRequests: protectedProcedure.query(async ({ ctx }) => {
     const requests = await ctx.prisma.request.findMany({})
     return requests
   }),
+
   updateRequest: protectedProcedure
     .input(
       z.object({
@@ -26,9 +34,10 @@ export const requestRouter = createTRPCRouter({
       if (!request || request.status !== RequestStatus.PENDING) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
-          message: 'This request cannot be rejected',
+          message: 'This request is already approved or rejected',
         })
       }
+
       // Reject the request
       if (input.updateAction === 'reject') {
         const rejectedRequest = await ctx.prisma.request.update({
@@ -45,18 +54,34 @@ export const requestRouter = createTRPCRouter({
             message: 'Failed to reject request',
           })
         }
-      } else {
-        // Approve the request and update corresponding entries
+        return 'Successfully rejected request'
+      }
+
+      // Approve the request and update corresponding entries
+      if (input.updateAction === 'approve') {
+        const tableToUpdate = datasetEnum[request.dataset]
         const allUpdateItems = request.updates
+
         const updateAll = await Promise.all(
           allUpdateItems.map(async (updateItem) => {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const { id, ...updateItemWithoutId } = updateItem
-            await ctx.prisma.company.update({
-              where: {
-                id: updateItem.id,
-              },
-              data: updateItemWithoutId,
+            const { id, ...fieldsToUpdate } = updateItem
+
+            // Convert date to ISO string for query
+            const fieldsToUpdateQuery: UpdateQuery = {
+              ...fieldsToUpdate,
+              maturityDate: fieldsToUpdate.maturityDate?.toString(),
+              date: fieldsToUpdate.date?.toString(),
+            }
+
+            await ctx.prisma.$runCommandRaw({
+              update: tableToUpdate,
+              updates: [
+                {
+                  q: { _id: { $oid: updateItem.id } },
+                  u: { $set: fieldsToUpdateQuery },
+                },
+              ],
             })
           }),
         )
@@ -83,6 +108,8 @@ export const requestRouter = createTRPCRouter({
             message: 'Failed to approve request',
           })
         }
+
+        return 'Successfully approved request'
       }
     }),
 })

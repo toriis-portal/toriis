@@ -52,7 +52,13 @@ const ReviewPage: FC = () => {
             </div>
           </div>
           {updateRequestMutation.isError && (
-            <Toast type="success" message="Something" />
+            <Toast type="error" message={updateRequestMutation.error.message} />
+          )}
+          {updateRequestMutation.isSuccess && (
+            <Toast
+              type="success"
+              message={updateRequestMutation.data as string}
+            />
           )}
         </>
       )}
