@@ -50,7 +50,7 @@ const CompanyTooltipGroup: FC<CompanyTooltipGroupProps> = ({
   return (
     <div
       className={clsx(
-        'mx-8 flex flex-wrap items-center justify-between',
+        'mx-8 flex flex-wrap items-center justify-between gap-y-4',
         className,
       )}
     >
