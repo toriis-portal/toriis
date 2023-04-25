@@ -1,5 +1,4 @@
 import type { FC } from 'react'
-import { StringArraySupportOption } from 'prettier'
 import type { Document } from '@contentful/rich-text-types'
 import type { Asset } from 'contentful'
 
@@ -39,9 +38,8 @@ export const getServerSideProps = async () => {
 
   await Promise.all(
     fossilFuelPageEntryTypes.map(async (entity: string) => {
-      const results = await contentClient.get('fossilFuelPage')
-      // console.log('LOOK')
-      // console.log(results[0][entity])
+      const results: Array<{ [key: string]: Asset | Document | string }> =
+        await contentClient.get('fossilFuelPage')
       fossilFuelPageEntryMap[entity] = results[0][entity]
     }),
   )
