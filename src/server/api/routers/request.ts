@@ -7,8 +7,8 @@ import type { UpdateType } from '../../../types'
 import { datasetEnum } from '../../../utils/enums'
 
 type UpdateQuery = Omit<UpdateType, 'maturityDate' | 'date'> & {
-  maturityDate?: string
-  date?: string
+  maturityDate?: object
+  date?: object
 }
 
 export const requestRouter = createTRPCRouter({
@@ -67,11 +67,11 @@ export const requestRouter = createTRPCRouter({
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const { id, ...fieldsToUpdate } = updateItem
 
-            // Convert date to ISO string for query
+            // Cast Date to object for MongoDB query
             const fieldsToUpdateQuery: UpdateQuery = {
               ...fieldsToUpdate,
-              maturityDate: fieldsToUpdate.maturityDate?.toString(),
-              date: fieldsToUpdate.date?.toString(),
+              maturityDate: fieldsToUpdate.maturityDate,
+              date: fieldsToUpdate.date ? fieldsToUpdate.date : undefined,
             }
 
             await ctx.prisma.$runCommandRaw({
