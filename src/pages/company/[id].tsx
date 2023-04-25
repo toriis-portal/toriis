@@ -1,12 +1,10 @@
 import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
-import type { Fuel } from '@prisma/client'
 import { Company } from '@prisma/client'
 import type { FC } from 'react'
 import { MARKS, BLOCKS, INLINES } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
-import type { Document } from '@contentful/rich-text-types'
 import type {
   Block,
   Inline,
@@ -126,29 +124,6 @@ const Company: FC<CompanyDetailsProps> = ({
     }
   }
 
-  const mergeLabels = () => {
-    const labelsText: Document[] = []
-
-    labels.map((label) => {
-      const item = fuelDetails.find((item) => item && item.name == label)
-
-      if (item && item.description) {
-        labelsText.push(item.description)
-      }
-    })
-
-    const mergedDocument: Document = labelsText.reduce(
-      (merged, document) => ({
-        nodeType: BLOCKS.DOCUMENT,
-        content: merged.content.concat(document.content),
-        data: {},
-      }),
-      { nodeType: BLOCKS.DOCUMENT, content: [], data: {} },
-    )
-
-    return mergedDocument
-  }
-
   const companyId = (useRouter().query.id as string) ?? ''
 
   const { data, isLoading, isError } = api.company.getCompany.useQuery(
@@ -248,7 +223,22 @@ const Company: FC<CompanyDetailsProps> = ({
               }
               interpretation={
                 <DataCard>
-                  {documentToReactComponents(mergeLabels(), contentfulOptions)}
+                  {labels.map((label) => {
+                    const item = fuelDetails.find(
+                      (item) => item && item.name == label,
+                    )
+                    if (item && item.description) {
+                      return (
+                        <>
+                          {documentToReactComponents(
+                            item.description,
+                            contentfulOptions,
+                          )}
+                          <br />
+                        </>
+                      )
+                    }
+                  })}
                 </DataCard>
               }
               chartOnLeft={chartDirections['fuel']}
