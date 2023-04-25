@@ -16,7 +16,10 @@ declare global {
 const ClimateClock = () => {
   return (
     <>
-      <div id="climate-clock-container" className="mx-auto w-5/6 items-center">
+      <div
+        id="climate-clock-container"
+        className="mx-auto my-8 w-5/6 items-center border border-8 border-white"
+      >
         <Script src="https://climateclock.world/widget-v2.js" async />
         <climate-clock />
       </div>

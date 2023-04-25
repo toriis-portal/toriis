@@ -97,14 +97,21 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
         <DirtyIndustry />
       </div>
       <div id="whyFossilFuelsAreBad" className="pt-20">
-        <FossilFuelsBad />
+        <FossilFuelsBad
+          text={fossilFuelPageEntryMap['whyAreFossilFuelsBad']}
+          caption={fossilFuelPageEntryMap['climateClock']}
+        />
       </div>
       <div id="warning" className="pt-20">
         <WhatWarningMeans />
       </div>
 
       <div id="financialCase" className="pt-20">
-        <FinancialCase entries={caseEntries} />
+        <FinancialCase
+          entries={caseEntries}
+          text={fossilFuelPageEntryMap['divestmentCase']}
+          img={fossilFuelPageEntryMap['divestmentGraph']}
+        />
       </div>
 
       {/* More placeholders for fossil fuel page sections: */}
