@@ -88,7 +88,10 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
 
       {/* Placeholders for fossil fuel page sections: */}
       <div id="uofiInvestments" className="pt-20">
-        <UniversityInvestments img={fossilFuelPageEntryMap['treeMap']} />
+        <UniversityInvestments
+          img={fossilFuelPageEntryMap['treeMap']}
+          caption={fossilFuelPageEntryMap['uofIInvestments']}
+        />
       </div>
       <div id="dirtyIndustry" className="pt-20">
         <DirtyIndustry />
