@@ -1,6 +1,5 @@
 import type { FC } from 'react'
-import type { Document } from '@contentful/rich-text-types'
-import type { Asset } from 'contentful'
+import { Spinner } from 'flowbite-react'
 
 import {
   PrimaryNavBar,
@@ -10,6 +9,7 @@ import {
 } from '../../components'
 import { ContentWrapper } from '../../utils/content'
 import { FinancialCase } from '../../sections'
+import { FossilFuelPage } from '../../types'
 import type { CaseEntry } from '../../types'
 import UniversityInvestments from '../../sections/fossil-fuel/UniversityInvestments'
 import DirtyIndustry from '../../sections/fossil-fuel/DirtyIndustry'
@@ -18,48 +18,37 @@ import WhatWarningMeans from '../../sections/fossil-fuel/WhatWarningMeans'
 import SchoolsDivested from '../../sections/fossil-fuel/SchoolsDivested'
 import InstitutionsDivested from '../../sections/fossil-fuel/InstitutionsDivested'
 
-const fossilFuelPageEntryTypes = [
-  'treeMap',
-  'uofIInvestments',
-  'whyAreFossilFuelsBad',
-  'climateClock',
-  'warmingMeans',
-  'divestmentCase',
-  'divestmentGraph',
-  'divestedSchools',
-  'divestedInstitutions',
-]
-
 export const getServerSideProps = async () => {
   const contentClient = new ContentWrapper()
   const caseEntries = await contentClient.get('case')
+  const fossilFuelPageEntries: FossilFuelPage | undefined =
+    await contentClient.getAllFossilFuelPageEntries()
 
-  const fossilFuelPageEntryMap: Record<string, Asset | Document | string> = {}
-
-  await Promise.all(
-    fossilFuelPageEntryTypes.map(async (entity: string) => {
-      const results: Array<{ [key: string]: Asset | Document | string }> =
-        await contentClient.get('fossilFuelPage')
-      fossilFuelPageEntryMap[entity] = results[0][entity]
-    }),
-  )
+  if (!fossilFuelPageEntries) {
+    // handle the case where fossilFuelPageEntries is undefined
+    return (
+      <div className="flex flex-col items-center px-12">
+        <Spinner color="info" />
+      </div>
+    )
+  }
 
   return {
     props: {
       caseEntries,
-      fossilFuelPageEntryMap,
+      fossilFuelPageEntries,
     },
   }
 }
 
 interface FossilFuelProps {
   caseEntries: CaseEntry[]
-  fossilFuelPageEntryMap: Record<string, Asset | Document | string>
+  fossilFuelPageEntries: FossilFuelPage
 }
 
 const FossilFuelPage: FC<FossilFuelProps> = ({
   caseEntries,
-  fossilFuelPageEntryMap,
+  fossilFuelPageEntries,
 }) => {
   const navItems = [
     { path: 'uofiInvestments', text: 'University of Illinois Investments' },
@@ -87,8 +76,8 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
       {/* Placeholders for fossil fuel page sections: */}
       <div id="uofiInvestments" className="pt-20">
         <UniversityInvestments
-          img={fossilFuelPageEntryMap['treeMap']}
-          caption={fossilFuelPageEntryMap['uofIInvestments']}
+          img={fossilFuelPageEntries['treeMap']}
+          caption={fossilFuelPageEntries['uofIInvestments']}
         />
       </div>
       <div id="dirtyIndustry" className="pt-20">
@@ -96,8 +85,8 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
       </div>
       <div id="whyFossilFuelsAreBad" className="pt-20">
         <FossilFuelsBad
-          text={fossilFuelPageEntryMap['whyAreFossilFuelsBad']}
-          caption={fossilFuelPageEntryMap['climateClock']}
+          text={fossilFuelPageEntries['whyAreFossilFuelsBad']}
+          caption={fossilFuelPageEntries['climateClock']}
         />
       </div>
       <div id="warning" className="pt-20">
@@ -107,8 +96,8 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
       <div id="financialCase" className="pt-20">
         <FinancialCase
           entries={caseEntries}
-          text={fossilFuelPageEntryMap['divestmentCase']}
-          img={fossilFuelPageEntryMap['divestmentGraph']}
+          text={fossilFuelPageEntries['divestmentCase']}
+          img={fossilFuelPageEntries['divestmentGraph']}
         />
       </div>
 

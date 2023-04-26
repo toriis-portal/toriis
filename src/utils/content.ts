@@ -1,6 +1,7 @@
 import { createClient } from 'contentful'
 import type { ContentfulClientApi } from 'contentful'
 
+import type { FossilFuelPage } from '../types'
 import { env } from '../env.mjs'
 import type {
   TimelineEntry,
@@ -84,5 +85,13 @@ export class ContentWrapper {
       }),
     )
     return homePageEntryMap
+  }
+
+  getAllFossilFuelPageEntries = async () => {
+    const fossilFuelPageEntries: FossilFuelPage[] = await this.get(
+      'fossilFuelPage',
+    )
+
+    return fossilFuelPageEntries[0]
   }
 }
