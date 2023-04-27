@@ -59,7 +59,7 @@ const TimelineItem: FC<TimlineItemProps> = ({ data, isLeft }) => {
                 })}
               >
                 <p
-                  className={clsx(' text-black', {
+                  className={clsx('text-black', {
                     'mr-6 pr-10 text-right': isLeft,
                     'ml-6 pl-10 text-left': !isLeft,
                   })}

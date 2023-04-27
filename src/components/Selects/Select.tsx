@@ -203,7 +203,7 @@ export const Select: FC<SelectProps> = ({
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={clsx(
-          ' flex w-full items-center overflow-hidden rounded-full border border-solid',
+          'flex w-full items-center overflow-hidden rounded-full border border-solid',
           {
             'justify-centerborder-darkTeal float-right h-10 w-fit border-black':
               !isFilter,
@@ -219,7 +219,7 @@ export const Select: FC<SelectProps> = ({
         >
           <span
             className={clsx('w-full text-black', {
-              ' overflow-hidden whitespace-nowrap': isFilter,
+              'overflow-hidden whitespace-nowrap': isFilter,
             })}
           >
             {textOption}
@@ -298,7 +298,7 @@ export const Select: FC<SelectProps> = ({
               <ul className="m-auto flex w-11/12 flex-col gap-5">
                 {Object.entries(options).map(([key, value]) => (
                   <li key={key} className="text-black">
-                    <span className="">{key}</span>
+                    <span>{key}</span>
                     <ul className="mt-2 flex flex-col gap-2">
                       {value.filter(handleSearchFilter).map((option) => (
                         <li

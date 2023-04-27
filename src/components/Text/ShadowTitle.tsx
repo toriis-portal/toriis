@@ -9,14 +9,14 @@ const ShadowTitle: FC<TitleProps> = ({ text }) => {
   return (
     <div
       className={clsx(
-        ' header-3 w-fit rounded-full bg-white',
+        'header-3 w-fit rounded-full bg-white',
         'border-4 border-cobalt',
         'px-14 py-4',
         'shadow-[-8px_8px_0px_0px] shadow-cobalt',
         'first-line:z-10',
       )}
     >
-      <p className="text-darkTeal ">{text}</p>
+      <p className="text-darkTeal">{text}</p>
     </div>
   )
 }

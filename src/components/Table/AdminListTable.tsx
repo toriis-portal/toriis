@@ -6,7 +6,7 @@ import { TrashIcon, ArrowUturnLeftIcon } from '@heroicons/react/24/outline'
 
 const delIconStyle = clsx('ml-8 h-auto w-6 stroke-2')
 const delUserTextStyle = (deletePressed: boolean) =>
-  clsx('basis-1/3 truncate ', {
+  clsx('basis-1/3 truncate', {
     'text-lightGray': deletePressed,
     'text-black': !deletePressed,
   })

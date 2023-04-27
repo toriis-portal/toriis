@@ -29,7 +29,7 @@ const CompanyDetailsAccordion: FC<CompanyDetailsAccordionProps> = ({
   return (
     <div
       className={clsx(
-        ' rounded-[10px] border-[3px] border-cobalt bg-lightBlue px-10 py-5',
+        'rounded-[10px] border-[3px] border-cobalt bg-lightBlue px-10 py-5',
         className,
       )}
     >
