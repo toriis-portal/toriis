@@ -42,7 +42,7 @@ const LimitedPopupBox: FC<LimitedPopupProps> = ({ text }) => {
       <button onClick={() => setIsOpen(true)}>
         <u
           className={clsx(
-            'w-[10&] font-inter text-xs font-light italic text-lightGray',
+            'w-[10%] font-inter text-xs font-light italic text-lightGray',
             { hidden: !isOverflowing },
           )}
         >

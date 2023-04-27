@@ -29,16 +29,12 @@ const RequestPage: FC = () => {
       {/* Place holder, for demo purposes only */}
       {session && (
         <>
-          <h1>Request Management</h1>
           <div className="flex flex-col items-center">
-            <RequestReviewTable requests={data} className={'w-5/6'} />
-            {data.map((request) => (
-              <div key={request.id}>
-                {request.updates.map((update) => (
-                  <p key={update.id}>{update.name}</p>
-                ))}
-              </div>
-            ))}
+            <RequestReviewTable
+              requests={data}
+              myRequests={false}
+              className={'w-5/6'}
+            />
           </div>
         </>
       )}
