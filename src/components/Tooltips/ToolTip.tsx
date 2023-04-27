@@ -58,9 +58,9 @@ const ToolTip: FC<TitleProps> = ({ title, details, children }) => {
             children
           ) : (
             <>
-              <div className="body-small">
-                <p className="font-bold">{title}:</p>
-                <p>{details}</p>
+              <div>
+                <p className="body-small font-bold">{title}:</p>
+                <p className="body-small">{details}</p>
               </div>
             </>
           )}
