@@ -93,19 +93,25 @@ const CompanyTooltipGroup: FC<CompanyTooltipGroupProps> = ({
             )} text-white`}
           />
         </div>
-        <ToolTip>
-          <div>
-            Average environmental grade for sector <b>Industrials</b>:
-            <Tag title="CCC" className="bg-clementine text-white" />
-            <br />
-            Environmental grade: ESG refers to a set of values used to screen
-            potential investments: Environmental, Social and Governance. An ESG
-            score measures how sustainably a company is conducting business
-            based on their environmental impact calculated from their carbon
-            emissions, energy consumption and climate change action. It also
-            addresses
-          </div>
-        </ToolTip>
+        {sectorEntry.avgGrade && (
+          <ToolTip>
+            <div>
+              Average environmental grade for sector <b>{sectorEntry.name}</b>
+              :
+              <Tag
+                title={sectorEntry.avgGrade}
+                className="bg-clementine text-white"
+              />
+              <br />
+              Environmental grade: ESG refers to a set of values used to screen
+              potential investments: Environmental, Social and Governance. An
+              ESG score measures how sustainably a company is conducting
+              business based on their environmental impact calculated from their
+              carbon emissions, energy consumption and climate change action. It
+              also addresses
+            </div>
+          </ToolTip>
+        )}
       </div>
     </div>
   )
