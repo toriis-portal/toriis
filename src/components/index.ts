@@ -38,6 +38,7 @@ import HighlightedTitle from './Text/HighlightedTitle'
 import LimitedPopupBox from './Text/LimitedPopupBox'
 import CapitalizedTitle from './Text/CapitalizedTitle'
 import ShadowTitle from './Text/ShadowTitle'
+import StatusTag from './Text/StatusTag'
 import Tag from './Text/Tag'
 // Tables
 import AdminListTable from './Table/AdminListTable'
@@ -88,4 +89,5 @@ export {
   AdminListTable,
   RequestReviewTable,
   LimitedPopupBox,
+  StatusTag,
 }
