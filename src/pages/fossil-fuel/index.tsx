@@ -14,23 +14,23 @@ import type { CaseEntry, DirtyCompanyEntry } from '../../types'
 export const getServerSideProps = async () => {
   const contentClient = new ContentWrapper()
   const caseEntries = await contentClient.get('case')
-  const dirtyCompanies = await contentClient.get('dirtyCompanies')
+  const companyEntries = await contentClient.get('dirtyCompanies')
   return {
     props: {
       caseEntries,
-      dirtyCompanies,
+      companyEntries: companyEntries,
     },
   }
 }
 
 interface FossilFuelProps {
   caseEntries: CaseEntry[]
-  dirtyCompanies: DirtyCompanyEntry[]
+  companyEntries: DirtyCompanyEntry[]
 }
 
 const FossilFuelPage: FC<FossilFuelProps> = ({
   caseEntries,
-  dirtyCompanies,
+  companyEntries,
 }) => {
   const navItems = [
     { path: 'uofiInvestments', text: 'University of Illinois Investments' },
@@ -59,7 +59,7 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
 
       <div id="uofiInvestments" className="pt-20"></div>
       <div id="dirtyIndustries" className="pt-20">
-        <DirtyIndustries companies={dirtyCompanies} />
+        <DirtyIndustries companies={companyEntries} />
       </div>
       <div id="whyFossilFuelsAreBad" className="pt-20"></div>
       <div id="warning" className="pt-20"></div>
