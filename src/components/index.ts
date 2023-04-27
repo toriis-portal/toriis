@@ -12,6 +12,7 @@ import ESGTag from './Card/ESGTag'
 import NetAssetTag from './Card/NetAssetTag'
 import AdminBox from './Card/AdminBox'
 import DataCard from './Card/DataCard'
+import LinkBox from './Card/LinkBox'
 // Charts
 import EnergyRadialChart from './Charts/EnergyRadialChart'
 import LandingDonutChart from './Charts/LandingDonutChart'
@@ -88,4 +89,5 @@ export {
   AdminBox,
   AdminListTable,
   InviteAdminBar,
+  LinkBox,
 }

@@ -7,9 +7,10 @@ import {
   SecondaryNavBar,
   ClimateClock,
   CompanyDetailsAccordion,
+  LinkBox,
 } from '../../components'
 import { ContentWrapper } from '../../utils/content'
-import { FinancialCase, InstitutionalDivestments } from '../../sections'
+import { FinancialCase } from '../../sections'
 import type { CaseEntry, LinkEntry, ListEntry } from '../../types'
 
 export const getServerSideProps = async () => {
@@ -97,7 +98,7 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
           content={content}
           className="bg-white"
         ></CompanyDetailsAccordion>
-        <InstitutionalDivestments
+        <LinkBox
           linkEntries={FossilFuelEntries}
           subscriptEntries={LinkEntries}
           listEntries={ListEntries}
