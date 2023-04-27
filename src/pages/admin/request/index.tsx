@@ -1,4 +1,4 @@
-import type { Company, Request } from '@prisma/client'
+import type { Request } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import type { FC } from 'react'
@@ -57,9 +57,7 @@ const RequestPage: FC = () => {
   }, [refetch])
 
   data?.pages.forEach((page) => {
-    console.log(page)
     page.items.forEach((item) => {
-      console.log(item)
       items = [...items, item]
     })
   })
