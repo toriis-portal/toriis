@@ -47,15 +47,15 @@ export class ContentWrapper {
       entity,
     )
   }
-  getFossilFuelPageLinks = async(entity: string, type?: string) => {
+  getFossilFuelPageLinks = async (entity: string, type?: string) => {
     const entries = await this.get<LinkEntry[]>(entity)
-  let filteredEntries = entries
+    let filteredEntries = entries
 
-  if (type) {
-    filteredEntries = filteredEntries.filter((entry) => entry.type === type);
-  }
- 
-  return filteredEntries
+    if (type) {
+      filteredEntries = filteredEntries.filter((entry) => entry.type === type)
+    }
+
+    return filteredEntries
   }
   sortHomeEntryByType = (entries: any, entity: string) => {
     switch (entity) {
@@ -68,7 +68,7 @@ export class ContentWrapper {
           (a, b) => a.order - b.order,
         )
       case 'link':
-        return (entries as LinkEntry[]).filter((entry) => entry.type === "Home")
+        return (entries as LinkEntry[]).filter((entry) => entry.type === 'Home')
       case 'list':
         return (entries as ListEntry[]).sort((a, b) => a.order - b.order)
       case 'info':
@@ -80,11 +80,11 @@ export class ContentWrapper {
   // sortFossilFuelEntryByType = (entries: any, entity: string, type?: string) => {
   //   switch (entity) {
   //      case 'link':
-  //       if (type === "Link") 
+  //       if (type === "Link")
   //         return (entries as LinkEntry[]).filter((entry) => entry.type === "Link")
   //       if (type === "FossilFuelPage")
   //        return (entries as LinkEntry[]).filter((entry) => entry.type === "FossilFuelPage")
-         
+
   //     case 'list':
   //       return (entries as ListEntry[]).sort((a, b) => a.order - b.order)
   //     default:

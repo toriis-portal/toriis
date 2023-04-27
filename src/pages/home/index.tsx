@@ -76,7 +76,7 @@ const Home: FC<HomeProps> = ({
           <InstitutionalDivestments
             linkEntries={divestmentLinkEntries}
             listEntries={divestmentListEntries}
-            title = "Institutional Divestment Links"
+            title="Institutional Divestment Links"
           />
         </div>
         <div id="refuteUISReponse" className="pt-20">
