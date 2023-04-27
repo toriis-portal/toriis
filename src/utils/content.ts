@@ -92,6 +92,6 @@ export class ContentWrapper {
       'fossilFuelPage',
     )
 
-    return fossilFuelPageEntries[0]
+    return fossilFuelPageEntries[0] as FossilFuelPage
   }
 }

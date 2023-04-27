@@ -61,7 +61,7 @@ const FinancialCase: FC<FinancialCaseProps> = ({ entries, text, img }) => {
         <HighlightedTitle
           title="Cases for Divestment"
           size="medium"
-          color="[#40D7D4]"
+          color="brightTeal"
         />
       </div>
       <div className="flex h-screen items-center justify-center">

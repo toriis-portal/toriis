@@ -1,5 +1,4 @@
 import type { FC } from 'react'
-import { Spinner } from 'flowbite-react'
 
 import {
   PrimaryNavBar,
@@ -23,15 +22,6 @@ export const getServerSideProps = async () => {
   const caseEntries = await contentClient.get('case')
   const fossilFuelPageEntries: FossilFuelPage | undefined =
     await contentClient.getAllFossilFuelPageEntries()
-
-  if (!fossilFuelPageEntries) {
-    // handle the case where fossilFuelPageEntries is undefined
-    return (
-      <div className="flex flex-col items-center px-12">
-        <Spinner color="info" />
-      </div>
-    )
-  }
 
   return {
     props: {
