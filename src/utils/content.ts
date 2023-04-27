@@ -20,15 +20,6 @@ const homePageEntryTypes = [
   'info',
 ]
 
-const fossilFuelPageEntryTypes = [
-  'timeline',
-  'request',
-  'response',
-  'link',
-  'list',
-  'info',
-]
-
 export class ContentWrapper {
   client: ContentfulClientApi
 
@@ -56,16 +47,15 @@ export class ContentWrapper {
       entity,
     )
   }
-  getSingleFossilFuelPageEntry = async (entity: string) => {
-    const client = this.client
+  getFossilFuelPageLinks = async(entity: string, type?: string) => {
+    const entries = await this.get<LinkEntry[]>(entity)
+  let filteredEntries = entries
 
-    const entries = await client.getEntries({
-      content_type: entity,
-    })
-    return this.sortFossilFuelEntryByType(
-      entries.items.map((item) => item.fields),
-      entity,
-    )
+  if (type) {
+    filteredEntries = filteredEntries.filter((entry) => entry.type === type);
+  }
+ 
+  return filteredEntries
   }
   sortHomeEntryByType = (entries: any, entity: string) => {
     switch (entity) {
@@ -87,20 +77,20 @@ export class ContentWrapper {
         return entries as LinkEntry[]
     }
   }
-  sortFossilFuelEntryByType = (entries: any, entity: string) => {
-    switch (entity) {
-      case 'link':
-        return (entries as LinkEntry[]).filter((entry) => entry.type === "FossilFuelPage")
-      case 'link':
-          return (entries as LinkEntry[]).filter((entry) => entry.type === "Link")
-      case 'list':
-        return (entries as ListEntry[]).sort((a, b) => a.order - b.order)
-      case 'info':
-        return (entries as Info[])[0] as Info
-      default:
-        return entries as LinkEntry[]
-    }
-  }
+  // sortFossilFuelEntryByType = (entries: any, entity: string, type?: string) => {
+  //   switch (entity) {
+  //      case 'link':
+  //       if (type === "Link") 
+  //         return (entries as LinkEntry[]).filter((entry) => entry.type === "Link")
+  //       if (type === "FossilFuelPage")
+  //        return (entries as LinkEntry[]).filter((entry) => entry.type === "FossilFuelPage")
+         
+  //     case 'list':
+  //       return (entries as ListEntry[]).sort((a, b) => a.order - b.order)
+  //     default:
+  //       return entries as LinkEntry[]
+  //   }
+  // }
   getAllHomePageEntries = async () => {
     const homePageEntryMap: Record<
       string,
@@ -118,23 +108,5 @@ export class ContentWrapper {
       }),
     )
     return homePageEntryMap
-  }
-  getAllFossilFuelPageEntries = async () => {
-    const FossilFuelPageEntryMap: Record<
-      string,
-      | TimelineEntry[]
-      | RefuteResponseEntry[]
-      | OurRequestsEntry[]
-      | ListEntry[]
-      | Info
-      | LinkEntry[]
-    > = {}
-    await Promise.all(
-      fossilFuelPageEntryTypes.map(async (entity) => {
-        const results = await this.getSingleFossilFuelPageEntry(entity)
-        FossilFuelPageEntryMap[entity] = results
-      }),
-    )
-    return FossilFuelPageEntryMap
   }
 }

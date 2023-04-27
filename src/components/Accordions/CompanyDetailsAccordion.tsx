@@ -5,13 +5,15 @@ import { useState } from 'react'
 import { ReadMoreButton } from '../index'
 
 interface CompanyDetailsAccordionProps {
-  content: string
+  content?: string
   className?: string
+  paragraphs?: string[]
 }
 
 const CompanyDetailsAccordion: FC<CompanyDetailsAccordionProps> = ({
   content,
   className,
+  paragraphs,
 }) => {
   const [folded, setFolded] = useState(true)
 
