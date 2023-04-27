@@ -7,14 +7,14 @@ import type { LinkEntry, ListEntry } from '../../types'
 
 interface LinkBoxProps {
   linkEntries: LinkEntry[]
-  subscriptEntries?: LinkEntry[]
+  superscriptEntries?: LinkEntry[]
   listEntries: ListEntry[]
   title: string
 }
 
 const LinkBox: FC<LinkBoxProps> = ({
   linkEntries,
-  subscriptEntries,
+  superscriptEntries: superscriptEntries,
   title,
 }) => {
   return (
@@ -38,8 +38,8 @@ const LinkBox: FC<LinkBoxProps> = ({
               </div>
             ))}
           </div>
-          {subscriptEntries &&
-            subscriptEntries.map((entry, index) => (
+          {superscriptEntries &&
+            superscriptEntries.map((entry, index) => (
               <div key={index} className="mx-2 pt-2 text-sm">
                 <sup className="text-xs">{index + 1}</sup>
                 <Link

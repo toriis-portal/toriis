@@ -127,7 +127,7 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
           </CompanyDetailsAccordion>
           <LinkBox
             linkEntries={FossilFuelEntries}
-            subscriptEntries={LinkEntries}
+            superscriptEntries={LinkEntries}
             listEntries={ListEntries}
             title="Relevant Links"
           />
