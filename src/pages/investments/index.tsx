@@ -10,6 +10,7 @@ import {
   ToTopButton,
   PrimaryNavBar,
   SearchBar,
+  Tag,
   CompanyCard,
   LoadMoreButton,
   ToolTip,
@@ -232,10 +233,26 @@ const InvestmentPage: FC = () => {
             />
             <ToolTip
               title="Definition"
-              details="An Environmental, Social, and Governance (ESG) rating that aims to measure 
-              how sustainably a company is conducting business. This rating is
-              based on their environmental impact calculated from their carbon
-              emissions, energy consumption and climate change action."
+              details={
+                <p>
+                  {' '}
+                  An Environmental, Social, and Governance (ESG) rating that
+                  aims to measure how sustainably a company is conducting
+                  business and managing ESG risk factors.
+                  <br />
+                  <br />
+                  <Tag
+                    title="AAA"
+                    className="body-small bg-brightTeal text-white"
+                  />
+                  scores indicate stong management and low risk, while
+                  <Tag
+                    title="CCC"
+                    className="body-small bg-clementine text-white"
+                  />
+                  scores indicate weak management and high risk. /
+                </p>
+              }
             />
           </div>
 
