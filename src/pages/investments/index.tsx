@@ -12,6 +12,7 @@ import {
   SearchBar,
   CompanyCard,
   LoadMoreButton,
+  ToolTip,
 } from '../../components'
 import { api } from '../../utils/api'
 import { sectorEnum, envGradeEnum, netAssetValEnum } from '../../utils/enums'
@@ -169,68 +170,96 @@ const InvestmentPage: FC = () => {
           </div>
         </div>
         <div className="mb-8 flex basis-3/4 flex-col justify-evenly gap-4 md:flex-row lg:mx-20 lg:gap-14">
-          <Select
-            text="Sector"
-            isFilter={true}
-            options={Object.values(sectorEnum)}
-            updateControl={{
-              type: 'on-change',
-              cb: (selectedOptions) => {
-                setFilterOptions({
-                  ...filterOptions,
-                  sectors: selectedOptions.map((item) => {
-                    return item.toUpperCase().replace(' ', '_') as Sector
-                  }),
-                })
-              },
-            }}
-          />
-          <Select
-            text="Industry"
-            isFilter={true}
-            isSearchable={true}
-            options={INDUSTRIES}
-            containerHeight="1/4"
-            updateControl={{
-              type: 'on-change',
-              cb: (selectedOptions) => {
-                setFilterOptions({
-                  ...filterOptions,
-                  industries: selectedOptions,
-                })
-              },
-            }}
-          />
-          <Select
-            text="Environmental Grade"
-            shortText="Env Grade"
-            isFilter={true}
-            options={Object.values(envGradeEnum)}
-            updateControl={{
-              type: 'on-change',
-              cb: (selectedOptions) => {
-                setFilterOptions({
-                  ...filterOptions,
-                  envGrade: selectedOptions,
-                })
-              },
-            }}
-          />
-          <Select
-            text="Net Asset Value"
-            shortText="Net Asset"
-            isFilter={true}
-            options={Object.keys(netAssetValEnum)}
-            updateControl={{
-              type: 'on-change',
-              cb: (selectedOptions) => {
-                setFilterOptions({
-                  ...filterOptions,
-                  netAssetVal: netAssetValCallback(selectedOptions),
-                })
-              },
-            }}
-          />
+          <div className="flex gap-2">
+            <Select
+              text="Sector"
+              isFilter={true}
+              options={Object.values(sectorEnum)}
+              updateControl={{
+                type: 'on-change',
+                cb: (selectedOptions) => {
+                  setFilterOptions({
+                    ...filterOptions,
+                    sectors: selectedOptions.map((item) => {
+                      return item.toUpperCase().replace(' ', '_') as Sector
+                    }),
+                  })
+                },
+              }}
+            />
+            <ToolTip
+              title="Definition"
+              details="A sector is comprised of many industries and is used to describe large components of the overall economy (eg, Energy)."
+            />
+          </div>
+          <div className="flex gap-2">
+            <Select
+              text="Industry"
+              isFilter={true}
+              isSearchable={true}
+              options={INDUSTRIES}
+              containerHeight="1/4"
+              updateControl={{
+                type: 'on-change',
+                cb: (selectedOptions) => {
+                  setFilterOptions({
+                    ...filterOptions,
+                    industries: selectedOptions,
+                  })
+                },
+              }}
+            />
+            <ToolTip
+              title="Definition"
+              details="An industry is comprised of companies that are closely related in their business activities and is used to describe nuanced components of a larger sector (eg, Oil & Gas)."
+            />
+          </div>
+          <div className="flex gap-2">
+            <Select
+              text="Environmental Grade"
+              shortText="Env Grade"
+              isFilter={true}
+              options={Object.values(envGradeEnum)}
+              updateControl={{
+                type: 'on-change',
+                cb: (selectedOptions) => {
+                  setFilterOptions({
+                    ...filterOptions,
+                    envGrade: selectedOptions,
+                  })
+                },
+              }}
+            />
+            <ToolTip
+              title="Definition"
+              details="An Environmental, Social, and Governance (ESG) rating that aims to measure 
+              how sustainably a company is conducting business. This rating is
+              based on their environmental impact calculated from their carbon
+              emissions, energy consumption and climate change action."
+            />
+          </div>
+
+          <div className="flex gap-2">
+            <Select
+              text="Net Asset Value"
+              shortText="Net Asset"
+              isFilter={true}
+              options={Object.keys(netAssetValEnum)}
+              updateControl={{
+                type: 'on-change',
+                cb: (selectedOptions) => {
+                  setFilterOptions({
+                    ...filterOptions,
+                    netAssetVal: netAssetValCallback(selectedOptions),
+                  })
+                },
+              }}
+            />
+            <ToolTip
+              title="Definition"
+              details="The total market value of all of a company's corporate bonds."
+            />
+          </div>
         </div>
         {lastSearchIsEmpty && (
           <p className="mb-8 w-full text-center text-[22px] font-medium">

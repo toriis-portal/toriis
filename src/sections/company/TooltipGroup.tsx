@@ -102,8 +102,7 @@ const CompanyTooltipGroup: FC<CompanyTooltipGroupProps> = ({
             potential investments: Environmental, Social and Governance. An ESG
             score measures how sustainably a company is conducting business
             based on their environmental impact calculated from their carbon
-            emissions, energy consumption and climate change action. It also
-            addresses
+            emissions, energy consumption and climate change action.
           </div>
         </ToolTip>
       </div>
