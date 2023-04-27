@@ -12,14 +12,14 @@ interface LinkBoxProps {
   title: string
 }
 
-const InstitutionalDivestments: FC<LinkBoxProps> = ({
+const LinkBox: FC<LinkBoxProps> = ({
   linkEntries,
   subscriptEntries,
   title,
 }) => {
   return (
     <div className="px-12">
-      <div className="mt-16 flex w-full flex-col items-center rounded-xl bg-darkTeal px-6 pt-6 pb-16 text-white">
+      <div className="mt-16 flex w-fit flex-col items-center rounded-xl bg-darkTeal px-20 pt-6 pb-16 text-white">
         <div className="relative -top-12 ">
           <ShadowTitle text={title} />
         </div>
@@ -57,4 +57,4 @@ const InstitutionalDivestments: FC<LinkBoxProps> = ({
   )
 }
 
-export default InstitutionalDivestments
+export default LinkBox

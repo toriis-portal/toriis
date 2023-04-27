@@ -77,20 +77,7 @@ export class ContentWrapper {
         return entries as LinkEntry[]
     }
   }
-  // sortFossilFuelEntryByType = (entries: any, entity: string, type?: string) => {
-  //   switch (entity) {
-  //      case 'link':
-  //       if (type === "Link")
-  //         return (entries as LinkEntry[]).filter((entry) => entry.type === "Link")
-  //       if (type === "FossilFuelPage")
-  //        return (entries as LinkEntry[]).filter((entry) => entry.type === "FossilFuelPage")
 
-  //     case 'list':
-  //       return (entries as ListEntry[]).sort((a, b) => a.order - b.order)
-  //     default:
-  //       return entries as LinkEntry[]
-  //   }
-  // }
   getAllHomePageEntries = async () => {
     const homePageEntryMap: Record<
       string,

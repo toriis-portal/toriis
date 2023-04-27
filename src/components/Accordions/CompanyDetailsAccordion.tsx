@@ -1,28 +1,36 @@
 import clsx from 'clsx'
 import type { FC } from 'react'
 import { useState } from 'react'
+import React from 'react'
 
 import { ReadMoreButton } from '../index'
 
 interface CompanyDetailsAccordionProps {
   content?: string
   className?: string
-  paragraphs?: string[]
+  children?: React.ReactNode
 }
 
 const CompanyDetailsAccordion: FC<CompanyDetailsAccordionProps> = ({
-  content,
+  content = '',
   className,
-  paragraphs,
+  children,
 }) => {
   const [folded, setFolded] = useState(true)
 
   const maxWordCount = 75
 
   let truncated = content
+  let children_truncated = null
 
   const contentSplit = content.split(' ')
-  const contentLengthTooLong = contentSplit.length > maxWordCount
+  let contentLengthTooLong = contentSplit.length > maxWordCount
+
+  if (children && folded) {
+    contentLengthTooLong = true
+    children_truncated = <div>{React.Children.toArray(children)[0]}</div>
+  }
+
   if (contentLengthTooLong) {
     truncated = contentSplit.slice(0, maxWordCount).join(' ')
     truncated += '...'
@@ -35,8 +43,14 @@ const CompanyDetailsAccordion: FC<CompanyDetailsAccordionProps> = ({
         className,
       )}
     >
-      <p>{folded ? truncated : content}</p>
-      <div className={`flex px-6 ${contentLengthTooLong ? '' : 'hidden'}`}>
+      {content && <p>{folded ? truncated : content}</p>}
+      {children && <p>{folded ? children_truncated : children}</p>}
+
+      <div
+        className={`flex px-6 ${
+          content ? (contentLengthTooLong ? '' : 'hidden') : ''
+        }`}
+      >
         <ReadMoreButton
           isOpen={!folded}
           handleOpen={() => {
