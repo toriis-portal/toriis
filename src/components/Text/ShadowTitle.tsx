@@ -16,7 +16,7 @@ const ShadowTitle: FC<TitleProps> = ({ text }) => {
         'first-line:z-10',
       )}
     >
-      <p className=" text-darkTeal ">{text}</p>
+      <p className="text-darkTeal ">{text}</p>
     </div>
   )
 }

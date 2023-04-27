@@ -39,7 +39,7 @@ const Landing: FC<{ text: Document }> = ({ text }) => {
           </div>
         </div>
         <div className="basis-4/7">
-          <div className=" mb-6 p-4 lg:pr-14">
+          <div className="mb-6 p-4 lg:pr-14">
             {documentToReactComponents(text, contentfulOptions)}
             <div className="flex flex-col gap-12 md:flex-row">
               <PrimaryButton

@@ -71,7 +71,7 @@ const AdminAdminPage: FC = () => {
                 size="medium"
                 color="clementine"
               />
-              <p className=" ml-2 mt-3.5 text-medGray">
+              <p className="ml-2 mt-3.5 text-medGray">
                 {`(${data?.length || 0} Results)`}
               </p>
             </div>

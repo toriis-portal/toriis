@@ -26,7 +26,7 @@ const InviteAdminBar: FC = () => {
         <div className="mr-10 flex w-full lg:mr-20">
           <input
             type="email"
-            className=" w-full rounded-md border bg-white p-4"
+            className="w-full rounded-md border bg-white p-4"
             placeholder="Invite Gmail"
             value={email}
             onChange={(event) => setEmail(event.target.value)}

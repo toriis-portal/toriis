@@ -26,7 +26,7 @@ const CompanyCard: FC<CardProps> = ({ companyInfo }) => {
           <p className="header-3 font-semibold">{companyInfo.company.name}</p>
           <Tag
             title="environmental grade"
-            className=" bg-lightBlue text-black"
+            className="bg-lightBlue text-black"
           />
         </div>
         <div className="flex flex-row items-center justify-between">
@@ -36,15 +36,15 @@ const CompanyCard: FC<CardProps> = ({ companyInfo }) => {
               <div className="col-span-1 col-start-1 row-span-1 row-start-1 self-center">
                 <Tag title="sector" className="bg-lightBlue text-black" />
               </div>
-              <p className=" col-span-1 col-start-2 row-span-1 row-start-1">
+              <p className="col-span-1 col-start-2 row-span-1 row-start-1">
                 {companyInfo.company.sector
                   ? sectorEnum[companyInfo.company.sector]
                   : 'None specified'}
               </p>
               <div className="col-span-1 col-start-1 row-span-1 row-start-3 self-center">
-                <Tag title="industry" className=" bg-lightBlue text-black" />
+                <Tag title="industry" className="bg-lightBlue text-black" />
               </div>
-              <p className=" text-wrap col-span-1 col-start-2 row-span-1 row-start-3">
+              <p className="text-wrap col-span-1 col-start-2 row-span-1 row-start-3">
                 {companyInfo.company.industry
                   ? companyInfo.company.industry
                   : 'None specified'}
