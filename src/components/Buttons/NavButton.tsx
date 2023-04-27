@@ -20,7 +20,7 @@ const NavButton: FC<NavButtonProps> = ({ title, link }) => {
           'border-cobalt': isActive,
           'border-white': !isActive,
         },
-        'header-3 hover:border-b-4 hover:border-cobalt hover:duration-100',
+        'header-3 text-[20px] hover:border-b-4 hover:border-cobalt hover:duration-100',
       )}
     >
       {title}
