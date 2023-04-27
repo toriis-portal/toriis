@@ -31,7 +31,7 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
                 'rounded border-2 border-solid border-cobalt',
                 'rounded bg-lightBlue px-5 py-1',
                 'shadow-[-8px_8px_0px_0px] shadow-cobalt',
-                'bb hover:shadow-cobalt first-letter:hover:shadow-[-5px_5px_0px_0px]',
+                ' hover:shadow-cobalt first-letter:hover:shadow-[-5px_5px_0px_0px]',
                 className,
               )}
             >
@@ -55,7 +55,7 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
             'rounded border-2 border-solid border-cobalt',
             'rounded bg-lightBlue px-20 py-3',
             'shadow-[-8px_8px_0px_0px] shadow-cobalt',
-            'bb hover:shadow-[-5px_5px_0px_0px] hover:shadow-cobalt',
+            ' hover:shadow-[-5px_5px_0px_0px] hover:shadow-cobalt',
             className,
           )}
         >

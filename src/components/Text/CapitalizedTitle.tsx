@@ -16,12 +16,12 @@ const CapitalizedTitle: FC = () => {
     return word.charAt(0) === word.charAt(0).toUpperCase()
   }
   const firstLetter = clsx(
-    't1 first-letter:font-black first-letter:text-clementine',
+    'first-letter:font-black first-letter:text-clementine',
   )
-  const landingHeader = clsx('t1')
+  const landingHeader = clsx('')
   return (
     <>
-      <div className="flex flex-wrap place-content-center space-x-3 pt-10">
+      <div className="header-1 flex flex-wrap place-content-center space-x-3 pt-10">
         {titleText.map((item, index) => (
           <span
             key={index}

@@ -203,7 +203,7 @@ export const Select: FC<SelectProps> = ({
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={clsx(
-          'bb flex w-full items-center overflow-hidden rounded-full border border-solid',
+          ' flex w-full items-center overflow-hidden rounded-full border border-solid',
           {
             'justify-centerborder-darkTeal float-right h-10 w-fit border-black':
               !isFilter,
@@ -219,7 +219,7 @@ export const Select: FC<SelectProps> = ({
         >
           <span
             className={clsx('w-full text-black', {
-              'bb overflow-hidden whitespace-nowrap font-inter': isFilter,
+              ' overflow-hidden whitespace-nowrap': isFilter,
             })}
           >
             {textOption}
@@ -282,7 +282,9 @@ export const Select: FC<SelectProps> = ({
                     key={option}
                     className="mt-1 flex items-center text-black"
                   >
-                    <span className={clsx({ r2: isFilter })}>{option}</span>
+                    <span className={clsx({ 'body-small': isFilter })}>
+                      {option}
+                    </span>
                     <input
                       onChange={() => handleChange(option)}
                       type="checkbox"
@@ -296,14 +298,14 @@ export const Select: FC<SelectProps> = ({
               <ul className="m-auto flex w-11/12 flex-col gap-5">
                 {Object.entries(options).map(([key, value]) => (
                   <li key={key} className="text-black">
-                    <span className="bb">{key}</span>
+                    <span className="">{key}</span>
                     <ul className="mt-2 flex flex-col gap-2">
                       {value.filter(handleSearchFilter).map((option) => (
                         <li
                           key={option}
                           className="flex items-center text-black"
                         >
-                          <span className="r2">{option}</span>
+                          <span className="body-small">{option}</span>
                           <input
                             onChange={() =>
                               handleGroupChange(`${key}-${option}`)
@@ -321,7 +323,7 @@ export const Select: FC<SelectProps> = ({
             )}
             {updateControl?.type === 'on-apply' && (
               <button
-                className="r1 m-[auto] mt-5 flex w-9/12 justify-center rounded-full bg-black text-white"
+                className="body-normal m-[auto] mt-5 flex w-9/12 justify-center rounded-full bg-black text-white"
                 onClick={handleApply}
               >
                 Apply

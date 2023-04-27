@@ -22,7 +22,7 @@ const RefuteUISResponse: FC<RefuteUISResponseProps> = ({
         color="clementine"
       />
       <div className="flex flex-col lg:flex-row">
-        <div className="t3 basis-3/7 px-20 py-8 font-medium leading-tight">
+        <div className="header-3 basis-3/7 px-20 py-8 leading-tight">
           {documentToReactComponents(leftText)}
         </div>
         <div className="basis-4/7 lg:pr-8">

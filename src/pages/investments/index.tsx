@@ -168,7 +168,7 @@ const InvestmentPage: FC = () => {
             <SearchBar setCompanySearchQuery={setCompanySearchQuery} />
           </div>
         </div>
-        <div className="bb mb-8 flex basis-3/4 flex-col justify-evenly gap-4 md:flex-row lg:mx-20 lg:gap-14">
+        <div className=" mb-8 flex basis-3/4 flex-col justify-evenly gap-4 md:flex-row lg:mx-20 lg:gap-14">
           <Select
             text="Sector"
             isFilter={true}
@@ -233,21 +233,21 @@ const InvestmentPage: FC = () => {
           />
         </div>
         {lastSearchIsEmpty && (
-          <p className="mb-8 w-full text-center text-[22px] font-medium">
+          <p className="header-2 mb-8 w-full text-center">
             No results found, try searching again.
           </p>
         )}
         <div className="flex w-full flex-col items-center gap-5 self-center rounded-t-xl bg-lightBlue pb-14">
           <div className="mt-9 mb-4 flex flex-row items-center justify-between self-stretch px-[3.6%]">
             <div className="flex flex-col flex-wrap items-center md:flex-row md:gap-3.5">
-              <p className="t2">
+              <p className="header-2">
                 {lastSearchIsEmpty ||
                 (companySearchQuery == initialSearchQuery &&
                   filterOptions == initialFilterOptions)
                   ? 'Recommendations'
                   : 'Results'}
               </p>
-              <p className="bb text-medGray">
+              <p className=" text-medGray">
                 {'('}
                 {data?.pages
                   ? (data.pages.length - 1) * limit +

@@ -40,7 +40,7 @@ const InstitutionalDivestments: FC<InstitutionalDivestmentsProps> = ({
           {linkEntries.map((entry, index) => (
             <div key={index} className="mx-2 inline-block text-center">
               <Link
-                className="bb"
+                className=""
                 href={entry.url}
                 target="_blank"
                 rel="noopener noreferrer"

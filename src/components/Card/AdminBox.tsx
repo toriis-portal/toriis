@@ -12,9 +12,9 @@ const NetAssetTag: FC<AdminBoxProps> = ({ title, description, link }) => {
     <Link href={link}>
       <div className="mb-5 h-[17rem] w-[25rem] rounded-lg border border-black py-[20%] text-center shadow-md hover:border-2 hover:border-cobalt">
         <div className="my-auto flex h-full flex-col justify-around">
-          <div className="t3">{title}</div>
+          <div className="header-3">{title}</div>
           <br />
-          <div className="bb px-4 leading-6">{description}</div>
+          <div className=" px-4 leading-6">{description}</div>
         </div>
       </div>
     </Link>

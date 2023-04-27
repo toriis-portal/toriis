@@ -31,7 +31,7 @@ const Carousel: FC<{ carouselChildrenData: RefuteResponseEntry[] }> = ({
     >
       <div className="overflow-hidden">
         <div
-          className="bb flex flex-row whitespace-normal transition-transform"
+          className=" flex flex-row whitespace-normal transition-transform"
           style={{
             transform: `translateX(-${activeIndex * 25}%)`,
             width: '400%',

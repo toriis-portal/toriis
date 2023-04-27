@@ -34,12 +34,12 @@ const Landing: FC<{ text: Document }> = ({ text }) => {
       <div className="flex flex-col items-center justify-center px-14 py-8 lg:flex-row">
         <div className="basis-2/5">
           <LandingDonutChart />
-          <div className={clsx('bb flex justify-center pt-2')}>
+          <div className={clsx(' flex justify-center pt-2')}>
             Assets Per Sector
           </div>
         </div>
         <div className="basis-4/7">
-          <div className="bb mb-6 p-4 lg:pr-14">
+          <div className=" mb-6 p-4 lg:pr-14">
             {documentToReactComponents(text, contentfulOptions)}
             <div className="flex flex-col gap-12 md:flex-row">
               <PrimaryButton

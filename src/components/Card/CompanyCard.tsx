@@ -22,8 +22,8 @@ const CompanyCard: FC<CardProps> = ({ companyInfo }) => {
           'md:overflow-hidden',
         )}
       >
-        <div className="t3 flex flex-row justify-between font-medium text-black">
-          {companyInfo.company.name}
+        <div className="flex flex-row justify-between text-black">
+          <p className="header-3 font-semibold">{companyInfo.company.name}</p>
           <Tag
             title="environmental grade"
             className=" bg-lightBlue text-black"
@@ -36,7 +36,7 @@ const CompanyCard: FC<CardProps> = ({ companyInfo }) => {
               <div className="col-span-1 col-start-1 row-span-1 row-start-1 self-center">
                 <Tag title="sector" className="bg-lightBlue text-black" />
               </div>
-              <p className="bb col-span-1 col-start-2 row-span-1 row-start-1">
+              <p className=" col-span-1 col-start-2 row-span-1 row-start-1">
                 {companyInfo.company.sector
                   ? sectorEnum[companyInfo.company.sector]
                   : 'None specified'}
@@ -44,7 +44,7 @@ const CompanyCard: FC<CardProps> = ({ companyInfo }) => {
               <div className="col-span-1 col-start-1 row-span-1 row-start-3 self-center">
                 <Tag title="industry" className=" bg-lightBlue text-black" />
               </div>
-              <p className="bb text-wrap col-span-1 col-start-2 row-span-1 row-start-3">
+              <p className=" text-wrap col-span-1 col-start-2 row-span-1 row-start-3">
                 {companyInfo.company.industry
                   ? companyInfo.company.industry
                   : 'None specified'}

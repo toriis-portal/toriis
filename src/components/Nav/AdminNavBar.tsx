@@ -40,7 +40,7 @@ const AdminNavBar: FC = () => {
             <Link key={i} href={navItem.path}>
               <p
                 className={clsx(
-                  'whitespace-nowrap text-[22px] font-medium',
+                  'header-3 whitespace-nowrap',
                   isActive &&
                     'underline decoration-clementine decoration-4 underline-offset-8',
                 )}

@@ -47,7 +47,7 @@ const TimelineItem: FC<TimlineItemProps> = ({ data, isLeft }) => {
                 <TimelineTick isLeft={isLeft} />
 
                 <div className="basis-3/12 rounded-lg bg-darkTeal py-2">
-                  <p className="t2 m-0 px-2 text-center font-normal text-white">
+                  <p className="header-2 m-0 px-2 text-center font-normal text-white">
                     {item.year}
                   </p>
                 </div>
@@ -59,7 +59,7 @@ const TimelineItem: FC<TimlineItemProps> = ({ data, isLeft }) => {
                 })}
               >
                 <p
-                  className={clsx('bb text-black', {
+                  className={clsx(' text-black', {
                     'mr-6 pr-10 text-right': isLeft,
                     'ml-6 pl-10 text-left': !isLeft,
                   })}

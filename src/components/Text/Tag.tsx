@@ -11,7 +11,7 @@ const Tag: FC<TagProps> = ({ title, className }) => {
     <div
       className={clsx(
         'flex max-h-8 w-fit items-center justify-center rounded-full px-[18px]',
-        'bb truncate',
+        ' truncate',
         className,
       )}
     >

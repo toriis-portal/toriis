@@ -23,7 +23,7 @@ const SecondaryNavBar: FC<{ navItems: NavItem[] }> = ({ navItems }) => {
                 spy={true}
                 smooth={true}
                 duration={500}
-                className={clsx(navStyle, 'bb')}
+                className={clsx(navStyle, '')}
               >
                 {dataKey.text}
               </Link>

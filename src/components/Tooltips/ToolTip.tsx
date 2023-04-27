@@ -31,7 +31,7 @@ const ToolTip: FC<TitleProps> = ({ title, details, children }) => {
   return (
     <div className="group relative flex w-fit justify-center">
       <button
-        className={clsx('bg-primary z-10 rounded text-base text-black')}
+        className={clsx('bg-primary rounded')}
         onMouseEnter={() => setIsShown(true)}
         onMouseLeave={handleMouseLeave}
       >
@@ -40,26 +40,28 @@ const ToolTip: FC<TitleProps> = ({ title, details, children }) => {
       {isShown && (
         <div
           className={clsx(
-            'border-light text-body-color absolute top-12 left-1/2',
+            'border-light absolute top-12 left-1/2 z-20',
             '-translate-x-1/2 rounded-xl border border-black bg-white',
-            'r1 w-60 p-5 leading-4',
+            'body-normal w-60 p-5 leading-4',
           )}
           onMouseEnter={() => setIsShown(true)}
           onMouseLeave={handleMouseLeave}
         >
           <span
             className={clsx(
-              'absolute -top-4 left-1/2 bottom-7 -z-10 h-8 w-8',
+              'absolute -top-4 left-1/2 bottom-7 h-8 w-8',
               '-translate-x-1/2 rotate-45 rounded-sm border-t border-l',
-              'border-black bg-white',
+              'body-small border-black bg-white',
             )}
           />
           {children ? (
             children
           ) : (
             <>
-              <div className="font-semibold">{title}:</div>
-              {details}
+              <div className="body-small">
+                <p className="font-bold">{title}:</p>
+                <p>{details}</p>
+              </div>
             </>
           )}
         </div>

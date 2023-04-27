@@ -10,28 +10,28 @@
 }
 
 @layer components {
-  .t1 {
-    @apply font-klima text-[32px] font-[647] leading-9;
+  .header-1 {
+    @apply font-klima text-[32px] font-[647];
   }
 
-  .t2 {
-    @apply font-klima text-[28px] font-[559] leading-8;
+  .header-2 {
+    @apply font-klima text-[28px] font-[559];
   }
 
-  .t3 {
-    @apply font-klima text-[22px] font-[559] leading-[25px];
+  .header-3 {
+    @apply font-klima text-[22px] font-medium;
   }
 
-  .bb {
-    @apply font-inter text-base font-medium leading-[19px];
+  .body-bold {
+    @apply font-inter text-base font-medium;
   }
 
-  .r1 {
-    @apply font-inter text-base font-normal leading-[19px];
+  .body-normal {
+    @apply font-inter text-base font-normal;
   }
 
-  .r2 {
-    @apply font-inter text-xs font-normal leading-[15px];
+  .body-small {
+    @apply font-inter text-xs font-normal;
   }
 }
 
