@@ -10,7 +10,7 @@ import {
 import { ContentWrapper } from '../../utils/content'
 import { FinancialCase } from '../../sections'
 import type { CaseEntry } from '../../types'
-import { Test } from '../../components/Table/Test'
+import { Test } from '../../components/Table/DynamicPaginatedAdminTable'
 
 export const getServerSideProps = async () => {
   const contentClient = new ContentWrapper()

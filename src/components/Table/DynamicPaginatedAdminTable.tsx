@@ -1,58 +1,106 @@
 import { useEffect, useMemo, useState } from 'react'
-import type { Company, Sector } from '@prisma/client'
+import type { Company, Dataset, Sector } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 
 import { api } from '../../utils/api'
 import { INDUSTRIES } from '../../utils/constants'
 
 import { DynamicTable, PaginatedDynamicTable } from './DynamicTable'
+import type { Column } from './DynamicTable/DynamicTable'
 
 const PAGE_SIZE = 20
 
-interface GlobalStateEntry {
-  key: keyof Company
-  value: string | number | Sector
+interface GlobalStateEntry<TableRow> {
+  key: keyof TableRow
+  value: TableRowWithChangedEntries<TableRow>[keyof TableRow]
   id: string
   page: number
 }
 
-type CompanyWithChangedEntries = Company & { changedEntries: (keyof Company)[] }
+type TableRowWithChangedEntries<TableRow> = TableRow & {
+  changedEntries: (keyof TableRow)[]
+}
 
-export const Test = () => {
+interface Props<TableRow> {
+  dataset: Dataset
+  originalRows: TableRow[]
+  columns: Column<TableRow>[]
+}
+
+interface baseTableRow {
+  id: string
+}
+
+export const DynamicPaginatedAdminTable = <TableRow extends baseTableRow>({
+  dataset,
+  originalRows,
+  columns,
+}: Props<TableRow>) => {
   const [skip, setSkip] = useState(0)
   const [isSelect, setIsSelect] = useState(false)
-  const [curColumn, setCurColumn] = useState<keyof Company>('name')
-  const [curRow, setCurRow] = useState<Company | null>(null)
+  const [curColumn, setCurColumn] = useState<keyof TableRow>('id')
+  const [curRow, setCurRow] = useState<TableRow | null>(null)
   const [textBoxContent, setTextBoxContent] = useState('')
-  const { data, isLoading } = api.company.getCompaniesBySkipTake.useQuery({
-    skip: skip,
-    take: PAGE_SIZE,
-  })
+
   const [globalStateEntries, SetGlobalStateEntries] = useState<
-    GlobalStateEntry[]
+    GlobalStateEntry<TableRow>[]
   >([])
   const { data: session, status } = useSession()
 
-  const originalRows = useMemo(() => data?.items ?? [], [data?.items])
-  const [rows, setRows] = useState<
-    (Company & {
-      changedEntries: (keyof Company)[]
-    })[]
-  >(() =>
+  // const originalRows = useMemo(
+  //   () => data?.items ?? [],
+  //   [data?.items],
+  // ) as TableRow[]
+  const [rows, setRows] = useState<TableRowWithChangedEntries<TableRow>[]>(() =>
     originalRows.map((row) => ({
       ...row,
       changedEntries: [],
     })),
   )
 
-  const submitRequest = () =>
+  const capturePageChanges = (page: number) => {
+    SetGlobalStateEntries(() => {
+      const newEntries = [] as GlobalStateEntry<TableRow>[]
+
+      rows
+        .filter((row) => row.changedEntries.length > 0)
+        .forEach((row) => {
+          row.changedEntries.forEach((key) => {
+            newEntries.push({
+              key: key,
+              value: row[key],
+              id: row.id,
+              page: page,
+            })
+          })
+        })
+      const mergedEntries = newEntries
+      globalStateEntries.forEach((entry) => {
+        const existingEntry = newEntries.find(
+          (newEntry) =>
+            newEntry.id === entry.id &&
+            newEntry.page === entry.page &&
+            entry.key === newEntry.key,
+        )
+        if (!existingEntry) {
+          mergedEntries.push(entry)
+        }
+      })
+      return mergedEntries
+    })
+  }
+
+  const submitRequest = () => {
+    // const currentMergedChanges = capturePageChanges(skip / PAGE_SIZE + 1)
+
     api.request.createRequest.useQuery({
-      dataset: 'Company',
+      dataset: dataset,
       updates: globalStateEntries,
       status: 'PENDING',
       userId: session?.user.id ?? '',
       createdAt: new Date().toISOString(),
     })
+  }
 
   useEffect(() => {
     const cleanedRows = originalRows.map((row) => {
@@ -62,7 +110,7 @@ export const Test = () => {
       }
     })
     setRows(cleanedRows)
-  }, [data, isLoading, originalRows, setRows])
+  }, [originalRows, setRows])
 
   // Persist changed data when moving through pages
   useEffect(() => {
@@ -75,42 +123,24 @@ export const Test = () => {
         (entry) => entry.id === row.id && entry.page === skip / PAGE_SIZE + 1,
       )
       if (globalStateEntry) {
-        const newRow: CompanyWithChangedEntries = {
+        const newRow: TableRowWithChangedEntries<TableRow> = {
           ...row,
           changedEntries: globalStateEntry.map((entry) => entry.key),
         }
 
-        globalStateEntry.forEach((entry) => {
-          if (entry.key in newRow) {
-            // Hack to get around type check failure for newRow[entry.key] = entry.value
-            switch (entry.key) {
-              case 'id':
-                newRow['id'] = entry.value as string
-                break
-              case 'name':
-                newRow['name'] = entry.value as string
-                break
-              case 'ticker':
-                newRow['ticker'] = entry.value as string
-                break
-              case 'sector':
-                newRow['sector'] = entry.value as Sector
-                break
-              case 'industry':
-                newRow['industry'] = entry.value as string
-                break
-              case 'netAssetVal':
-                newRow['netAssetVal'] = entry.value as number
-                break
-              case 'description':
-                newRow['description'] = entry.value as string
-                break
-              case 'bloombergId':
-                newRow['bloombergId'] = entry.value as string
-                break
+        globalStateEntry.forEach(
+          <K extends keyof TableRowWithChangedEntries<TableRow>>({
+            key,
+            value,
+          }: {
+            key: K
+            value: TableRowWithChangedEntries<TableRow>[K]
+          }) => {
+            if (key in newRow) {
+              newRow[key] = value
             }
-          }
-        })
+          },
+        )
 
         return newRow
       }
@@ -120,10 +150,10 @@ export const Test = () => {
   }, [skip, globalStateEntries, originalRows])
 
   const handleChange = (
-    row: Company,
+    row: TableRow,
     updatedEntry: {
-      key: keyof Company
-      value: string | number
+      key: keyof TableRow
+      value: TableRowWithChangedEntries<TableRow>[keyof TableRow]
     },
   ) => {
     setRows((prevRows) => {
@@ -136,7 +166,7 @@ export const Test = () => {
                   (dataRow: { id: string }) => dataRow.id === row.id,
                 )
               : []
-          ) as Company | []
+          ) as TableRow | []
 
           if (
             updatedEntries &&
@@ -182,42 +212,35 @@ export const Test = () => {
           onPageChange: (page) => setSkip((page - 1) * PAGE_SIZE),
           rowCount: rows.length,
         }}
-        capturePageChanges={(page) =>
-          SetGlobalStateEntries(() => {
-            const newEntries = [] as GlobalStateEntry[]
-
-            rows
-              .filter((row) => row.changedEntries.length > 0)
-              .forEach((row) => {
-                row.changedEntries.forEach((key) => {
-                  newEntries.push({
-                    key: key,
-                    value: row[key] ?? '',
-                    id: row.id,
-                    page: page,
-                  })
-                })
-              })
-            const mergedEntries = newEntries
-            globalStateEntries.forEach((entry) => {
-              const existingEntry = newEntries.find(
-                (newEntry) =>
-                  newEntry.id === entry.id &&
-                  newEntry.page === entry.page &&
-                  entry.key === newEntry.key,
-              )
-              if (!existingEntry) {
-                mergedEntries.push(entry)
-              }
-            })
-            return mergedEntries
-          })
-        }
+        capturePageChanges={capturePageChanges}
         rows={rows}
         styles={{
           table: 'w-full',
         }}
-        columns={[
+        columns={columns}
+      />
+      <input
+        value={textBoxContent}
+        disabled={isSelect}
+        onChange={(e) => {
+          setTextBoxContent(e.target.value)
+          if (curRow) {
+            handleChange(curRow, {
+              key: curColumn,
+              value: e.target
+                .value as TableRowWithChangedEntries<TableRow>[keyof TableRow],
+            })
+          }
+        }}
+      ></input>
+
+      <button onClick={submitRequest}>Request changes</button>
+    </>
+  )
+}
+
+/*
+[
           {
             key: 'name',
             label: 'Name',
@@ -293,20 +316,5 @@ export const Test = () => {
             setCurRow(row)
             setCurColumn(col.key)
           }
-        }}
-      />
-      <input
-        value={textBoxContent}
-        disabled={isSelect}
-        onChange={(e) => {
-          setTextBoxContent(e.target.value)
-          if (curRow) {
-            handleChange(curRow, { key: curColumn, value: e.target.value })
-          }
-        }}
-      ></input>
-
-      <button onClick={submitRequest}>Request changes</button>
-    </>
-  )
-}
+        }
+        */
