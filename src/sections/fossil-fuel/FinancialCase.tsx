@@ -1,17 +1,16 @@
 import type { FC } from 'react'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import { MARKS, BLOCKS, INLINES } from '@contentful/rich-text-types'
-import type {
-  Block,
-  Inline,
-} from '@contentful/rich-text-types/dist/types/types'
-import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
 import type { Document } from '@contentful/rich-text-types'
 import type { Asset } from 'contentful'
-import Image from 'next/image'
 
+import { contentfulOptions } from '../../utils/contentfulOptions'
 import type { CaseEntry } from '../../types'
-import { HighlightedTitle, CaseAccordion, Tag } from '../../components'
+import {
+  HighlightedTitle,
+  CaseAccordion,
+  Tag,
+  ImageWithCaption,
+} from '../../components'
 
 interface FinancialCaseProps {
   entries: CaseEntry[]
@@ -20,32 +19,6 @@ interface FinancialCaseProps {
 }
 
 const FinancialCase: FC<FinancialCaseProps> = ({ entries, text, img }) => {
-  const contentfulOptions = {
-    renderMark: {
-      [MARKS.BOLD]: (text: any) => (
-        <span className="font-semibold underline decoration-2 underline-offset-4">
-          {text}
-        </span>
-      ),
-    },
-    renderNode: {
-      [BLOCKS.PARAGRAPH]: (node: any, children: any) => (
-        <p className="align-center">{children}</p>
-      ),
-      [INLINES.HYPERLINK]: (node: Block | Inline, children: any) => {
-        return (
-          <a
-            href={node.data.uri as string}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {children}
-            <ArrowUpRightIcon className="align-self-start ml-0.5 inline h-4 w-4 stroke-current stroke-1" />
-          </a>
-        )
-      },
-    },
-  }
   return (
     <div className="bg-white p-12">
       <HighlightedTitle
@@ -64,17 +37,10 @@ const FinancialCase: FC<FinancialCaseProps> = ({ entries, text, img }) => {
           color="brightTeal"
         />
       </div>
-      <div className="flex h-screen items-center justify-center">
-        <Image
-          src={'http:' + img.fields.file.url}
-          alt={img.fields.title}
-          width={1100}
-          height={900}
-        />
-      </div>
-      <div className="mb-8 text-sm text-[#9C9FA1] underline ">
-        {img.fields.description}
-      </div>
+      <ImageWithCaption
+        img={img}
+        captionStyle="mb-8 text-sm text-[#9C9FA1] underline "
+      />
       {entries.map((entry, index) => (
         <div key={index}>
           <CaseAccordion content={entry} />

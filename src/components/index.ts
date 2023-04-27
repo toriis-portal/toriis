@@ -22,6 +22,7 @@ import FinanceBrushChart from './Charts/FinanceBrushChart'
 import ListItem from './Displays/ListItem'
 import Carousel from './Displays/Carousel/Carousel'
 import ClimateClock from './Displays/ClimateClock/ClimateClock'
+import ImageWithCaption from './Displays/Image/ImageWithCaption'
 // Accordions
 import RequestAccordion from './Accordions/RequestAccordion'
 import CaseAccordion from './Accordions/CaseAccordion'
@@ -88,4 +89,5 @@ export {
   AdminBox,
   AdminListTable,
   InviteAdminBar,
+  ImageWithCaption,
 }

@@ -19,10 +19,15 @@ import InstitutionsDivested from '../../sections/fossil-fuel/InstitutionsDiveste
 
 export const getServerSideProps = async () => {
   const contentClient = new ContentWrapper()
-  const caseEntries = await contentClient.get('case')
-  const fossilFuelPageEntries: FossilFuelPage | undefined =
-    await contentClient.getAllFossilFuelPageEntries()
+  const fossilFuelEntries = await contentClient.getAllFossilFuelPageEntries()
+  const caseEntries = fossilFuelEntries['case']
+  const fossilFuelPageEntries = fossilFuelEntries['fossilFuelPage']
 
+  console.log('Case Entries')
+  const caseEntriesTwo = await contentClient.get('case')
+  console.log(caseEntries)
+  // console.log(caseEntriesTwo)
+  // console.log(fossilFuelPageEntries)
   return {
     props: {
       caseEntries,

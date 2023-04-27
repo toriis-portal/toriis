@@ -1,7 +1,6 @@
 import { createClient } from 'contentful'
 import type { ContentfulClientApi } from 'contentful'
 
-import type { FossilFuelPage } from '../types'
 import { env } from '../env.mjs'
 import type {
   TimelineEntry,
@@ -10,6 +9,8 @@ import type {
   ListEntry,
   LinkEntry,
   Info,
+  CaseEntry,
+  FossilFuelPage,
 } from '../types/index.js'
 
 const homePageEntryTypes = [
@@ -20,6 +21,8 @@ const homePageEntryTypes = [
   'list',
   'info',
 ]
+
+const fossilFuelPageEntryTypes = ['fossilFuelPage', 'case']
 
 export class ContentWrapper {
   client: ContentfulClientApi
@@ -88,10 +91,22 @@ export class ContentWrapper {
   }
 
   getAllFossilFuelPageEntries = async () => {
-    const fossilFuelPageEntries: FossilFuelPage[] = await this.get(
-      'fossilFuelPage',
+    const fossilFuelPageEntryMap: Record<
+      string,
+      FossilFuelPage[] | CaseEntry[]
+    > = {}
+    await Promise.all(
+      fossilFuelPageEntryTypes.map(async (entity) => {
+        switch (entity) {
+          case 'case':
+            const caseResults: CaseEntry[] = await this.get(entity)
+            fossilFuelPageEntryMap[entity] = caseResults
+          case 'fossilFuelPage':
+            const results: FossilFuelPage[] = await this.get(entity)
+            fossilFuelPageEntryMap[entity] = results[0]
+        }
+      }),
     )
-
-    return fossilFuelPageEntries[0] as FossilFuelPage
+    return fossilFuelPageEntryMap
   }
 }

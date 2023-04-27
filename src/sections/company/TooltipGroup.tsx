@@ -1,14 +1,9 @@
 import type { FC } from 'react'
 import clsx from 'clsx'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
-import { INLINES } from '@contentful/rich-text-types'
-import type {
-  Block,
-  Inline,
-} from '@contentful/rich-text-types/dist/types/types'
 import type { Company, ESG } from '@prisma/client'
 
+import { contentfulOptions } from '../../utils/contentfulOptions'
 import { Tag, ToolTip } from '../../components'
 import { envGradeToColor, assetAmountToString } from '../../utils/helpers'
 import type { SectorEntry, IndustryEntry } from '../../types'
@@ -30,23 +25,6 @@ const CompanyTooltipGroup: FC<CompanyTooltipGroupProps> = ({
   industryEntry,
   className,
 }) => {
-  const contentfulOptions = {
-    renderNode: {
-      [INLINES.HYPERLINK]: (node: Block | Inline, children: any) => {
-        return (
-          <a
-            href={node.data.uri as string}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {children}
-            <ArrowUpRightIcon className="align-self-start ml-0.5 inline h-4 w-4 stroke-current stroke-1" />
-          </a>
-        )
-      },
-    },
-  }
-
   return (
     <div
       className={clsx(
