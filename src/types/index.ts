@@ -58,3 +58,8 @@ export interface SectorEntry {
   details?: Document
   avgGrade?: string
 }
+
+export interface CompanyDetailsEntry {
+  name: string
+  description: Document
+}
