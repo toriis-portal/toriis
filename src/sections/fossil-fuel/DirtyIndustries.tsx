@@ -81,9 +81,9 @@ const DirtyIndustries: FC<{ companies: DirtyCompanyEntry[] }> = ({
         }
       }
     })
-    .forEach((td) => {
-      if (td != undefined) {
-        tabDetails.push(td)
+    .forEach((tabDetail) => {
+      if (tabDetail != undefined) {
+        tabDetails.push(tabDetail)
       }
     })
 
