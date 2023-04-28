@@ -7,13 +7,13 @@ import { HighlightedTitle, ReadMoreAccordion, LinkBox } from '../../components'
 
 interface WarmingProps {
   linkEntries: LinkEntry[]
-  sourceEntries: LinkEntry[]
+  footnote: Document
   text: Document
 }
 
 const WhatWarmingMeans: FC<WarmingProps> = ({
   linkEntries,
-  sourceEntries,
+  footnote,
   text,
 }) => {
   return (
@@ -29,7 +29,7 @@ const WhatWarmingMeans: FC<WarmingProps> = ({
         </ReadMoreAccordion>
         <LinkBox
           linkEntries={linkEntries}
-          superscriptEntries={sourceEntries}
+          footnote={documentToReactComponents(footnote)}
           title="Relevant Links"
         />
       </div>

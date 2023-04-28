@@ -1,5 +1,4 @@
 import type { Document } from '@contentful/rich-text-types'
-import type { Company, ESG } from '@prisma/client'
 import type { Asset } from 'contentful'
 
 /* API Types */
@@ -65,6 +64,7 @@ export interface FossilFuelPage {
   whyAreFossilFuelsBad: Document
   climateClock: Document
   warmingMeans: Document
+  warmingSource: Document
   divestmentCase: Document
   divestmentGraph: Asset
   divestedSchools: string

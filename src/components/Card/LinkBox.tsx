@@ -7,25 +7,24 @@ import type { LinkEntry } from '../../types'
 
 interface LinkBoxProps {
   linkEntries: LinkEntry[]
-  superscriptEntries?: LinkEntry[]
+  footnote?: React.ReactNode
   title: string
 }
 
-const LinkBox: FC<LinkBoxProps> = ({
-  linkEntries,
-  superscriptEntries: superscriptEntries,
-  title,
-}) => {
+const LinkBox: FC<LinkBoxProps> = ({ linkEntries, footnote, title }) => {
   return (
     <div className="px-12">
-      <div className="mt-16 flex w-fit flex-col items-center rounded-xl bg-darkTeal px-20 pt-6 pb-16 text-white">
+      <div className="mt-16 flex w-fit flex-col items-center rounded-xl bg-darkTeal px-20 pt-6 pb-10 text-white">
         <div className="relative -top-12 ">
           <ShadowTitle text={title} />
         </div>
-        <div className="leading-loose underline">
-          <div className="flex flex-wrap justify-center ">
+        <div className="flex flex-col ">
+          <div className="flex flex-wrap justify-center">
             {linkEntries.map((entry, index) => (
-              <div key={index} className="mx-2 inline-block text-center">
+              <div
+                key={index}
+                className="inline-block p-2 text-center underline"
+              >
                 <Link
                   href={entry.url}
                   target="_blank"
@@ -37,19 +36,7 @@ const LinkBox: FC<LinkBoxProps> = ({
               </div>
             ))}
           </div>
-          {superscriptEntries &&
-            superscriptEntries.map((entry, index) => (
-              <div key={index} className="mx-2 pt-2 text-sm">
-                <sup className="text-xs">{index + 1}</sup>
-                <Link
-                  href={entry.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {entry.name}
-                </Link>
-              </div>
-            ))}
+          <div className="body-small p-2 lg:p-4">{footnote}</div>
         </div>
       </div>
     </div>

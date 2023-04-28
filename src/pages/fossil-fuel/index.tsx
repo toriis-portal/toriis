@@ -87,7 +87,7 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
         <WhatWarmingMeans
           text={fossilFuelPageEntries['warmingMeans']}
           linkEntries={linkEntries}
-          sourceEntries={linkEntries}
+          footnote={fossilFuelPageEntries['warmingSource']}
         />
       </div>
       <div id="financialCase" className="pt-20">
