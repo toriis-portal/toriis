@@ -30,7 +30,7 @@ const SearchBar: FC<SearchBarProps> = ({ setCompanySearchQuery }) => {
           />
           <button
             type="submit"
-            className="underline-offset-6 ml-6 flex items-center justify-center rounded-full bg-black px-6 text-white underline"
+            className="underline-offset-6 ml-6 flex items-center justify-center rounded-full bg-black py-1 px-4 text-white underline"
           >
             Search
           </button>

@@ -46,7 +46,7 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
     { path: 'uofiInvestments', text: 'University of Illinois Investments' },
     { path: 'dirtyIndustry', text: 'The Dirty Industry UIUC Supports' },
     { path: 'whyFossilFuelsAreBad', text: 'Why Are Fossil Fuels Bad' },
-    { path: 'warning', text: 'What 1.5C Warning Means' },
+    { path: 'warming', text: 'What 1.5C Warming Means' },
     { path: 'financialCase', text: 'The Case For Institutional Divestments' },
     { path: 'divestedSchools', text: 'Schools That Have Divested ' },
     { path: 'divestedInstitutions', text: 'Institutions That Have Divested' },
@@ -71,7 +71,7 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
           caption={fossilFuelPageEntries['uofIInvestments']}
         />
       </div>
-      <div id="dirtyIndustry" className="pt-10">
+      <div id="dirtyIndustry" className="pt-20">
         <DirtyIndustry />
       </div>
       <div id="whyFossilFuelsAreBad" className="pt-10">
@@ -80,7 +80,7 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
           caption={fossilFuelPageEntries['climateClock']}
         />
       </div>
-      <div id="warning" className="pt-20">
+      <div id="warming" className="pt-20">
         <WhatWarningMeans />
       </div>
 

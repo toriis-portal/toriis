@@ -18,7 +18,7 @@ const ClimateClock = () => {
     <>
       <div
         id="climate-clock-container"
-        className="mx-auto my-8 w-5/6 items-center border border-8 border-white"
+        className="mx-auto my-8 w-full items-center border border-8 border-white"
       >
         <Script src="https://climateclock.world/widget-v2.js" async />
         <climate-clock />

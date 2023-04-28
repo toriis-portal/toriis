@@ -3,6 +3,7 @@ import React from 'react'
 import type { Document } from '@contentful/rich-text-types'
 import { MARKS, BLOCKS } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import clsx from 'clsx'
 
 import {
   PrimaryButton,
@@ -31,9 +32,9 @@ const Landing: FC<{ text: Document }> = ({ text }) => {
     <div className="flex flex-col items-center justify-center">
       <CapitalizedTitle />
       <div className="flex flex-col items-center justify-center px-14 py-8 lg:flex-row">
-        <div className="basis-3/7">
+        <div className="basis-2/5">
           <LandingDonutChart />
-          <div className="flex justify-center pt-2 font-inter text-xl font-semibold">
+          <div className={clsx('flex justify-center pt-2')}>
             Assets Per Sector
           </div>
         </div>

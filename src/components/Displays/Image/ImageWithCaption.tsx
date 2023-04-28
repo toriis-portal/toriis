@@ -11,7 +11,7 @@ interface ImageWithCaptionProps {
 const ImageWithCaption: FC<ImageWithCaptionProps> = ({ img, captionStyle }) => {
   return (
     <>
-      <div className="flex items-center justify-center">
+      <div className="mb-5 flex items-center justify-center">
         <Image
           src={'http:' + img.fields.file.url}
           alt={img.fields.title}

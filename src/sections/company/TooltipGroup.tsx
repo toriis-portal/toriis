@@ -3,13 +3,13 @@ import clsx from 'clsx'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import type { Company, ESG } from '@prisma/client'
 
-import { contentfulOptions } from '../../utils/contentfulOptions'
+import { mainParagraphStyle } from '../../utils/contentfulOptions'
 import { Tag, ToolTip } from '../../components'
 import { envGradeToColor, assetAmountToString } from '../../utils/helpers'
 import type { SectorEntry, IndustryEntry } from '../../types'
 
-const tagGroupStyle = clsx('flex-col lg:inline-flex lg:flex-row')
-const noteStyle = clsx('lg:px-2 font-medium truncate')
+const tagGroupStyle = clsx('items-center flex-col lg:inline-flex lg:flex-row')
+const noteStyle = clsx('lg:px-2 truncate my-1')
 const tagStyle = clsx('bg-cobalt text-white')
 
 interface CompanyTooltipGroupProps {
@@ -39,7 +39,7 @@ const CompanyTooltipGroup: FC<CompanyTooltipGroupProps> = ({
           title={sectorEntry.name}
           details={
             sectorEntry.details &&
-            documentToReactComponents(sectorEntry.details, contentfulOptions)
+            documentToReactComponents(sectorEntry.details, mainParagraphStyle)
           }
         />
       </div>
@@ -72,16 +72,16 @@ const CompanyTooltipGroup: FC<CompanyTooltipGroupProps> = ({
           />
         </div>
         <ToolTip>
-          <div>
+          <div className="body-small">
             Average environmental grade for sector <b>Industrials</b>:
             <Tag title="CCC" className="bg-clementine text-white" />
             <br />
-            Environmental grade: ESG refers to a set of values used to screen
-            potential investments: Environmental, Social and Governance. An ESG
-            score measures how sustainably a company is conducting business
-            based on their environmental impact calculated from their carbon
-            emissions, energy consumption and climate change action. It also
-            addresses
+            <b>Environmental grade:</b> ESG refers to a set of values used to
+            screen potential investments: Environmental, Social and Governance.
+            An ESG score measures how sustainably a company is conducting
+            business based on their environmental impact calculated from their
+            carbon emissions, energy consumption and climate change action. It
+            also addresses
           </div>
         </ToolTip>
       </div>

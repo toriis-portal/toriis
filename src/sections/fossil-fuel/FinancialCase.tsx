@@ -3,12 +3,11 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import type { Document } from '@contentful/rich-text-types'
 import type { Asset } from 'contentful'
 
-import { contentfulOptions } from '../../utils/contentfulOptions'
+import { mainParagraphStyle } from '../../utils/contentfulOptions'
 import type { CaseEntry } from '../../types'
 import {
   HighlightedTitle,
   CaseAccordion,
-  Tag,
   ImageWithCaption,
 } from '../../components'
 
@@ -26,7 +25,7 @@ const FinancialCase: FC<FinancialCaseProps> = ({ entries, text, img }) => {
         size="large"
         color="clementine"
       />
-      <div>{documentToReactComponents(text, contentfulOptions)}</div>
+      <div>{documentToReactComponents(text, mainParagraphStyle)}</div>
       <div className="mt-2 text-[#9C9FA1] underline">
         {img.fields.description}
       </div>

@@ -69,3 +69,8 @@ export interface FossilFuelPage {
   divestedSchools: string
   divestedInstitutions: string
 }
+
+export interface CompanyDetailsEntry {
+  name: string
+  description: Document
+}
