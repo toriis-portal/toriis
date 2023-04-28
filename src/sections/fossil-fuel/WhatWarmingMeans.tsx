@@ -4,7 +4,6 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
 import type { LinkEntry } from '../../types'
 import { HighlightedTitle, ReadMoreAccordion, LinkBox } from '../../components'
-import { mainParagraphStyle } from '../../utils/contentfulOptions'
 
 interface WarmingProps {
   linkEntries: LinkEntry[]
@@ -30,7 +29,7 @@ const WhatWarmingMeans: FC<WarmingProps> = ({
         </ReadMoreAccordion>
         <LinkBox
           linkEntries={linkEntries}
-          footnote={documentToReactComponents(footnote, mainParagraphStyle)}
+          footnote={documentToReactComponents(footnote)}
           title="Relevant Links"
         />
       </div>
