@@ -19,32 +19,34 @@ interface FinancialCaseProps {
 
 const FinancialCase: FC<FinancialCaseProps> = ({ entries, text, img }) => {
   return (
-    <div className="bg-white p-12">
+    <div className="bg-white px-12">
       <HighlightedTitle
         title="Financial Case for Fossil Fuel Divestment"
         size="large"
         color="clementine"
       />
-      <div>{documentToReactComponents(text, mainParagraphStyle)}</div>
-      <div className="mt-2 text-[#9C9FA1] underline">
-        {img.fields.description}
-      </div>
-      <div className="my-4">
-        <HighlightedTitle
-          title="Cases for Divestment"
-          size="medium"
-          color="brightTeal"
-        />
-      </div>
-      <ImageWithCaption
-        img={img}
-        captionStyle="mb-8 text-sm text-[#9C9FA1] underline "
-      />
-      {entries.map((entry, index) => (
-        <div key={index}>
-          <CaseAccordion content={entry} />
+      <div className="px-12">
+        <div>{documentToReactComponents(text, mainParagraphStyle)}</div>
+        <div className="mt-2 text-[#9C9FA1] underline">
+          {img.fields.description}
         </div>
-      ))}
+        <div className="mt-4">
+          <HighlightedTitle
+            title="Cases for Divestment"
+            size="medium"
+            color="brightTeal"
+          />
+        </div>
+        <ImageWithCaption
+          img={img}
+          captionStyle="mb-8 text-sm text-[#9C9FA1] underline "
+        />
+        {entries.map((entry, index) => (
+          <div key={index}>
+            <CaseAccordion content={entry} />
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

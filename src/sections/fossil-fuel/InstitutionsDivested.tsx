@@ -4,7 +4,7 @@ import { HighlightedTitle } from '../../components'
 
 const InstitutionsDivested: FC = () => {
   return (
-    <div className="bg-white p-12">
+    <div className="bg-white px-12">
       <HighlightedTitle
         title="Institutions That Have Divested"
         size="large"

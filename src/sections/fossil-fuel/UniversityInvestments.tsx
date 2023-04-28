@@ -15,13 +15,13 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
   caption,
 }) => {
   return (
-    <div className="bg-white px-12 py-5">
+    <div className="bg-white px-12">
       <HighlightedTitle
         title="University of Illinois Investments"
-        size="medium"
+        size="large"
         color="clementine"
       />
-      <div className="px-10">
+      <div className="px-12">
         <Tag
           title={img.fields.title}
           className="mb-1 w-4 rounded-md bg-[#FFA90233]

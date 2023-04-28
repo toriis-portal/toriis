@@ -18,7 +18,7 @@ const FossilFuelsBad: FC<FossilFuelsBadProps> = ({ text, caption }) => {
         size="large"
         color="clementine"
       />
-      <div className="px-10">
+      <div className="px-12 pb-6">
         {documentToReactComponents(text, mainParagraphStyle)}
         <ClimateClock />
         <div className="bg-white p-6">

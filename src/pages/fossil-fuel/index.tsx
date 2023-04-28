@@ -65,7 +65,7 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
       </div>
       <SecondaryNavBar navItems={navItems} />
 
-      <div id="uofiInvestments">
+      <div id="uofiInvestments" className="pt-20">
         <UniversityInvestments
           img={fossilFuelPageEntries['treeMap']}
           caption={fossilFuelPageEntries['uofIInvestments']}
@@ -74,16 +74,15 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
       <div id="dirtyIndustry" className="pt-20">
         <DirtyIndustry />
       </div>
-      <div id="whyFossilFuelsAreBad" className="pt-10">
+      <div id="whyFossilFuelsAreBad" className="pt-20">
         <FossilFuelsBad
           text={fossilFuelPageEntries['whyAreFossilFuelsBad']}
           caption={fossilFuelPageEntries['climateClock']}
         />
       </div>
-      <div id="warming" className="pt-20">
+      <div id="warming">
         <WhatWarningMeans />
       </div>
-
       <div id="financialCase" className="pt-20">
         <FinancialCase
           entries={caseEntries}
@@ -91,8 +90,6 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
           img={fossilFuelPageEntries['divestmentGraph']}
         />
       </div>
-
-      {/* More placeholders for fossil fuel page sections: */}
       <div id="divestedSchools" className="pt-20">
         <SchoolsDivested />
       </div>
