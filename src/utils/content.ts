@@ -37,7 +37,7 @@ export class ContentWrapper {
   async get<T>(entity: string): Promise<T> {
     const client = this.client
     const entries = await client.getEntries({ content_type: entity })
-    return entries.items.map((item) => item.fields) as unknown as T
+    return entries.items.map((item) => item.fields) as T
   }
 
   getSingleHomePageEntry = async (entity: string) => {
@@ -46,13 +46,13 @@ export class ContentWrapper {
     const entries = await client.getEntries({
       content_type: entity,
     })
-    return this.sortEntryByType(
+    return this.parseHomePageEntries(
       entries.items.map((item) => item.fields),
       entity,
     )
   }
 
-  sortEntryByType = (entries: any, entity: string) => {
+  parseHomePageEntries = (entries: any, entity: string) => {
     switch (entity) {
       case 'timeline':
         return (entries as TimelineEntry[]).sort((a, b) => a.year - b.year)
@@ -90,21 +90,34 @@ export class ContentWrapper {
     return homePageEntryMap
   }
 
+  parseFossilFuelPageEntries = (entries: any, entity: string) => {
+    switch (entity) {
+      case 'fossilFuelPage':
+        return (entries as FossilFuelPage[])[0] as FossilFuelPage
+      default:
+        return entries as CaseEntry[]
+    }
+  }
+
+  getSingleFossilFuelPageEntry = async (entity: string) => {
+    const client = this.client
+
+    const entries = await client.getEntries({
+      content_type: entity,
+    })
+    return this.parseFossilFuelPageEntries(
+      entries.items.map((item) => item.fields),
+      entity,
+    )
+  }
+
   getAllFossilFuelPageEntries = async () => {
-    const fossilFuelPageEntryMap: Record<
-      string,
-      FossilFuelPage[] | CaseEntry[]
-    > = {}
+    const fossilFuelPageEntryMap: Record<string, FossilFuelPage | CaseEntry[]> =
+      {}
     await Promise.all(
       fossilFuelPageEntryTypes.map(async (entity) => {
-        switch (entity) {
-          case 'case':
-            const caseResults: CaseEntry[] = await this.get(entity)
-            fossilFuelPageEntryMap[entity] = caseResults
-          case 'fossilFuelPage':
-            const results: FossilFuelPage[] = await this.get(entity)
-            fossilFuelPageEntryMap[entity] = results[0]
-        }
+        const results = await this.getSingleFossilFuelPageEntry(entity)
+        fossilFuelPageEntryMap[entity] = results
       }),
     )
     return fossilFuelPageEntryMap

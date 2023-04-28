@@ -7,15 +7,17 @@ import {
   SecondaryNavBar,
 } from '../../components'
 import { ContentWrapper } from '../../utils/content'
-import { FinancialCase } from '../../sections'
 import { FossilFuelPage } from '../../types'
 import type { CaseEntry } from '../../types'
-import UniversityInvestments from '../../sections/fossil-fuel/UniversityInvestments'
-import DirtyIndustry from '../../sections/fossil-fuel/DirtyIndustry'
-import FossilFuelsBad from '../../sections/fossil-fuel/FossilFuelsBad'
-import WhatWarningMeans from '../../sections/fossil-fuel/WhatWarningMeans'
-import SchoolsDivested from '../../sections/fossil-fuel/SchoolsDivested'
-import InstitutionsDivested from '../../sections/fossil-fuel/InstitutionsDivested'
+import {
+  UniversityInvestments,
+  DirtyIndustry,
+  FossilFuelsBad,
+  WhatWarningMeans,
+  SchoolsDivested,
+  InstitutionsDivested,
+  FinancialCase,
+} from '../../sections'
 
 export const getServerSideProps = async () => {
   const contentClient = new ContentWrapper()
@@ -23,11 +25,6 @@ export const getServerSideProps = async () => {
   const caseEntries = fossilFuelEntries['case']
   const fossilFuelPageEntries = fossilFuelEntries['fossilFuelPage']
 
-  console.log('Case Entries')
-  const caseEntriesTwo = await contentClient.get('case')
-  console.log(caseEntries)
-  // console.log(caseEntriesTwo)
-  // console.log(fossilFuelPageEntries)
   return {
     props: {
       caseEntries,
