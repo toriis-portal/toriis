@@ -3,12 +3,11 @@ import Link from 'next/link'
 import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
 
 import { ShadowTitle } from '../../components'
-import type { LinkEntry, ListEntry } from '../../types'
+import type { LinkEntry } from '../../types'
 
 interface LinkBoxProps {
   linkEntries: LinkEntry[]
   superscriptEntries?: LinkEntry[]
-  listEntries: ListEntry[]
   title: string
 }
 

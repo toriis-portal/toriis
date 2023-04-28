@@ -7,11 +7,11 @@ const AuthErrorPage: FC = () => {
   const linkStyle = clsx('text-cobalt underline cursor-pointer')
 
   return (
-    <div className="flex h-full flex-col items-center justify-center p-20 font-klima">
-      <p className="font-medium">
+    <div className="flex h-full flex-col items-center justify-center gap-10 py-20 font-klima">
+      <p className="font-bold">
         Sorry, you do not have permission to login as an administrator.
       </p>
-      <p className="p-10">
+      <p>
         Please check your email and{' '}
         <span
           className={linkStyle}

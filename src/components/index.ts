@@ -23,10 +23,11 @@ import FinanceBrushChart from './Charts/FinanceBrushChart'
 import ListItem from './Displays/ListItem'
 import Carousel from './Displays/Carousel/Carousel'
 import ClimateClock from './Displays/ClimateClock/ClimateClock'
+import ImageWithCaption from './Displays/Image/ImageWithCaption'
 // Accordions
 import RequestAccordion from './Accordions/RequestAccordion'
 import CaseAccordion from './Accordions/CaseAccordion'
-import CompanyDetailsAccordion from './Accordions/CompanyDetailsAccordion'
+import ReadMoreAccordion from './Accordions/ReadMoreAccordion'
 // Nav
 import PrimaryNavBar from './Nav/PrimaryNavBar'
 import SecondaryNavBar from './Nav/SecondaryNavBar'
@@ -82,7 +83,7 @@ export {
   FuelRadialChart,
   EmissionBarChart,
   DataCard,
-  CompanyDetailsAccordion,
+  ReadMoreAccordion,
   EnergyRadialChart,
   AdminNavBar,
   ClimateClock,
@@ -90,4 +91,5 @@ export {
   AdminListTable,
   InviteAdminBar,
   LinkBox,
+  ImageWithCaption,
 }

@@ -21,8 +21,8 @@ const UpdateContent: FC = () => {
       {session && (
         <div>
           <AdminNavBar />
-          <div className="flex w-screen flex-col items-center justify-center gap-8 pt-72">
-            <h2 className="font-klima font-semibold">
+          <div className="flex h-full w-full flex-col items-center justify-center gap-8 pt-52">
+            <h2 className="font-bold">
               Manage site wide content through Contentful
             </h2>
 

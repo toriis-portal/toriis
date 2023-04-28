@@ -24,9 +24,9 @@ export const LeaveConfirmationModal: FC<ModalProps> = ({
   }
 
   const buttonStyles = clsx(
-    'mx-1 h-8 w-3/5 rounded-full bg-cobaltext-xs',
-    'font-normal text-white min-[380px]:w-2/5 sm:w-2/5',
-    'sm:flex-[0_1_140px] sm:text-xs min-[800px]:text-base',
+    'mx-1 h-8 w-3/5 rounded-full bg-cobalt body-small',
+    'text-white min-[380px]:w-2/5 sm:w-2/5',
+    'sm:flex-[0_1_140px] sm:body-small min-[800px]:body-normal',
   )
 
   const flexStyles = clsx('flex flex-col items-center')
@@ -39,10 +39,10 @@ export const LeaveConfirmationModal: FC<ModalProps> = ({
         flexStyles,
       )}
     >
-      <p className="px-2 text-center text-xs font-semibold text-pumpkin sm:text-base ">
+      <p className="body-small sm:body-normal px-2 text-center font-semibold text-pumpkin ">
         Are you sure you want to move to another page?
       </p>
-      <p className="w-4/5 text-center text-sm font-medium text-black sm:text-base ">
+      <p className="body-small sm:body-normal w-4/5 text-center font-medium text-black ">
         Moving to another page before requesting review can cause changes to be
         lost.
       </p>

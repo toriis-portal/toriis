@@ -5,15 +5,12 @@ import type { LinkEntry, ListEntry } from '../../types'
 
 interface InstitutionalDivestmentsProps {
   linkEntries: LinkEntry[]
-  subscriptEntries?: LinkEntry[]
   listEntries: ListEntry[]
-  title: string
 }
 
 const InstitutionalDivestments: FC<InstitutionalDivestmentsProps> = ({
   linkEntries,
   listEntries,
-  title,
 }) => {
   return (
     <div className="px-12">
@@ -34,9 +31,8 @@ const InstitutionalDivestments: FC<InstitutionalDivestmentsProps> = ({
         </div>
       </div>
       <LinkBox
-        title={title}
+        title="Institutional Divestment Links"
         linkEntries={linkEntries}
-        listEntries={listEntries}
       />
     </div>
   )

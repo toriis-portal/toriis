@@ -5,13 +5,13 @@ import React from 'react'
 
 import { ReadMoreButton } from '../index'
 
-interface CompanyDetailsAccordionProps {
+interface ReadMoreAccordionProps {
   content?: string
   className?: string
   children?: React.ReactNode
 }
 
-const CompanyDetailsAccordion: FC<CompanyDetailsAccordionProps> = ({
+const ReadMoreAccordion: FC<ReadMoreAccordionProps> = ({
   content = '',
   className,
   children,
@@ -39,13 +39,14 @@ const CompanyDetailsAccordion: FC<CompanyDetailsAccordionProps> = ({
   return (
     <div
       className={clsx(
-        'rounded-[10px] border-[3px] border-cobalt bg-lightBlue px-10 py-5',
+        'w-full rounded-[10px] border-[3px] border-cobalt bg-lightBlue px-10 py-5',
         className,
       )}
     >
-      {content && <p>{folded ? truncated : content}</p>}
-      {children && <p>{folded ? children_truncated : children}</p>}
-
+      {content && <div className="mb-2">{folded ? truncated : content}</div>}
+      {children && (
+        <div className="mb-2">{folded ? children_truncated : children}</div>
+      )}
       <div
         className={`flex px-6 ${
           content ? (contentLengthTooLong ? '' : 'hidden') : ''
@@ -62,4 +63,4 @@ const CompanyDetailsAccordion: FC<CompanyDetailsAccordionProps> = ({
   )
 }
 
-export default CompanyDetailsAccordion
+export default ReadMoreAccordion
