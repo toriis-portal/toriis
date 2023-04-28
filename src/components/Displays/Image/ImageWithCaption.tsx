@@ -15,7 +15,7 @@ const ImageWithCaption: FC<ImageWithCaptionProps> = ({ img, captionStyle }) => {
         <Image
           src={'http:' + img.fields.file.url}
           alt={img.fields.title}
-          width={1300}
+          width={900}
           height={900}
         />
       </div>

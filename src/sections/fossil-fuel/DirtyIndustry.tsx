@@ -4,7 +4,7 @@ import { HighlightedTitle } from '../../components'
 
 const DirtyIndustry: FC = () => {
   return (
-    <div className="bg-white p-12">
+    <div className="bg-white px-12">
       <HighlightedTitle
         title="The Dirty Industry UIUC Supports"
         size="large"
