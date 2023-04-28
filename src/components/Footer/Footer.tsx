@@ -18,7 +18,7 @@ interface LinkSubsectionProps {
 
 const LinkSubsection = ({ title, links }: LinkSubsectionProps) => {
   return (
-    <div className="w-1/6">
+    <div className="w-1/3">
       <h3 className="text-xl">{title}</h3>
       <div className="mt-8 flex flex-col">
         {links.map(({ href, text }) => (
@@ -64,7 +64,7 @@ const SocialLink = ({ type }: SocialLinkProps) => {
 export const Footer = () => (
   <footer>
     <div className="bg-darkTeal p-10 text-white">
-      <div className="flex">
+      <div className="flex flex-wrap">
         <div className="w-1/2 pl-14">
           <CapitalizedTitle
             center={false}
@@ -85,61 +85,64 @@ export const Footer = () => (
             uiuc.secs@gmail.com
           </a>
         </div>
-        <LinkSubsection
-          title="About us"
-          links={[
-            {
-              href: 'https://www.secsillinois.org/',
-              text: (
-                <span className="flex underline underline-offset-4">
-                  SECS <ArrowUpRightIcon className="ml-1 w-5" />
-                </span>
-              ),
-            },
-            {
-              href: 'https://uiuc.hack4impact.org/',
-              text: (
-                <span className="flex underline underline-offset-4">
-                  Hack4Impact UIUC <ArrowUpRightIcon className="ml-1 w-5" />
-                </span>
-              ),
-            },
-          ]}
-        />
-        <LinkSubsection
-          title="Follow SECS"
-          links={[
-            {
-              href: 'https://www.instagram.com/secsillinois/',
-              text: <SocialLink type="instagram" />,
-            },
-            {
-              href: 'https://twitter.com/SECSillinois',
-              text: <SocialLink type="twitter" />,
-            },
-            {
-              href: 'https://www.facebook.com/SECSillinois',
-              text: <SocialLink type="facebook" />,
-            },
-          ]}
-        />
-        <LinkSubsection
-          title="Follow Hack4Impact UIUC"
-          links={[
-            {
-              href: 'https://www.instagram.com/hack4impactuiuc/',
-              text: <SocialLink type="instagram" />,
-            },
-            {
-              href: 'https://github.com/hack4impact-uiuc',
-              text: <SocialLink type="github" />,
-            },
-            {
-              href: 'https://www.facebook.com/hack4impact',
-              text: <SocialLink type="facebook" />,
-            },
-          ]}
-        />
+
+        <div className="flex w-1/2">
+          <LinkSubsection
+            title="About us"
+            links={[
+              {
+                href: 'https://www.secsillinois.org/',
+                text: (
+                  <span className="flex underline underline-offset-4">
+                    SECS <ArrowUpRightIcon className="ml-1 w-5" />
+                  </span>
+                ),
+              },
+              {
+                href: 'https://uiuc.hack4impact.org/',
+                text: (
+                  <span className="flex underline underline-offset-4">
+                    Hack4Impact UIUC <ArrowUpRightIcon className="ml-1 w-5" />
+                  </span>
+                ),
+              },
+            ]}
+          />
+          <LinkSubsection
+            title="Follow SECS"
+            links={[
+              {
+                href: 'https://www.instagram.com/secsillinois/',
+                text: <SocialLink type="instagram" />,
+              },
+              {
+                href: 'https://twitter.com/SECSillinois',
+                text: <SocialLink type="twitter" />,
+              },
+              {
+                href: 'https://www.facebook.com/SECSillinois',
+                text: <SocialLink type="facebook" />,
+              },
+            ]}
+          />
+          <LinkSubsection
+            title="Follow Hack4Impact UIUC"
+            links={[
+              {
+                href: 'https://www.instagram.com/hack4impactuiuc/',
+                text: <SocialLink type="instagram" />,
+              },
+              {
+                href: 'https://github.com/hack4impact-uiuc',
+                text: <SocialLink type="github" />,
+              },
+              {
+                href: 'https://www.facebook.com/hack4impact',
+                text: <SocialLink type="facebook" />,
+              },
+            ]}
+          />
+        </div>
       </div>
     </div>
 
