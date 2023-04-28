@@ -27,7 +27,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         />
       </Head>
       <SessionProvider session={session}>
-        <main className="flex flex-col font-klima text-lg">
+        <main className="body-bold flex flex-col">
           <Component {...pageProps} />
         </main>
       </SessionProvider>

@@ -16,10 +16,10 @@ const ReadMoreButton: FC<ReadMoreButtonProps> = ({
   return (
     <div
       className={clsx(
-        'ml-auto flex flex-row items-center rounded-full bg-clementine text-center font-inter',
+        'body-normal ml-auto flex flex-row items-center rounded-full bg-clementine text-center',
         {
-          'px-4 py-[1px] text-base not-italic': link,
-          'px-4 py-1 text-base italic': !link,
+          'px-4 py-[1px] not-italic': link,
+          'px-4 py-1 italic': !link,
         },
       )}
     >

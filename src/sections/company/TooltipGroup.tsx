@@ -13,8 +13,8 @@ import { Tag, ToolTip } from '../../components'
 import { envGradeToColor, assetAmountToString } from '../../utils/helpers'
 import type { SectorEntry, IndustryEntry } from '../../types'
 
-const tagGroupStyle = clsx('flex-col lg:inline-flex lg:flex-row')
-const noteStyle = clsx('lg:px-2 font-medium truncate')
+const tagGroupStyle = clsx('items-center flex-col lg:inline-flex lg:flex-row')
+const noteStyle = clsx('lg:px-2 truncate my-1')
 const tagStyle = clsx('bg-cobalt text-white')
 
 interface CompanyTooltipGroupProps {
@@ -50,7 +50,7 @@ const CompanyTooltipGroup: FC<CompanyTooltipGroupProps> = ({
   return (
     <div
       className={clsx(
-        'mx-8 flex flex-wrap items-center justify-between',
+        'mx-8 flex flex-wrap items-center justify-between gap-y-4',
         className,
       )}
     >
@@ -94,16 +94,16 @@ const CompanyTooltipGroup: FC<CompanyTooltipGroupProps> = ({
           />
         </div>
         <ToolTip>
-          <div>
+          <div className="body-small">
             Average environmental grade for sector <b>Industrials</b>:
             <Tag title="CCC" className="bg-clementine text-white" />
             <br />
-            Environmental grade: ESG refers to a set of values used to screen
-            potential investments: Environmental, Social and Governance. An ESG
-            score measures how sustainably a company is conducting business
-            based on their environmental impact calculated from their carbon
-            emissions, energy consumption and climate change action. It also
-            addresses
+            <b>Environmental grade:</b> ESG refers to a set of values used to
+            screen potential investments: Environmental, Social and Governance.
+            An ESG score measures how sustainably a company is conducting
+            business based on their environmental impact calculated from their
+            carbon emissions, energy consumption and climate change action. It
+            also addresses
           </div>
         </ToolTip>
       </div>

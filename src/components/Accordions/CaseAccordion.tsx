@@ -61,7 +61,7 @@ const CaseAccordion: FC<{ content: CaseEntry }> = ({ content }) => {
         )}
       >
         <p
-          className={clsx('inline p-4 text-lg font-medium lg:ml-6', {
+          className={clsx('header-3 inline p-4 lg:ml-6', {
             'lg:ml-6': !open,
             '-ml-[1.5px] -mt-[1px] lg:ml-[22.5px]': open,
           })}
@@ -76,7 +76,7 @@ const CaseAccordion: FC<{ content: CaseEntry }> = ({ content }) => {
       </button>
       <div
         className={clsx(
-          'font-regular flex flex-col gap-2 border-t-[0.125rem] border-cobalt pt-6 pb-9 font-inter text-base text-black',
+          'body-normal flex flex-col gap-2 border-t-[0.125rem] border-cobalt pt-6 pb-9 text-black',
           {
             'mx-[47px]': open,
             'mx-12': !open,

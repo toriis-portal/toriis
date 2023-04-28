@@ -1,7 +1,18 @@
 import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
 import { Company } from '@prisma/client'
+import type { FC } from 'react'
+import { MARKS, BLOCKS, INLINES } from '@contentful/rich-text-types'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
+import type {
+  Block,
+  Inline,
+} from '@contentful/rich-text-types/dist/types/types'
+import { useState, useRef } from 'react'
 
+import { FuelEnum } from '../../utils/enums'
+import { ContentWrapper } from '../../utils/content'
 import FinanceBrushChart from '../../components/Charts/FinanceBrushChart'
 import {
   HighlightedTitle,
@@ -15,6 +26,43 @@ import {
 } from '../../components'
 import { api } from '../../utils/api'
 import { CompanyTooltipGroup, ChartGroup } from '../../sections'
+import type { CompanyDetailsEntry } from '../../types'
+
+export const getServerSideProps = async () => {
+  const contentClient = new ContentWrapper()
+  const companyDetails: CompanyDetailsEntry[] = await contentClient.get(
+    'companyDetailsPage',
+  )
+  const yahooFinance = companyDetails.find(
+    (item) => item.name == 'Yahoo Finance',
+  )
+  const carbonAccounting = companyDetails.find(
+    (item) => item.name == 'Carbon Accounting',
+  )
+  const renewableEnergy = companyDetails.find(
+    (item) => item.name == 'Renewable Energy',
+  )
+  const fuelTypes = Object.values(FuelEnum)
+  const fuelDetails = fuelTypes.map(
+    (fuelName) => companyDetails.find((item) => item.name == fuelName) ?? null,
+  )
+
+  return {
+    props: {
+      yahooFinanceDetails: yahooFinance,
+      carbonAccountingDetails: carbonAccounting,
+      renewableEnergyDetails: renewableEnergy,
+      fuelDetails: fuelDetails,
+    },
+  }
+}
+
+interface CompanyDetailsProps {
+  yahooFinanceDetails: CompanyDetailsEntry
+  carbonAccountingDetails: CompanyDetailsEntry
+  renewableEnergyDetails: CompanyDetailsEntry
+  fuelDetails: (CompanyDetailsEntry | undefined)[]
+}
 
 /**
  * Get the direction of the charts so that they alternate between left and right
@@ -35,7 +83,47 @@ const getChartDirections = (company: Company) => {
   return directionDict
 }
 
-const Company = () => {
+const Company: FC<CompanyDetailsProps> = ({
+  yahooFinanceDetails,
+  carbonAccountingDetails,
+  renewableEnergyDetails,
+  fuelDetails,
+}) => {
+  const [labels, setLabels] = useState<string[]>([])
+  const previousLabels = useRef<string[]>([])
+  const contentfulOptions = {
+    renderMark: {
+      [MARKS.BOLD]: (text: any) => (
+        <span className="font-semibold underline decoration-2 underline-offset-4">
+          {text}
+        </span>
+      ),
+    },
+    renderNode: {
+      [BLOCKS.PARAGRAPH]: (node: any, children: any) => (
+        <p className="align-center">{children}</p>
+      ),
+      [INLINES.HYPERLINK]: (node: Block | Inline, children: any) => {
+        return (
+          <a
+            href={node.data.uri as string}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {children}
+            <ArrowUpRightIcon className="align-self-start ml-0.5 inline h-4 w-4 stroke-current stroke-1" />
+          </a>
+        )
+      },
+    },
+  }
+  const handleSetLabels = (newLabels: string[]) => {
+    if (JSON.stringify(newLabels) !== JSON.stringify(previousLabels.current)) {
+      setLabels(newLabels)
+      previousLabels.current = newLabels
+    }
+  }
+
   const companyId = (useRouter().query.id as string) ?? ''
 
   const { data, isLoading, isError } = api.company.getCompany.useQuery(
@@ -77,8 +165,8 @@ const Company = () => {
       <div className="mt-6 ml-8">
         <BackButton />
       </div>
-      <div className="mb-20 flex flex-col px-12 lg:px-24">
-        <div className="flex flex-col items-center">
+      <div className="mb-20 flex flex-col flex-wrap px-12 lg:px-24">
+        <div className="flex flex-col items-center ">
           <HighlightedTitle
             title={company.name}
             size="large"
@@ -112,7 +200,14 @@ const Company = () => {
             <ChartGroup
               title="Carbon Accounting"
               chart={<EmissionBarChart emissionData={company.emission} />}
-              interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
+              interpretation={
+                <DataCard>
+                  {documentToReactComponents(
+                    carbonAccountingDetails.description,
+                    contentfulOptions,
+                  )}
+                </DataCard>
+              }
               chartOnLeft={chartDirections['emission']}
               chartSize="md"
             />
@@ -120,8 +215,32 @@ const Company = () => {
           {company.fuel && (
             <ChartGroup
               title="CDP-Fuel"
-              chart={<FuelRadialChart source={company.fuel} />}
-              interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
+              chart={
+                <FuelRadialChart
+                  source={company.fuel}
+                  setLabels={handleSetLabels}
+                />
+              }
+              interpretation={
+                <DataCard>
+                  {labels.map((label, key) => {
+                    const item = fuelDetails.find(
+                      (item) => item && item.name == label,
+                    )
+                    if (item && item.description) {
+                      return (
+                        <div key={key}>
+                          {documentToReactComponents(
+                            item.description,
+                            contentfulOptions,
+                          )}
+                          <br />
+                        </div>
+                      )
+                    }
+                  })}
+                </DataCard>
+              }
               chartOnLeft={chartDirections['fuel']}
               chartSize="md"
             />
@@ -130,7 +249,14 @@ const Company = () => {
             <ChartGroup
               title="CDP-Energy"
               chart={<EnergyRadialChart energyData={company.energy} />}
-              interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
+              interpretation={
+                <DataCard>
+                  {documentToReactComponents(
+                    renewableEnergyDetails.description,
+                    contentfulOptions,
+                  )}
+                </DataCard>
+              }
               chartOnLeft={chartDirections['energy']}
               chartSize="sm"
             />
@@ -139,7 +265,14 @@ const Company = () => {
             <ChartGroup
               title="Yahoo Finance"
               chart={<FinanceBrushChart companyId={companyId} />}
-              interpretation={<DataCard>Jooslin is your fav PM</DataCard>}
+              interpretation={
+                <DataCard>
+                  {documentToReactComponents(
+                    yahooFinanceDetails.description,
+                    contentfulOptions,
+                  )}
+                </DataCard>
+              }
               chartOnLeft={chartDirections['ticker']}
               chartSize="lg"
             />

@@ -31,7 +31,7 @@ const AuthButton: FC = () => {
         </button>
       ) : (
         <button
-          className="w-fit rounded-full bg-lightBlue px-5 py-1 text-center text-base font-medium text-black"
+          className="w-fit rounded-full bg-lightBlue px-5 py-1 text-center text-black"
           onClick={() => setOpen(!open)}
         >
           admin login
@@ -40,7 +40,7 @@ const AuthButton: FC = () => {
       <div
         className={clsx(
           'rounded-lg border border-black bg-white py-6 px-2 lg:px-2',
-          'font-inter text-base font-normal text-black',
+          'body-normal text-black',
           'absolute right-8 top-[5.5rem] inline-block',
           'z-[100] w-[40%] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.3)] transition-opacity duration-200 lg:w-[28%]',
           { 'invisible opacity-0': !open, 'visible opacity-100': open },
@@ -54,7 +54,7 @@ const AuthButton: FC = () => {
           </div>
           {session ? (
             <div>
-              <Link href="/admin/data">
+              <Link href="/admin/website">
                 <button className={buttonStyle}>Manage Website</button>
               </Link>
               <Link href="/admin/management">

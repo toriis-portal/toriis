@@ -3,6 +3,8 @@ import { useRouter } from 'next/router'
 import type { FC } from 'react'
 import { useEffect } from 'react'
 
+import { AdminNavBar } from '../../../components'
+
 const ReviewPage: FC = () => {
   const { data: session, status } = useSession()
   const { push } = useRouter()
@@ -14,7 +16,16 @@ const ReviewPage: FC = () => {
     }
   }, [push, status])
 
-  return <div>{session && <h1>Review a Request with id {requestId}</h1>}</div>
+  return (
+    <div>
+      {session && (
+        <>
+          <AdminNavBar />
+          <h1>Review a Request with id {requestId}</h1>
+        </>
+      )}
+    </div>
+  )
 }
 
 export default ReviewPage

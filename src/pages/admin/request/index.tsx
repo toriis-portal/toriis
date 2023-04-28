@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import clsx from 'clsx'
 import { Spinner } from 'flowbite-react'
 
+import { AdminNavBar } from '../../../components'
 import { api } from '../../../utils/api'
 import { RequestReviewTable, Tag, LoadMoreButton } from '../../../components'
 
@@ -73,6 +74,7 @@ const RequestPage: FC = () => {
     <div>
       {session && (
         <>
+          <AdminNavBar />
           <div className="flex flex-col items-center pt-24">
             <div className="flex flex-row justify-center gap-5">
               <button
