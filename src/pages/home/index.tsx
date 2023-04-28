@@ -7,7 +7,12 @@ import {
   RefuteUISResponse,
   TimelineSection,
 } from '../../sections'
-import { ToTopButton, SecondaryNavBar, PrimaryNavBar } from '../../components'
+import {
+  ToTopButton,
+  SecondaryNavBar,
+  PrimaryNavBar,
+  Footer,
+} from '../../components'
 import { ContentWrapper } from '../../utils/content'
 import type {
   Info,
@@ -89,6 +94,8 @@ const Home: FC<HomeProps> = ({
         </div>
 
         <ToTopButton />
+
+        <Footer />
       </main>
     </>
   )

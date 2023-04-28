@@ -11,17 +11,33 @@ const titleText: string[] = [
   'Investments',
 ]
 
-const CapitalizedTitle: FC = () => {
+interface CapitalizedTitleProps {
+  textSize?: string
+  center?: boolean
+  xSpacing?: string
+  paddingTop?: string
+}
+
+const CapitalizedTitle: FC<CapitalizedTitleProps> = ({
+  textSize = 'text-4xl',
+  center = true,
+  xSpacing = 'space-x-3',
+  paddingTop = 'pt-10',
+}) => {
   function isCapital(word: string) {
     return word.charAt(0) === word.charAt(0).toUpperCase()
   }
   const firstLetter = clsx(
-    'text-4xl first-letter:font-black first-letter:text-clementine font-medium',
+    `${textSize} first-letter:font-black first-letter:text-clementine font-medium`,
   )
-  const landingHeader = clsx('text-4xl font-medium')
+  const landingHeader = clsx(`${textSize} font-medium`)
+  const centeredStyle = center ? 'place-content-center' : ''
+
   return (
     <>
-      <div className="flex flex-wrap place-content-center space-x-3 pt-10">
+      <div
+        className={clsx('flex flex-wrap', centeredStyle, xSpacing, paddingTop)}
+      >
         {titleText.map((item, index) => (
           <span
             key={index}

@@ -48,6 +48,8 @@ import ToolTip from './Tooltips/ToolTip'
 //Modals
 import GeneralModal from './Modals/GeneralModal'
 import LeaveConfirmationModal from './Modals/LeaveConfirmationModal'
+//Footer
+import Footer from './Footer/Footer'
 export {
   AuthButton,
   ListItem,
@@ -88,4 +90,5 @@ export {
   AdminBox,
   AdminListTable,
   InviteAdminBar,
+  Footer,
 }
