@@ -8,12 +8,12 @@ import {
 } from '../../components'
 import { ContentWrapper } from '../../utils/content'
 import { FossilFuelPage } from '../../types'
-import type { CaseEntry } from '../../types'
+import type { CaseEntry, LinkEntry } from '../../types'
 import {
   UniversityInvestments,
   DirtyIndustry,
   FossilFuelsBad,
-  WhatWarningMeans,
+  WhatWarmingMeans,
   SchoolsDivested,
   InstitutionsDivested,
   FinancialCase,
@@ -23,10 +23,12 @@ export const getServerSideProps = async () => {
   const contentClient = new ContentWrapper()
   const fossilFuelEntries = await contentClient.getAllFossilFuelPageEntries()
   const caseEntries = fossilFuelEntries['case']
+  const linkEntries = fossilFuelEntries['link']
   const fossilFuelPageEntries = fossilFuelEntries['fossilFuelPage']
 
   return {
     props: {
+      linkEntries,
       caseEntries,
       fossilFuelPageEntries,
     },
@@ -34,11 +36,13 @@ export const getServerSideProps = async () => {
 }
 
 interface FossilFuelProps {
+  linkEntries: LinkEntry[]
   caseEntries: CaseEntry[]
   fossilFuelPageEntries: FossilFuelPage
 }
 
 const FossilFuelPage: FC<FossilFuelProps> = ({
+  linkEntries,
   caseEntries,
   fossilFuelPageEntries,
 }) => {
@@ -51,7 +55,6 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
     { path: 'divestedSchools', text: 'Schools That Have Divested ' },
     { path: 'divestedInstitutions', text: 'Institutions That Have Divested' },
   ]
-
   return (
     <>
       <PrimaryNavBar />
@@ -81,7 +84,11 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
         />
       </div>
       <div id="warming">
-        <WhatWarningMeans />
+        <WhatWarmingMeans
+          text={fossilFuelPageEntries['warmingMeans']}
+          linkEntries={linkEntries}
+          sourceEntries={linkEntries}
+        />
       </div>
       <div id="financialCase" className="pt-20">
         <FinancialCase

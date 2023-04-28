@@ -22,7 +22,7 @@ const homePageEntryTypes = [
   'info',
 ]
 
-const fossilFuelPageEntryTypes = ['fossilFuelPage', 'case']
+const fossilFuelPageEntryTypes = ['fossilFuelPage', 'case', 'link']
 
 export class ContentWrapper {
   client: ContentfulClientApi
@@ -64,10 +64,10 @@ export class ContentWrapper {
         )
       case 'list':
         return (entries as ListEntry[]).sort((a, b) => a.order - b.order)
-      case 'info':
-        return (entries as Info[])[0] as Info
+      case 'link':
+        return (entries as LinkEntry[]).filter((entry) => entry.type === 'Home')
       default:
-        return entries as LinkEntry[]
+        return (entries as Info[])[0] as Info
     }
   }
 
@@ -94,6 +94,10 @@ export class ContentWrapper {
     switch (entity) {
       case 'fossilFuelPage':
         return (entries as FossilFuelPage[])[0] as FossilFuelPage
+      case 'link':
+        return (entries as LinkEntry[]).filter(
+          (entry) => entry.type === 'FossilFuelPage',
+        )
       default:
         return entries as CaseEntry[]
     }
@@ -112,8 +116,10 @@ export class ContentWrapper {
   }
 
   getAllFossilFuelPageEntries = async () => {
-    const fossilFuelPageEntryMap: Record<string, FossilFuelPage | CaseEntry[]> =
-      {}
+    const fossilFuelPageEntryMap: Record<
+      string,
+      FossilFuelPage | CaseEntry[] | LinkEntry[]
+    > = {}
     await Promise.all(
       fossilFuelPageEntryTypes.map(async (entity) => {
         const results = await this.getSingleFossilFuelPageEntry(entity)

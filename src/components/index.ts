@@ -12,6 +12,7 @@ import ESGTag from './Card/ESGTag'
 import NetAssetTag from './Card/NetAssetTag'
 import AdminBox from './Card/AdminBox'
 import DataCard from './Card/DataCard'
+import LinkBox from './Card/LinkBox'
 // Charts
 import EnergyRadialChart from './Charts/EnergyRadialChart'
 import LandingDonutChart from './Charts/LandingDonutChart'
@@ -26,7 +27,7 @@ import ImageWithCaption from './Displays/Image/ImageWithCaption'
 // Accordions
 import RequestAccordion from './Accordions/RequestAccordion'
 import CaseAccordion from './Accordions/CaseAccordion'
-import CompanyDetailsAccordion from './Accordions/CompanyDetailsAccordion'
+import ReadMoreAccordion from './Accordions/ReadMoreAccordion'
 // Nav
 import PrimaryNavBar from './Nav/PrimaryNavBar'
 import SecondaryNavBar from './Nav/SecondaryNavBar'
@@ -82,12 +83,13 @@ export {
   FuelRadialChart,
   EmissionBarChart,
   DataCard,
-  CompanyDetailsAccordion,
+  ReadMoreAccordion,
   EnergyRadialChart,
   AdminNavBar,
   ClimateClock,
   AdminBox,
   AdminListTable,
   InviteAdminBar,
+  LinkBox,
   ImageWithCaption,
 }

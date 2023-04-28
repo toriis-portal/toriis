@@ -21,6 +21,7 @@ export interface OurRequestsEntry {
 export interface LinkEntry {
   name: string
   url: string
+  type: 'Home' | 'FossilFuelPage' | 'Link'
 }
 
 export interface ListEntry {

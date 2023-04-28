@@ -1,5 +1,5 @@
 import Script from 'next/script'
-import type { DetailedHTMLProps, HTMLAttributes } from 'react'
+import type { DetailedHTMLProps, FC, HTMLAttributes } from 'react'
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -13,7 +13,7 @@ declare global {
   }
 }
 
-const ClimateClock = () => {
+const ClimateClock: FC = () => {
   return (
     <>
       <div

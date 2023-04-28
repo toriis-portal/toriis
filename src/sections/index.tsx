@@ -15,7 +15,7 @@ import FossilFuelsBad from './fossil-fuel/FossilFuelsBad'
 import InstitutionsDivested from './fossil-fuel/InstitutionsDivested'
 import SchoolsDivested from './fossil-fuel/SchoolsDivested'
 import UniversityInvestments from './fossil-fuel/UniversityInvestments'
-import WhatWarningMeans from './fossil-fuel/WhatWarningMeans'
+import WhatWarmingMeans from './fossil-fuel/WhatWarmingMeans'
 export {
   InstitutionalDivestments,
   Landing,
@@ -31,5 +31,5 @@ export {
   InstitutionsDivested,
   SchoolsDivested,
   UniversityInvestments,
-  WhatWarningMeans,
+  WhatWarmingMeans,
 }
