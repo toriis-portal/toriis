@@ -36,7 +36,7 @@ module.exports = {
     },
     fontFamily: {
       klima: ['Klima', 'Arial', 'Roboto'],
-      inter: ['Inter', 'Klima', 'Arial'],
+      inter: ['Inter', 'sans-serif'],
     },
   },
   plugins: [require('flowbite/plugin')],
