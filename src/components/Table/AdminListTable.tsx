@@ -6,7 +6,7 @@ import { TrashIcon, ArrowUturnLeftIcon } from '@heroicons/react/24/outline'
 
 const delIconStyle = clsx('ml-8 h-auto w-6 stroke-2')
 const delUserTextStyle = (deletePressed: boolean) =>
-  clsx('basis-1/3 truncate text-xl font-medium', {
+  clsx('basis-1/3 truncate', {
     'text-lightGray': deletePressed,
     'text-black': !deletePressed,
   })
@@ -41,7 +41,7 @@ const AdminListTable: FC<AdminTableProps> = ({
     >
       <div className="w-full py-12">
         <div className="flex w-full flex-row items-center justify-center">
-          <div className="flex w-10/12 flex-row items-center gap-1 border-b-[1px] border-darkGray pb-4 pl-6 text-base text-medGray">
+          <div className="body-normal flex w-10/12 flex-row items-center gap-1 border-b-[1px] border-darkGray pb-4 pl-6 text-medGray">
             <p className="basis-1/3">Email</p>
             <p className="basis-1/3">Name</p>
             <p className="basis-1/6">Date added</p>
@@ -62,7 +62,7 @@ const AdminListTable: FC<AdminTableProps> = ({
                 <p className={delUserTextStyle(deletePressed)}>{user.email}</p>
                 <p className={delUserTextStyle(deletePressed)}>{user.name}</p>
                 <p
-                  className={clsx('basis-1/6 text-base', {
+                  className={clsx('body-normal basis-1/6', {
                     'text-lightGray': deletePressed,
                     'text-medGray': !deletePressed,
                   })}

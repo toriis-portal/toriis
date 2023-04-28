@@ -33,7 +33,7 @@ const InstitutionalDivestments: FC<InstitutionalDivestmentsProps> = ({
         </div>
       </div>
       <div className="mt-16 flex w-full flex-col items-center rounded-xl bg-darkTeal px-6 pt-6 pb-16 text-white">
-        <div className="relative -top-12 ">
+        <div className="relative -top-12">
           <ShadowTitle text="Institutional Divestment Links" />
         </div>
         <div className="flex flex-wrap justify-center leading-loose underline">

@@ -1,60 +1,30 @@
-import type { FC } from 'react'
 import clsx from 'clsx'
 
-const titleText: string[] = [
-  'Transparent',
-  'and',
-  'Open',
-  'Resource',
-  'for',
-  'Institutional',
-  'Investments',
-]
-
-interface CapitalizedTitleProps {
-  textSize?: string
-  center?: boolean
-  xSpacing?: string
-  paddingTop?: string
-}
-
-const CapitalizedTitle: FC<CapitalizedTitleProps> = ({
-  textSize = 'text-4xl',
-  center = true,
-  xSpacing = 'space-x-3',
-  paddingTop = 'pt-10',
-}) => {
-  function isCapital(word: string) {
-    return word.charAt(0) === word.charAt(0).toUpperCase()
-  }
-  const firstLetter = clsx(
-    `${textSize} first-letter:font-black first-letter:text-clementine font-medium`,
+const CapitalizedTitle = ({
+  className,
+  ...props
+}: React.ComponentProps<'span'>) => {
+  const firstLetterAccent = clsx(
+    'block',
+    'first-letter:text-clementine',
+    'first-letter:font-black',
   )
-  const landingHeader = clsx(`${textSize} font-medium`)
-  const centeredStyle = center ? 'place-content-center' : ''
 
   return (
-    <>
-      <div
-        className={clsx('flex flex-wrap', centeredStyle, xSpacing, paddingTop)}
-      >
-        {titleText.map((item, index) => (
-          <span
-            key={index}
-            className={isCapital(item) ? firstLetter : landingHeader}
-          >
-            {item.endsWith('s') ? (
-              <div>
-                Investment
-                <span className="text-clementine">s</span>
-              </div>
-            ) : (
-              item
-            )}
-          </span>
-        ))}
-      </div>
-    </>
+    <span
+      className={clsx('space-x-1', className, 'header-1 flex font-medium')}
+      {...props}
+    >
+      <span className={firstLetterAccent}>Transparent</span>
+      <span>and</span>
+      <span className={firstLetterAccent}>Open</span>
+      <span className={firstLetterAccent}>Resource</span>
+      <span>for</span>
+      <span className={firstLetterAccent}>Institutional</span>
+      <span className={clsx(firstLetterAccent)}>
+        Investment<span className="text-clementine">s</span>
+      </span>
+    </span>
   )
 }
 

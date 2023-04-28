@@ -19,7 +19,7 @@ interface LinkSubsectionProps {
 const LinkSubsection = ({ title, links }: LinkSubsectionProps) => {
   return (
     <div className="w-1/3">
-      <h3 className="text-xl">{title}</h3>
+      <h3 className="text-lg">{title}</h3>
       <div className="mt-8 flex flex-col">
         {links.map(({ href, text }) => (
           <a
@@ -47,7 +47,12 @@ const SocialLink = ({ type }: SocialLinkProps) => {
     github: GitHubIcon as string,
   }[type]
 
-  const displayText = type.charAt(0).toUpperCase() + type.slice(1)
+  const displayText = {
+    instagram: 'Instagram',
+    facebook: 'Facebook',
+    twitter: 'Twitter',
+    github: 'GitHub',
+  }
 
   return (
     <span className="flex">
@@ -56,7 +61,7 @@ const SocialLink = ({ type }: SocialLinkProps) => {
         src={icon}
         alt={`${type} logo`}
       />
-      {displayText}
+      {displayText[type]}
     </span>
   )
 }
@@ -66,12 +71,7 @@ export const Footer = () => (
     <div className="bg-darkTeal p-10 text-white">
       <div className="flex flex-wrap">
         <div className="w-1/2 pl-14">
-          <CapitalizedTitle
-            center={false}
-            xSpacing="space-x-1"
-            textSize="text-xl"
-            paddingTop="pt-0"
-          />
+          <CapitalizedTitle className="text-xl" />
 
           <div className="mb-4">
             <p className="mt-8 text-sm">Can’t find what you are looking for?</p>
