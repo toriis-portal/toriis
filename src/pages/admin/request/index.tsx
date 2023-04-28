@@ -75,7 +75,7 @@ const RequestPage: FC = () => {
       {session && (
         <>
           <AdminNavBar />
-          <div className="flex flex-col items-center pt-24">
+          <div className="flex flex-col items-center pt-12">
             <div className="flex flex-row justify-center gap-5">
               <button
                 className={selectButtonWrapStyle}
