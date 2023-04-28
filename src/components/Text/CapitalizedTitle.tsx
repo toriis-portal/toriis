@@ -16,17 +16,13 @@ const CapitalizedTitle: FC = () => {
     return word.charAt(0) === word.charAt(0).toUpperCase()
   }
   const firstLetter = clsx(
-    'text-4xl first-letter:font-black first-letter:text-clementine font-medium',
+    'first-letter:font-black first-letter:text-clementine',
   )
-  const landingHeader = clsx('text-4xl font-medium')
   return (
     <>
-      <div className="flex flex-wrap place-content-center space-x-3 pt-10">
+      <div className="header-1 flex flex-wrap place-content-center space-x-3 pt-10">
         {titleText.map((item, index) => (
-          <span
-            key={index}
-            className={isCapital(item) ? firstLetter : landingHeader}
-          >
+          <span key={index} className={isCapital(item) ? firstLetter : ''}>
             {item.endsWith('s') ? (
               <div>
                 Investment

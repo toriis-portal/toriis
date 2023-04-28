@@ -28,7 +28,6 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
             <button
               type={type}
               className={clsx(
-                'font-klima text-[18px] font-semibold',
                 'rounded border-2 border-solid border-cobalt',
                 'rounded bg-lightBlue px-5 py-1',
                 'shadow-[-8px_8px_0px_0px] shadow-cobalt',
@@ -53,7 +52,6 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
         <button
           onClick={onClick || undefined}
           className={clsx(
-            'font-klima text-[18px] font-medium',
             'rounded border-2 border-solid border-cobalt',
             'rounded bg-lightBlue px-20 py-3',
             'shadow-[-8px_8px_0px_0px] shadow-cobalt',
