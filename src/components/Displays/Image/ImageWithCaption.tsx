@@ -21,7 +21,12 @@ const ImageWithCaption: FC<ImageWithCaptionProps> = ({ img, captionStyle }) => {
             height={850}
           />
         </div>
-        <div className={clsx(captionStyle, 'flex-start')}>
+        <div
+          className={clsx(
+            captionStyle,
+            'flex-start body-small mb-8 text-footnoteGray underline',
+          )}
+        >
           {img.fields.description && <p>{img.fields.description}</p>}
         </div>
       </div>

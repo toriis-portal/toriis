@@ -95,6 +95,7 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
           entries={caseEntries}
           text={fossilFuelPageEntries['divestmentCase']}
           img={fossilFuelPageEntries['divestmentGraph']}
+          footnote={fossilFuelPageEntries['divestmentSource']}
         />
       </div>
       <div id="divestedSchools" className="pt-20">

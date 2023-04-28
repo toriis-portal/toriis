@@ -67,6 +67,7 @@ export interface FossilFuelPage {
   warmingSource: Document
   divestmentCase: Document
   divestmentGraph: Asset
+  divestmentSource: Document
   divestedSchools: string
   divestedInstitutions: string
 }

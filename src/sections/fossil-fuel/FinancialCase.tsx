@@ -15,9 +15,15 @@ interface FinancialCaseProps {
   entries: CaseEntry[]
   text: Document
   img: Asset
+  footnote: Document
 }
 
-const FinancialCase: FC<FinancialCaseProps> = ({ entries, text, img }) => {
+const FinancialCase: FC<FinancialCaseProps> = ({
+  entries,
+  text,
+  img,
+  footnote,
+}) => {
   return (
     <div className="bg-white px-12">
       <HighlightedTitle
@@ -29,9 +35,6 @@ const FinancialCase: FC<FinancialCaseProps> = ({ entries, text, img }) => {
         <div className="flex flex-col gap-3">
           {documentToReactComponents(text, mainParagraphStyle)}
         </div>
-        <div className="mt-2 text-[#9C9FA1] underline">
-          {img.fields.description}
-        </div>
         <div className="mt-4">
           <HighlightedTitle
             title="Cases for Divestment"
@@ -39,15 +42,15 @@ const FinancialCase: FC<FinancialCaseProps> = ({ entries, text, img }) => {
             color="brightTeal"
           />
         </div>
-        <ImageWithCaption
-          img={img}
-          captionStyle="mb-8 text-sm text-[#9C9FA1] underline "
-        />
+        <ImageWithCaption img={img} />
         {entries.map((entry, index) => (
           <div key={index}>
             <CaseAccordion content={entry} />
           </div>
         ))}
+        <div className="body-small text-footnoteGray">
+          {documentToReactComponents(footnote)}
+        </div>
       </div>
     </div>
   )
