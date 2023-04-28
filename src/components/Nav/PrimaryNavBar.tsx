@@ -14,7 +14,7 @@ const PrimaryNavBar: FC = () => {
         <Link href="/home">
           <Image
             src={toriisLogo as HTMLImageElement}
-            className="my-2 h-14 w-auto"
+            className="my-3 h-12 w-auto"
             alt="TORIIS Logo"
           />
         </Link>
