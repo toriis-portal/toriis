@@ -26,7 +26,9 @@ const FinancialCase: FC<FinancialCaseProps> = ({ entries, text, img }) => {
         color="clementine"
       />
       <div className="px-12">
-        <div>{documentToReactComponents(text, mainParagraphStyle)}</div>
+        <div className="flex flex-col gap-3">
+          {documentToReactComponents(text, mainParagraphStyle)}
+        </div>
         <div className="mt-2 text-[#9C9FA1] underline">
           {img.fields.description}
         </div>

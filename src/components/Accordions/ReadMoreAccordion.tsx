@@ -17,23 +17,22 @@ const ReadMoreAccordion: FC<ReadMoreAccordionProps> = ({
   children,
 }) => {
   const [folded, setFolded] = useState(true)
+  const MAX_WORD_COUNT = 75
 
-  const maxWordCount = 75
+  let contentTruncated = content
+  let childrenTruncated = children
 
-  let truncated = content
-  let children_truncated = null
+  const shouldTruncate =
+    (content && content.split(' ').length > MAX_WORD_COUNT) ||
+    (children && React.Children.toArray(children).length > 1)
 
-  const contentSplit = content.split(' ')
-  let contentLengthTooLong = contentSplit.length > maxWordCount
-
-  if (children && folded) {
-    contentLengthTooLong = true
-    children_truncated = <div>{React.Children.toArray(children)[0]}</div>
+  if (children && shouldTruncate) {
+    childrenTruncated = <div>{React.Children.toArray(children)[0]}</div>
   }
 
-  if (contentLengthTooLong) {
-    truncated = contentSplit.slice(0, maxWordCount).join(' ')
-    truncated += '...'
+  if (content && shouldTruncate) {
+    contentTruncated = content.split(' ').slice(0, MAX_WORD_COUNT).join(' ')
+    contentTruncated += '...'
   }
 
   return (
@@ -43,13 +42,17 @@ const ReadMoreAccordion: FC<ReadMoreAccordionProps> = ({
         className,
       )}
     >
-      {content && <div className="mb-2">{folded ? truncated : content}</div>}
+      {content && (
+        <div className="mb-2">{folded ? contentTruncated : content}</div>
+      )}
       {children && (
-        <div className="mb-2">{folded ? children_truncated : children}</div>
+        <div className="mb-2 flex flex-col gap-3">
+          {folded ? childrenTruncated : children}
+        </div>
       )}
       <div
         className={`flex px-6 ${
-          content ? (contentLengthTooLong ? '' : 'hidden') : ''
+          content ? (shouldTruncate ? '' : 'hidden') : ''
         }`}
       >
         <ReadMoreButton
