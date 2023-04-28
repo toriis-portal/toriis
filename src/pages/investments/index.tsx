@@ -12,6 +12,7 @@ import {
   SearchBar,
   CompanyCard,
   LoadMoreButton,
+  Footer,
 } from '../../components'
 import { api } from '../../utils/api'
 import { sectorEnum, envGradeEnum, netAssetValEnum } from '../../utils/enums'
@@ -299,6 +300,7 @@ const InvestmentPage: FC = () => {
           <ToTopButton />
         </div>
       </div>
+      <Footer />
     </>
   )
 }

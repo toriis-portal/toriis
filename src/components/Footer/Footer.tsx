@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { ArrowUpRightIcon, HeartIcon } from '@heroicons/react/24/solid'
-import Image from 'next/image'
+import Link from 'next/link'
 
 import CapitalizedTitle from '../Text/CapitalizedTitle'
 import InstagramIcon from '../Icon/InstagramIcon'
@@ -18,17 +18,17 @@ interface LinkSubsectionProps {
 
 const LinkSubsection = ({ title, links }: LinkSubsectionProps) => {
   return (
-    <div className="w-1/3">
+    <div className="mb-10 w-full flex-1 text-center lg:text-left">
       <h3 className="text-lg">{title}</h3>
-      <div className="mt-8 flex flex-col">
+      <div className="mt-8 flex flex-col items-center lg:items-start">
         {links.map(({ href, text }) => (
-          <a
+          <Link
             key={href}
             className="mb-5 w-fit text-sm transition duration-500 hover:text-clementine"
             href={href}
           >
             {text}
-          </a>
+          </Link>
         ))}
       </div>
     </div>
@@ -66,23 +66,23 @@ export const Footer = () => (
   <footer>
     <div className="bg-darkTeal p-10 text-white">
       <div className="flex flex-wrap">
-        <div className="w-1/2 pl-14">
-          <CapitalizedTitle className="text-xl" />
+        <div className="mb-5 w-full text-center md:mb-0 lg:w-1/2 lg:pl-14 lg:text-left">
+          <CapitalizedTitle className="justify-center pr-2 text-sm sm:text-base md:m-0 md:text-base lg:justify-start lg:text-xl" />
 
           <div className="mb-4">
             <p className="mt-8 text-sm">Can’t find what you are looking for?</p>
             <p className="text-sm">Contact us through email to get in touch!</p>
           </div>
 
-          <a
+          <Link
             className="bg-red text-clementine"
             href="mailto:uiuc.secs@gmail.com"
           >
             uiuc.secs@gmail.com
-          </a>
+          </Link>
         </div>
 
-        <div className="flex w-1/2">
+        <div className="flex w-full flex-wrap lg:w-1/2">
           <LinkSubsection
             title="About us"
             links={[
@@ -108,15 +108,15 @@ export const Footer = () => (
             title="Follow SECS"
             links={[
               {
-                href: 'https://www.instagram.com/secsillinois/',
+                href: 'https://www.instagram.com/secsuiuc',
                 text: <SocialLink type="instagram" />,
               },
               {
-                href: 'https://twitter.com/SECSillinois',
+                href: 'https://twitter.com/secsuiuc',
                 text: <SocialLink type="twitter" />,
               },
               {
-                href: 'https://www.facebook.com/SECSillinois',
+                href: 'https://www.facebook.com/SECSUIUC',
                 text: <SocialLink type="facebook" />,
               },
             ]}
@@ -133,7 +133,7 @@ export const Footer = () => (
                 text: <SocialLink type="github" />,
               },
               {
-                href: 'https://www.facebook.com/hack4impact',
+                href: 'https://www.facebook.com/h4iuiuc/',
                 text: <SocialLink type="facebook" />,
               },
             ]}
@@ -142,7 +142,7 @@ export const Footer = () => (
       </div>
     </div>
 
-    <div className="flex bg-lightBlue py-3 pl-24 text-sm">
+    <div className="flex bg-lightBlue py-3 text-sm md:pl-10 lg:pl-24">
       Made with <HeartIcon className="mx-2 w-5" /> by the Hack4Impact UIUC &
       SECS teams!
     </div>

@@ -6,6 +6,7 @@ import {
   HighlightedTitle,
   SecondaryNavBar,
   ClimateClock,
+  Footer,
 } from '../../components'
 import { ContentWrapper } from '../../utils/content'
 import { FinancialCase } from '../../sections'
@@ -63,6 +64,8 @@ const FossilFuelPage: FC<FossilFuelProps> = ({ caseEntries }) => {
       <div id="divestedSchools" className="pt-20"></div>
       <div id="divestedInstitutions" className="pt-20"></div>
       <ClimateClock />
+
+      <Footer />
     </>
   )
 }

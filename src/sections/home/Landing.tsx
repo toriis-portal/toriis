@@ -30,7 +30,7 @@ const Landing: FC<{ text: Document }> = ({ text }) => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <CapitalizedTitle className="mt-10 place-content-center space-x-3 text-4xl" />
+      <CapitalizedTitle className="mt-10 place-content-center text-lg sm:text-lg md:space-x-2 md:text-2xl lg:space-x-3 lg:text-4xl" />
       <div className="flex flex-col items-center justify-center px-14 py-8 lg:flex-row">
         <div className="basis-2/5">
           <LandingDonutChart />
