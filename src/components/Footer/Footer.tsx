@@ -2,11 +2,11 @@ import type { ReactNode } from 'react'
 import { ArrowUpRightIcon, HeartIcon } from '@heroicons/react/24/solid'
 import Image from 'next/image'
 
-import InstagramIcon from '../../assets/instagram-logo.svg'
-import FacebookIcon from '../../assets/facebook-logo.svg'
-import TwitterIcon from '../../assets/twitter-logo.svg'
-import GitHubIcon from '../../assets/github-logo.svg'
 import CapitalizedTitle from '../Text/CapitalizedTitle'
+import InstagramIcon from '../Icon/InstagramIcon'
+import FacebookIcon from '../Icon/FacebookIcon'
+import TwitterIcon from '../Icon/TwitterIcon'
+import GitHubIcon from '../Icon/GitHubIcon'
 
 interface LinkSubsectionProps {
   title: string
@@ -40,12 +40,12 @@ interface SocialLinkProps {
 }
 
 const SocialLink = ({ type }: SocialLinkProps) => {
-  const icon: string = {
-    instagram: InstagramIcon as string,
-    facebook: FacebookIcon as string,
-    twitter: TwitterIcon as string,
-    github: GitHubIcon as string,
-  }[type]
+  const icon = {
+    instagram: <InstagramIcon className="mr-2" />,
+    facebook: <FacebookIcon className="mr-2" />,
+    twitter: <TwitterIcon className="mr-2" />,
+    github: <GitHubIcon className="mr-2" />,
+  }
 
   const displayText = {
     instagram: 'Instagram',
@@ -55,13 +55,9 @@ const SocialLink = ({ type }: SocialLinkProps) => {
   }
 
   return (
-    <span className="flex">
-      <Image
-        className="mr-2 w-5 hover:text-inherit"
-        src={icon}
-        alt={`${type} logo`}
-      />
-      {displayText[type]}
+    <span className="group flex items-center">
+      {icon[type]}
+      <span className="group-hover:fill-clementine">{displayText[type]}</span>
     </span>
   )
 }
