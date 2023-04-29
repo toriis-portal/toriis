@@ -1,10 +1,11 @@
 import clsx from 'classnames'
 import type { ReactNode } from 'react'
+import type { Sector } from '@prisma/client'
 
 import { TableCell } from './TableCell'
 
 // Describes the type of key-value, value types that can be in the table data passed in
-export type RowEntry = string | number
+export type RowEntry = string | number | Sector | undefined
 
 interface BaseColumnCtrl<TableRow> {
   applyStyle?: (row: TableRow) => string
@@ -66,7 +67,7 @@ export type TableColumnCtrl<TableRow> =
 /**
  * Generic Column interface that describes the properties of a column for the DynamicTable
  */
-interface Column<TableRow> {
+export interface Column<TableRow> {
   key: keyof TableRow
   label: string
   headerClassName?: string

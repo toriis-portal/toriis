@@ -6,7 +6,11 @@ import { api } from '../../utils/api'
 import { INDUSTRIES } from '../../utils/constants'
 
 import { DynamicTable, PaginatedDynamicTable } from './DynamicTable'
-import type { Column } from './DynamicTable/DynamicTable'
+import type {
+  BaseTableRowGeneric,
+  Column,
+  RowEntry,
+} from './DynamicTable/DynamicTable'
 
 const PAGE_SIZE = 20
 
@@ -29,11 +33,9 @@ interface Props<TableRow> {
   setSkip: (skip: number) => void
 }
 
-interface baseTableRow {
-  id: string
-}
-
-export const DynamicPaginatedAdminTable = <TableRow extends baseTableRow>({
+export const DynamicPaginatedAdminTable = <
+  TableRow extends BaseTableRowGeneric<TableRow>,
+>({
   dataset,
   originalRows,
   columns,
@@ -50,12 +52,10 @@ export const DynamicPaginatedAdminTable = <TableRow extends baseTableRow>({
   >([])
   const { data: session, status } = useSession()
 
-  const [rows, setRows] = useState<TableRowWithChangedEntries<TableRow>[]>(() =>
-    originalRows.map((row) => ({
-      ...row,
-      changedEntries: [],
-    })),
-  )
+  const mutation = api.request.createRequest.useMutation()
+
+  const [rows, setRows] =
+    useState<TableRowWithChangedEntries<TableRow>[]>(originalRows)
 
   const capturePageChanges = (page: number) => {
     const newEntries = [] as GlobalStateEntry<TableRow>[]
@@ -89,8 +89,7 @@ export const DynamicPaginatedAdminTable = <TableRow extends baseTableRow>({
 
   const submitRequest = () => {
     const currentMergedChanges = capturePageChanges(skip / PAGE_SIZE + 1)
-
-    api.request.createRequest.useQuery({
+    mutation.mutate({
       dataset: dataset,
       updates: currentMergedChanges,
       status: 'PENDING',
@@ -101,12 +100,7 @@ export const DynamicPaginatedAdminTable = <TableRow extends baseTableRow>({
 
   // Persist changed data when moving through pages
   useEffect(() => {
-    const initializeRows = originalRows.map((row) => ({
-      ...row,
-      changedEntries: [],
-    }))
-
-    const newRows = initializeRows.map((row) => {
+    const newRows = originalRows.map((row) => {
       const globalStateEntry = globalStateEntries.filter(
         (entry) => entry.id === row.id && entry.page === skip / PAGE_SIZE + 1,
       )
@@ -142,7 +136,7 @@ export const DynamicPaginatedAdminTable = <TableRow extends baseTableRow>({
     row: TableRow,
     updatedEntry: {
       key: keyof TableRow
-      value: TableRow[keyof TableRow]
+      value: RowEntry
     },
   ) => {
     setRows((prevRows) => {
@@ -224,8 +218,7 @@ export const DynamicPaginatedAdminTable = <TableRow extends baseTableRow>({
           if (curRow) {
             handleChange(curRow, {
               key: curColumn,
-              value: e.target
-                .value as TableRowWithChangedEntries<TableRow>[keyof TableRow],
+              value: e.target.value as RowEntry,
             })
           }
         }}

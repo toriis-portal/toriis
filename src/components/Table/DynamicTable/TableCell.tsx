@@ -62,12 +62,18 @@ const SelectEntry = <TableRow extends BaseTableRowGeneric<TableRow>>({
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (typeof selected === 'number') {
       setSelected(Number(e.target.value))
-      onChange?.(row, { key: col.key, value: Number(e.target.value) })
+      onChange?.(row, {
+        key: col.key as Exclude<keyof TableRow, 'changedEntries'>,
+        value: Number(e.target.value),
+      })
       return
     }
 
     setSelected(e.target.value)
-    onChange?.(row, { key: col.key, value: e.target.value })
+    onChange?.(row, {
+      key: col.key as Exclude<keyof TableRow, 'changedEntries'>,
+      value: e.target.value,
+    })
   }
 
   return (

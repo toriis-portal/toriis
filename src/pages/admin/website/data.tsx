@@ -4,20 +4,95 @@ import type { FC } from 'react'
 import { useEffect, useMemo, useState } from 'react'
 import type { Dataset } from '@prisma/client'
 import type { Company } from '@prisma/client'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { getQueryKey } from '@trpc/react-query'
 
 import { AdminNavBar } from '../../../components'
 import { DynamicPaginatedAdminTable } from '../../../components/Table/DynamicPaginatedAdminTable'
 import { INDUSTRIES } from '../../../utils/constants'
 import { api } from '../../../utils/api'
+import type { Column } from '../../../components/Table/DynamicTable/DynamicTable'
+
+const industryKeyValue = INDUSTRIES.map((industry) => ({
+  key: industry,
+  value: industry,
+}))
+
+interface CompanyWithChangedEntries extends Company {
+  changedEntries: (keyof Company)[]
+}
+
+const CompanyColumns: Column<Company>[] = [
+  {
+    key: 'name',
+    label: 'Name',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row: Company) => row.name ?? '',
+    },
+  },
+  {
+    key: 'ticker',
+    label: 'Ticker',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.ticker ?? '',
+    },
+  },
+  {
+    key: 'sector',
+    label: 'Sector',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.sector ?? '',
+    },
+  },
+  {
+    key: 'industry',
+    label: 'Industry',
+    isEditable: true,
+    ctrl: {
+      type: 'select',
+      options: industryKeyValue,
+      render: (row) => row.industry ?? '',
+    },
+  },
+  {
+    key: 'description',
+    label: 'Description',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.description ?? '',
+    },
+  },
+  {
+    key: 'netAssetVal',
+    label: 'Net Asset Value',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.netAssetVal,
+    },
+  },
+  {
+    key: 'bloombergId',
+    label: 'Bloomberg ID',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.bloombergId ?? '',
+    },
+  },
+]
 
 const UpdateData: FC = () => {
   const { data: session, status } = useSession()
   const { push } = useRouter()
   const [dataset, setDataSet] = useState<Dataset>('COMPANY')
   const [columns, setColumns] = useState([])
-  const [rows, setRows] = useState<Company[]>([])
+  const [rows, setRows] = useState<CompanyWithChangedEntries[]>([])
   const [skip, setSkip] = useState(0)
 
   const { data: investment } = api.investment.getInvestmentsBySkipTake.useQuery(
@@ -32,10 +107,6 @@ const UpdateData: FC = () => {
   })
 
   console.log(investment)
-  const industryKeyValue = INDUSTRIES.map((industry) => ({
-    key: industry,
-    value: industry,
-  }))
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -43,7 +114,10 @@ const UpdateData: FC = () => {
     }
   }, [push, status])
 
-  const originalRows = useMemo(() => company?.items ?? [], [company?.items])
+  const originalRows: Company[] = useMemo(
+    () => company?.items ?? [],
+    [company?.items],
+  )
 
   // // Add data to table when data is loaded
   useEffect(() => {
@@ -63,76 +137,11 @@ const UpdateData: FC = () => {
         <button onClick={() => setDataSet('INVESTMENT')}>Investments</button>
         <button onClick={() => setDataSet('COMPANY')}>Companies</button>
         <DynamicPaginatedAdminTable
+          originalRows={rows}
           skip={skip}
           setSkip={setSkip}
           dataset={dataset}
-          originalRows={rows}
-          columns={[
-            {
-              key: 'name',
-              label: 'Name',
-              isEditable: true,
-              ctrl: {
-                type: 'text',
-                render: (row) => row.name ?? '',
-              },
-            },
-            {
-              key: 'ticker',
-              label: 'Ticker',
-              isEditable: true,
-              ctrl: {
-                type: 'text',
-                render: (row) => row.ticker ?? '',
-              },
-            },
-            {
-              key: 'sector',
-              label: 'Sector',
-              isEditable: true,
-              ctrl: {
-                type: 'text',
-                render: (row) => row.sector ?? '',
-              },
-            },
-            {
-              key: 'industry',
-              label: 'Industry',
-              isEditable: true,
-              ctrl: {
-                type: 'select',
-                options: industryKeyValue,
-                render: (row) => row.industry ?? '',
-              },
-            },
-            {
-              key: 'description',
-              label: 'Description',
-              isEditable: true,
-              ctrl: {
-                type: 'text',
-                render: (row) => row.description ?? '',
-              },
-            },
-            {
-              key: 'netAssetVal',
-              label: 'Net Asset Value',
-              isEditable: true,
-              ctrl: {
-                type: 'text',
-                render: (row) => row.netAssetVal,
-              },
-            },
-            {
-              key: 'bloombergId',
-              label: 'Bloomberg ID',
-              isEditable: true,
-              ctrl: {
-                type: 'text',
-                render: (row) => row.bloombergId ?? '',
-              },
-            },
-          ]}
+          columns={CompanyColumns}
         />
       </div>
     )

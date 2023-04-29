@@ -23,7 +23,9 @@ export const requestRouter = createTRPCRouter({
         updates: z.array(
           z.object({
             id: z.string(),
-            value: z.union([z.string(), z.number()]),
+            key: z.string().or(z.number()).or(z.symbol()),
+            value: z.any(), // TODO: Check this again so and see if there's a way we can have more narrow types on this
+            page: z.number().nullish(),
           }),
         ),
         status: z.nativeEnum(RequestStatus),
@@ -32,7 +34,7 @@ export const requestRouter = createTRPCRouter({
         createdAt: z.string(),
       }),
     )
-    .query(async ({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
       const request = await ctx.prisma.request.create({
         data: {
           dataset: input.dataset,
