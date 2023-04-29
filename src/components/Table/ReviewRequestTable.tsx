@@ -17,7 +17,7 @@ const RequestReviewTable: FC<RequestTableProps> = ({
   className,
 }) => {
   return (
-    <div className={clsx('flex flex-col items-center', className)}>
+    <div className={clsx('body-normal flex flex-col items-center', className)}>
       <table className="w-full table-fixed overflow-x-scroll py-12">
         <colgroup>
           <col className="w-[20%]" />
@@ -36,7 +36,7 @@ const RequestReviewTable: FC<RequestTableProps> = ({
         <tbody>
           {requests.map((request) => {
             return (
-              <tr key={request.id} className="border-b-2 border-lightGray py-3">
+              <tr key={request.id} className="border-b-2 border-lightGray">
                 <td className="py-3 text-black">
                   {request.createdAt.toLocaleDateString()}
                 </td>

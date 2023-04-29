@@ -3,7 +3,6 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
-import clsx from 'clsx'
 import { Spinner } from 'flowbite-react'
 
 import { api } from '../../../utils/api'
@@ -17,17 +16,14 @@ import {
 const RequestPage: FC = () => {
   const { data: session, status } = useSession()
   const { push } = useRouter()
+  const userId = session?.user.id ?? ''
+  const [showOnlyUserRequests, setShowOnlyUserRequests] = useState(true)
 
   useEffect(() => {
     if (status === 'unauthenticated') {
       void push('/auth/error')
     }
   }, [push, status])
-
-  const [showOnlyUserRequests, setShowOnlyUserRequests] = useState(true)
-
-  let items: Request[] = []
-  const userId = session?.user.id ?? ''
 
   const limit = 5
   const {
@@ -62,11 +58,16 @@ const RequestPage: FC = () => {
     }
   }, [refetch])
 
-  data?.pages.forEach((page) => {
-    page.items.forEach((item) => {
-      items = [...items, item]
+  type QueryDataType = typeof data
+  const parseData = (data: QueryDataType) => {
+    let items: Request[] = []
+    data?.pages.forEach((page) => {
+      page.items.forEach((item) => {
+        items = [...items, item]
+      })
     })
-  })
+    return items
+  }
 
   return (
     <div>
@@ -87,7 +88,7 @@ const RequestPage: FC = () => {
               />
             </div>
             <RequestReviewTable
-              requests={items}
+              requests={parseData(data)}
               myRequests={showOnlyUserRequests}
               className={'w-5/6 pt-16 pb-4'}
             />
