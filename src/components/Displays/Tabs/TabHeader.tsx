@@ -1,16 +1,22 @@
 import clsx from 'clsx'
 import type { FC } from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const TabHeader: FC<{ title: string; active: boolean }> = ({
   title,
   active,
 }) => {
-  const MAX_TITLE_LENGTH = 5
-  const truncatedTitle =
-    title.length > MAX_TITLE_LENGTH
-      ? title.substring(0, MAX_TITLE_LENGTH) + '...'
-      : title
+  const [truncatedTitle, setTruncatedTitle] = useState(title)
+
+  // const MAX_TITLE_LENGTH = 5
+  // const truncatedTitle =
+  //   title.length > MAX_TITLE_LENGTH
+  //     ? title.substring(0, MAX_TITLE_LENGTH) + '...'
+  //     : title
+
+  useEffect(() => {
+    console.log(window.innerWidth)
+  })
 
   return (
     <div

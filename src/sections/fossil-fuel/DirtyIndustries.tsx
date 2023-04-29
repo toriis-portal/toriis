@@ -26,13 +26,9 @@ const DirtyIndustries: FC<{ companies: DirtyCompanyEntry[] }> = ({
         <ul className="list-disc">{children}</ul>
       ),
       [INLINES.HYPERLINK]: (node: Block | Inline, children: any) => {
-        const url =
-          'uri' in node.data && typeof node.data.uri == 'string'
-            ? node.data.uri
-            : '#'
         return (
           <a
-            href={url}
+            href={node.data.uri as string}
             target="_blank"
             rel="noopener noreferrer"
             className="underline"
