@@ -15,7 +15,7 @@ const RefuteUISResponse: FC<RefuteUISResponseProps> = ({
   entries,
 }) => {
   return (
-    <div className="bg-clementine/20 px-12 py-20">
+    <div className="bg-clementine/20 p-12">
       <HighlightedTitle
         title="Refute UIS Response"
         size="large"

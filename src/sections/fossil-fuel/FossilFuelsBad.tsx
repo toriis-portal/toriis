@@ -12,7 +12,7 @@ interface FossilFuelsBadProps {
 
 const FossilFuelsBad: FC<FossilFuelsBadProps> = ({ text, caption }) => {
   return (
-    <div className="bg-[#E6F0FA] p-12">
+    <div className="bg-lightBlue p-12">
       <HighlightedTitle
         title="Why Are Fossil Fuels Bad"
         size="large"

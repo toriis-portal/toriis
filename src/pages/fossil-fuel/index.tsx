@@ -5,7 +5,6 @@ import {
   ToTopButton,
   HighlightedTitle,
   SecondaryNavBar,
-  ClimateClock,
   Footer,
 } from '../../components'
 import { ContentWrapper } from '../../utils/content'
@@ -69,8 +68,7 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
         />
       </div>
       <SecondaryNavBar navItems={navItems} />
-
-      <div id="uofiInvestments" className="pt-20">
+      <div id="uofiInvestments" className="pt-10">
         <UniversityInvestments
           img={fossilFuelPageEntries['treeMap']}
           caption={fossilFuelPageEntries['uofIInvestments']}

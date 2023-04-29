@@ -17,7 +17,7 @@ const WhatWarmingMeans: FC<WarmingProps> = ({
   text,
 }) => {
   return (
-    <div className="bg-[#FFA90233] p-12">
+    <div className="bg-clementine/20 p-12">
       <HighlightedTitle
         title="What 1.5C Warning Means"
         size="large"
