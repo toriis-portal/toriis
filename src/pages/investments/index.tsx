@@ -247,7 +247,7 @@ const InvestmentPage: FC = () => {
                     indicates strong management and low risk.
                     <Tag
                       title="CCC"
-                      className="body-small float-left mr-2 bg-clementine text-white"
+                      className="body-small float-left mr-2 bg-pumpkin text-white"
                     />
                     indicates weak management and high risk.
                   </p>
