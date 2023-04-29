@@ -28,25 +28,9 @@ const DirtyIndustries: FC<{ companies: DirtyCompanyEntry[] }> = ({
 }) => {
   const contentfulOptions = {
     renderNode: {
-      [BLOCKS.DOCUMENT]: (node: any, children: any) => {
-        function containsProps(object: any): object is contentfulDocumentList {
-          return 'props' in object
-        }
-        const canDeconstructChildren =
-          Array.isArray(children) &&
-          children.length > 0 &&
-          containsProps(children[0])
-
-        return canDeconstructChildren && containsProps(children[0]) ? (
-          <ul className="list-disc">
-            {children[0].props.children.map((elem, i) => (
-              <li key={i}>{elem}</li>
-            ))}
-          </ul>
-        ) : (
-          <>{children}</>
-        )
-      },
+      [BLOCKS.UL_LIST]: (node: any, children: any) => (
+        <ul className="list-disc">{children}</ul>
+      ),
       [INLINES.HYPERLINK]: (node: Block | Inline, children: any) => {
         const url =
           'uri' in node.data && typeof node.data.uri == 'string'

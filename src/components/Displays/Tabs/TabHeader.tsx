@@ -1,15 +1,17 @@
 import clsx from 'clsx'
 import type { FC } from 'react'
+import { useState } from 'react'
 
 const TabHeader: FC<{ title: string; active: boolean }> = ({
   title,
   active,
 }) => {
   const MAX_TITLE_LENGTH = 5
-  let truncatedTitle = title
-  if (title.length > MAX_TITLE_LENGTH) {
-    truncatedTitle = title.substring(0, MAX_TITLE_LENGTH) + '...'
-  }
+  const truncatedTitle =
+    title.length > MAX_TITLE_LENGTH
+      ? title.substring(0, MAX_TITLE_LENGTH) + '...'
+      : title
+
   return (
     <div
       className={clsx(
