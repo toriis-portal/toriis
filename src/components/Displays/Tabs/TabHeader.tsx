@@ -8,15 +8,22 @@ const TabHeader: FC<{ title: string; active: boolean }> = ({
 }) => {
   const [truncatedTitle, setTruncatedTitle] = useState(title)
 
-  // const MAX_TITLE_LENGTH = 5
-  // const truncatedTitle =
-  //   title.length > MAX_TITLE_LENGTH
-  //     ? title.substring(0, MAX_TITLE_LENGTH) + '...'
-  //     : title
-
   useEffect(() => {
-    console.log(window.innerWidth)
-  })
+    const handleResize = () => {
+      const MAX_TITLE_LENGTH = window.innerWidth > 1000 ? 5 : 2
+      setTruncatedTitle(
+        title.length > MAX_TITLE_LENGTH
+          ? title.substring(0, MAX_TITLE_LENGTH) + '...'
+          : title,
+      )
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [title, truncatedTitle])
 
   return (
     <div
