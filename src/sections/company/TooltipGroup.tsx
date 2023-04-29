@@ -1,4 +1,4 @@
-import type { FC } from 'react'
+import type { FC, ReactNode } from 'react'
 import clsx from 'clsx'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import type { Company, ESG } from '@prisma/client'
@@ -16,6 +16,7 @@ interface CompanyTooltipGroupProps {
   company: Company & { ESG: ESG | null }
   sectorEntry: SectorEntry
   industryEntry: IndustryEntry
+  esgExplanation: ReactNode
   className?: string
 }
 
@@ -23,6 +24,7 @@ const CompanyTooltipGroup: FC<CompanyTooltipGroupProps> = ({
   company,
   sectorEntry,
   industryEntry,
+  esgExplanation,
   className,
 }) => {
   return (
@@ -84,12 +86,8 @@ const CompanyTooltipGroup: FC<CompanyTooltipGroupProps> = ({
                 )}
               />
               <br />
-              <b>Environmental grade:</b> ESG refers to a set of values used to
-              screen potential investments: Environmental, Social and
-              Governance. An ESG score measures how sustainably a company is
-              conducting business based on their environmental impact calculated
-              from their carbon emissions, energy consumption and climate change
-              action. It also addresses
+              <b>Environmental grade:</b>
+              {esgExplanation}
             </div>
           </ToolTip>
         )}
