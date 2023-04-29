@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { FC, ReactNode } from 'react'
 import { ArrowUpRightIcon, HeartIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 
@@ -62,7 +62,7 @@ const SocialLink = ({ type }: SocialLinkProps) => {
   )
 }
 
-export const Footer = () => (
+export const Footer: FC = () => (
   <footer>
     <div className="bg-darkTeal p-10 text-white">
       <div className="flex flex-wrap">
@@ -87,7 +87,7 @@ export const Footer = () => (
             title="About us"
             links={[
               {
-                href: 'https://www.secsillinois.org/',
+                href: 'https://secsatuiuc.web.illinois.edu',
                 text: (
                   <span className="flex underline underline-offset-4">
                     SECS <ArrowUpRightIcon className="ml-1 w-5" />

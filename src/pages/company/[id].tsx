@@ -18,7 +18,7 @@ import {
   HighlightedTitle,
   InvestmentTable,
   EmissionBarChart,
-  CompanyDetailsAccordion,
+  ReadMoreAccordion,
   EnergyRadialChart,
   BackButton,
   FuelRadialChart,
@@ -180,10 +180,7 @@ const Company: FC<CompanyDetailsProps> = ({
           className="mb-10"
         />
         {company.description && (
-          <CompanyDetailsAccordion
-            content={company.description}
-            className="mb-10"
-          />
+          <ReadMoreAccordion content={company.description} className="mb-10" />
         )}
         {(company.emission ||
           company.fuel ||

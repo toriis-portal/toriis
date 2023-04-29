@@ -35,5 +35,10 @@ const config = {
       },
     ]
   },
+
+  images: {
+    domains: ['images.ctfassets.net'],
+  },
 }
+
 export default config
