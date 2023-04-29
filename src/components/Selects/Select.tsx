@@ -219,7 +219,7 @@ export const Select: FC<SelectProps> = ({
         >
           <span
             className={clsx('w-full text-black', {
-              'text-md overflow-hidden whitespace-nowrap font-inter': isFilter,
+              'overflow-hidden whitespace-nowrap': isFilter,
             })}
           >
             {textOption}
@@ -282,7 +282,7 @@ export const Select: FC<SelectProps> = ({
                     key={option}
                     className="mt-1 flex items-center text-black"
                   >
-                    <span className={clsx({ 'font-inter text-sm': isFilter })}>
+                    <span className={clsx({ 'body-small': isFilter })}>
                       {option}
                     </span>
                     <input
@@ -298,16 +298,14 @@ export const Select: FC<SelectProps> = ({
               <ul className="m-auto flex w-11/12 flex-col gap-5">
                 {Object.entries(options).map(([key, value]) => (
                   <li key={key} className="text-black">
-                    <span className="text-xl">{key}</span>
+                    <span>{key}</span>
                     <ul className="mt-2 flex flex-col gap-2">
                       {value.filter(handleSearchFilter).map((option) => (
                         <li
                           key={option}
                           className="flex items-center text-black"
                         >
-                          <span className="text-sm max-sm:text-[3px]">
-                            {option}
-                          </span>
+                          <span className="body-small">{option}</span>
                           <input
                             onChange={() =>
                               handleGroupChange(`${key}-${option}`)
@@ -325,7 +323,7 @@ export const Select: FC<SelectProps> = ({
             )}
             {updateControl?.type === 'on-apply' && (
               <button
-                className="m-[auto] mt-5 flex w-9/12 justify-center rounded-full bg-black text-sm text-white"
+                className="body-normal m-[auto] mt-5 flex w-9/12 justify-center rounded-full bg-black text-white"
                 onClick={handleApply}
               >
                 Apply

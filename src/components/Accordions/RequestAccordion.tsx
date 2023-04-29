@@ -37,16 +37,14 @@ const RequestAccordion: FC<{ content: OurRequestsEntry }> = ({ content }) => {
         )}
       >
         <NumberCircle val={content.order} />
-        <p className="inline p-4 text-lg font-medium md:ml-6">
-          {content.title}
-        </p>
+        <p className="inline p-4 md:ml-6">{content.title}</p>
       </div>
       {open && (
-        <div className="border-t-2 border-cobalt px-4 pt-6 font-inter text-base text-neutral-600 md:px-20">
+        <div className="body-normal border-t-2 border-cobalt px-4 pt-6 text-neutral-600 md:px-20">
           {documentToReactComponents(content.details, contentfulOptions)}
         </div>
       )}
-      <div className="flex px-6 pb-6">
+      <div className="body-normal flex px-6 pb-6">
         <ReadMoreButton isOpen={open} handleOpen={handleOpen} />
       </div>
     </div>

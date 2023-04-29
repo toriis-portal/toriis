@@ -15,12 +15,12 @@ const NavButton: FC<NavButtonProps> = ({ title, link }) => {
     <Link
       href={link}
       className={clsx(
-        'border-b-4 bg-white py-2 text-center font-klima text-[20px] font-medium text-black',
+        'border-b-4 bg-white py-2 text-center text-black',
         {
           'border-cobalt': isActive,
           'border-white': !isActive,
         },
-        'hover:border-b-4 hover:border-cobalt hover:duration-100',
+        'header-3 text-[20px] hover:border-b-4 hover:border-cobalt hover:duration-100',
       )}
     >
       {title}

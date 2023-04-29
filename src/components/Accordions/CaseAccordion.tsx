@@ -33,12 +33,12 @@ const CaseAccordion: FC<{ content: CaseEntry }> = ({ content }) => {
         )
       },
       [INLINES.HYPERLINK]: (node: Block | Inline, children: any) => {
-        const url =
-          'uri' in node.data && typeof node.data.uri == 'string'
-            ? node.data.uri
-            : '#'
         return (
-          <a href={url} target="_blank" rel="noopener noreferrer">
+          <a
+            href={node.data.uri as string}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {children}
             <ArrowUpRightIcon className="align-self-start ml-0.5 inline h-4 w-4 stroke-current stroke-1" />
           </a>
@@ -49,10 +49,9 @@ const CaseAccordion: FC<{ content: CaseEntry }> = ({ content }) => {
 
   return (
     <div
-      className={clsx('mb-6 content-center rounded-xl bg-white lg:mx-32', {
-        'border-4 border-cobalt': open,
-        'border-[3px] border-black': !open,
-      })}
+      className={clsx(
+        'mb-6 content-center rounded-xl border-[3px] border-cobalt bg-white lg:mx-20',
+      )}
     >
       <button
         onClick={handleOpen}
@@ -61,7 +60,7 @@ const CaseAccordion: FC<{ content: CaseEntry }> = ({ content }) => {
         )}
       >
         <p
-          className={clsx('inline p-4 text-lg font-medium lg:ml-6', {
+          className={clsx('header-3 inline p-4 lg:ml-6', {
             'lg:ml-6': !open,
             '-ml-[1.5px] -mt-[1px] lg:ml-[22.5px]': open,
           })}
@@ -76,7 +75,7 @@ const CaseAccordion: FC<{ content: CaseEntry }> = ({ content }) => {
       </button>
       <div
         className={clsx(
-          'font-regular flex flex-col gap-2 border-t-[0.125rem] border-cobalt pt-6 pb-9 font-inter text-base text-black',
+          'body-normal flex flex-col gap-2 border-t-[0.125rem] border-cobalt pt-6 pb-9 text-black',
           {
             'mx-[47px]': open,
             'mx-12': !open,
