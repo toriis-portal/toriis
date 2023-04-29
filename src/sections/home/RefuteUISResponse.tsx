@@ -15,14 +15,14 @@ const RefuteUISResponse: FC<RefuteUISResponseProps> = ({
   entries,
 }) => {
   return (
-    <div className="bg-clementine/20 px-12 py-20">
+    <div className="bg-clementine/20 p-12">
       <HighlightedTitle
         title="Refute UIS Response"
         size="large"
         color="clementine"
       />
       <div className="flex flex-col lg:flex-row">
-        <div className="basis-3/7 px-20 py-8 text-[28px] font-medium leading-tight">
+        <div className="header-3 basis-3/7 px-20 py-8 leading-tight">
           {documentToReactComponents(leftText)}
         </div>
         <div className="basis-4/7 lg:pr-8">

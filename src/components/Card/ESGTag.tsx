@@ -16,7 +16,7 @@ const ESGTag: FC<TagProps> = ({ grade }) => {
     <div
       className={`flex ${envGradeToColor(
         grade,
-      )} aspect-square max-w-fit items-center rounded-xl text-center text-[28px] font-medium leading-8 text-white`}
+      )} header-2 aspect-square max-w-fit items-center rounded-xl text-center leading-8 text-white`}
     >
       <div className="w-[109px] align-middle">{display}</div>
     </div>
