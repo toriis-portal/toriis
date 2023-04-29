@@ -1,7 +1,6 @@
-import type { FC } from 'react'
 import clsx from 'clsx'
 
-const CapitalizedTitle: FC = ({
+const CapitalizedTitle = ({
   className,
   ...props
 }: React.ComponentProps<'span'>) => {
