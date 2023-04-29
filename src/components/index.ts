@@ -6,12 +6,14 @@ import ToTopButton from './Buttons/ToTopButton'
 import ReadMoreButton from './Buttons/ReadMoreButton'
 import BackButton from './Buttons/BackButton'
 import LoadMoreButton from './Buttons/LoadMoreButton'
+import TabButton from './Buttons/TabButton'
 // Card
 import CompanyCard from './Card/CompanyCard'
 import ESGTag from './Card/ESGTag'
 import NetAssetTag from './Card/NetAssetTag'
 import AdminBox from './Card/AdminBox'
 import DataCard from './Card/DataCard'
+import LinkBox from './Card/LinkBox'
 // Charts
 import EnergyRadialChart from './Charts/EnergyRadialChart'
 import LandingDonutChart from './Charts/LandingDonutChart'
@@ -22,10 +24,11 @@ import FinanceBrushChart from './Charts/FinanceBrushChart'
 import ListItem from './Displays/ListItem'
 import Carousel from './Displays/Carousel/Carousel'
 import ClimateClock from './Displays/ClimateClock/ClimateClock'
+import ImageWithCaption from './Displays/Image/ImageWithCaption'
 // Accordions
 import RequestAccordion from './Accordions/RequestAccordion'
 import CaseAccordion from './Accordions/CaseAccordion'
-import CompanyDetailsAccordion from './Accordions/CompanyDetailsAccordion'
+import ReadMoreAccordion from './Accordions/ReadMoreAccordion'
 // Nav
 import PrimaryNavBar from './Nav/PrimaryNavBar'
 import SecondaryNavBar from './Nav/SecondaryNavBar'
@@ -37,7 +40,7 @@ import InviteAdminBar from './Selects/InviteAdminBar'
 // Text
 import NumberCircle from './Text/NumberCircle'
 import HighlightedTitle from './Text/HighlightedTitle'
-import LimitedPopupBox from './Text/LimitedPopupBox'
+import CommentModal from './Modals/CommentModal'
 import CapitalizedTitle from './Text/CapitalizedTitle'
 import ShadowTitle from './Text/ShadowTitle'
 import StatusTag from './Text/StatusTag'
@@ -48,15 +51,20 @@ import InvestmentTable from './Table/InvestmentTable'
 import RequestReviewTable from './Table/ReviewRequestTable'
 //Tooltips
 import ToolTip from './Tooltips/ToolTip'
-//Modals
+// Modals
 import GeneralModal from './Modals/GeneralModal'
 import LeaveConfirmationModal from './Modals/LeaveConfirmationModal'
+// Toast
+import Toast from './Toast/Toast'
+// Footer
+import Footer from './Footer/Footer'
 export {
   AuthButton,
   ListItem,
   NumberCircle,
   HighlightedTitle,
   NavButton,
+  TabButton,
   PrimaryNavBar,
   PrimaryButton,
   ToTopButton,
@@ -84,7 +92,7 @@ export {
   FuelRadialChart,
   EmissionBarChart,
   DataCard,
-  CompanyDetailsAccordion,
+  ReadMoreAccordion,
   EnergyRadialChart,
   AdminNavBar,
   ClimateClock,
@@ -92,6 +100,10 @@ export {
   AdminListTable,
   InviteAdminBar,
   RequestReviewTable,
-  LimitedPopupBox,
+  CommentModal,
   StatusTag,
+  LinkBox,
+  ImageWithCaption,
+  Toast,
+  Footer,
 }

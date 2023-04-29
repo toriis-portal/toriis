@@ -3,13 +3,13 @@ import type { FC } from 'react'
 import { useRef, useState, useEffect } from 'react'
 import { XMarkIcon } from '@heroicons/react/24/solid'
 
-import GeneralModal from '../Modals/GeneralModal'
+import GeneralModal from './GeneralModal'
 
-interface LimitedPopupProps {
+interface CommentModalProps {
   text: string
 }
 
-const LimitedPopupBox: FC<LimitedPopupProps> = ({ text }) => {
+const CommentModal: FC<CommentModalProps> = ({ text }) => {
   const commentRef = useRef<HTMLParagraphElement>(null)
   const [isOverflowing, setIsOverflowing] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
@@ -24,7 +24,7 @@ const LimitedPopupBox: FC<LimitedPopupProps> = ({ text }) => {
   }, [])
 
   return (
-    <div className="flex gap-2 border border-lightGray p-1">
+    <div className="body-normal flex flex-row justify-between gap-2 border border-lightGray px-4 py-1">
       <GeneralModal isOpen={isOpen}>
         <button
           onClick={() => setIsOpen(false)}
@@ -36,13 +36,13 @@ const LimitedPopupBox: FC<LimitedPopupProps> = ({ text }) => {
           {text}
         </div>
       </GeneralModal>
-      <p ref={commentRef} className="w-[90%] truncate">
+      <p ref={commentRef} className="basis-5/6 truncate">
         {text}
       </p>
       <button onClick={() => setIsOpen(true)}>
         <u
           className={clsx(
-            'w-[10%] font-inter text-xs font-light italic text-lightGray',
+            'basis-1/6 truncate font-inter text-xs font-light italic text-lightGray',
             { hidden: !isOverflowing },
           )}
         >
@@ -53,4 +53,4 @@ const LimitedPopupBox: FC<LimitedPopupProps> = ({ text }) => {
   )
 }
 
-export default LimitedPopupBox
+export default CommentModal

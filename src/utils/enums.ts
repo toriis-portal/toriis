@@ -28,6 +28,14 @@ export const requestStatusEnum = {
   REJECTED: 'Rejected',
 }
 
+export const datasetEnum = {
+  COMPANY: 'Company',
+  INVESTMENT: 'Investment',
+  FUEL: 'Fuel',
+  EMISSION: 'Emission',
+  ENERGY: 'Energy',
+}
+
 export const netAssetValEnum = {
   '0-5M': [0, 5e6],
   '5M-10M': [5e6, 10e6],

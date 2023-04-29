@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import Link from 'next/link'
 
 import { datasetEnum } from '../../utils/enums'
-import { LimitedPopupBox, StatusTag } from '../../components'
+import { CommentModal, StatusTag } from '../../components'
 
 interface RequestTableProps {
   requests: Request[] | undefined
@@ -48,9 +48,7 @@ const RequestReviewTable: FC<RequestTableProps> = ({
                   {datasetEnum[request.dataset]}
                 </td>
                 <td>
-                  {request.comment && (
-                    <LimitedPopupBox text={request.comment} />
-                  )}
+                  {request.comment && <CommentModal text={request.comment} />}
                 </td>
                 <td className="pl-10">
                   <Link

@@ -15,7 +15,13 @@ const HighlightedTitle: FC<TitleProps> = ({
 }) => {
   return (
     <>
-      <div className={clsx('ml-[1.4rem] w-fit', padded && 'mb-12 ')}>
+      <div
+        className={clsx(
+          'w-fit',
+          padded && 'mb-12',
+          size == 'large' && 'ml-[1.4rem]',
+        )}
+      >
         <div
           className={clsx(
             'relative z-0',

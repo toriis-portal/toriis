@@ -6,9 +6,13 @@ import { useEffect, useState } from 'react'
 import clsx from 'clsx'
 import { Spinner } from 'flowbite-react'
 
-import { AdminNavBar } from '../../../components'
 import { api } from '../../../utils/api'
-import { RequestReviewTable, Tag, LoadMoreButton } from '../../../components'
+import {
+  RequestReviewTable,
+  AdminNavBar,
+  TabButton,
+  LoadMoreButton,
+} from '../../../components'
 
 const RequestPage: FC = () => {
   const { data: session, status } = useSession()
@@ -63,13 +67,6 @@ const RequestPage: FC = () => {
     })
   })
 
-  const selectButtonWrapStyle = clsx('basis-1/2 w-[18vw] min-w-fit')
-  const selectButtonStyle = (selected: boolean) =>
-    clsx('border -m-1 font-normal sm:text-base w-full min-w-fit text-sm', {
-      'border-cobalt bg-lightBlue': selected,
-      'border-black bg-white': !selected,
-    })
-
   return (
     <div>
       {session && (
@@ -77,24 +74,16 @@ const RequestPage: FC = () => {
           <AdminNavBar />
           <div className="flex flex-col items-center pt-12">
             <div className="flex flex-row justify-center gap-5">
-              <button
-                className={selectButtonWrapStyle}
+              <TabButton
+                text="My Request Status"
                 onClick={() => setMyRequests(true)}
-              >
-                <Tag
-                  title="My Request Status"
-                  className={selectButtonStyle(myRequests)}
-                />
-              </button>
-              <button
-                className={selectButtonWrapStyle}
+                active={myRequests}
+              />
+              <TabButton
+                text="Review Database Requests"
                 onClick={() => setMyRequests(false)}
-              >
-                <Tag
-                  title="Review Database Requests"
-                  className={selectButtonStyle(!myRequests)}
-                />
-              </button>
+                active={!myRequests}
+              />
             </div>
             <RequestReviewTable
               requests={items}
