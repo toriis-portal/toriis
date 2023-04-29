@@ -24,7 +24,7 @@ const RequestPage: FC = () => {
     }
   }, [push, status])
 
-  const [myRequests, setMyRequests] = useState(true)
+  const [showOnlyUserRequests, setShowOnlyUserRequests] = useState(true)
 
   let items: Request[] = []
   const userId = session?.user.id ?? ''
@@ -41,13 +41,14 @@ const RequestPage: FC = () => {
     {
       limit: limit,
       userId: userId,
-      showOnlyUserRequests: myRequests,
+      showOnlyUserRequests: showOnlyUserRequests,
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
       refetchOnWindowFocus: false,
       cacheTime: 0,
       retry: false,
+      enabled: !!userId,
     },
   )
 
@@ -76,18 +77,18 @@ const RequestPage: FC = () => {
             <div className="flex flex-row justify-center gap-5">
               <TabButton
                 text="My Request Status"
-                onClick={() => setMyRequests(true)}
-                active={myRequests}
+                onClick={() => setShowOnlyUserRequests(true)}
+                active={showOnlyUserRequests}
               />
               <TabButton
                 text="Review Database Requests"
-                onClick={() => setMyRequests(false)}
-                active={!myRequests}
+                onClick={() => setShowOnlyUserRequests(false)}
+                active={!showOnlyUserRequests}
               />
             </div>
             <RequestReviewTable
               requests={items}
-              myRequests={myRequests}
+              myRequests={showOnlyUserRequests}
               className={'w-5/6 pt-16 pb-4'}
             />
             {(isLoading || !data || isFetchingNextPage) && <Spinner />}

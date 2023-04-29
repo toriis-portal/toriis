@@ -1,13 +1,12 @@
 import type { FC } from 'react'
 import type { Request } from '@prisma/client'
 import clsx from 'clsx'
-import Link from 'next/link'
 
 import { datasetEnum } from '../../utils/enums'
 import { CommentModal, StatusTag } from '../../components'
 
 interface RequestTableProps {
-  requests: Request[] | undefined
+  requests: Request[]
   myRequests: boolean
   className?: string
 }
@@ -35,7 +34,7 @@ const RequestReviewTable: FC<RequestTableProps> = ({
           </tr>
         </thead>
         <tbody>
-          {requests?.map((request) => {
+          {requests.map((request) => {
             return (
               <tr key={request.id} className="border-b-2 border-lightGray py-3">
                 <td className="py-3 text-black">
@@ -48,16 +47,11 @@ const RequestReviewTable: FC<RequestTableProps> = ({
                   {request.comment && <CommentModal text={request.comment} />}
                 </td>
                 <td className="pl-10">
-                  <Link
-                    className="flex h-full items-center justify-end"
-                    href={`/admin/request/${request.id}`}
-                  >
-                    <StatusTag
-                      type={request.status}
-                      myRequests={myRequests}
-                      className="w-full"
-                    />
-                  </Link>
+                  <StatusTag
+                    request={request}
+                    isMyRequest={myRequests}
+                    className="w-full"
+                  />
                 </td>
               </tr>
             )
