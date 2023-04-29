@@ -51,7 +51,7 @@ import ToolTip from './Tooltips/ToolTip'
 import GeneralModal from './Modals/GeneralModal'
 import LeaveConfirmationModal from './Modals/LeaveConfirmationModal'
 // Toast
-import Toast from './Toasts/Toast'
+import Toast from './Toast/Toast'
 // Footer
 import Footer from './Footer/Footer'
 export {
