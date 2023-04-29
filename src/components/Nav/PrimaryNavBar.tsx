@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { Navbar } from 'flowbite-react'
 
 import { AuthButton, NavButton } from '../index'
-import toriisimg from '../../../public/toriis.png'
+import toriisLogo from '../../../public/toriis.png'
 
 const PrimaryNavBar: FC = () => {
   return (
@@ -13,9 +13,9 @@ const PrimaryNavBar: FC = () => {
       <Navbar fluid={true} rounded={true}>
         <Link href="/home">
           <Image
-            src={toriisimg as HTMLImageElement}
-            className="mr-3 h-14 w-auto sm:h-20"
-            alt="Toriis Logo"
+            src={toriisLogo as HTMLImageElement}
+            className="my-3 h-12 w-auto"
+            alt="TORIIS Logo"
           />
         </Link>
         <Navbar.Toggle />

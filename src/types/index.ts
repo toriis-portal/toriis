@@ -1,5 +1,12 @@
 import type { Document } from '@contentful/rich-text-types'
-import type { Company, ESG } from '@prisma/client'
+import type {
+  Company,
+  Emission,
+  Energy,
+  Fuel,
+  Investment,
+} from '@prisma/client'
+import type { Asset } from 'contentful'
 
 /* API Types */
 
@@ -8,6 +15,10 @@ export interface UncleanedESG {
   environment_score: number
   environment_level: string
 }
+
+export type UpdateType = Partial<
+  Company & Investment & Fuel & Emission & Energy
+>
 
 /* Contentful Types */
 
@@ -20,6 +31,7 @@ export interface OurRequestsEntry {
 export interface LinkEntry {
   name: string
   url: string
+  type: 'Home' | 'FossilFuelPage' | 'Link'
 }
 
 export interface ListEntry {
@@ -56,4 +68,22 @@ export interface IndustryEntry {
 export interface SectorEntry {
   name: string
   details?: Document
+}
+export interface FossilFuelPage {
+  treeMap: Asset
+  uofIInvestments: Document
+  whyAreFossilFuelsBad: Document
+  climateClock: Document
+  warmingMeans: Document
+  warmingSource: Document
+  divestmentCase: Document
+  divestmentGraph: Asset
+  divestmentSource: Document
+  divestedSchools: string
+  divestedInstitutions: string
+}
+
+export interface CompanyDetailsEntry {
+  name: string
+  description: Document
 }

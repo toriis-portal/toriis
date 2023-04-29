@@ -1,5 +1,5 @@
 import Script from 'next/script'
-import type { DetailedHTMLProps, HTMLAttributes } from 'react'
+import type { DetailedHTMLProps, FC, HTMLAttributes } from 'react'
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -13,10 +13,13 @@ declare global {
   }
 }
 
-const ClimateClock = () => {
+const ClimateClock: FC = () => {
   return (
     <>
-      <div id="climate-clock-container" className="mx-auto w-5/6 items-center">
+      <div
+        id="climate-clock-container"
+        className="mx-auto my-8 w-full items-center border border-8 border-white"
+      >
         <Script src="https://climateclock.world/widget-v2.js" async />
         <climate-clock />
       </div>

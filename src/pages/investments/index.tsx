@@ -14,6 +14,7 @@ import {
   CompanyCard,
   LoadMoreButton,
   ToolTip,
+  Footer,
 } from '../../components'
 import { api } from '../../utils/api'
 import { sectorEnum, envGradeEnum, netAssetValEnum } from '../../utils/enums'
@@ -279,14 +280,14 @@ const InvestmentPage: FC = () => {
           </div>
         </div>
         {lastSearchIsEmpty && (
-          <p className="mb-8 w-full text-center text-[22px] font-medium">
+          <p className="header-2 mb-8 w-full text-center">
             No results found, try searching again.
           </p>
         )}
         <div className="flex w-full flex-col items-center gap-5 self-center rounded-t-xl bg-lightBlue pb-14">
           <div className="mt-9 mb-4 flex flex-row items-center justify-between self-stretch px-[3.6%]">
             <div className="flex flex-col flex-wrap items-center md:flex-row md:gap-3.5">
-              <p className="text-xl font-medium min-[500px]:text-3xl sm:text-[32px]">
+              <p className="header-2">
                 {lastSearchIsEmpty ||
                 (companySearchQuery == initialSearchQuery &&
                   filterOptions == initialFilterOptions)
@@ -345,6 +346,7 @@ const InvestmentPage: FC = () => {
           <ToTopButton />
         </div>
       </div>
+      <Footer />
     </>
   )
 }

@@ -12,30 +12,9 @@ const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 type FuelTypes = Omit<Fuel, 'id' | 'companyId' | 'year' | 'totalConsumption'>
 
-/**
- * Gets the labels that have a non-null or non-zero value
- *
- * @param fuels - Fuel object to parse
- * @returns Labels that exist on the object
- */
-const getLabels = (fuels: Fuel) => {
-  const labels: string[] = []
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { totalConsumption, id, companyId, year, ...rest } = fuels
-  Object.keys(rest).forEach((key) => {
-    if (
-      rest[key as keyof FuelTypes] !== null &&
-      rest[key as keyof FuelTypes] !== 0 &&
-      key != 'totalConsumption' &&
-      totalConsumption &&
-      (rest[key as keyof FuelTypes] ?? 0) / totalConsumption >= 0.005
-    ) {
-      labels.push(FuelEnum[key as keyof typeof FuelEnum])
-    }
-  })
-
-  return labels
+interface FuelRadialChartProps {
+  source: Fuel
+  setLabels: (labels: string[]) => void
 }
 
 /**
@@ -43,8 +22,35 @@ const getLabels = (fuels: Fuel) => {
  * @param source - Fuel object to parse and render
  * @returns - Radial chart
  */
-const FuelRadialChart: FC<{ source: Fuel }> = ({ source }) => {
+const FuelRadialChart: FC<FuelRadialChartProps> = ({ source, setLabels }) => {
+  /**
+   * Gets the labels that have a non-null or non-zero value
+   *
+   * @param fuels - Fuel object to parse
+   * @returns Labels that exist on the object
+   */
+  const getLabels = (fuels: Fuel) => {
+    const labels: string[] = []
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { totalConsumption, id, companyId, year, ...rest } = fuels
+    Object.keys(rest).forEach((key) => {
+      if (
+        rest[key as keyof FuelTypes] !== null &&
+        rest[key as keyof FuelTypes] !== 0 &&
+        key != 'totalConsumption' &&
+        totalConsumption &&
+        (rest[key as keyof FuelTypes] ?? 0) / totalConsumption >= 0.005
+      ) {
+        labels.push(FuelEnum[key as keyof typeof FuelEnum])
+      }
+    })
+
+    setLabels(labels)
+    return labels
+  }
   const [series, setSeries] = useState([0, 0, 0, 0])
+
   const getPercentage = (value: number, total: number) => {
     return Math.round((value / total) * 100)
   }
