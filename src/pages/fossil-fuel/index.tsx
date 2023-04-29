@@ -5,38 +5,57 @@ import {
   ToTopButton,
   HighlightedTitle,
   SecondaryNavBar,
-  ClimateClock,
+  Footer,
 } from '../../components'
 import { ContentWrapper } from '../../utils/content'
-import { FinancialCase } from '../../sections'
-import type { CaseEntry } from '../../types'
-import { Test } from '../../components/Table/DynamicPaginatedAdminTable'
+import { FossilFuelPage } from '../../types'
+import type { CaseEntry, LinkEntry } from '../../types'
+import {
+  UniversityInvestments,
+  DirtyIndustry,
+  FossilFuelsBad,
+  WhatWarmingMeans,
+  SchoolsDivested,
+  InstitutionsDivested,
+  FinancialCase,
+} from '../../sections'
 
 export const getServerSideProps = async () => {
   const contentClient = new ContentWrapper()
-  const caseEntries = await contentClient.get('case')
+  const fossilFuelEntries = await contentClient.getAllFossilFuelPageEntries()
+  const caseEntries = fossilFuelEntries['case']
+  const linkEntries = fossilFuelEntries['link']
+  const fossilFuelPageEntries = fossilFuelEntries['fossilFuelPage']
+
   return {
     props: {
+      linkEntries,
       caseEntries,
+      fossilFuelPageEntries,
     },
   }
 }
 
 interface FossilFuelProps {
+  linkEntries: LinkEntry[]
   caseEntries: CaseEntry[]
+  fossilFuelPageEntries: FossilFuelPage
 }
 
-const FossilFuelPage: FC<FossilFuelProps> = ({ caseEntries }) => {
+const FossilFuelPage: FC<FossilFuelProps> = ({
+  linkEntries,
+  caseEntries,
+  fossilFuelPageEntries,
+}) => {
   const navItems = [
     { path: 'uofiInvestments', text: 'University of Illinois Investments' },
     { path: 'dirtyIndustry', text: 'The Dirty Industry UIUC Supports' },
     { path: 'whyFossilFuelsAreBad', text: 'Why Are Fossil Fuels Bad' },
-    { path: 'warning', text: 'What 1.5C Warning Means' },
+    { path: 'warming', text: 'What 1.5C Warming Means' },
     { path: 'financialCase', text: 'The Case For Institutional Divestments' },
     { path: 'divestedSchools', text: 'Schools That Have Divested ' },
     { path: 'divestedInstitutions', text: 'Institutions That Have Divested' },
   ]
-
   return (
     <>
       <PrimaryNavBar />
@@ -49,22 +68,43 @@ const FossilFuelPage: FC<FossilFuelProps> = ({ caseEntries }) => {
         />
       </div>
       <SecondaryNavBar navItems={navItems} />
-
-      {/* Placeholders for fossil fuel page sections: */}
-      <div id="uofiInvestments" className="pt-20"></div>
-      <div id="dirtyIndustry" className="pt-20"></div>
-      <div id="whyFossilFuelsAreBad" className="pt-20"></div>
-      <div id="warning" className="pt-20"></div>
-
-      <div id="financialCase" className="pt-20">
-        <FinancialCase entries={caseEntries} />
+      <div id="uofiInvestments" className="pt-10">
+        <UniversityInvestments
+          img={fossilFuelPageEntries['treeMap']}
+          caption={fossilFuelPageEntries['uofIInvestments']}
+        />
       </div>
-
-      <Test />
-      {/* More placeholders for fossil fuel page sections: */}
-      <div id="divestedSchools" className="pt-20"></div>
-      <div id="divestedInstitutions" className="pt-20"></div>
-      <ClimateClock />
+      <div id="dirtyIndustry" className="pt-20">
+        <DirtyIndustry />
+      </div>
+      <div id="whyFossilFuelsAreBad" className="pt-20">
+        <FossilFuelsBad
+          text={fossilFuelPageEntries['whyAreFossilFuelsBad']}
+          caption={fossilFuelPageEntries['climateClock']}
+        />
+      </div>
+      <div id="warming">
+        <WhatWarmingMeans
+          text={fossilFuelPageEntries['warmingMeans']}
+          linkEntries={linkEntries}
+          footnote={fossilFuelPageEntries['warmingSource']}
+        />
+      </div>
+      <div id="financialCase" className="pt-20">
+        <FinancialCase
+          entries={caseEntries}
+          text={fossilFuelPageEntries['divestmentCase']}
+          img={fossilFuelPageEntries['divestmentGraph']}
+          footnote={fossilFuelPageEntries['divestmentSource']}
+        />
+      </div>
+      <div id="divestedSchools" className="pt-20">
+        <SchoolsDivested />
+      </div>
+      <div id="divestedInstitutions" className="pt-20">
+        <InstitutionsDivested />
+      </div>
+      <Footer />
     </>
   )
 }

@@ -26,7 +26,7 @@ const InviteAdminBar: FC = () => {
         <div className="mr-10 flex w-full lg:mr-20">
           <input
             type="email"
-            className="w-full rounded-md border bg-white px-4 py-4"
+            className="w-full rounded-md border bg-white p-4"
             placeholder="Invite Gmail"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
@@ -36,10 +36,10 @@ const InviteAdminBar: FC = () => {
           text="Invite"
           type="submit"
           hasArrow={false}
-          className="w-48 px-5 py-2 text-base font-medium"
+          className="body-normal w-48 px-5 py-2"
         />
       </form>
-      <div className="font-md mt-2 text-medGray">
+      <div className="mt-2 text-medGray">
         {mutation.isSuccess && 'succesfully invited new administator!'}
         {mutation.isError && 'failed to invite new administator!'}
       </div>

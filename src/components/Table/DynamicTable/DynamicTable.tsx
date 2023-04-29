@@ -67,7 +67,7 @@ export type TableColumnCtrl<TableRow> =
  * Generic Column interface that describes the properties of a column for the DynamicTable
  */
 interface Column<TableRow> {
-  key: keyof Omit<TableRow, 'changedEntries'>
+  key: keyof TableRow
   label: string
   headerClassName?: string
   cellClassName?: string
@@ -103,7 +103,7 @@ interface Props<TableRow> {
   onSelectChange?: (
     row: TableRow,
     updatedEntry: {
-      key: keyof Omit<TableRow, 'changedEntries'>
+      key: keyof TableRow
       value: RowEntry
     },
   ) => void
