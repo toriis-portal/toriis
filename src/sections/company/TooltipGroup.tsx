@@ -78,7 +78,10 @@ const CompanyTooltipGroup: FC<CompanyTooltipGroupProps> = ({
               :
               <Tag
                 title={sectorEntry.avgGrade}
-                className="bg-clementine text-white"
+                className={clsx(
+                  'text-white',
+                  envGradeToColor(sectorEntry.avgGrade),
+                )}
               />
               <br />
               <b>Environmental grade:</b> ESG refers to a set of values used to
