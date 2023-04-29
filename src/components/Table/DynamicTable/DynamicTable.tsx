@@ -66,7 +66,7 @@ export type TableColumnCtrl<TableRow> =
 /**
  * Generic Column interface that describes the properties of a column for the DynamicTable
  */
-export interface Column<TableRow> {
+interface Column<TableRow> {
   key: keyof Omit<TableRow, 'changedEntries'>
   label: string
   headerClassName?: string

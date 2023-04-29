@@ -25,6 +25,8 @@ interface Props<TableRow> {
   dataset: Dataset
   originalRows: TableRow[]
   columns: Column<TableRow>[]
+  skip: number
+  setSkip: (skip: number) => void
 }
 
 interface baseTableRow {
@@ -35,8 +37,9 @@ export const DynamicPaginatedAdminTable = <TableRow extends baseTableRow>({
   dataset,
   originalRows,
   columns,
+  skip,
+  setSkip,
 }: Props<TableRow>) => {
-  const [skip, setSkip] = useState(0)
   const [isSelect, setIsSelect] = useState(false)
   const [curColumn, setCurColumn] = useState<keyof TableRow>('id')
   const [curRow, setCurRow] = useState<TableRow | null>(null)
@@ -47,10 +50,6 @@ export const DynamicPaginatedAdminTable = <TableRow extends baseTableRow>({
   >([])
   const { data: session, status } = useSession()
 
-  // const originalRows = useMemo(
-  //   () => data?.items ?? [],
-  //   [data?.items],
-  // ) as TableRow[]
   const [rows, setRows] = useState<TableRowWithChangedEntries<TableRow>[]>(() =>
     originalRows.map((row) => ({
       ...row,
@@ -59,58 +58,46 @@ export const DynamicPaginatedAdminTable = <TableRow extends baseTableRow>({
   )
 
   const capturePageChanges = (page: number) => {
-    SetGlobalStateEntries(() => {
-      const newEntries = [] as GlobalStateEntry<TableRow>[]
+    const newEntries = [] as GlobalStateEntry<TableRow>[]
 
-      rows
-        .filter((row) => row.changedEntries.length > 0)
-        .forEach((row) => {
-          row.changedEntries.forEach((key) => {
-            newEntries.push({
-              key: key,
-              value: row[key],
-              id: row.id,
-              page: page,
-            })
+    rows
+      .filter((row) => row.changedEntries.length > 0)
+      .forEach((row) => {
+        row.changedEntries.forEach((key) => {
+          newEntries.push({
+            key: key,
+            value: row[key],
+            id: row.id,
+            page: page,
           })
         })
-      const mergedEntries = newEntries
-      globalStateEntries.forEach((entry) => {
-        const existingEntry = newEntries.find(
-          (newEntry) =>
-            newEntry.id === entry.id &&
-            newEntry.page === entry.page &&
-            entry.key === newEntry.key,
-        )
-        if (!existingEntry) {
-          mergedEntries.push(entry)
-        }
       })
-      return mergedEntries
+    const mergedEntries = newEntries
+    globalStateEntries.forEach((entry) => {
+      const existingEntry = newEntries.find(
+        (newEntry) =>
+          newEntry.id === entry.id &&
+          newEntry.page === entry.page &&
+          entry.key === newEntry.key,
+      )
+      if (!existingEntry) {
+        mergedEntries.push(entry)
+      }
     })
+    return mergedEntries
   }
 
   const submitRequest = () => {
-    // const currentMergedChanges = capturePageChanges(skip / PAGE_SIZE + 1)
+    const currentMergedChanges = capturePageChanges(skip / PAGE_SIZE + 1)
 
     api.request.createRequest.useQuery({
       dataset: dataset,
-      updates: globalStateEntries,
+      updates: currentMergedChanges,
       status: 'PENDING',
       userId: session?.user.id ?? '',
       createdAt: new Date().toISOString(),
     })
   }
-
-  useEffect(() => {
-    const cleanedRows = originalRows.map((row) => {
-      return {
-        ...row,
-        changedEntries: [],
-      }
-    })
-    setRows(cleanedRows)
-  }, [originalRows, setRows])
 
   // Persist changed data when moving through pages
   useEffect(() => {
@@ -118,10 +105,12 @@ export const DynamicPaginatedAdminTable = <TableRow extends baseTableRow>({
       ...row,
       changedEntries: [],
     }))
+
     const newRows = initializeRows.map((row) => {
       const globalStateEntry = globalStateEntries.filter(
         (entry) => entry.id === row.id && entry.page === skip / PAGE_SIZE + 1,
       )
+
       if (globalStateEntry) {
         const newRow: TableRowWithChangedEntries<TableRow> = {
           ...row,
@@ -153,7 +142,7 @@ export const DynamicPaginatedAdminTable = <TableRow extends baseTableRow>({
     row: TableRow,
     updatedEntry: {
       key: keyof TableRow
-      value: TableRowWithChangedEntries<TableRow>[keyof TableRow]
+      value: TableRow[keyof TableRow]
     },
   ) => {
     setRows((prevRows) => {
@@ -198,11 +187,6 @@ export const DynamicPaginatedAdminTable = <TableRow extends baseTableRow>({
       return newRows
     })
   }
-  const industryKeyValue = INDUSTRIES.map((industry) => ({
-    value: industry,
-    label: industry,
-  }))
-
   return (
     <>
       <PaginatedDynamicTable
@@ -212,12 +196,25 @@ export const DynamicPaginatedAdminTable = <TableRow extends baseTableRow>({
           onPageChange: (page) => setSkip((page - 1) * PAGE_SIZE),
           rowCount: rows.length,
         }}
-        capturePageChanges={capturePageChanges}
+        capturePageChanges={(page) =>
+          SetGlobalStateEntries(capturePageChanges(page))
+        }
         rows={rows}
         styles={{
           table: 'w-full',
         }}
         columns={columns}
+        onSelectChange={(row, updatedEntry) => handleChange(row, updatedEntry)}
+        onRowEntryClick={(row, col) => {
+          setTextBoxContent(row[col.key]?.toString() ?? '')
+          if (col.ctrl.type !== 'text') {
+            setIsSelect(true)
+          } else {
+            setIsSelect(false)
+            setCurRow(row)
+            setCurColumn(col.key)
+          }
+        }}
       />
       <input
         value={textBoxContent}
@@ -238,83 +235,3 @@ export const DynamicPaginatedAdminTable = <TableRow extends baseTableRow>({
     </>
   )
 }
-
-/*
-[
-          {
-            key: 'name',
-            label: 'Name',
-            isEditable: true,
-            ctrl: {
-              type: 'text',
-              render: (row) => row.name ?? '',
-            },
-          },
-          {
-            key: 'ticker',
-            label: 'Ticker',
-            isEditable: true,
-            ctrl: {
-              type: 'text',
-              render: (row) => row.ticker ?? '',
-            },
-          },
-          {
-            key: 'sector',
-            label: 'Sector',
-            isEditable: true,
-            ctrl: {
-              type: 'text',
-              render: (row) => row.sector ?? '',
-            },
-          },
-          {
-            key: 'industry',
-            label: 'Industry',
-            isEditable: true,
-            ctrl: {
-              type: 'select',
-              options: industryKeyValue,
-              render: (row) => row.industry ?? '',
-            },
-          },
-          {
-            key: 'description',
-            label: 'Description',
-            isEditable: true,
-            ctrl: {
-              type: 'text',
-              render: (row) => row.description ?? '',
-            },
-          },
-          {
-            key: 'netAssetVal',
-            label: 'Net Asset Value',
-            isEditable: true,
-            ctrl: {
-              type: 'text',
-              render: (row) => row.netAssetVal,
-            },
-          },
-          {
-            key: 'bloombergId',
-            label: 'Bloomberg ID',
-            isEditable: true,
-            ctrl: {
-              type: 'text',
-              render: (row) => row.bloombergId ?? '',
-            },
-          },
-        ]}
-        onSelectChange={(row, updatedEntry) => handleChange(row, updatedEntry)}
-        onRowEntryClick={(row, col) => {
-          setTextBoxContent(row[col.key]?.toString() ?? '')
-          if (col.ctrl.type !== 'text') {
-            setIsSelect(true)
-          } else {
-            setIsSelect(false)
-            setCurRow(row)
-            setCurColumn(col.key)
-          }
-        }
-        */

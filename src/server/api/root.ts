@@ -3,6 +3,7 @@ import { createTRPCRouter } from './trpc'
 import { companyRouter } from './routers/company'
 import { esgRouter } from './routers/esg'
 import { userRouter } from './routers/user'
+import { investmentRouter } from './routers/investment'
 
 /**
  * This is the primary router for your server.
@@ -14,6 +15,7 @@ export const appRouter = createTRPCRouter({
   user: userRouter,
   cronjob: esgRouter,
   request: requestRouter,
+  investment: investmentRouter,
 })
 
 // export type definition of API
