@@ -1,40 +1,34 @@
-import type { FC } from 'react'
 import clsx from 'clsx'
 
-const titleText: string[] = [
-  'Transparent',
-  'and',
-  'Open',
-  'Resource',
-  'for',
-  'Institutional',
-  'Investments',
-]
-
-const CapitalizedTitle: FC = () => {
-  function isCapital(word: string) {
-    return word.charAt(0) === word.charAt(0).toUpperCase()
-  }
-  const firstLetter = clsx(
-    'first-letter:font-black first-letter:text-clementine',
+const CapitalizedTitle = ({
+  className,
+  ...props
+}: React.ComponentProps<'span'>) => {
+  const firstLetterAccent = clsx(
+    'block',
+    'first-letter:text-clementine',
+    'first-letter:font-black',
   )
+
   return (
-    <>
-      <div className="header-1 flex flex-wrap place-content-center space-x-3 pt-10">
-        {titleText.map((item, index) => (
-          <span key={index} className={isCapital(item) ? firstLetter : ''}>
-            {item.endsWith('s') ? (
-              <div>
-                Investment
-                <span className="text-clementine">s</span>
-              </div>
-            ) : (
-              item
-            )}
-          </span>
-        ))}
-      </div>
-    </>
+    <span
+      className={clsx(
+        'space-x-1',
+        className,
+        'header-1 flex max-w-full flex-wrap font-medium',
+      )}
+      {...props}
+    >
+      <span className={firstLetterAccent}>Transparent</span>
+      <span>and</span>
+      <span className={firstLetterAccent}>Open</span>
+      <span className={firstLetterAccent}>Resource</span>
+      <span>for</span>
+      <span className={firstLetterAccent}>Institutional</span>
+      <span className={clsx(firstLetterAccent)}>
+        Investment<span className="text-clementine">s</span>
+      </span>
+    </span>
   )
 }
 

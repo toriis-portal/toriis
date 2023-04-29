@@ -5,6 +5,8 @@ import {
   ToTopButton,
   HighlightedTitle,
   SecondaryNavBar,
+  ClimateClock,
+  Footer,
 } from '../../components'
 import { ContentWrapper } from '../../utils/content'
 import { FossilFuelPage } from '../../types'
@@ -104,6 +106,7 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
       <div id="divestedInstitutions" className="pt-20">
         <InstitutionsDivested />
       </div>
+      <Footer />
     </>
   )
 }
