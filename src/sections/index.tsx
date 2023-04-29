@@ -11,7 +11,11 @@ import CompanyTooltipGroup from './company/TooltipGroup'
 //Fossil Fuel Page
 import FinancialCase from './fossil-fuel/FinancialCase'
 import DirtyIndustries from './fossil-fuel/DirtyIndustries'
-
+import FossilFuelsBad from './fossil-fuel/FossilFuelsBad'
+import InstitutionsDivested from './fossil-fuel/InstitutionsDivested'
+import SchoolsDivested from './fossil-fuel/SchoolsDivested'
+import UniversityInvestments from './fossil-fuel/UniversityInvestments'
+import WhatWarmingMeans from './fossil-fuel/WhatWarmingMeans'
 export {
   InstitutionalDivestments,
   Landing,
@@ -23,4 +27,9 @@ export {
   ChartGroup,
   CompanyTooltipGroup,
   DirtyIndustries,
+  FossilFuelsBad,
+  InstitutionsDivested,
+  SchoolsDivested,
+  UniversityInvestments,
+  WhatWarmingMeans,
 }

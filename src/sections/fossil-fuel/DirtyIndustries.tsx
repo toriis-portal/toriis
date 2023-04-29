@@ -17,12 +17,6 @@ interface TabDetails {
   url: string
 }
 
-interface contentfulDocumentList {
-  props: {
-    children: ReactNode[]
-  }
-}
-
 const DirtyIndustries: FC<{ companies: DirtyCompanyEntry[] }> = ({
   companies,
 }) => {

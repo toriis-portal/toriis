@@ -9,6 +9,9 @@ import type {
   ListEntry,
   LinkEntry,
   Info,
+  CaseEntry,
+  DirtyCompanyEntry,
+  FossilFuelPage,
 } from '../types/index.js'
 
 const homePageEntryTypes = [
@@ -18,6 +21,13 @@ const homePageEntryTypes = [
   'link',
   'list',
   'info',
+]
+
+const fossilFuelPageEntryTypes = [
+  'fossilFuelPage',
+  'case',
+  'dirtyCompanies',
+  'link',
 ]
 
 export class ContentWrapper {
@@ -33,7 +43,7 @@ export class ContentWrapper {
   async get<T>(entity: string): Promise<T> {
     const client = this.client
     const entries = await client.getEntries({ content_type: entity })
-    return entries.items.map((item) => item.fields) as unknown as T
+    return entries.items.map((item) => item.fields) as T
   }
 
   getSingleHomePageEntry = async (entity: string) => {
@@ -42,13 +52,13 @@ export class ContentWrapper {
     const entries = await client.getEntries({
       content_type: entity,
     })
-    return this.sortEntryByType(
+    return this.parseHomePageEntries(
       entries.items.map((item) => item.fields),
       entity,
     )
   }
 
-  sortEntryByType = (entries: any, entity: string) => {
+  parseHomePageEntries = (entries: any, entity: string) => {
     switch (entity) {
       case 'timeline':
         return (entries as TimelineEntry[]).sort((a, b) => a.year - b.year)
@@ -60,10 +70,10 @@ export class ContentWrapper {
         )
       case 'list':
         return (entries as ListEntry[]).sort((a, b) => a.order - b.order)
-      case 'info':
-        return (entries as Info[])[0] as Info
+      case 'link':
+        return (entries as LinkEntry[]).filter((entry) => entry.type === 'Home')
       default:
-        return entries as LinkEntry[]
+        return (entries as Info[])[0] as Info
     }
   }
 
@@ -84,5 +94,44 @@ export class ContentWrapper {
       }),
     )
     return homePageEntryMap
+  }
+
+  parseFossilFuelPageEntries = (entries: any, entity: string) => {
+    switch (entity) {
+      case 'fossilFuelPage':
+        return (entries as FossilFuelPage[])[0] as FossilFuelPage
+      case 'link':
+        return (entries as LinkEntry[]).filter(
+          (entry) => entry.type === 'FossilFuelPage',
+        )
+      default:
+        return entries as CaseEntry[]
+    }
+  }
+
+  getSingleFossilFuelPageEntry = async (entity: string) => {
+    const client = this.client
+
+    const entries = await client.getEntries({
+      content_type: entity,
+    })
+    return this.parseFossilFuelPageEntries(
+      entries.items.map((item) => item.fields),
+      entity,
+    )
+  }
+
+  getAllFossilFuelPageEntries = async () => {
+    const fossilFuelPageEntryMap: Record<
+      string,
+      FossilFuelPage | CaseEntry[] | DirtyCompanyEntry[] | LinkEntry[]
+    > = {}
+    await Promise.all(
+      fossilFuelPageEntryTypes.map(async (entity) => {
+        const results = await this.getSingleFossilFuelPageEntry(entity)
+        fossilFuelPageEntryMap[entity] = results
+      }),
+    )
+    return fossilFuelPageEntryMap
   }
 }

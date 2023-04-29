@@ -10,8 +10,7 @@ const Tag: FC<TagProps> = ({ title, className }) => {
   return (
     <div
       className={clsx(
-        'flex max-h-8 w-fit justify-center rounded-full px-[18px]',
-        'truncate text-lg font-medium',
+        'flex max-h-8 w-fit items-center justify-center truncate rounded-full px-[18px]',
         className,
       )}
     >

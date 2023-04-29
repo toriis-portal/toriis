@@ -28,7 +28,17 @@ const config = {
         destination: '/home',
         permanent: true,
       },
+      {
+        source: '/admin/website',
+        destination: '/admin/website/data',
+        permanent: true,
+      },
     ]
   },
+
+  images: {
+    domains: ['images.ctfassets.net'],
+  },
 }
+
 export default config

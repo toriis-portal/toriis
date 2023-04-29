@@ -9,6 +9,32 @@
   text-underline-offset: 0.5rem;
 }
 
+@layer components {
+  .header-1 {
+    @apply font-klima text-[32px] font-[647];
+  }
+
+  .header-2 {
+    @apply font-klima text-[28px] font-[559];
+  }
+
+  .header-3 {
+    @apply font-klima text-[22px] font-medium;
+  }
+
+  .body-bold {
+    @apply font-inter text-base font-medium;
+  }
+
+  .body-normal {
+    @apply font-inter text-base font-normal;
+  }
+
+  .body-small {
+    @apply font-inter text-xs font-normal;
+  }
+}
+
 @layer base {
   @font-face {
     font-family: 'Klima';

@@ -3,10 +3,10 @@ import { useRouter } from 'next/router'
 import type { FC } from 'react'
 import { useEffect } from 'react'
 
-import { PrimaryButton } from '../../../components'
+import { PrimaryButton, AdminNavBar } from '../../../components'
 import { CONTENTFUL_LINK } from '../../../utils/constants'
 
-const ContentPage: FC = () => {
+const UpdateContent: FC = () => {
   const { data: session, status } = useSession()
   const { push } = useRouter()
 
@@ -19,20 +19,23 @@ const ContentPage: FC = () => {
   return (
     <>
       {session && (
-        <div className="flex h-screen w-screen flex-col items-center justify-center gap-8">
-          <h2 className="font-klima font-semibold">
-            Manage site wide content through Contentful
-          </h2>
+        <div>
+          <AdminNavBar />
+          <div className="flex h-full w-full flex-col items-center justify-center gap-8 pt-52">
+            <h2 className="font-bold">
+              Manage site wide content through Contentful
+            </h2>
 
-          <PrimaryButton
-            text="Go to Contentful"
-            link={CONTENTFUL_LINK as string}
-            className="flex items-center justify-center gap-2 !px-10 text-center"
-          />
+            <PrimaryButton
+              text="Go to Contentful"
+              link={CONTENTFUL_LINK as string}
+              className="flex items-center justify-center gap-2 !px-10 text-center"
+            />
+          </div>
         </div>
       )}
     </>
   )
 }
 
-export default ContentPage
+export default UpdateContent

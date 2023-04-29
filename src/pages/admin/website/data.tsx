@@ -3,7 +3,9 @@ import { useRouter } from 'next/router'
 import type { FC } from 'react'
 import { useEffect } from 'react'
 
-const DataPage: FC = () => {
+import { AdminNavBar } from '../../../components'
+
+const UpdateData: FC = () => {
   const { data: session, status } = useSession()
   const { push } = useRouter()
 
@@ -13,7 +15,13 @@ const DataPage: FC = () => {
     }
   }, [push, status])
 
-  return <div>{session && <h1>Update Database</h1>}</div>
+  return (
+    session && (
+      <div>
+        <AdminNavBar />
+      </div>
+    )
+  )
 }
 
-export default DataPage
+export default UpdateData

@@ -37,11 +37,11 @@ enum EnvGrade {
 }
 
 enum Dataset {
-  Investment
-  Company
-  Fuel
-  Emission
-  Energy
+  INVESTMENT
+  COMPANY
+  FUEL
+  EMISSION
+  ENERGY
 }
 
 enum RequestStatus {
@@ -107,16 +107,16 @@ model Session {
 }
 
 model User {
-  id              String           @id @default(auto()) @map("_id") @db.ObjectId
-  name            String?
-  email           String?          @unique
-  emailVerified   DateTime?
-  image           String?
-  accounts        Account[]
-  sessions        Session[]
-  createdAt       DateTime         @default(now())
-  WhitelistedUser WhitelistedUser?
-  Requests        Request[]
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  createdAt     DateTime  @default(now())
+  shouldEmail   Boolean   @default(true)
+  Requests      Request[]
 }
 
 model VerificationToken {
@@ -201,6 +201,5 @@ model Request {
 model WhitelistedUser {
   id     String  @id @default(auto()) @map("_id") @db.ObjectId
   email  String  @unique
-  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String? @unique @db.ObjectId
+  userId String?
 }
