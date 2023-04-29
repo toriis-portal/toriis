@@ -24,8 +24,7 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
       <div className="px-12">
         <Tag
           title={img.fields.title}
-          className="mb-1 w-4 rounded-md bg-[#FFA90233]
-text-black"
+          className="mb-1 w-4 rounded-md bg-clementine/20 text-black"
         />
         <ImageWithCaption img={img} />
         <div>{documentToReactComponents(caption, mainParagraphStyle)}</div>

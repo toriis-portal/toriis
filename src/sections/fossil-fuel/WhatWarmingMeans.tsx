@@ -24,7 +24,7 @@ const WhatWarmingMeans: FC<WarmingProps> = ({
         color="clementine"
       />
       <div className="flex flex-col items-center justify-center ">
-        <ReadMoreAccordion className="w-[85%] bg-white">
+        <ReadMoreAccordion className="bg-white">
           {documentToReactComponents(text)}
         </ReadMoreAccordion>
         <LinkBox
