@@ -146,8 +146,8 @@ export const DynamicPaginatedAdminTable = <
           const updatedEntries = (
             originalRows
               ? originalRows.find(
-                  (dataRow: { id: string }) => dataRow.id === row.id,
-                )
+                (dataRow: { id: string }) => dataRow.id === row.id,
+              )
               : []
           ) as TableRow | []
 

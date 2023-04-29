@@ -20,6 +20,12 @@ export type UpdateType = Partial<
   Company & Investment & Fuel & Emission & Energy
 >
 
+export type StrictUpdateType = {
+  id: string
+  key: string
+  value: UpdateType
+}
+
 /* Contentful Types */
 
 export interface OurRequestsEntry {

@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { Dataset, RequestStatus } from '@prisma/client'
 
 import { createTRPCRouter, protectedProcedure } from '../trpc'
-import type { UpdateType } from '../../../types'
+import type { UpdateType, StrictUpdateType } from '../../../types'
 import { datasetEnum } from '../../../utils/enums'
 
 type UpdateQuery = Omit<UpdateType, 'maturityDate' | 'date'> & {
@@ -16,6 +16,7 @@ export const requestRouter = createTRPCRouter({
     const requests = await ctx.prisma.request.findMany({})
     return requests
   }),
+
   createRequest: protectedProcedure
     .input(
       z.object({
@@ -50,6 +51,7 @@ export const requestRouter = createTRPCRouter({
       })
       return request
     }),
+
   getRequests: protectedProcedure
     .input(
       z.object({
@@ -142,22 +144,16 @@ export const requestRouter = createTRPCRouter({
 
         const updateAll = await Promise.all(
           allUpdateItems.map(async (updateItem) => {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const { id, ...fieldsToUpdate } = updateItem
-
-            // Cast Date to object for MongoDB query
-            const fieldsToUpdateQuery: UpdateQuery = {
-              ...fieldsToUpdate,
-              maturityDate: fieldsToUpdate.maturityDate,
-              date: fieldsToUpdate.date ? fieldsToUpdate.date : undefined,
-            }
+            const { id, ...updateKeyValuePair } = updateItem
+            const { key, value } = updateKeyValuePair
+            const updateQuery: { [key: string]: any } = { [key]: value }
 
             await ctx.prisma.$runCommandRaw({
               update: tableToUpdate,
               updates: [
                 {
-                  q: { _id: { $oid: updateItem.id } },
-                  u: { $set: fieldsToUpdateQuery },
+                  q: { _id: { $oid: id } },
+                  u: { $set: updateQuery },
                 },
               ],
             })

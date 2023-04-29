@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 
 import { AdminNavBar, PrimaryButton, Toast } from '../../../components'
 import { api } from '../../../utils/api'
+import { DynamicTable } from '../../../components/Table/DynamicTable'
 
 const ReviewPage: FC = () => {
   const { data: session, status } = useSession()
@@ -25,7 +26,7 @@ const ReviewPage: FC = () => {
         <>
           <AdminNavBar />
           <div className="flex w-full flex-col items-center justify-center px-20 py-20">
-            <div className="mb-10">Table goes here</div>
+            {/* <DynamicTable/> */}
             <div className="flex-between flex flex-row gap-12">
               <PrimaryButton
                 text="Reject Request"
