@@ -3,9 +3,8 @@ import { useRouter } from 'next/router'
 import type { FC } from 'react'
 import { useEffect } from 'react'
 
-import { AdminNavBar, PrimaryButton } from '../../../components'
+import { AdminNavBar, PrimaryButton, Toast } from '../../../components'
 import { api } from '../../../utils/api'
-import Toast from '../../../components/Toasts/Toast'
 
 const ReviewPage: FC = () => {
   const { data: session, status } = useSession()

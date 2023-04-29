@@ -47,10 +47,12 @@ import AdminListTable from './Table/AdminListTable'
 import InvestmentTable from './Table/InvestmentTable'
 //Tooltips
 import ToolTip from './Tooltips/ToolTip'
-//Modals
+// Modals
 import GeneralModal from './Modals/GeneralModal'
 import LeaveConfirmationModal from './Modals/LeaveConfirmationModal'
-//Footer
+// Toast
+import Toast from './Toasts/Toast'
+// Footer
 import Footer from './Footer/Footer'
 export {
   AuthButton,
@@ -94,5 +96,6 @@ export {
   InviteAdminBar,
   LinkBox,
   ImageWithCaption,
+  Toast,
   Footer,
 }
