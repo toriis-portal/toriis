@@ -55,11 +55,3 @@ export const FuelEnum = {
   otherRenewable: 'Other Renewable',
   otherNonRenewable: 'Other Non-Renewable',
 }
-
-export const datasetEnum = {
-  INVESTMENT: 'Investment',
-  COMPANY: 'Company',
-  FUEL: 'Fuel',
-  EMISSION: 'Emission',
-  ENERGY: 'Energy',
-}

@@ -24,7 +24,7 @@ const CommentModal: FC<CommentModalProps> = ({ text }) => {
   }, [])
 
   return (
-    <div className="body-normal flex flex-row justify-between gap-2 border border-lightGray px-4 py-1">
+    <div className="body-normal flex flex-row justify-between gap-2 border border-lightGray px-4 py-0.5">
       <GeneralModal isOpen={isOpen}>
         <button
           onClick={() => setIsOpen(false)}
@@ -42,7 +42,7 @@ const CommentModal: FC<CommentModalProps> = ({ text }) => {
       <button onClick={() => setIsOpen(true)}>
         <u
           className={clsx(
-            'basis-1/6 truncate font-inter text-xs font-light italic text-lightGray',
+            'basis-1/6 truncate text-xs font-light italic text-footnoteGray',
             { hidden: !isOverflowing },
           )}
         >

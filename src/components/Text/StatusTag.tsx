@@ -17,7 +17,7 @@ const StatusTag: FC<StatusTagProps> = ({ type, myRequests, className }) => {
     <div
       className={clsx(
         'flex max-h-6 min-w-fit justify-center rounded-full',
-        'text-center text-base',
+        'body-normal truncate text-center',
         {
           'bg-brightTeal text-white': type == RequestStatus.APPROVED,
           'bg-clementine text-white':

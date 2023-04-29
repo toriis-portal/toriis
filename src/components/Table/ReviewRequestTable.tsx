@@ -26,7 +26,7 @@ const RequestReviewTable: FC<RequestTableProps> = ({
           <col className="w-[50%]" />
           <col className="w-[15%]" />
         </colgroup>
-        <thead className="w-full items-center border-b-2 border-black pb-4 text-left text-base font-medium text-black">
+        <thead className="w-full items-center border-b-2 border-black pb-4 text-left">
           <tr>
             <th>Date Requested</th>
             <th>Database</th>
@@ -37,10 +37,7 @@ const RequestReviewTable: FC<RequestTableProps> = ({
         <tbody>
           {requests?.map((request) => {
             return (
-              <tr
-                key={request.id}
-                className="border-b-2 border-lightGray text-base"
-              >
+              <tr key={request.id} className="border-b-2 border-lightGray py-3">
                 <td className="py-3 text-black">
                   {request.createdAt.toLocaleDateString()}
                 </td>
@@ -53,7 +50,7 @@ const RequestReviewTable: FC<RequestTableProps> = ({
                 <td className="pl-10">
                   <Link
                     className="flex h-full items-center justify-end"
-                    href={`/admin/request/[${request.id}]`}
+                    href={`/admin/request/${request.id}`}
                   >
                     <StatusTag
                       type={request.status}
