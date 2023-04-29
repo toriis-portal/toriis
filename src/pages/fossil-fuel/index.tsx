@@ -17,7 +17,7 @@ import {
   WhatWarmingMeans,
   SchoolsDivested,
   InstitutionsDivested,
-  FinancialCase,
+  DivestmentCase,
 } from '../../sections'
 
 export const getServerSideProps = async () => {
@@ -52,7 +52,7 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
     { path: 'dirtyIndustry', text: 'The Dirty Industry UIUC Supports' },
     { path: 'whyFossilFuelsAreBad', text: 'Why Are Fossil Fuels Bad' },
     { path: 'warming', text: 'What 1.5C Warming Means' },
-    { path: 'financialCase', text: 'The Case For Institutional Divestments' },
+    { path: 'divestmentCase', text: 'The Case For Institutional Divestments' },
     { path: 'divestedSchools', text: 'Schools That Have Divested ' },
     { path: 'divestedInstitutions', text: 'Institutions That Have Divested' },
   ]
@@ -90,8 +90,8 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
           footnote={fossilFuelPageEntries['warmingSource']}
         />
       </div>
-      <div id="financialCase" className="pt-20">
-        <FinancialCase
+      <div id="divestmentCase" className="pt-20">
+        <DivestmentCase
           entries={caseEntries}
           text={fossilFuelPageEntries['divestmentCase']}
           img={fossilFuelPageEntries['divestmentGraph']}

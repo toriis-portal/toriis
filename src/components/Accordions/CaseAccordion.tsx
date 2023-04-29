@@ -50,7 +50,7 @@ const CaseAccordion: FC<{ content: CaseEntry }> = ({ content }) => {
   return (
     <div
       className={clsx(
-        'mb-6 content-center rounded-xl border-[3px] border-cobalt bg-white lg:mx-20',
+        'mb-6 content-center rounded-xl border-[3px] border-cobalt bg-white',
       )}
     >
       <button
