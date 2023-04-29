@@ -10,7 +10,7 @@ interface EmissionBarChartProps {
 
 const EmissionBarChart: FC<EmissionBarChartProps> = ({ emissionData }) => {
   const labels = ['Scope 1 Estimate', 'Scope 2 Estimate', 'Scope 3 Estimate']
-  const colors = ['#E6F0FA', '#40D7D4', '#0F81E8']
+  const colors = ['#40D7D4', '#4F81E8', '#0F81E8']
   const scopeValues = [
     emissionData?.scopeOne ?? 0,
     emissionData?.scopeTwo ?? 0,
