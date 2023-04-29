@@ -235,24 +235,23 @@ const InvestmentPage: FC = () => {
             <ToolTip
               title="Definition"
               details={
-                <p>
-                  {' '}
+                <div className="flex flex-col gap-2">
                   An Environmental, Social, and Governance (ESG) rating that
                   aims to measure how sustainably a company is conducting
                   business and managing ESG risk factors.
-                  <br />
-                  <br />
-                  <Tag
-                    title="AAA"
-                    className="body-small bg-brightTeal text-white"
-                  />
-                  scores indicate stong management and low risk, while
-                  <Tag
-                    title="CCC"
-                    className="body-small bg-clementine text-white"
-                  />
-                  scores indicate weak management and high risk. /
-                </p>
+                  <p>
+                    <Tag
+                      title="AAA"
+                      className="body-small float-left mr-2 bg-brightTeal text-white"
+                    />
+                    indicates strong management and low risk.
+                    <Tag
+                      title="CCC"
+                      className="body-small float-left mr-2 bg-clementine text-white"
+                    />
+                    indicates weak management and high risk.
+                  </p>
+                </div>
               }
             />
           </div>
