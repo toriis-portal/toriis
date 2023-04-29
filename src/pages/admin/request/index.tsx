@@ -89,7 +89,7 @@ const RequestPage: FC = () => {
             </div>
             <RequestReviewTable
               requests={parseData(data)}
-              myRequests={showOnlyUserRequests}
+              isMyRequests={showOnlyUserRequests}
               className={'w-5/6 pt-16 pb-4'}
             />
             {(isLoading || !data || isFetchingNextPage) && <Spinner />}

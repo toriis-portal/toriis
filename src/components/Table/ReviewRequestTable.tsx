@@ -7,13 +7,13 @@ import { CommentModal, StatusTag } from '../../components'
 
 interface RequestTableProps {
   requests: Request[]
-  myRequests: boolean
+  isMyRequests: boolean
   className?: string
 }
 
 const RequestReviewTable: FC<RequestTableProps> = ({
   requests,
-  myRequests,
+  isMyRequests,
   className,
 }) => {
   return (
@@ -49,7 +49,7 @@ const RequestReviewTable: FC<RequestTableProps> = ({
                 <td className="pl-10">
                   <StatusTag
                     request={request}
-                    isMyRequest={myRequests}
+                    isMyRequest={isMyRequests}
                     className="w-full"
                   />
                 </td>
