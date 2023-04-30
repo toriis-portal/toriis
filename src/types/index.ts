@@ -74,6 +74,7 @@ export interface IndustryEntry {
 export interface SectorEntry {
   name: string
   details?: Document
+  avgGrade?: string
 }
 export interface FossilFuelPage {
   treeMap: Asset

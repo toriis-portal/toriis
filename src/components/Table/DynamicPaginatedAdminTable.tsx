@@ -3,6 +3,7 @@ import type { Company, Dataset, Sector } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 
 import { api } from '../../utils/api'
+import { SubmitRequestModal, PrimaryButton } from '../index'
 
 import { DynamicTable, PaginatedDynamicTable } from './DynamicTable'
 import type {
@@ -70,6 +71,7 @@ export const DynamicPaginatedAdminTable = <
   const [curColumn, setCurColumn] = useState<keyof TableRow>('id')
   const [curRow, setCurRow] = useState<TableRow | null>(null)
   const [textBoxContent, setTextBoxContent] = useState('')
+  const [modalOpen, setModalOpen] = useState(false)
 
   const [globalStateEntries, SetGlobalStateEntries] = useState<
     GlobalStateEntry<TableRow>[]
@@ -111,13 +113,14 @@ export const DynamicPaginatedAdminTable = <
     return mergedEntries
   }
 
-  const submitRequest = () => {
+  const submitRequest = (comment: string) => {
     const currentMergedChanges = capturePageChanges(skip / PAGE_SIZE + 1)
     mutation.mutate({
       dataset: dataset,
       updates: convertTypes(currentMergedChanges),
       status: 'PENDING',
       userId: session?.user.id ?? '',
+      comment: comment,
       createdAt: new Date().toISOString(),
     })
   }
@@ -253,7 +256,12 @@ export const DynamicPaginatedAdminTable = <
         }}
       ></input>
 
-      <button onClick={submitRequest}>Request changes</button>
+      <SubmitRequestModal
+        isOpen={modalOpen}
+        isOpenCallBack={setModalOpen}
+        onSubmit={submitRequest}
+      />
+      <PrimaryButton text="Request Review" onClick={() => setModalOpen(true)} />
     </>
   )
 }

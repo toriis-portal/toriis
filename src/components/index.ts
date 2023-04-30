@@ -41,6 +41,7 @@ import InviteAdminBar from './Selects/InviteAdminBar'
 import NumberCircle from './Text/NumberCircle'
 import HighlightedTitle from './Text/HighlightedTitle'
 import CommentModal from './Modals/CommentModal'
+import SubmitRequestModal from './Modals/SubmitRequestModal'
 import CapitalizedTitle from './Text/CapitalizedTitle'
 import ShadowTitle from './Text/ShadowTitle'
 import StatusTag from './Text/StatusTag'
@@ -101,6 +102,7 @@ export {
   InviteAdminBar,
   RequestReviewTable,
   CommentModal,
+  SubmitRequestModal,
   StatusTag,
   LinkBox,
   ImageWithCaption,

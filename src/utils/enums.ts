@@ -4,10 +4,10 @@ export const sectorEnum = {
   TECHNOLOGY: 'Technology',
   UTILITIES: 'Utilities',
   HEALTHCARE: 'Healthcare',
-  CONSUMER_CYCLICAL: 'Consumer Cyclical',
+  CONSUMER_CYCLICAL: 'Consumer Discretionary',
   COMMUNICATION_SERVICES: 'Communication Services',
   ENERGY: 'Energy',
-  CONSUMER_DEFENSIVE: 'Consumer Defensive',
+  CONSUMER_DEFENSIVE: 'Consumer Staples',
   REAL_ESTATE: 'Real Estate',
   BASIC_MATERIALS: 'Basic Materials',
 }
