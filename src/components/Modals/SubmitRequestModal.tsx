@@ -9,9 +9,14 @@ import GeneralModal from './GeneralModal'
 interface SubmitRequestModalProps {
   isOpen: boolean
   isOpenCallBack?: (isOpen: boolean) => void
+  onSubmit: () => void
 }
 
-export const SubmitRequestModal: FC<SubmitRequestModalProps> = ({ isOpen, isOpenCallBack }) => {
+export const SubmitRequestModal: FC<SubmitRequestModalProps> = ({
+  isOpen,
+  isOpenCallBack,
+  onSubmit,
+}) => {
   const flexStyles = clsx('flex flex-col items-center')
 
   return (
@@ -43,7 +48,10 @@ export const SubmitRequestModal: FC<SubmitRequestModalProps> = ({ isOpen, isOpen
       <PrimaryButton
         text="Submit Request"
         className="mt-4 flex items-center justify-center !px-12 !py-2"
-        onClick={() => { isOpenCallBack && isOpenCallBack(false) }}
+        onClick={() => {
+          onSubmit()
+          isOpenCallBack && isOpenCallBack(false)
+        }}
       />
     </GeneralModal>
   )
