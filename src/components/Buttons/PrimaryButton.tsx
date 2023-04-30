@@ -23,7 +23,6 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
   type = undefined,
 }) => {
   const buttonStyle = clsx(
-    'font-klima text-[18px] font-semibold',
     'rounded border-2 border-solid',
     'rounded px-5 py-1',
     'shadow-[-8px_8px_0px_0px]',

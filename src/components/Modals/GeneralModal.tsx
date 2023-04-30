@@ -4,6 +4,7 @@ import clsx from 'clsx'
 
 interface GeneralModalProps {
   isOpen: boolean
+  isOpenCallBack?: (isOpen: boolean) => void
   className?: string
   children?: React.ReactNode
   closeOnOutsideClick?: boolean
@@ -14,17 +15,15 @@ export const GeneralModal: FC<GeneralModalProps> = ({
   className,
   children,
   closeOnOutsideClick = false,
+  isOpenCallBack
 }) => {
-  const [internalIsOpen, setInternalIsOpen] = useState(true)
 
   return (
     <>
-      {(closeOnOutsideClick ? internalIsOpen : isOpen) && (
+      {isOpen && (
         <div
           className="fixed inset-0 z-10 flex h-full w-full items-center justify-center bg-[rgba(0,0,0,.5)]"
-          onClick={() => {
-            setInternalIsOpen(false)
-          }}
+          onClick={() => { isOpenCallBack && isOpenCallBack(false) }}
         >
           <div
             className={clsx(

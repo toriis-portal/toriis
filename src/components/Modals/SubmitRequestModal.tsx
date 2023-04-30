@@ -6,12 +6,18 @@ import PrimaryButton from '../Buttons/PrimaryButton'
 
 import GeneralModal from './GeneralModal'
 
-export const SubmitRequestModal: FC = ({}) => {
+interface SubmitRequestModalProps {
+  isOpen: boolean
+  isOpenCallBack?: (isOpen: boolean) => void
+}
+
+export const SubmitRequestModal: FC<SubmitRequestModalProps> = ({ isOpen, isOpenCallBack }) => {
   const flexStyles = clsx('flex flex-col items-center')
 
   return (
     <GeneralModal
-      isOpen={true}
+      isOpen={isOpen}
+      isOpenCallBack={isOpenCallBack}
       closeOnOutsideClick={true}
       className={clsx(
         'justify-evenly gap-2 px-12 pt-8 pb-10 sm:flex-[0_0_35%]',
@@ -36,8 +42,8 @@ export const SubmitRequestModal: FC = ({}) => {
 
       <PrimaryButton
         text="Submit Request"
-        link={''}
-        className="mt-4 flex items-center justify-center !px-14 !py-4 text-center !font-medium"
+        className="mt-4 flex items-center justify-center !px-12 !py-2"
+        onClick={() => { isOpenCallBack && isOpenCallBack(false) }}
       />
     </GeneralModal>
   )
