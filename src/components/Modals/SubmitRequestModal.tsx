@@ -19,13 +19,26 @@ export const SubmitRequestModal: FC = ({}) => {
       <GeneralModal
         isOpen={isOpen}
         className={clsx(
-          'h-2/5 w-3/5 justify-evenly gap-2 py-4 sm:flex-[0_0_35%]',
+          'w-3/5 justify-evenly gap-2 py-8 px-12 sm:flex-[0_0_35%]',
           flexStyles,
         )}
       >
         <p className="header-3 w-4/5 text-center font-medium text-black ">
           Submit Request
         </p>
+
+        <label htmlFor="comments">
+          <p>
+            Comments <span className="text-medGray">(Optional)</span>
+          </p>
+          <input
+            type="text"
+            name="comments"
+            id="comments"
+            className="mb-4 block h-32 w-[507px] rounded"
+          />
+        </label>
+
         <PrimaryButton
           text="Submit Request"
           link={''}
