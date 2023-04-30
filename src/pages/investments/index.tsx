@@ -174,7 +174,7 @@ const InvestmentPage: FC = () => {
             <SearchBar setCompanySearchQuery={setCompanySearchQuery} />
           </div>
         </div>
-        <div className="mb-8 flex basis-3/4 flex-col justify-evenly gap-4 md:flex-row lg:mx-20 lg:gap-14">
+        <div className="mb-8 flex basis-3/4 flex-col justify-evenly gap-4 md:flex-row lg:mx-20 lg:gap-10">
           <div className={SelectGroupStyle}>
             <Select
               text="Sector"
