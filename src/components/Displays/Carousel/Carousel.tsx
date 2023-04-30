@@ -23,9 +23,9 @@ const Carousel: FC<{
 
   const style = clsx(
     'flex flex-col',
-    'gap-4 px-12 pt-12 pb-8',
+    'gap-4  pt-12 pb-8',
     {
-      'shadow-[-16px_16px_0px_0px] shadow-clementine bg-white rounded-md border-4 border-clementine bg-white':
+      'px-12 shadow-[-16px_16px_0px_0px] shadow-clementine bg-white rounded-md border-4 border-clementine bg-white':
         sectionName === 'Home',
     },
     { 'bg-lightBlue': sectionName === 'SchoolsDivested' },
@@ -54,15 +54,23 @@ const Carousel: FC<{
         </div>
       </div>
 
-      <div className="flex items-center justify-between">
+      <div
+        className={clsx('flex items-center', {
+          'justify-center gap-10': sectionName !== 'Home',
+          'justify-between': sectionName === 'Home',
+        })}
+      >
         <button
           onClick={() => updateIndex(activeIndex - 1)}
           disabled={activeIndex == 0}
         >
           <ChevronLeftIcon
-            className={`h-9 stroke-current ${
-              activeIndex == 0 ? 'text-black/20' : 'text-black'
-            }`}
+            className={clsx('stroke-current', {
+              'text-black/20': activeIndex == 0,
+              'text-black': activeIndex != 0,
+              'h-9': sectionName === 'Home',
+              'h-4': sectionName !== 'Home',
+            })}
           />
         </button>
         <div className="flex flex-row gap-3">
@@ -81,11 +89,12 @@ const Carousel: FC<{
           disabled={activeIndex == carouselChildrenData.length - 1}
         >
           <ChevronRightIcon
-            className={`h-9 stroke-current ${
-              activeIndex == carouselChildrenData.length - 1
-                ? 'text-black/20'
-                : 'text-black'
-            }`}
+            className={clsx('stroke-current', {
+              'text-black/20': activeIndex == carouselChildrenData.length - 1,
+              'text-black': activeIndex != carouselChildrenData.length - 1,
+              'h-9': sectionName === 'Home',
+              'h-4': sectionName !== 'Home',
+            })}
           />
         </button>
       </div>

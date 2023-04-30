@@ -25,7 +25,7 @@ const CarouselChild: FC<{
           {documentToReactComponents(childData.details as Document)}
         </div>
       ) : (
-        <div className="grid w-screen grid-cols-3">
+        <div className="grid w-screen grid-cols-3 text-center">
           {columns.map((column, i) => (
             <div key={i}>
               <ul>

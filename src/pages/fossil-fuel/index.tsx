@@ -40,8 +40,6 @@ interface FossilFuelProps {
   linkEntries: LinkEntry[]
   caseEntries: CaseEntry[]
   fossilFuelPageEntries: FossilFuelPage
-  schoolEntries: string
-  institutionEntries: string
 }
 
 const FossilFuelPage: FC<FossilFuelProps> = ({
