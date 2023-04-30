@@ -28,6 +28,14 @@ const AdminAdminPage: FC = () => {
     },
   })
 
+  const deleteWhitelistedUsersMutation =
+    api.user.deleteManyWhitelistedUsers.useMutation({
+      async onSuccess() {
+        setUsersToDelete([])
+        await refetch()
+      },
+    })
+
   const updateEmailsMutation = api.user.updateUserEmailPreference.useMutation({
     async onSuccess() {
       setUsersEmailUpdate([])
@@ -45,6 +53,7 @@ const AdminAdminPage: FC = () => {
 
   const handleUpdateUsers = () => {
     updateEmailsMutation.mutate({ ids: usersEmailUpdate })
+    deleteWhitelistedUsersMutation.mutate({ ids: usersToDelete })
     deleteUsersMutation.mutate({ ids: usersToDelete })
     setEdit(false)
   }
@@ -134,7 +143,7 @@ const AdminAdminPage: FC = () => {
                 color="clementine"
               />
             </div>
-            <InviteAdminBar />
+            <InviteAdminBar refetch={refetch} />
           </div>
         </div>
       </>

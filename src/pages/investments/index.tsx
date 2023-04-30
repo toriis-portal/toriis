@@ -3,6 +3,7 @@ import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import type { Company, EnvGrade, Sector } from '@prisma/client'
 import { Spinner } from 'flowbite-react'
+import { clsx } from 'clsx'
 
 import {
   Select,
@@ -74,6 +75,8 @@ const initialFilterOptions: FilterOptions = {
   netAssetVal: [],
   envGrade: [],
 }
+
+const SelectGroupStyle = clsx('flex flex-row gap-2 basis-1/4')
 
 const InvestmentPage: FC = () => {
   const [companySearchQuery, setCompanySearchQuery] =
@@ -172,7 +175,7 @@ const InvestmentPage: FC = () => {
           </div>
         </div>
         <div className="mb-8 flex basis-3/4 flex-col justify-evenly gap-4 md:flex-row lg:mx-20 lg:gap-14">
-          <div className="flex gap-2">
+          <div className={SelectGroupStyle}>
             <Select
               text="Sector"
               isFilter={true}
@@ -194,7 +197,7 @@ const InvestmentPage: FC = () => {
               details="A sector is comprised of many industries and is used to describe large components of the overall economy (eg, Energy)."
             />
           </div>
-          <div className="flex gap-2">
+          <div className={SelectGroupStyle}>
             <Select
               text="Industry"
               isFilter={true}
@@ -216,7 +219,7 @@ const InvestmentPage: FC = () => {
               details="An industry is comprised of companies that are closely related in their business activities and is used to describe nuanced components of a larger sector (eg, Oil & Gas)."
             />
           </div>
-          <div className="flex gap-2">
+          <div className={SelectGroupStyle}>
             <Select
               text="Environmental Grade"
               shortText="Env Grade"
@@ -239,7 +242,7 @@ const InvestmentPage: FC = () => {
                   An Environmental, Social, and Governance (ESG) rating that
                   aims to measure how sustainably a company is conducting
                   business and managing ESG risk factors.
-                  <p>
+                  <div>
                     <Tag
                       title="AAA"
                       className="body-small float-left mr-2 bg-brightTeal text-white"
@@ -250,13 +253,13 @@ const InvestmentPage: FC = () => {
                       className="body-small float-left mr-2 bg-pumpkin text-white"
                     />
                     indicates weak management and high risk.
-                  </p>
+                  </div>
                 </div>
               }
             />
           </div>
 
-          <div className="flex gap-2">
+          <div className={SelectGroupStyle}>
             <Select
               text="Net Asset Value"
               shortText="Net Asset"

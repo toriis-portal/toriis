@@ -4,7 +4,11 @@ import { useState } from 'react'
 import { PrimaryButton } from '..'
 import { api } from '../../utils/api'
 
-const InviteAdminBar: FC = () => {
+interface InviteAdminBarProps {
+  refetch: () => Promise<any>
+}
+
+const InviteAdminBar: FC<InviteAdminBarProps> = ({ refetch }) => {
   const isValidEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     return emailRegex.test(email)
@@ -13,6 +17,10 @@ const InviteAdminBar: FC = () => {
 
   const mutation = api.user.addWhitelistedUser.useMutation({
     retry: false,
+    async onSuccess() {
+      setEmail('')
+      await refetch()
+    },
   })
 
   const handleSubmit = (event?: React.SyntheticEvent) => {

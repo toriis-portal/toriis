@@ -54,16 +54,13 @@ const ToolTip: FC<TitleProps> = ({ title, details, children }) => {
               'body-small border-black bg-white',
             )}
           />
-          {children ? (
-            children
-          ) : (
-            <>
-              <div className="body-small">
-                <p className="font-bold">{title}:</p>
-                <p>{details}</p>
-              </div>
-            </>
-          )}
+          <>
+            <div className="body-small">
+              <div className="font-bold">{title}</div>
+              <div>{details}</div>
+              {children}
+            </div>
+          </>
         </div>
       )}
     </div>

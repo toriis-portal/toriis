@@ -60,6 +60,12 @@ export interface CaseEntry {
   url: string
 }
 
+export interface DirtyCompanyEntry {
+  companyName: string
+  details: Document
+  url: string
+}
+
 export interface IndustryEntry {
   name: string
   details?: string
@@ -68,6 +74,7 @@ export interface IndustryEntry {
 export interface SectorEntry {
   name: string
   details?: Document
+  avgGrade?: string
 }
 export interface FossilFuelPage {
   treeMap: Asset
