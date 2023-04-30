@@ -1,8 +1,16 @@
+import assert from 'assert'
+
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import type { FC } from 'react'
-import { useEffect, useMemo, useState } from 'react'
-import type { Dataset, Investment } from '@prisma/client'
+import { useEffect, useState } from 'react'
+import type {
+  Dataset,
+  Emission,
+  Energy,
+  Fuel,
+  Investment,
+} from '@prisma/client'
 import type { Company } from '@prisma/client'
 
 import { AdminNavBar, TabButton } from '../../../components'
@@ -10,23 +18,17 @@ import { DynamicPaginatedAdminTable } from '../../../components/Table/DynamicPag
 import { api } from '../../../utils/api'
 import type { Column } from '../../../components/Table/DynamicTable/DynamicTable'
 import { IndustryEnum, sectorEnum } from '../../../utils/enums'
-import type { UpdateType } from '../../../types'
 
-const industryKeyValue = Object.values(IndustryEnum).map((industry) => ({
-  key: industry,
-  value: industry,
-}))
+interface baseChangedEntries {
+  id: string
+  changedEntries: (keyof (Company | Investment))[]
+}
 
 const getEnumKeyValue = (enumType: string[]) => {
   return enumType.map((value) => ({
     key: value,
     value,
   }))
-}
-
-interface baseChangedEntries {
-  id: string
-  changedEntries: (keyof (Company | Investment))[]
 }
 
 const CompanyColumns: Column<Company>[] = [
@@ -116,15 +118,15 @@ const InvestmentColumns: Column<Investment>[] = [
       render: (row) => row.coupon,
     },
   },
-  // {
-  //   key: 'maturityDate',
-  //   label: 'Maturity Date',
-  //   isEditable: true,
-  //   ctrl: {
-  //     type: 'text',
-  //     render: (row) => row.maturityDate,
-  //   },
-  // },
+  {
+    key: 'maturityDate',
+    label: 'Maturity Date',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.maturityDate.toISOString(),
+    },
+  },
   {
     key: 'quantity',
     label: 'Quantity',
@@ -163,16 +165,216 @@ const InvestmentColumns: Column<Investment>[] = [
   },
 ]
 
-type UpdateTypesWithChangedEntries = (Company | Investment) & baseChangedEntries
+const FuelColumns: Column<Fuel>[] = [
+  {
+    key: 'year',
+    label: 'Year',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.year,
+    },
+  },
+  {
+    key: 'totalConsumption',
+    label: 'Total Consumption',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.totalConsumption ?? 0,
+    },
+  },
+  {
+    key: 'biodiesels',
+    label: 'Biodiesels',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.biodiesels ?? 0,
+    },
+  },
+  {
+    key: 'biogases',
+    label: 'Biogases',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.biogases ?? 0,
+    },
+  },
+  {
+    key: 'crudeOil',
+    label: 'Crude Oil',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.crudeOil ?? 0,
+    },
+  },
+  {
+    key: 'coal',
+    label: 'Coal',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.coal ?? 0,
+    },
+  },
+  {
+    key: 'oil',
+    label: 'Oil',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.oil ?? 0,
+    },
+  },
+  {
+    key: 'gas',
+    label: 'Gas',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.gas ?? 0,
+    },
+  },
+  {
+    key: 'otherBiomass',
+    label: 'Other Biomass',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.otherBiomass ?? 0,
+    },
+  },
+  {
+    key: 'sustainableBiomass',
+    label: 'Sustainable Biomass',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.sustainableBiomass ?? 0,
+    },
+  },
+  {
+    key: 'otherRenewable',
+    label: 'Other Renewable',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.otherRenewable ?? 0,
+    },
+  },
+  {
+    key: 'otherNonRenewable',
+    label: 'Other Non-Renewable',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.otherNonRenewable ?? 0,
+    },
+  },
+]
+
+const EmissionColumns: Column<Emission>[] = [
+  {
+    key: 'date',
+    label: 'Date',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row?.date?.toISOString() ?? '',
+    },
+  },
+  {
+    key: 'version',
+    label: 'Version',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.version ?? 0,
+    },
+  },
+  {
+    key: 'scopeOne',
+    label: 'Scope One',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.scopeOne ?? 0,
+    },
+  },
+  {
+    key: 'scopeTwo',
+    label: 'Scope Two',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.scopeTwo ?? 0,
+    },
+  },
+  {
+    key: 'scopeThree',
+    label: 'Scope Three',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.scopeThree ?? 0,
+    },
+  },
+]
+
+const EnergyColumns: Column<Energy>[] = [
+  {
+    key: 'year',
+    label: 'Year',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.year ?? 0,
+    },
+  },
+  {
+    key: 'totalConsumption',
+    label: 'Total Consumption',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.totalConsumption ?? 0,
+    },
+  },
+  {
+    key: 'totalRenewableConsumption',
+    label: 'Total Renewable Consumption',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.totalRenewableConsumption ?? 0,
+    },
+  },
+  {
+    key: 'totalNonRenewableConsumption',
+    label: 'Total Non-Renewable Consumption',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.totalNonRenewableConsumption ?? 0,
+    },
+  },
+]
+
+type DataSetTypes = Company | Investment | Fuel | Emission | Energy
+type DataSetColumns = Column<DataSetTypes>[]
+type UpdateTypesWithChangedEntries = DataSetTypes & baseChangedEntries
 
 const UpdateData: FC = () => {
   const { data: session, status } = useSession()
   const { push } = useRouter()
   const [dataset, setDataSet] = useState<Dataset>('COMPANY')
-  const [columns, setColumns] = useState<
-    Column<Investment>[] | Column<Company>[]
-  >(CompanyColumns)
-  const [data, setData] = useState<(Investment | Company)[]>([])
+  const [columns, setColumns] = useState<DataSetColumns>(
+    CompanyColumns as DataSetColumns,
+  )
+  const [data, setData] = useState<UpdateTypesWithChangedEntries[]>([])
   const [rows, setRows] = useState<UpdateTypesWithChangedEntries[]>([])
   const [skip, setSkip] = useState(0)
 
@@ -187,6 +389,21 @@ const UpdateData: FC = () => {
     take: 20,
   })
 
+  const { data: fuel } = api.fuel.getFuelsBySkipTake.useQuery({
+    skip: skip,
+    take: 20,
+  })
+
+  const { data: emission } = api.emission.getEmissionsBySkipTake.useQuery({
+    skip: skip,
+    take: 20,
+  })
+
+  const { data: energy } = api.energy.getEnergyBySkipTake.useQuery({
+    skip: skip,
+    take: 20,
+  })
+
   console.log(investment)
 
   useEffect(() => {
@@ -197,13 +414,61 @@ const UpdateData: FC = () => {
 
   useEffect(() => {
     if (dataset === 'COMPANY') {
-      setData(company?.items ?? [])
-      setColumns(CompanyColumns)
-    } else {
-      setData(investment?.items ?? [])
-      setColumns(InvestmentColumns)
+      const companyData = company?.items ?? []
+      setData(
+        companyData.map((company) => {
+          return {
+            ...company,
+            changedEntries: [],
+          }
+        }),
+      )
+      setColumns(CompanyColumns as DataSetColumns)
+    } else if (dataset === 'INVESTMENT') {
+      const investmentData = investment?.items ?? []
+      setData(
+        investmentData.map((investment: Investment) => ({
+          ...investment,
+          changedEntries: [],
+        })),
+      )
+      setColumns(InvestmentColumns as DataSetColumns)
+    } else if (dataset === 'FUEL') {
+      const fuelData = fuel?.items ?? []
+      setData(
+        fuelData.map((fuel) => ({
+          ...fuel,
+          changedEntries: [],
+        })),
+      )
+      setColumns(FuelColumns as DataSetColumns)
+    } else if (dataset === 'EMISSION') {
+      const emissionData = emission?.items ?? []
+      setData(
+        emissionData.map((emission) => ({
+          ...emission,
+          changedEntries: [],
+        })),
+      )
+      setColumns(EmissionColumns as DataSetColumns)
+    } else if (dataset === 'ENERGY') {
+      const energyData = energy?.items ?? []
+      setData(
+        energyData.map((energy) => ({
+          ...energy,
+          changedEntries: [],
+        })),
+      )
+      setColumns(EnergyColumns as DataSetColumns)
     }
-  }, [company, dataset, investment])
+  }, [
+    company,
+    dataset,
+    emission?.items,
+    energy?.items,
+    fuel?.items,
+    investment,
+  ])
 
   // // Add data to table when data is loaded
   useEffect(() => {
@@ -231,14 +496,27 @@ const UpdateData: FC = () => {
             text="Company"
             onClick={() => setDataSet('COMPANY')}
           />
+          <TabButton
+            active={dataset == 'FUEL'}
+            text="Fuel"
+            onClick={() => setDataSet('FUEL')}
+          />
+          <TabButton
+            active={dataset == 'EMISSION'}
+            text="Emission"
+            onClick={() => setDataSet('EMISSION')}
+          />
+          <TabButton
+            active={dataset == 'ENERGY'}
+            text="Energy"
+            onClick={() => setDataSet('ENERGY')}
+          />
         </div>
         <DynamicPaginatedAdminTable
           originalRows={rows}
           skip={skip}
           setSkip={setSkip}
           dataset={dataset}
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
           columns={columns}
         />
       </div>

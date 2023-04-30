@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react'
 import { api } from '../../utils/api'
 import { SubmitRequestModal, PrimaryButton } from '../index'
 
-import { DynamicTable, PaginatedDynamicTable } from './DynamicTable'
+import { PaginatedDynamicTable } from './DynamicTable'
 import type {
   BaseTableRowGeneric,
   Column,
@@ -27,14 +27,10 @@ type TableRowWithChangedEntries<TableRow> = TableRow & {
 
 interface Props<TableRow> {
   dataset: Dataset
-  originalRows: TableRow[]
   columns: Column<TableRow>[]
+  originalRows: TableRow[]
   skip: number
   setSkip: (skip: number) => void
-}
-export interface DynamicTableRowGeneric<TableRow> {
-  id: string
-  changedEntries: (keyof TableRow)[]
 }
 
 interface MutationInput {
@@ -48,9 +44,9 @@ export const DynamicPaginatedAdminTable = <
 >({
   dataset,
   originalRows,
-  columns,
   skip,
   setSkip,
+  ...tableProps
 }: Props<TableRow>) => {
   const convertTypes = (
     entries: GlobalStateEntry<TableRow>[],
@@ -229,7 +225,6 @@ export const DynamicPaginatedAdminTable = <
         styles={{
           table: 'w-full',
         }}
-        columns={columns}
         onSelectChange={(row, updatedEntry) => handleChange(row, updatedEntry)}
         onRowEntryClick={(row, col) => {
           setTextBoxContent(row[col.key]?.toString() ?? '')
@@ -241,6 +236,7 @@ export const DynamicPaginatedAdminTable = <
             setCurColumn(col.key)
           }
         }}
+        {...tableProps}
       />
       <input
         value={textBoxContent}

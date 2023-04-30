@@ -1,6 +1,6 @@
 import { createTRPCRouter } from '../trpc'
 import { skipTakeRequest } from '../../../utils/helpers'
 
-export const investmentRouter = createTRPCRouter({
-  getInvestmentsBySkipTake: skipTakeRequest,
+export const fuelRouter = createTRPCRouter({
+  getFuelsBySkipTake: skipTakeRequest,
 })
