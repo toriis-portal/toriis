@@ -3,6 +3,7 @@ import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import type { Company, EnvGrade, Sector } from '@prisma/client'
 import { Spinner } from 'flowbite-react'
+import { clsx } from 'clsx'
 
 import {
   Select,
@@ -10,8 +11,10 @@ import {
   ToTopButton,
   PrimaryNavBar,
   SearchBar,
+  Tag,
   CompanyCard,
   LoadMoreButton,
+  ToolTip,
   Footer,
 } from '../../components'
 import { api } from '../../utils/api'
@@ -72,6 +75,8 @@ const initialFilterOptions: FilterOptions = {
   netAssetVal: [],
   envGrade: [],
 }
+
+const SelectGroupStyle = clsx('flex flex-row gap-2 basis-1/4')
 
 const InvestmentPage: FC = () => {
   const [companySearchQuery, setCompanySearchQuery] =
@@ -169,69 +174,112 @@ const InvestmentPage: FC = () => {
             <SearchBar setCompanySearchQuery={setCompanySearchQuery} />
           </div>
         </div>
-        <div className="mb-8 flex basis-3/4 flex-col justify-evenly gap-4 md:flex-row lg:mx-20 lg:gap-14">
-          <Select
-            text="Sector"
-            isFilter={true}
-            options={Object.values(sectorEnum)}
-            updateControl={{
-              type: 'on-change',
-              cb: (selectedOptions) => {
-                setFilterOptions({
-                  ...filterOptions,
-                  sectors: selectedOptions.map((item) => {
-                    return item.toUpperCase().replace(' ', '_') as Sector
-                  }),
-                })
-              },
-            }}
-          />
-          <Select
-            text="Industry"
-            isFilter={true}
-            isSearchable={true}
-            options={INDUSTRIES}
-            containerHeight="1/4"
-            updateControl={{
-              type: 'on-change',
-              cb: (selectedOptions) => {
-                setFilterOptions({
-                  ...filterOptions,
-                  industries: selectedOptions,
-                })
-              },
-            }}
-          />
-          <Select
-            text="Environmental Grade"
-            shortText="Env Grade"
-            isFilter={true}
-            options={Object.values(envGradeEnum)}
-            updateControl={{
-              type: 'on-change',
-              cb: (selectedOptions) => {
-                setFilterOptions({
-                  ...filterOptions,
-                  envGrade: selectedOptions,
-                })
-              },
-            }}
-          />
-          <Select
-            text="Net Asset Value"
-            shortText="Net Asset"
-            isFilter={true}
-            options={Object.keys(netAssetValEnum)}
-            updateControl={{
-              type: 'on-change',
-              cb: (selectedOptions) => {
-                setFilterOptions({
-                  ...filterOptions,
-                  netAssetVal: netAssetValCallback(selectedOptions),
-                })
-              },
-            }}
-          />
+        <div className="mb-8 flex basis-3/4 flex-col justify-evenly gap-4 md:flex-row lg:mx-20 lg:gap-10">
+          <div className={SelectGroupStyle}>
+            <Select
+              text="Sector"
+              isFilter={true}
+              options={Object.values(sectorEnum)}
+              updateControl={{
+                type: 'on-change',
+                cb: (selectedOptions) => {
+                  setFilterOptions({
+                    ...filterOptions,
+                    sectors: selectedOptions.map((item) => {
+                      return item.toUpperCase().replace(' ', '_') as Sector
+                    }),
+                  })
+                },
+              }}
+            />
+            <ToolTip
+              title="Definition"
+              details="A sector is comprised of many industries and is used to describe large components of the overall economy (eg, Energy)."
+            />
+          </div>
+          <div className={SelectGroupStyle}>
+            <Select
+              text="Industry"
+              isFilter={true}
+              isSearchable={true}
+              options={INDUSTRIES}
+              containerHeight="1/4"
+              updateControl={{
+                type: 'on-change',
+                cb: (selectedOptions) => {
+                  setFilterOptions({
+                    ...filterOptions,
+                    industries: selectedOptions,
+                  })
+                },
+              }}
+            />
+            <ToolTip
+              title="Definition"
+              details="An industry is comprised of companies that are closely related in their business activities and is used to describe nuanced components of a larger sector (eg, Oil & Gas)."
+            />
+          </div>
+          <div className={SelectGroupStyle}>
+            <Select
+              text="Environmental Grade"
+              shortText="Env Grade"
+              isFilter={true}
+              options={Object.values(envGradeEnum)}
+              updateControl={{
+                type: 'on-change',
+                cb: (selectedOptions) => {
+                  setFilterOptions({
+                    ...filterOptions,
+                    envGrade: selectedOptions,
+                  })
+                },
+              }}
+            />
+            <ToolTip
+              title="Definition"
+              details={
+                <div className="flex flex-col gap-2">
+                  An Environmental, Social, and Governance (ESG) rating that
+                  aims to measure how sustainably a company is conducting
+                  business and managing ESG risk factors.
+                  <div>
+                    <Tag
+                      title="AAA"
+                      className="body-small float-left mr-2 bg-brightTeal text-white"
+                    />
+                    indicates strong management and low risk.
+                    <Tag
+                      title="CCC"
+                      className="body-small float-left mr-2 bg-pumpkin text-white"
+                    />
+                    indicates weak management and high risk.
+                  </div>
+                </div>
+              }
+            />
+          </div>
+
+          <div className={SelectGroupStyle}>
+            <Select
+              text="Net Asset Value"
+              shortText="Net Asset"
+              isFilter={true}
+              options={Object.keys(netAssetValEnum)}
+              updateControl={{
+                type: 'on-change',
+                cb: (selectedOptions) => {
+                  setFilterOptions({
+                    ...filterOptions,
+                    netAssetVal: netAssetValCallback(selectedOptions),
+                  })
+                },
+              }}
+            />
+            <ToolTip
+              title="Definition"
+              details="The total market value of all of a company's corporate bonds."
+            />
+          </div>
         </div>
         {lastSearchIsEmpty && (
           <p className="header-2 mb-8 w-full text-center">
