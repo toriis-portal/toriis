@@ -10,8 +10,8 @@ import { api } from '../../utils/api'
 import LoadMoreButton from '../Buttons/LoadMoreButton'
 interface ChevronFilterProps {
   text: string
-  onClickUp: VoidFunction
-  onClickDown: VoidFunction
+  onClickUp?: VoidFunction
+  onClickDown?: VoidFunction
 }
 
 const ChevronFilter: FC<ChevronFilterProps> = ({
@@ -84,7 +84,33 @@ const InvestmentTable: FC<{ companyId: string }> = (companyId) => {
   if (!data || isLoading) {
     return (
       <div className="text-center">
-        <Spinner />
+        <table className="mx-8 table-fixed border-2 border-clementine">
+          <thead>
+            <tr className="bg-clementine text-white">
+              <th>
+                <ChevronFilter text="Investment" />
+              </th>
+              <th className={tableHeaderMiddleStyle}>
+                <ChevronFilter text="Coupon" />
+              </th>
+              <th className={tableHeaderMiddleStyle}>
+                <ChevronFilter text="Maturity Date" />
+              </th>
+              <th className={tableHeaderMiddleStyle}>
+                <ChevronFilter text="Quantity" />
+              </th>
+              <th className={tableHeaderMiddleStyle}>
+                <ChevronFilter text="Cost Value" />
+              </th>
+              <th className={tableHeaderMiddleStyle}>
+                <ChevronFilter text="Market Value" />
+              </th>
+              <th className="w-1/12">
+                <ChevronFilter text="Year" />
+              </th>
+            </tr>
+          </thead>
+        </table>
       </div>
     )
   }
