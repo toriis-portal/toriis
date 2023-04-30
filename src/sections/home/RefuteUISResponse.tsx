@@ -26,7 +26,7 @@ const RefuteUISResponse: FC<RefuteUISResponseProps> = ({
           {documentToReactComponents(leftText)}
         </div>
         <div className="basis-4/7 lg:pr-8">
-          <Carousel carouselChildrenData={entries} />
+          <Carousel carouselChildrenData={entries} sectionName="Home" />
         </div>
       </div>
     </div>

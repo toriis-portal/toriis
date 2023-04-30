@@ -94,3 +94,8 @@ export interface CompanyDetailsEntry {
   name: string
   description: Document
 }
+
+export interface divestedEntity {
+  order: number
+  details: string[]
+}
