@@ -6,17 +6,26 @@ import clsx from 'clsx'
 interface BackButtonProps {
   customText?: string
   customLink?: string
+  reviewList?: boolean
 }
 
 const BackButton: FC<BackButtonProps> = ({
   customText = 'Back',
   customLink,
+  reviewList = false,
 }) => {
   const router = useRouter()
 
   const handleClick = () => {
     if (customLink) {
-      void router.push(customLink)
+      if (reviewList) {
+        void router.push({
+          pathname: customLink,
+          query: { reviewList: 'true' },
+        })
+      } else {
+        void router.push(customLink)
+      }
     } else {
       router.back()
     }

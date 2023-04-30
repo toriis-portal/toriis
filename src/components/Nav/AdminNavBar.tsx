@@ -92,6 +92,8 @@ const AdminNavBar: FC = () => {
       <div className="h-10 basis-1/4">
         {path == '/admin' ? (
           <BackButton customLink="/home" customText="Back To Toriis" />
+        ) : path.startsWith('/admin/request/') ? (
+          <BackButton customLink="/admin/request/" reviewList />
         ) : (
           <BackButton customLink="/admin" />
         )}
