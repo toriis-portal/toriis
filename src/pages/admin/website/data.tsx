@@ -19,7 +19,7 @@ const UpdateData: FC = () => {
     session && (
       <div>
         <AdminNavBar />
-        <SubmitRequestModal text={''} />
+        <SubmitRequestModal />
       </div>
     )
   )
