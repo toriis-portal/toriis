@@ -13,12 +13,11 @@ import {
   LoadMoreButton,
 } from '../../../components'
 
-const RequestPage: FC = () => {
+const RequestPage: FC<{ reviewList: boolean }> = ({ reviewList }) => {
   const { data: session, status } = useSession()
   const { push } = useRouter()
   const userId = session?.user.id ?? ''
-  const [showOnlyUserRequests, setShowOnlyUserRequests] = useState(true)
-
+  const [showOnlyUserRequests, setShowOnlyUserRequests] = useState(reviewList)
   useEffect(() => {
     if (status === 'unauthenticated') {
       void push('/auth/error')
