@@ -1,10 +1,11 @@
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
-import { Dataset, RequestStatus } from '@prisma/client'
+import { Company, Dataset, RequestStatus } from '@prisma/client'
 
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 import type { UpdateType, StrictUpdateType } from '../../../types'
 import { datasetEnum } from '../../../utils/enums'
+import { JSONObject } from 'superjson/dist/types'
 
 type UpdateQuery = Omit<UpdateType, 'maturityDate' | 'date'> & {
   maturityDate?: object
@@ -182,6 +183,44 @@ export const requestRouter = createTRPCRouter({
         }
 
         return 'Successfully approved request'
+      }
+    }),
+
+  getRequestDataDiff: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const request = await ctx.prisma.request.findUnique({
+        where: {
+          id: input.id,
+        },
+      })
+      if (!request) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Error fetching request',
+        })
+      }
+      const targetDataset = datasetEnum[request.dataset]
+      const targetItems = request.updates.map((update) => update.id)
+
+      const originalData = await ctx.prisma.$runCommandRaw({
+        find: targetDataset,
+        filter: {
+          _id: { $in: targetItems.map((id) => ({ $oid: id })) },
+        },
+      })
+
+      console.log(originalData.cursor)
+
+      if (originalData && originalData.cursor) {
+        const parsedOriginalData = (originalData.cursor as JSONObject)
+          .firstBatch
+        return { old: parsedOriginalData, new: request.updates }
+      } else {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Error fetching original data',
+        })
       }
     }),
 })

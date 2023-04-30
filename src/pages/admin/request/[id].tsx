@@ -10,7 +10,7 @@ import { DynamicTable } from '../../../components/Table/DynamicTable'
 const ReviewPage: FC = () => {
   const { data: session, status } = useSession()
   const { push } = useRouter()
-  const requestId = (useRouter().query.id as string) ?? ''
+  const requestId = useRouter().query.id as string
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -19,6 +19,10 @@ const ReviewPage: FC = () => {
   }, [push, status])
 
   const updateRequestMutation = api.request.updateRequest.useMutation({})
+  const { data } = api.request.getRequestDataDiff.useQuery(
+    { id: requestId },
+    { enabled: !!requestId, refetchOnWindowFocus: false, retry: false },
+  )
 
   return (
     <div>
@@ -26,7 +30,6 @@ const ReviewPage: FC = () => {
         <>
           <AdminNavBar />
           <div className="flex w-full flex-col items-center justify-center px-20 py-20">
-            {/* <DynamicTable/> */}
             <div className="flex-between flex flex-row gap-12">
               <PrimaryButton
                 text="Reject Request"
