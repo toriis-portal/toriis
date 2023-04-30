@@ -238,26 +238,31 @@ export const DynamicPaginatedAdminTable = <
         }}
         {...tableProps}
       />
-      <input
-        value={textBoxContent}
-        disabled={isSelect}
-        onChange={(e) => {
-          setTextBoxContent(e.target.value)
-          if (curRow) {
-            handleChange(curRow, {
-              key: curColumn,
-              value: e.target.value as RowEntry,
-            })
-          }
-        }}
-      ></input>
-
-      <SubmitRequestModal
-        isOpen={modalOpen}
-        isOpenCallBack={setModalOpen}
-        onSubmit={submitRequest}
-      />
-      <PrimaryButton text="Request Review" onClick={() => setModalOpen(true)} />
+      <div className="flex w-full flex-col items-center">
+        <input
+          value={textBoxContent}
+          disabled={isSelect}
+          onChange={(e) => {
+            setTextBoxContent(e.target.value)
+            if (curRow) {
+              handleChange(curRow, {
+                key: curColumn,
+                value: e.target.value as RowEntry,
+              })
+            }
+          }}
+          className="my-2 w-full border-2 border-cobalt px-10 py-4"
+        ></input>
+        <SubmitRequestModal
+          isOpen={modalOpen}
+          isOpenCallBack={setModalOpen}
+          onSubmit={submitRequest}
+        />
+        <PrimaryButton
+          text="Request Review"
+          onClick={() => setModalOpen(true)}
+        />
+      </div>
     </>
   )
 }

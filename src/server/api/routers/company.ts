@@ -8,7 +8,7 @@ import { sectorEnum } from '../../../utils/enums'
 import { ContentWrapper } from '../../../utils/content'
 import { createTRPCRouter, publicProcedure } from '../trpc'
 import type { IndustryEntry, SectorEntry } from '../../../types'
-import { skipTakeRequest } from '../../../utils/helpers'
+import { skipTakeRequest } from '../helper'
 
 const createNetAssetValFilter = (range: number[]) => {
   return {

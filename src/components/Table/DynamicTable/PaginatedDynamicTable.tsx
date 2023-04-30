@@ -36,7 +36,7 @@ export const PaginatedDynamicTable = <
   return (
     <div>
       <DynamicTable {...tableProps} />
-      <div className="flex">
+      <div className="flex w-full flex-row justify-center">
         <ChevronLeftIcon
           onClick={() => handlePageChange(page, -1)}
           className="h-5 w-5"
