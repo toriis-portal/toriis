@@ -53,6 +53,7 @@ export const userRouter = createTRPCRouter({
         })
       }
     }),
+
   deleteManyWhitelistedUsers: protectedProcedure
     .input(z.object({ ids: z.array(z.string()) }))
     .mutation(async ({ input, ctx }) => {
@@ -70,6 +71,7 @@ export const userRouter = createTRPCRouter({
         })
       }
     }),
+
   updateUserEmailPreference: protectedProcedure
     .input(z.object({ ids: z.array(z.string()) }))
     .mutation(async ({ input, ctx }) => {
@@ -116,13 +118,14 @@ export const userRouter = createTRPCRouter({
       if (!wuser.userId) {
         return wuser
       }
-      return (
-        (await ctx.prisma.user.findUnique({
-          where: {
-            id: wuser.userId,
-          },
-        })) || wuser
-      )
+
+      const fullUser = await ctx.prisma.user.findUnique({
+        where: {
+          id: wuser.userId,
+        },
+      })
+
+      return fullUser || wuser
     })
 
     const promises = await Promise.all(fullUsers)

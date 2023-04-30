@@ -11,6 +11,10 @@ const delUserTextStyle = (deletePressed: boolean) =>
     'text-black': !deletePressed,
   })
 
+function isLoggedInUser(user: User | WhitelistedUser): user is User {
+  return (user as WhitelistedUser).userId === undefined
+}
+
 interface AdminTableProps {
   users: (User | WhitelistedUser)[] | undefined
   editEnabled: boolean
@@ -53,6 +57,7 @@ const AdminListTable: FC<AdminTableProps> = ({
         {users?.map((user, num) => {
           const deletePressed = tempDeleted.indexOf(user.id) > -1
           const checkClicked = tempChecked.indexOf(user.id) > -1
+          const isFullUser = isLoggedInUser(user)
           return (
             <div
               key={num}
@@ -61,7 +66,7 @@ const AdminListTable: FC<AdminTableProps> = ({
               <div className="mt-4 flex w-10/12 flex-row items-center gap-1 border-b-[1px] border-darkGray pb-4 pl-6">
                 <p className={delUserTextStyle(deletePressed)}>{user.email}</p>
                 <p className={delUserTextStyle(deletePressed)}>
-                  {(user as User).name || 'N/A'}
+                  {isFullUser ? user.name : 'N/A'}
                 </p>
                 <p
                   className={clsx('body-normal basis-1/6', {
@@ -69,22 +74,18 @@ const AdminListTable: FC<AdminTableProps> = ({
                     'text-medGray': !deletePressed,
                   })}
                 >
-                  {(user as User).createdAt?.toLocaleDateString() || 'N/A'}
+                  {isFullUser ? user.createdAt?.toLocaleDateString() : 'N/A'}
                 </p>
                 <div className="flex basis-1/6 flex-col items-center">
                   <Checkbox
                     onClick={() => onCheck(user.id)}
                     className="h-6 w-6"
-                    disabled={
-                      !editEnabled ||
-                      deletePressed ||
-                      (user as WhitelistedUser).userId !== undefined
-                    }
+                    disabled={!editEnabled || deletePressed || !isFullUser}
                     checked={
-                      (user as WhitelistedUser).userId === undefined &&
+                      isFullUser &&
                       (editEnabled && checkClicked
-                        ? !(user as User).shouldEmail
-                        : (user as User).shouldEmail)
+                        ? !user.shouldEmail
+                        : user.shouldEmail)
                     }
                   ></Checkbox>
                 </div>
