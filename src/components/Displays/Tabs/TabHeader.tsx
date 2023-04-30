@@ -34,7 +34,7 @@ const TabHeader: FC<{ title: string; active: boolean }> = ({
       )}
     >
       <p
-        className={clsx('border-b-2 py-3.5 px-4 ', {
+        className={clsx('whitespace-nowrap border-b-2 py-3.5 px-4', {
           'border-lightBlue': !active,
           'border-clementine': active,
         })}

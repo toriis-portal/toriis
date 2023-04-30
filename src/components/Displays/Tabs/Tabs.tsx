@@ -16,7 +16,7 @@ const Tabs: FC<{ tabDetails: TabDetails[] }> = ({ tabDetails }) => {
   const [activeIdx, setActiveIndx] = useState(0)
 
   return (
-    <div className="px-12">
+    <div className="md:px-12">
       {/* Tab headers:*/}
       <div className="flex flex-row space-x-1.5">
         {tabDetails.map((details, i) => {
