@@ -18,8 +18,7 @@ import { DynamicPaginatedAdminTable } from '../../../components/Table/DynamicPag
 import { api } from '../../../utils/api'
 import type { Column } from '../../../components/Table/DynamicTable/DynamicTable'
 import {
-  CompanyColumns,
-  InvestmentColumns,
+  getColumns,
   FuelColumns,
   EmissionColumns,
   EnergyColumns,
@@ -28,13 +27,6 @@ import {
 interface baseChangedEntries {
   id: string
   changedEntries: (keyof (Company | Investment))[]
-}
-
-const getEnumKeyValue = (enumType: string[]) => {
-  return enumType.map((value) => ({
-    key: value,
-    value,
-  }))
 }
 
 type DataSetTypes = Company | Investment | Fuel | Emission | Energy
@@ -47,7 +39,7 @@ const UpdateData: FC = () => {
   const { push } = useRouter()
   const [dataset, setDataSet] = useState<Dataset>('COMPANY')
   const [columns, setColumns] = useState<DataSetColumns>(
-    CompanyColumns as DataSetColumns,
+    getColumns('COMPANY', true) as DataSetColumns,
   )
   const [data, setData] = useState<UpdateTypesWithChangedEntries[]>([])
   const [rows, setRows] = useState<UpdateTypesWithChangedEntries[]>([])
@@ -96,7 +88,7 @@ const UpdateData: FC = () => {
           }
         }),
       )
-      setColumns(CompanyColumns as DataSetColumns)
+      setColumns(getColumns('COMPANY', true) as DataSetColumns)
     } else if (dataset === 'INVESTMENT') {
       const investmentData = investment?.items ?? []
       setData(
@@ -105,7 +97,7 @@ const UpdateData: FC = () => {
           changedEntries: [],
         })),
       )
-      setColumns(InvestmentColumns as DataSetColumns)
+      setColumns(getColumns('INVESTMENT', true) as DataSetColumns)
     } else if (dataset === 'FUEL') {
       const fuelData = fuel?.items ?? []
       setData(

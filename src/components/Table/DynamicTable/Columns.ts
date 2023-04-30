@@ -5,11 +5,12 @@ import type {
   Fuel,
   Energy,
 } from '@prisma/client'
+import { Dataset } from '@prisma/client'
 
 import type { Column } from '../../../components/Table/DynamicTable/DynamicTable'
 import { IndustryEnum, sectorEnum } from '../../../utils/enums'
 
-const errorStyle = 'border-2 border-red-500'
+const errorStyle = 'border-2 border-pumpkin'
 
 const getEnumKeyValue = (enumType: string[]) => {
   return enumType.map((value) => ({
@@ -18,153 +19,161 @@ const getEnumKeyValue = (enumType: string[]) => {
   }))
 }
 
-export const CompanyColumns: Column<Company>[] = [
-  {
-    key: 'name',
-    label: 'Name',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row: Company) => row.name ?? '',
-      applyStyle: (row: Company) => (row.name ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'ticker',
-    label: 'Ticker',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row: Company) => row.ticker ?? '',
-      applyStyle: (row: Company) => (row.ticker ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'sector',
-    label: 'Sector',
-    isEditable: true,
-    ctrl: {
-      type: 'select',
-      options: getEnumKeyValue(Object.values(sectorEnum)),
-      render: (row) => row.sector ?? '',
-      applyStyle: (row: Company) => (row.sector ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'industry',
-    label: 'Industry',
-    isEditable: true,
-    ctrl: {
-      type: 'select',
-      options: getEnumKeyValue(Object.values(IndustryEnum)),
-      render: (row) => row.industry ?? '',
-      applyStyle: (row: Company) => (row.industry ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'description',
-    label: 'Description',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.description ?? '',
-      applyStyle: (row: Company) => (row.description ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'netAssetVal',
-    label: 'Net Asset Value',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.netAssetVal,
-      applyStyle: (row: Company) => (row.netAssetVal ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'bloombergId',
-    label: 'Bloomberg ID',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.bloombergId ?? '',
-      applyStyle: (row: Company) => (row.bloombergId ? '' : errorStyle),
-    },
-  },
-]
-
-export const InvestmentColumns: Column<Investment>[] = [
-  {
-    key: 'rawName',
-    label: 'Name',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.rawName ?? '',
-      applyStyle: (row: Investment) => (row.rawName ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'coupon',
-    label: 'Coupon',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.coupon,
-      applyStyle: (row: Investment) => (row.coupon ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'maturityDate',
-    label: 'Maturity Date',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.maturityDate.toISOString(),
-      applyStyle: (row: Investment) => (row.maturityDate ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'quantity',
-    label: 'Quantity',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.quantity,
-      applyStyle: (row: Investment) => (row.quantity ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'costVal',
-    label: 'Cost Value',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.costVal,
-      applyStyle: (row: Investment) => (row.costVal ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'marketVal',
-    label: 'Market Value',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.marketVal,
-      applyStyle: (row: Investment) => (row.marketVal ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'year',
-    label: 'Year',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.year,
-      applyStyle: (row: Investment) => (row.year ? '' : errorStyle),
-    },
-  },
-]
+export const getColumns = (key: Dataset, isEditable: boolean) => {
+  if (key == Dataset.COMPANY) {
+    const CompanyColumns: Column<Company>[] = [
+      {
+        key: 'name',
+        label: 'Name',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row: Company) => row.name ?? '',
+          applyStyle: (row: Company) => (row.name ? '' : errorStyle),
+        },
+      },
+      {
+        key: 'ticker',
+        label: 'Ticker',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row: Company) => row.ticker ?? '',
+          applyStyle: (row: Company) => (row.ticker ? '' : errorStyle),
+        },
+      },
+      {
+        key: 'sector',
+        label: 'Sector',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'select',
+          options: getEnumKeyValue(Object.values(sectorEnum)),
+          render: (row) => row.sector ?? '',
+          applyStyle: (row: Company) => (row.sector ? '' : errorStyle),
+        },
+      },
+      {
+        key: 'industry',
+        label: 'Industry',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'select',
+          options: getEnumKeyValue(Object.values(IndustryEnum)),
+          render: (row) => row.industry ?? '',
+          applyStyle: (row: Company) => (row.industry ? '' : errorStyle),
+        },
+      },
+      {
+        key: 'description',
+        label: 'Description',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.description ?? '',
+          applyStyle: (row: Company) => (row.description ? '' : errorStyle),
+        },
+      },
+      {
+        key: 'netAssetVal',
+        label: 'Net Asset Value',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.netAssetVal,
+          applyStyle: (row: Company) => (row.netAssetVal ? '' : errorStyle),
+        },
+      },
+      {
+        key: 'bloombergId',
+        label: 'Bloomberg ID',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.bloombergId ?? '',
+          applyStyle: (row: Company) => (row.bloombergId ? '' : errorStyle),
+        },
+      },
+    ]
+    return CompanyColumns
+  }
+  if (key == Dataset.INVESTMENT) {
+    const InvestmentColumns: Column<Investment>[] = [
+      {
+        key: 'rawName',
+        label: 'Name',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.rawName ?? '',
+          applyStyle: (row: Investment) => (row.rawName ? '' : errorStyle),
+        },
+      },
+      {
+        key: 'coupon',
+        label: 'Coupon',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.coupon,
+          applyStyle: (row: Investment) => (row.coupon ? '' : errorStyle),
+        },
+      },
+      {
+        key: 'maturityDate',
+        label: 'Maturity Date',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.maturityDate.toISOString(),
+          applyStyle: (row: Investment) => (row.maturityDate ? '' : errorStyle),
+        },
+      },
+      {
+        key: 'quantity',
+        label: 'Quantity',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.quantity,
+          applyStyle: (row: Investment) => (row.quantity ? '' : errorStyle),
+        },
+      },
+      {
+        key: 'costVal',
+        label: 'Cost Value',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.costVal,
+          applyStyle: (row: Investment) => (row.costVal ? '' : errorStyle),
+        },
+      },
+      {
+        key: 'marketVal',
+        label: 'Market Value',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.marketVal,
+          applyStyle: (row: Investment) => (row.marketVal ? '' : errorStyle),
+        },
+      },
+      {
+        key: 'year',
+        label: 'Year',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.year,
+          applyStyle: (row: Investment) => (row.year ? '' : errorStyle),
+        },
+      },
+    ]
+    return InvestmentColumns
+  }
+  return []
+}
 
 export const FuelColumns: Column<Fuel>[] = [
   {
