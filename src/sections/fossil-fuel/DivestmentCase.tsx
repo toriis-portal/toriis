@@ -18,7 +18,7 @@ interface FinancialCaseProps {
   footnote: Document
 }
 
-const FinancialCase: FC<FinancialCaseProps> = ({
+const DivestmentCase: FC<FinancialCaseProps> = ({
   entries,
   text,
   img,
@@ -27,7 +27,7 @@ const FinancialCase: FC<FinancialCaseProps> = ({
   return (
     <div className="bg-white px-12">
       <HighlightedTitle
-        title="Financial Case for Fossil Fuel Divestment"
+        title="The Case for Fossil Fuel Divestment"
         size="large"
         color="clementine"
       />
@@ -43,16 +43,18 @@ const FinancialCase: FC<FinancialCaseProps> = ({
           />
         </div>
         <ImageWithCaption img={img} />
-        {entries.map((entry, index) => (
-          <div key={index}>
-            <CaseAccordion content={entry} />
+        <div className="lg:px-20">
+          {entries.map((entry, index) => (
+            <div key={index}>
+              <CaseAccordion content={entry} />
+            </div>
+          ))}
+          <div className="body-small text-footnoteGray">
+            {documentToReactComponents(footnote)}
           </div>
-        ))}
-        <div className="body-small text-footnoteGray">
-          {documentToReactComponents(footnote)}
         </div>
       </div>
     </div>
   )
 }
-export default FinancialCase
+export default DivestmentCase

@@ -9,7 +9,7 @@ import TimelineSection from './home/Timeline'
 import ChartGroup from './company/ChartGroup'
 import CompanyTooltipGroup from './company/TooltipGroup'
 //Fossil Fuel Page
-import FinancialCase from './fossil-fuel/FinancialCase'
+import DivestmentCase from './fossil-fuel/DivestmentCase'
 import DirtyIndustries from './fossil-fuel/DirtyIndustries'
 import FossilFuelsBad from './fossil-fuel/FossilFuelsBad'
 import InstitutionsDivested from './fossil-fuel/InstitutionsDivested'
@@ -23,7 +23,7 @@ export {
   RefuteUISResponse,
   SampleSection,
   TimelineSection,
-  FinancialCase,
+  DivestmentCase,
   ChartGroup,
   CompanyTooltipGroup,
   DirtyIndustries,

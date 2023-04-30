@@ -14,13 +14,7 @@ const TwitterIcon = ({ className, ...props }: React.ComponentProps<'svg'>) => (
     <title>twitter [#154]</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g
-      id="Page-1"
-      stroke="none"
-      stroke-width="1"
-      fill="none"
-      fill-rule="evenodd"
-    >
+    <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g
         id="Dribbble-Light-Preview"
         transform="translate(-60.000000, -7521.000000)"
