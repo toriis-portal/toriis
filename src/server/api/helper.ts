@@ -5,7 +5,7 @@ import { publicProcedure } from './trpc'
 export const skipTakeRequest = publicProcedure
   .input(
     z.object({
-      skip: z.number().min(0).max(100).nullish(),
+      skip: z.number().min(0).nullish(),
       take: z.number().min(1).max(100).nullish(),
     }),
   )

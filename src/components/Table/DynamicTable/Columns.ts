@@ -49,7 +49,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
         ctrl: {
           type: 'select',
           options: getEnumKeyValue(Object.values(sectorEnum)),
-          render: (row) => row.sector ?? '',
+          render: (row) => (row.sector ? sectorEnum[row.sector] : ''),
           applyStyle: (row: Company) => (row.sector ? '' : errorStyle),
         },
       },
