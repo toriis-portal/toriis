@@ -2,22 +2,31 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import type { FC } from 'react'
 import { useEffect, useMemo, useState } from 'react'
-import type { Dataset } from '@prisma/client'
+import type { Dataset, Investment } from '@prisma/client'
 import type { Company } from '@prisma/client'
 
-import { AdminNavBar } from '../../../components'
+import { AdminNavBar, TabButton } from '../../../components'
 import { DynamicPaginatedAdminTable } from '../../../components/Table/DynamicPaginatedAdminTable'
-import { INDUSTRIES } from '../../../utils/constants'
 import { api } from '../../../utils/api'
 import type { Column } from '../../../components/Table/DynamicTable/DynamicTable'
+import { IndustryEnum, sectorEnum } from '../../../utils/enums'
+import type { UpdateType } from '../../../types'
 
-const industryKeyValue = INDUSTRIES.map((industry) => ({
+const industryKeyValue = Object.values(IndustryEnum).map((industry) => ({
   key: industry,
   value: industry,
 }))
 
-interface CompanyWithChangedEntries extends Company {
-  changedEntries: (keyof Company)[]
+const getEnumKeyValue = (enumType: string[]) => {
+  return enumType.map((value) => ({
+    key: value,
+    value,
+  }))
+}
+
+interface baseChangedEntries {
+  id: string
+  changedEntries: (keyof (Company | Investment))[]
 }
 
 const CompanyColumns: Column<Company>[] = [
@@ -44,7 +53,8 @@ const CompanyColumns: Column<Company>[] = [
     label: 'Sector',
     isEditable: true,
     ctrl: {
-      type: 'text',
+      type: 'select',
+      options: getEnumKeyValue(Object.values(sectorEnum)),
       render: (row) => row.sector ?? '',
     },
   },
@@ -54,7 +64,7 @@ const CompanyColumns: Column<Company>[] = [
     isEditable: true,
     ctrl: {
       type: 'select',
-      options: industryKeyValue,
+      options: getEnumKeyValue(Object.values(IndustryEnum)),
       render: (row) => row.industry ?? '',
     },
   },
@@ -87,12 +97,83 @@ const CompanyColumns: Column<Company>[] = [
   },
 ]
 
+const InvestmentColumns: Column<Investment>[] = [
+  {
+    key: 'rawName',
+    label: 'Name',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.rawName ?? '',
+    },
+  },
+  {
+    key: 'coupon',
+    label: 'Coupon',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.coupon,
+    },
+  },
+  // {
+  //   key: 'maturityDate',
+  //   label: 'Maturity Date',
+  //   isEditable: true,
+  //   ctrl: {
+  //     type: 'text',
+  //     render: (row) => row.maturityDate,
+  //   },
+  // },
+  {
+    key: 'quantity',
+    label: 'Quantity',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.quantity,
+    },
+  },
+  {
+    key: 'costVal',
+    label: 'Cost Value',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.costVal,
+    },
+  },
+  {
+    key: 'marketVal',
+    label: 'Market Value',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.marketVal,
+    },
+  },
+  {
+    key: 'year',
+    label: 'Year',
+    isEditable: true,
+    ctrl: {
+      type: 'text',
+      render: (row) => row.year,
+    },
+  },
+]
+
+type UpdateTypesWithChangedEntries = (Company | Investment) & baseChangedEntries
+
 const UpdateData: FC = () => {
   const { data: session, status } = useSession()
   const { push } = useRouter()
   const [dataset, setDataSet] = useState<Dataset>('COMPANY')
-  const [columns, setColumns] = useState([])
-  const [rows, setRows] = useState<CompanyWithChangedEntries[]>([])
+  const [columns, setColumns] = useState<
+    Column<Investment>[] | Column<Company>[]
+  >(CompanyColumns)
+  const [data, setData] = useState<(Investment | Company)[]>([])
+  const [rows, setRows] = useState<UpdateTypesWithChangedEntries[]>([])
   const [skip, setSkip] = useState(0)
 
   const { data: investment } = api.investment.getInvestmentsBySkipTake.useQuery(
@@ -114,34 +195,59 @@ const UpdateData: FC = () => {
     }
   }, [push, status])
 
-  const originalRows: Company[] = useMemo(
-    () => company?.items ?? [],
-    [company?.items],
-  )
+  function getValue(): (Company | Investment)[] {
+    if (dataset === 'COMPANY') {
+      return columns
+    } else {
+      return columns
+    }
+  }
+
+  useEffect(() => {
+    if (dataset === 'COMPANY') {
+      setData(company?.items ?? [])
+      setColumns(CompanyColumns)
+    } else {
+      setData(investment?.items ?? [])
+      setColumns(InvestmentColumns)
+    }
+  }, [company, dataset, investment])
 
   // // Add data to table when data is loaded
   useEffect(() => {
-    const cleanedRows = originalRows.map((row) => {
+    const cleanedRows = data.map((row) => {
       return {
         ...row,
         changedEntries: [],
       }
     })
     setRows(cleanedRows)
-  }, [originalRows, setRows])
+  }, [data, setRows])
 
   return (
     session && (
       <div>
         <AdminNavBar />
-        <button onClick={() => setDataSet('INVESTMENT')}>Investments</button>
-        <button onClick={() => setDataSet('COMPANY')}>Companies</button>
+        <div>
+          <TabButton
+            active={dataset == 'INVESTMENT'}
+            text="Investment"
+            onClick={() => setDataSet('INVESTMENT')}
+          />
+          <TabButton
+            active={dataset == 'COMPANY'}
+            text="Company"
+            onClick={() => setDataSet('COMPANY')}
+          />
+        </div>
         <DynamicPaginatedAdminTable
           originalRows={rows}
           skip={skip}
           setSkip={setSkip}
           dataset={dataset}
-          columns={CompanyColumns}
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          columns={columns}
         />
       </div>
     )

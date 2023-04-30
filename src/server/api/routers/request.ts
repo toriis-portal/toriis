@@ -1,10 +1,10 @@
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
-import { Dataset, RequestStatus } from '@prisma/client'
+import { Dataset, RequestStatus, Sector } from '@prisma/client'
 
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 import type { UpdateType, StrictUpdateType } from '../../../types'
-import { datasetEnum } from '../../../utils/enums'
+import { IndustryEnum, datasetEnum } from '../../../utils/enums'
 
 type UpdateQuery = Omit<UpdateType, 'maturityDate' | 'date'> & {
   maturityDate?: object
@@ -24,8 +24,12 @@ export const requestRouter = createTRPCRouter({
         updates: z.array(
           z.object({
             id: z.string(),
-            key: z.string().or(z.number()).or(z.symbol()),
-            value: z.any(), // TODO: Check this again so and see if there's a way we can have more narrow types on this
+            key: z.string(),
+            value: z
+              .string()
+              .or(z.number())
+              .or(z.nativeEnum(Sector))
+              .or(z.nativeEnum(IndustryEnum)), // TODO: Check this again so and see if there's a way we can have more narrow types on this
             page: z.number().nullish(),
           }),
         ),

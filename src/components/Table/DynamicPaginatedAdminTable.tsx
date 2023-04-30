@@ -3,7 +3,6 @@ import type { Company, Dataset, Sector } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 
 import { api } from '../../utils/api'
-import { INDUSTRIES } from '../../utils/constants'
 
 import { DynamicTable, PaginatedDynamicTable } from './DynamicTable'
 import type {
@@ -32,6 +31,16 @@ interface Props<TableRow> {
   skip: number
   setSkip: (skip: number) => void
 }
+export interface DynamicTableRowGeneric<TableRow> {
+  id: string
+  changedEntries: (keyof TableRow)[]
+}
+
+interface MutationInput {
+  id: string
+  key: string
+  value: string | number
+}
 
 export const DynamicPaginatedAdminTable = <
   TableRow extends BaseTableRowGeneric<TableRow>,
@@ -42,6 +51,21 @@ export const DynamicPaginatedAdminTable = <
   skip,
   setSkip,
 }: Props<TableRow>) => {
+  const convertTypes = (
+    entries: GlobalStateEntry<TableRow>[],
+  ): MutationInput[] => {
+    const convertedItems: MutationInput[] = []
+
+    entries.forEach((entry) => {
+      convertedItems.push({
+        key: entry.key as string,
+        id: entry.id,
+        value: entry.value as string | number,
+      })
+    })
+
+    return convertedItems
+  }
   const [isSelect, setIsSelect] = useState(false)
   const [curColumn, setCurColumn] = useState<keyof TableRow>('id')
   const [curRow, setCurRow] = useState<TableRow | null>(null)
@@ -91,12 +115,17 @@ export const DynamicPaginatedAdminTable = <
     const currentMergedChanges = capturePageChanges(skip / PAGE_SIZE + 1)
     mutation.mutate({
       dataset: dataset,
-      updates: currentMergedChanges,
+      updates: convertTypes(currentMergedChanges),
       status: 'PENDING',
       userId: session?.user.id ?? '',
       createdAt: new Date().toISOString(),
     })
   }
+
+  // Reset the entry changes when the table is changed
+  useEffect(() => {
+    SetGlobalStateEntries([])
+  }, [dataset])
 
   // Persist changed data when moving through pages
   useEffect(() => {
@@ -146,8 +175,8 @@ export const DynamicPaginatedAdminTable = <
           const updatedEntries = (
             originalRows
               ? originalRows.find(
-                (dataRow: { id: string }) => dataRow.id === row.id,
-              )
+                  (dataRow: { id: string }) => dataRow.id === row.id,
+                )
               : []
           ) as TableRow | []
 

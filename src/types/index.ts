@@ -22,8 +22,8 @@ export type UpdateType = Partial<
 
 export type StrictUpdateType = {
   id: string
-  key: string
-  value: UpdateType
+  key: string | symbol | number
+  value: string | number | boolean | null
 }
 
 /* Contentful Types */
