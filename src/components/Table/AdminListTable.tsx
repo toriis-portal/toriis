@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import type { User } from '@prisma/client'
+import type { User, WhitelistedUser } from '@prisma/client'
 import { Checkbox } from 'flowbite-react'
 import clsx from 'clsx'
 import { TrashIcon, ArrowUturnLeftIcon } from '@heroicons/react/24/outline'
@@ -11,8 +11,12 @@ const delUserTextStyle = (deletePressed: boolean) =>
     'text-black': !deletePressed,
   })
 
+function isLoggedInUser(user: User | WhitelistedUser): user is User {
+  return (user as WhitelistedUser).userId === undefined
+}
+
 interface AdminTableProps {
-  users: User[] | undefined
+  users: (User | WhitelistedUser)[] | undefined
   editEnabled: boolean
   onTrash: (id: string) => void
   onUndo: (id: string) => void
@@ -53,6 +57,7 @@ const AdminListTable: FC<AdminTableProps> = ({
         {users?.map((user, num) => {
           const deletePressed = tempDeleted.indexOf(user.id) > -1
           const checkClicked = tempChecked.indexOf(user.id) > -1
+          const isFullUser = isLoggedInUser(user)
           return (
             <div
               key={num}
@@ -60,24 +65,27 @@ const AdminListTable: FC<AdminTableProps> = ({
             >
               <div className="mt-4 flex w-10/12 flex-row items-center gap-1 border-b-[1px] border-darkGray pb-4 pl-6">
                 <p className={delUserTextStyle(deletePressed)}>{user.email}</p>
-                <p className={delUserTextStyle(deletePressed)}>{user.name}</p>
+                <p className={delUserTextStyle(deletePressed)}>
+                  {isFullUser ? user.name : 'N/A'}
+                </p>
                 <p
                   className={clsx('body-normal basis-1/6', {
                     'text-lightGray': deletePressed,
                     'text-medGray': !deletePressed,
                   })}
                 >
-                  {user.createdAt.toLocaleDateString()}
+                  {isFullUser ? user.createdAt?.toLocaleDateString() : 'N/A'}
                 </p>
                 <div className="flex basis-1/6 flex-col items-center">
                   <Checkbox
                     onClick={() => onCheck(user.id)}
                     className="h-6 w-6"
-                    disabled={!editEnabled || deletePressed}
+                    disabled={!editEnabled || deletePressed || !isFullUser}
                     checked={
-                      editEnabled && checkClicked
+                      isFullUser &&
+                      (editEnabled && checkClicked
                         ? !user.shouldEmail
-                        : user.shouldEmail
+                        : user.shouldEmail)
                     }
                   ></Checkbox>
                 </div>

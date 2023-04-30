@@ -10,7 +10,7 @@ import ChartGroup from './company/ChartGroup'
 import CompanyTooltipGroup from './company/TooltipGroup'
 //Fossil Fuel Page
 import DivestmentCase from './fossil-fuel/DivestmentCase'
-import DirtyIndustry from './fossil-fuel/DirtyIndustry'
+import DirtyIndustries from './fossil-fuel/DirtyIndustries'
 import FossilFuelsBad from './fossil-fuel/FossilFuelsBad'
 import InstitutionsDivested from './fossil-fuel/InstitutionsDivested'
 import SchoolsDivested from './fossil-fuel/SchoolsDivested'
@@ -26,7 +26,7 @@ export {
   DivestmentCase,
   ChartGroup,
   CompanyTooltipGroup,
-  DirtyIndustry,
+  DirtyIndustries,
   FossilFuelsBad,
   InstitutionsDivested,
   SchoolsDivested,

@@ -23,6 +23,7 @@ import FinanceBrushChart from './Charts/FinanceBrushChart'
 // Displays
 import ListItem from './Displays/ListItem'
 import Carousel from './Displays/Carousel/Carousel'
+import Tabs from './Displays/Tabs/Tabs'
 import ClimateClock from './Displays/ClimateClock/ClimateClock'
 import ImageWithCaption from './Displays/Image/ImageWithCaption'
 // Accordions
@@ -41,6 +42,7 @@ import InviteAdminBar from './Selects/InviteAdminBar'
 import NumberCircle from './Text/NumberCircle'
 import HighlightedTitle from './Text/HighlightedTitle'
 import CommentModal from './Modals/CommentModal'
+import SubmitRequestModal from './Modals/SubmitRequestModal'
 import CapitalizedTitle from './Text/CapitalizedTitle'
 import ShadowTitle from './Text/ShadowTitle'
 import StatusTag from './Text/StatusTag'
@@ -70,6 +72,7 @@ export {
   ToTopButton,
   LoadMoreButton,
   Carousel,
+  Tabs,
   Select,
   LandingDonutChart,
   FinanceBrushChart,
@@ -101,6 +104,7 @@ export {
   InviteAdminBar,
   RequestReviewTable,
   CommentModal,
+  SubmitRequestModal,
   StatusTag,
   LinkBox,
   ImageWithCaption,

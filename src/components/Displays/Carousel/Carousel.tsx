@@ -4,14 +4,15 @@ import React, { useState } from 'react'
 import { ChevronLeftIcon } from '@heroicons/react/24/solid'
 import { ChevronRightIcon } from '@heroicons/react/24/solid'
 
-import type { RefuteResponseEntry } from '../../../types'
+import type { RefuteResponseEntry, divestedEntity } from '../../../types'
 
 import CarouselChild from './CarouselChild'
 import CarouselDot from './CarouselDot'
 
-const Carousel: FC<{ carouselChildrenData: RefuteResponseEntry[] }> = ({
-  carouselChildrenData,
-}) => {
+const Carousel: FC<{
+  carouselChildrenData: RefuteResponseEntry[] | divestedEntity[]
+  sectionName: 'Home' | 'SchoolsDivested' | 'InstitutionsDivested'
+}> = ({ carouselChildrenData, sectionName }) => {
   const [activeIndex, setActiveIndex] = useState(0)
 
   const updateIndex = (newIndex: number) => {
@@ -20,15 +21,19 @@ const Carousel: FC<{ carouselChildrenData: RefuteResponseEntry[] }> = ({
     }
   }
 
+  const style = clsx(
+    'flex flex-col',
+    'gap-4  pt-12 pb-8',
+    {
+      'px-12 shadow-[-16px_16px_0px_0px] shadow-clementine bg-white rounded-md border-4 border-clementine bg-white':
+        sectionName === 'Home',
+    },
+    { 'bg-lightBlue': sectionName === 'SchoolsDivested' },
+    { 'bg-clementine/20': sectionName === 'InstitutionsDivested' },
+  )
+
   return (
-    <div
-      className={clsx(
-        'flex flex-col',
-        'gap-4 px-12 pt-12 pb-8',
-        'rounded-md border-4 border-clementine bg-white',
-        'shadow-[-16px_16px_0px_0px] shadow-clementine',
-      )}
-    >
+    <div className={style}>
       <div className="overflow-hidden">
         <div
           className="flex flex-row whitespace-normal transition-transform"
@@ -38,25 +43,45 @@ const Carousel: FC<{ carouselChildrenData: RefuteResponseEntry[] }> = ({
           }}
         >
           {carouselChildrenData.map((childData, index) => {
-            return <CarouselChild childData={childData} key={index} />
+            return (
+              <CarouselChild
+                childData={childData}
+                sectionName={sectionName}
+                key={index}
+              />
+            )
           })}
         </div>
       </div>
 
-      <div className="flex items-center justify-between">
+      <div
+        className={clsx('flex items-center', {
+          'justify-center gap-10': sectionName !== 'Home',
+          'justify-between': sectionName === 'Home',
+        })}
+      >
         <button
           onClick={() => updateIndex(activeIndex - 1)}
           disabled={activeIndex == 0}
         >
           <ChevronLeftIcon
-            className={`h-9 stroke-current ${
-              activeIndex == 0 ? 'text-black/20' : 'text-black'
-            }`}
+            className={clsx('stroke-current', {
+              'text-black/20': activeIndex == 0,
+              'text-black': activeIndex != 0,
+              'h-9': sectionName === 'Home',
+              'h-4': sectionName !== 'Home',
+            })}
           />
         </button>
         <div className="flex flex-row gap-3">
           {carouselChildrenData.map((_, index) => {
-            return <CarouselDot active={index == activeIndex} key={index} />
+            return (
+              <CarouselDot
+                active={index == activeIndex}
+                key={index}
+                sectionName={sectionName}
+              />
+            )
           })}
         </div>
         <button
@@ -64,11 +89,12 @@ const Carousel: FC<{ carouselChildrenData: RefuteResponseEntry[] }> = ({
           disabled={activeIndex == carouselChildrenData.length - 1}
         >
           <ChevronRightIcon
-            className={`h-9 stroke-current ${
-              activeIndex == carouselChildrenData.length - 1
-                ? 'text-black/20'
-                : 'text-black'
-            }`}
+            className={clsx('stroke-current', {
+              'text-black/20': activeIndex == carouselChildrenData.length - 1,
+              'text-black': activeIndex != carouselChildrenData.length - 1,
+              'h-9': sectionName === 'Home',
+              'h-4': sectionName !== 'Home',
+            })}
           />
         </button>
       </div>

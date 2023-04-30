@@ -26,6 +26,19 @@ export const userRouter = createTRPCRouter({
   deleteManyUsers: protectedProcedure
     .input(z.object({ ids: z.array(z.string()) }))
     .mutation(async ({ input, ctx }) => {
+      const deleteWhitelist = await ctx.prisma.whitelistedUser.deleteMany({
+        where: {
+          userId: {
+            in: input.ids,
+          },
+        },
+      })
+      if (!deleteWhitelist) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to delete user from whitelist',
+        })
+      }
       const deleteUsers = await ctx.prisma.user.deleteMany({
         where: {
           id: {
@@ -39,9 +52,14 @@ export const userRouter = createTRPCRouter({
           message: 'Failed to delete users',
         })
       }
+    }),
+
+  deleteManyWhitelistedUsers: protectedProcedure
+    .input(z.object({ ids: z.array(z.string()) }))
+    .mutation(async ({ input, ctx }) => {
       const deleteWhitelist = await ctx.prisma.whitelistedUser.deleteMany({
         where: {
-          userId: {
+          id: {
             in: input.ids,
           },
         },
@@ -94,9 +112,44 @@ export const userRouter = createTRPCRouter({
     }),
 
   getAllUsers: protectedProcedure.query(async ({ ctx }) => {
-    const users = await ctx.prisma.user.findMany()
-    return users
+    const users = await ctx.prisma.whitelistedUser.findMany()
+
+    const fullUsers = users.map(async (wuser) => {
+      if (!wuser.userId) {
+        return wuser
+      }
+
+      const fullUser = await ctx.prisma.user.findUnique({
+        where: {
+          id: wuser.userId,
+        },
+      })
+
+      return fullUser || wuser
+    })
+
+    const promises = await Promise.all(fullUsers)
+    if (!promises) {
+      throw new TRPCError({
+        code: 'INTERNAL_SERVER_ERROR',
+        message: 'Failed to get user data',
+      })
+    }
+    return promises
   }),
+
+  findUserById: protectedProcedure
+    .input(z.object({ id: z.string().nullish() }))
+    .query(async ({ input, ctx }) => {
+      if (!input.id) {
+        return undefined
+      }
+      return await ctx.prisma.user.findUnique({
+        where: {
+          id: input.id,
+        },
+      })
+    }),
 
   addWhitelistedUser: protectedProcedure
     .input(
