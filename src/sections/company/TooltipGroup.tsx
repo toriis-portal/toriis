@@ -75,9 +75,11 @@ const CompanyTooltipGroup: FC<CompanyTooltipGroupProps> = ({
         </div>
         {sectorEntry.avgGrade && (
           <ToolTip>
-            <div>
-              Average environmental grade for sector <b>{sectorEntry.name}</b>
-              :
+            <div className="body-small">
+              <p>
+                Average environmental grade for sector <b>{sectorEntry.name}</b>
+                :
+              </p>
               <Tag
                 title={sectorEntry.avgGrade}
                 className={clsx(
