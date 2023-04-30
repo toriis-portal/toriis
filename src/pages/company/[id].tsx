@@ -42,6 +42,9 @@ export const getServerSideProps = async () => {
   const renewableEnergy = companyDetails.find(
     (item) => item.name == 'Renewable Energy',
   )
+  const esgExplanation = companyDetails.find(
+    (item) => item.name == 'ESG Explanation',
+  )
   const fuelTypes = Object.values(FuelEnum)
   const fuelDetails = fuelTypes.map(
     (fuelName) => companyDetails.find((item) => item.name == fuelName) ?? null,
@@ -52,6 +55,7 @@ export const getServerSideProps = async () => {
       yahooFinanceDetails: yahooFinance,
       carbonAccountingDetails: carbonAccounting,
       renewableEnergyDetails: renewableEnergy,
+      esgExplanation: esgExplanation,
       fuelDetails: fuelDetails,
     },
   }
@@ -61,6 +65,7 @@ interface CompanyDetailsProps {
   yahooFinanceDetails: CompanyDetailsEntry
   carbonAccountingDetails: CompanyDetailsEntry
   renewableEnergyDetails: CompanyDetailsEntry
+  esgExplanation: CompanyDetailsEntry
   fuelDetails: (CompanyDetailsEntry | undefined)[]
 }
 
@@ -87,6 +92,7 @@ const Company: FC<CompanyDetailsProps> = ({
   yahooFinanceDetails,
   carbonAccountingDetails,
   renewableEnergyDetails,
+  esgExplanation,
   fuelDetails,
 }) => {
   const [labels, setLabels] = useState<string[]>([])
@@ -177,6 +183,10 @@ const Company: FC<CompanyDetailsProps> = ({
           company={company}
           sectorEntry={sectorEntry}
           industryEntry={industryEntry}
+          esgExplanation={documentToReactComponents(
+            esgExplanation.description,
+            contentfulOptions,
+          )}
           className="mb-10"
         />
         {company.description && (
