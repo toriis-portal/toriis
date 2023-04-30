@@ -10,6 +10,7 @@ import type {
   LinkEntry,
   Info,
   CaseEntry,
+  DirtyCompanyEntry,
   FossilFuelPage,
 } from '../types/index.js'
 
@@ -22,7 +23,12 @@ const homePageEntryTypes = [
   'info',
 ]
 
-const fossilFuelPageEntryTypes = ['fossilFuelPage', 'case', 'link']
+const fossilFuelPageEntryTypes = [
+  'fossilFuelPage',
+  'case',
+  'dirtyCompanies',
+  'link',
+]
 
 export class ContentWrapper {
   client: ContentfulClientApi
@@ -118,7 +124,7 @@ export class ContentWrapper {
   getAllFossilFuelPageEntries = async () => {
     const fossilFuelPageEntryMap: Record<
       string,
-      FossilFuelPage | CaseEntry[] | LinkEntry[]
+      FossilFuelPage | CaseEntry[] | DirtyCompanyEntry[] | LinkEntry[]
     > = {}
     await Promise.all(
       fossilFuelPageEntryTypes.map(async (entity) => {
