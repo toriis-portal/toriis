@@ -87,3 +87,13 @@ export interface CompanyDetailsEntry {
   name: string
   description: Document
 }
+
+export interface schoolChild {
+  order: number
+  details: string[]
+}
+
+export interface institutionChild {
+  order: number
+  details: string[]
+}

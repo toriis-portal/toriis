@@ -4,14 +4,15 @@ import React, { useState } from 'react'
 import { ChevronLeftIcon } from '@heroicons/react/24/solid'
 import { ChevronRightIcon } from '@heroicons/react/24/solid'
 
-import type { RefuteResponseEntry } from '../../../types'
+import type { RefuteResponseEntry, schoolChild } from '../../../types'
 
 import CarouselChild from './CarouselChild'
 import CarouselDot from './CarouselDot'
 
-const Carousel: FC<{ carouselChildrenData: RefuteResponseEntry[] }> = ({
-  carouselChildrenData,
-}) => {
+const Carousel: FC<{
+  carouselChildrenData: RefuteResponseEntry[] | schoolChild[]
+  sectionName: string
+}> = ({ carouselChildrenData, sectionName }) => {
   const [activeIndex, setActiveIndex] = useState(0)
 
   const updateIndex = (newIndex: number) => {
@@ -20,15 +21,18 @@ const Carousel: FC<{ carouselChildrenData: RefuteResponseEntry[] }> = ({
     }
   }
 
+  const style = clsx(
+    'flex flex-col',
+    'gap-4 px-12 pt-12 pb-8',
+    sectionName === 'Home'
+      ? 'shadow-[-16px_16px_0px_0px] shadow-clementine bg-white rounded-md border-4 border-clementine bg-white'
+      : sectionName === 'SchoolsDivested'
+      ? 'bg-lightBlue'
+      : 'bg-[#FFA90233]',
+  )
+
   return (
-    <div
-      className={clsx(
-        'flex flex-col',
-        'gap-4 px-12 pt-12 pb-8',
-        'rounded-md border-4 border-clementine bg-white',
-        'shadow-[-16px_16px_0px_0px] shadow-clementine',
-      )}
-    >
+    <div className={style}>
       <div className="overflow-hidden">
         <div
           className="flex flex-row whitespace-normal transition-transform"
@@ -38,7 +42,13 @@ const Carousel: FC<{ carouselChildrenData: RefuteResponseEntry[] }> = ({
           }}
         >
           {carouselChildrenData.map((childData, index) => {
-            return <CarouselChild childData={childData} key={index} />
+            return (
+              <CarouselChild
+                childData={childData}
+                sectionName={sectionName}
+                key={index}
+              />
+            )
           })}
         </div>
       </div>
@@ -56,7 +66,13 @@ const Carousel: FC<{ carouselChildrenData: RefuteResponseEntry[] }> = ({
         </button>
         <div className="flex flex-row gap-3">
           {carouselChildrenData.map((_, index) => {
-            return <CarouselDot active={index == activeIndex} key={index} />
+            return (
+              <CarouselDot
+                active={index == activeIndex}
+                key={index}
+                sectionName={sectionName}
+              />
+            )
           })}
         </div>
         <button

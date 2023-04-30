@@ -40,6 +40,8 @@ interface FossilFuelProps {
   linkEntries: LinkEntry[]
   caseEntries: CaseEntry[]
   fossilFuelPageEntries: FossilFuelPage
+  schoolEntries: string
+  institutionEntries: string
 }
 
 const FossilFuelPage: FC<FossilFuelProps> = ({
@@ -99,10 +101,14 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
         />
       </div>
       <div id="divestedSchools" className="pt-20">
-        <SchoolsDivested />
+        <SchoolsDivested
+          schoolEntries={fossilFuelPageEntries['divestedSchools']}
+        />
       </div>
       <div id="divestedInstitutions" className="pt-20">
-        <InstitutionsDivested />
+        <InstitutionsDivested
+          institutionEntries={fossilFuelPageEntries['divestedInstitutions']}
+        />
       </div>
       <Footer />
     </>
