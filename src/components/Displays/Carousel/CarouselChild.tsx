@@ -3,14 +3,13 @@ import type { FC } from 'react'
 import React from 'react'
 import type { Document } from '@contentful/rich-text-types'
 
-import type { schoolChild } from '../../../types'
+import type { divestedEntity } from '../../../types'
 import type { RefuteResponseEntry } from '../../../types'
 
 const CarouselChild: FC<{
-  childData: RefuteResponseEntry | schoolChild
+  childData: RefuteResponseEntry | divestedEntity
   sectionName: 'Home' | 'SchoolsDivested' | 'InstitutionsDivested'
 }> = ({ childData, sectionName }) => {
-  console.log(childData)
   let columns: string[][] = []
 
   if (sectionName !== 'Home' && Array.isArray(childData.details)) {

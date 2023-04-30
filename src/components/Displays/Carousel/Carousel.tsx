@@ -4,13 +4,13 @@ import React, { useState } from 'react'
 import { ChevronLeftIcon } from '@heroicons/react/24/solid'
 import { ChevronRightIcon } from '@heroicons/react/24/solid'
 
-import type { RefuteResponseEntry, schoolChild } from '../../../types'
+import type { RefuteResponseEntry, divestedEntity } from '../../../types'
 
 import CarouselChild from './CarouselChild'
 import CarouselDot from './CarouselDot'
 
 const Carousel: FC<{
-  carouselChildrenData: RefuteResponseEntry[] | schoolChild[]
+  carouselChildrenData: RefuteResponseEntry[] | divestedEntity[]
   sectionName: 'Home' | 'SchoolsDivested' | 'InstitutionsDivested'
 }> = ({ carouselChildrenData, sectionName }) => {
   const [activeIndex, setActiveIndex] = useState(0)
@@ -24,11 +24,12 @@ const Carousel: FC<{
   const style = clsx(
     'flex flex-col',
     'gap-4 px-12 pt-12 pb-8',
-    sectionName === 'Home'
-      ? 'shadow-[-16px_16px_0px_0px] shadow-clementine bg-white rounded-md border-4 border-clementine bg-white'
-      : sectionName === 'SchoolsDivested'
-      ? 'bg-lightBlue'
-      : 'bg-[#FFA90233]',
+    {
+      'shadow-[-16px_16px_0px_0px] shadow-clementine bg-white rounded-md border-4 border-clementine bg-white':
+        sectionName === 'Home',
+    },
+    { 'bg-lightBlue': sectionName === 'SchoolsDivested' },
+    { 'bg-clementine/20': sectionName === 'InstitutionsDivested' },
   )
 
   return (

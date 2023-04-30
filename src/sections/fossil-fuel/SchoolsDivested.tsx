@@ -1,15 +1,14 @@
 import type { FC } from 'react'
 
-import { Carousel } from '../../components'
-import { HighlightedTitle } from '../../components'
-import type { schoolChild } from '../../types'
+import { Carousel, HighlightedTitle } from '../../components'
+import type { divestedEntity } from '../../types'
 interface schoolsDivestedProps {
   schoolEntries: string
 }
 
 function formatSchoolData(schoolEntries: string, limit: number) {
   const list = schoolEntries.split('\n')
-  const result: schoolChild[] = []
+  const result: divestedEntity[] = []
   for (let i = 0; i < list.length; i += limit) {
     result.push({ order: i / limit, details: list.slice(i, i + limit) })
   }

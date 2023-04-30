@@ -88,12 +88,7 @@ export interface CompanyDetailsEntry {
   description: Document
 }
 
-export interface schoolChild {
-  order: number
-  details: string[]
-}
-
-export interface institutionChild {
+export interface divestedEntity {
   order: number
   details: string[]
 }

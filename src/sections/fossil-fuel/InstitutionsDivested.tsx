@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 
 import { Carousel, HighlightedTitle } from '../../components'
-import type { institutionChild } from '../../types'
+import type { divestedEntity } from '../../types'
 
 interface institutionsDivestedProps {
   institutionEntries: string
@@ -9,7 +9,7 @@ interface institutionsDivestedProps {
 
 function formatInstitutionData(institutionEntries: string, limit: number) {
   const list = institutionEntries.split('\n')
-  const result: institutionChild[] = []
+  const result: divestedEntity[] = []
   for (let i = 0; i < list.length; i += limit) {
     result.push({ order: i / limit, details: list.slice(i, i + limit) })
   }
