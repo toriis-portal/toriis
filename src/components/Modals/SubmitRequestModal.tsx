@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import type { FC } from 'react'
 import clsx from 'clsx'
 
@@ -14,7 +14,7 @@ export const SubmitRequestModal: FC = ({}) => {
       isOpen={true}
       closeOnOutsideClick={true}
       className={clsx(
-        'justify-evenly gap-2 py-8 px-12 sm:flex-[0_0_35%]',
+        'justify-evenly gap-2 px-12 pt-8 pb-10 sm:flex-[0_0_35%]',
         flexStyles,
       )}
     >
@@ -37,7 +37,7 @@ export const SubmitRequestModal: FC = ({}) => {
       <PrimaryButton
         text="Submit Request"
         link={''}
-        className="mt-2 flex items-center justify-center !px-14 !py-4 text-center !font-medium"
+        className="mt-4 flex items-center justify-center !px-14 !py-4 text-center !font-medium"
       />
     </GeneralModal>
   )

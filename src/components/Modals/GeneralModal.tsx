@@ -24,7 +24,6 @@ export const GeneralModal: FC<GeneralModalProps> = ({
           className="fixed inset-0 z-10 flex h-full w-full items-center justify-center bg-[rgba(0,0,0,.5)]"
           onClick={() => {
             setInternalIsOpen(false)
-            console.log('closing')
           }}
         >
           <div
