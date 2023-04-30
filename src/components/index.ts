@@ -6,6 +6,7 @@ import ToTopButton from './Buttons/ToTopButton'
 import ReadMoreButton from './Buttons/ReadMoreButton'
 import BackButton from './Buttons/BackButton'
 import LoadMoreButton from './Buttons/LoadMoreButton'
+import TabButton from './Buttons/TabButton'
 // Card
 import CompanyCard from './Card/CompanyCard'
 import ESGTag from './Card/ESGTag'
@@ -39,12 +40,15 @@ import InviteAdminBar from './Selects/InviteAdminBar'
 // Text
 import NumberCircle from './Text/NumberCircle'
 import HighlightedTitle from './Text/HighlightedTitle'
+import CommentModal from './Modals/CommentModal'
 import CapitalizedTitle from './Text/CapitalizedTitle'
 import ShadowTitle from './Text/ShadowTitle'
+import StatusTag from './Text/StatusTag'
 import Tag from './Text/Tag'
 // Tables
 import AdminListTable from './Table/AdminListTable'
 import InvestmentTable from './Table/InvestmentTable'
+import RequestReviewTable from './Table/ReviewRequestTable'
 //Tooltips
 import ToolTip from './Tooltips/ToolTip'
 // Modals
@@ -60,6 +64,7 @@ export {
   NumberCircle,
   HighlightedTitle,
   NavButton,
+  TabButton,
   PrimaryNavBar,
   PrimaryButton,
   ToTopButton,
@@ -94,6 +99,9 @@ export {
   AdminBox,
   AdminListTable,
   InviteAdminBar,
+  RequestReviewTable,
+  CommentModal,
+  StatusTag,
   LinkBox,
   ImageWithCaption,
   Toast,

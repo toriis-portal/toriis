@@ -69,7 +69,7 @@ export const FinanceBrushChart: FC<FinanceBrushChartProps> = ({
         },
       },
     },
-    colors: ['#546E7A'],
+    colors: ['#626161'],
     stroke: {
       width: 2,
     },
@@ -90,7 +90,7 @@ export const FinanceBrushChart: FC<FinanceBrushChartProps> = ({
         enabled: true,
       },
     },
-    colors: ['#008FFB'],
+    colors: ['#0F81E8'],
     fill: {
       type: 'gradient',
       gradient: {

@@ -9,6 +9,7 @@ module.exports = {
       colors: {
         cobalt: '#0F81E8',
         lightBlue: '#E6F0FA',
+        mediumBlue: '#4F81E8',
         darkTeal: '#17292E',
         brightTeal: '#40D7D4',
         pumpkin: '#FF6112',

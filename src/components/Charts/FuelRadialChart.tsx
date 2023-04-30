@@ -114,6 +114,7 @@ const FuelRadialChart: FC<FuelRadialChartProps> = ({ source, setLabels }) => {
         },
       },
     },
+    colors: ['#FFA902', '#FF6112', '#40D7D4', '#0F81E8'],
     labels: getLabels(source),
     legend: {
       position: 'bottom',
