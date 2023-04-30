@@ -11,7 +11,7 @@ import CarouselDot from './CarouselDot'
 
 const Carousel: FC<{
   carouselChildrenData: RefuteResponseEntry[] | schoolChild[]
-  sectionName: string
+  sectionName: 'Home' | 'SchoolsDivested' | 'InstitutionsDivested'
 }> = ({ carouselChildrenData, sectionName }) => {
   const [activeIndex, setActiveIndex] = useState(0)
 

@@ -4,17 +4,19 @@ import clsx from 'clsx'
 
 interface CircleDotProps {
   active: boolean
-  sectionName: string
+  sectionName: 'Home' | 'SchoolsDivested' | 'InstitutionsDivested'
 }
 
 const CarouselDot: FC<CircleDotProps> = ({ active, sectionName }) => {
   const style = clsx(
     'rounded-full',
-    active
-      ? sectionName === 'Home'
-        ? 'bg-pumpkin h-3.5 w-3.5'
-        : 'bg-[#0F81E8] h-2 w-2'
-      : 'bg-lightGray',
+    { 'bg-lightGray h-3.5 w-3.5': sectionName === 'Home' && !active },
+    { 'bg-lightGray h-2 w-2': sectionName !== 'Home' && !active },
+    { 'bg-pumpkin h-3.5 w-3.5': sectionName === 'Home' && active },
+    { 'bg-cobalt h-2 w-2': sectionName == 'SchoolsDivested' && active },
+    {
+      'bg-clementine h-2 w-2': sectionName == 'InstitutionsDivested' && active,
+    },
   )
 
   return <div className={style}></div>

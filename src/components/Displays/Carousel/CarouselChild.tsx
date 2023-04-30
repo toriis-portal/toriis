@@ -1,28 +1,29 @@
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import type { FC } from 'react'
 import React from 'react'
+import type { Document } from '@contentful/rich-text-types'
 
 import type { schoolChild } from '../../../types'
 import type { RefuteResponseEntry } from '../../../types'
 
 const CarouselChild: FC<{
   childData: RefuteResponseEntry | schoolChild
-  sectionName: string
+  sectionName: 'Home' | 'SchoolsDivested' | 'InstitutionsDivested'
 }> = ({ childData, sectionName }) => {
   console.log(childData)
   let columns: string[][] = []
 
-  if (sectionName != 'Home') {
+  if (sectionName !== 'Home' && Array.isArray(childData.details)) {
     columns = Array.from({ length: 3 }, (_, i) =>
-      childData.details.slice(i * 6, (i + 1) * 6),
-    ) as string[][]
+      (childData.details as string[]).slice(i * 6, (i + 1) * 6),
+    )
   }
 
   return (
     <>
       {sectionName === 'Home' ? (
         <div className="inline-flex leading-snug" style={{ width: '100%' }}>
-          {documentToReactComponents(childData.details)}
+          {documentToReactComponents(childData.details as Document)}
         </div>
       ) : (
         <div className="grid w-screen grid-cols-3">
