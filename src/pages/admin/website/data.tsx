@@ -195,14 +195,6 @@ const UpdateData: FC = () => {
     }
   }, [push, status])
 
-  function getValue(): (Company | Investment)[] {
-    if (dataset === 'COMPANY') {
-      return columns
-    } else {
-      return columns
-    }
-  }
-
   useEffect(() => {
     if (dataset === 'COMPANY') {
       setData(company?.items ?? [])

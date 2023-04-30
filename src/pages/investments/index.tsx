@@ -15,8 +15,12 @@ import {
   Footer,
 } from '../../components'
 import { api } from '../../utils/api'
-import { sectorEnum, envGradeEnum, netAssetValEnum } from '../../utils/enums'
-import { INDUSTRIES } from '../../utils/constants'
+import {
+  sectorEnum,
+  envGradeEnum,
+  netAssetValEnum,
+  IndustryEnum,
+} from '../../utils/enums'
 
 interface FilterOptions {
   sectors: Sector[]
@@ -190,7 +194,7 @@ const InvestmentPage: FC = () => {
             text="Industry"
             isFilter={true}
             isSearchable={true}
-            options={INDUSTRIES}
+            options={Object.values(IndustryEnum)}
             containerHeight="1/4"
             updateControl={{
               type: 'on-change',
