@@ -1,6 +1,7 @@
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
-import { Dataset, RequestStatus, Sector } from '@prisma/client'
+import { Company, Dataset, RequestStatus, Sector } from '@prisma/client'
+import type { JSONObject } from 'superjson/dist/types'
 
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 import type { UpdateType, StrictUpdateType } from '../../../types'
@@ -188,6 +189,46 @@ export const requestRouter = createTRPCRouter({
         }
 
         return 'Successfully approved request'
+      }
+    }),
+
+  getRequestDataDiff: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const request = await ctx.prisma.request.findUnique({
+        where: {
+          id: input.id,
+        },
+      })
+      if (!request) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Error fetching request',
+        })
+      }
+      const targetDataset = datasetEnum[request.dataset]
+      const targetItems = request.updates.map((update) => update.id)
+
+      const originalData = await ctx.prisma.$runCommandRaw({
+        find: targetDataset,
+        filter: {
+          _id: { $in: targetItems.map((id) => ({ $oid: id })) },
+        },
+      })
+
+      if (originalData && originalData.cursor) {
+        const parsedOriginalData = (originalData.cursor as JSONObject)
+          .firstBatch
+        return {
+          request: request,
+          old: parsedOriginalData,
+          new: request.updates,
+        }
+      } else {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Error fetching original data',
+        })
       }
     }),
 })

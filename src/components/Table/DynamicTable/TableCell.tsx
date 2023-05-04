@@ -60,6 +60,9 @@ const SelectEntry = <TableRow extends BaseTableRowGeneric<TableRow>>({
   const disabledStyles = !col.isEditable ? 'bg-gray-100' : ''
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (e.target.value == '') {
+      return
+    }
     if (typeof selected === 'number') {
       setSelected(Number(e.target.value))
       onChange?.(row, {
@@ -95,6 +98,7 @@ const SelectEntry = <TableRow extends BaseTableRowGeneric<TableRow>>({
       }}
       onChange={handleChange}
     >
+      <option value="">{}</option>
       {col.ctrl.options.map((option) => (
         <option key={option.value} value={option.value}>
           {isExplicitSelectOption(option) ? option.label : option.value}

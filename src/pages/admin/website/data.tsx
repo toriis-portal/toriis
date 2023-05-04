@@ -23,6 +23,7 @@ import {
   FuelColumns,
   InvestmentColumns,
 } from '../../../utils/companyColumns'
+import { getColumns } from '../../../components/Table/DynamicTable/Columns'
 
 interface baseChangedEntries {
   id: string
@@ -34,11 +35,12 @@ type DataSetColumns = Column<DataSetTypes>[]
 type UpdateTypesWithChangedEntries = DataSetTypes & baseChangedEntries
 
 const UpdateData: FC = () => {
+  const BATCH_SIZE = 10
   const { data: session, status } = useSession()
   const { push } = useRouter()
   const [dataset, setDataSet] = useState<Dataset>('COMPANY')
   const [columns, setColumns] = useState<DataSetColumns>(
-    CompanyColumns as DataSetColumns,
+    getColumns('COMPANY', true) as DataSetColumns,
   )
   const [data, setData] = useState<UpdateTypesWithChangedEntries[]>([])
   const [rows, setRows] = useState<UpdateTypesWithChangedEntries[]>([])
@@ -47,30 +49,28 @@ const UpdateData: FC = () => {
   const { data: investment } = api.investment.getInvestmentsBySkipTake.useQuery(
     {
       skip: skip,
-      take: 20,
+      take: BATCH_SIZE,
     },
   )
   const { data: company } = api.company.getCompaniesBySkipTake.useQuery({
     skip: skip,
-    take: 20,
+    take: BATCH_SIZE,
   })
 
   const { data: fuel } = api.fuel.getFuelsBySkipTake.useQuery({
     skip: skip,
-    take: 20,
+    take: BATCH_SIZE,
   })
 
   const { data: emission } = api.emission.getEmissionsBySkipTake.useQuery({
     skip: skip,
-    take: 20,
+    take: BATCH_SIZE,
   })
 
   const { data: energy } = api.energy.getEnergyBySkipTake.useQuery({
     skip: skip,
-    take: 20,
+    take: BATCH_SIZE,
   })
-
-  console.log(investment)
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -89,7 +89,7 @@ const UpdateData: FC = () => {
           }
         }),
       )
-      setColumns(CompanyColumns as DataSetColumns)
+      setColumns(getColumns('COMPANY', true) as DataSetColumns)
     } else if (dataset === 'INVESTMENT') {
       const investmentData = investment?.items ?? []
       setData(
@@ -98,7 +98,7 @@ const UpdateData: FC = () => {
           changedEntries: [],
         })),
       )
-      setColumns(InvestmentColumns as DataSetColumns)
+      setColumns(getColumns('INVESTMENT', true) as DataSetColumns)
     } else if (dataset === 'FUEL') {
       const fuelData = fuel?.items ?? []
       setData(
@@ -151,40 +151,42 @@ const UpdateData: FC = () => {
     session && (
       <div>
         <AdminNavBar />
-        <div>
-          <TabButton
-            active={dataset == 'INVESTMENT'}
-            text="Investment"
-            onClick={() => setDataSet('INVESTMENT')}
-          />
-          <TabButton
-            active={dataset == 'COMPANY'}
-            text="Company"
-            onClick={() => setDataSet('COMPANY')}
-          />
-          <TabButton
-            active={dataset == 'FUEL'}
-            text="Fuel"
-            onClick={() => setDataSet('FUEL')}
-          />
-          <TabButton
-            active={dataset == 'EMISSION'}
-            text="Emission"
-            onClick={() => setDataSet('EMISSION')}
-          />
-          <TabButton
-            active={dataset == 'ENERGY'}
-            text="Energy"
-            onClick={() => setDataSet('ENERGY')}
+        <div className="p-12">
+          <div className="flex flex-row gap-4 pb-10">
+            <TabButton
+              active={dataset == 'INVESTMENT'}
+              text="Investment"
+              onClick={() => setDataSet('INVESTMENT')}
+            />
+            <TabButton
+              active={dataset == 'COMPANY'}
+              text="Company"
+              onClick={() => setDataSet('COMPANY')}
+            />
+            <TabButton
+              active={dataset == 'FUEL'}
+              text="Fuel"
+              onClick={() => setDataSet('FUEL')}
+            />
+            <TabButton
+              active={dataset == 'EMISSION'}
+              text="Emission"
+              onClick={() => setDataSet('EMISSION')}
+            />
+            <TabButton
+              active={dataset == 'ENERGY'}
+              text="Energy"
+              onClick={() => setDataSet('ENERGY')}
+            />
+          </div>
+          <DynamicPaginatedAdminTable
+            originalRows={rows}
+            skip={skip}
+            setSkip={setSkip}
+            dataset={dataset}
+            columns={columns}
           />
         </div>
-        <DynamicPaginatedAdminTable
-          originalRows={rows}
-          skip={skip}
-          setSkip={setSkip}
-          dataset={dataset}
-          columns={columns}
-        />
       </div>
     )
   )
