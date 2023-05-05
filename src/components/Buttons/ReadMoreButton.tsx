@@ -24,18 +24,14 @@ const ReadMoreButton: FC<ReadMoreButtonProps> = ({
       )}
     >
       {link ? (
-        <>
-          <a href={link} target="_blank" rel="noopener noreferrer">
-            {isOpen ? 'Show less' : 'Read more'}
-            <ArrowUpRightIcon className="align-self-start ml-2 mb-[1px] inline h-3.5 w-4 stroke-current stroke-1" />
-          </a>
-        </>
+        <a href={link} target="_blank" rel="noopener noreferrer">
+          {isOpen ? 'Show less' : 'Read more'}
+          <ArrowUpRightIcon className="align-self-start ml-2 mb-[1px] inline h-3.5 w-4 stroke-current stroke-1" />
+        </a>
       ) : (
-        <>
-          <button className="italic" onClick={handleOpen}>
-            {isOpen ? 'Show less' : 'Read more'}
-          </button>
-        </>
+        <button className="italic" onClick={handleOpen}>
+          {isOpen ? 'Show less' : 'Read more'}
+        </button>
       )}
     </div>
   )

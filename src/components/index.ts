@@ -1,6 +1,6 @@
 // Buttons
 import AuthButton from './Buttons/AuthButton'
-import NavButton from './Buttons/NavButton'
+import NavButton from './Nav/PrimaryNavBar/NavButton'
 import PrimaryButton from './Buttons/PrimaryButton'
 import ToTopButton from './Buttons/ToTopButton'
 import ReadMoreButton from './Buttons/ReadMoreButton'
@@ -9,8 +9,6 @@ import LoadMoreButton from './Buttons/LoadMoreButton'
 import TabButton from './Buttons/TabButton'
 // Card
 import CompanyCard from './Cards/CompanyCard'
-import ESGTag from './Cards/ESGTag'
-import NetAssetTag from './Cards/NetAssetTag'
 import AdminBox from './Cards/AdminBox'
 import DataCard from './Cards/DataCard'
 import LinkBox from './Cards/LinkBox'
@@ -31,7 +29,7 @@ import RequestAccordion from './Accordions/RequestAccordion'
 import CaseAccordion from './Accordions/CaseAccordion'
 import ReadMoreAccordion from './Accordions/ReadMoreAccordion'
 // Nav
-import PrimaryNavBar from './Nav/PrimaryNavBar'
+import PrimaryNavBar from './Nav/PrimaryNavBar/PrimaryNavBar'
 import SecondaryNavBar from './Nav/SecondaryNavBar'
 import AdminNavBar from './Nav/AdminNavBar'
 // Selects
@@ -87,8 +85,6 @@ export {
   SearchBar,
   BackButton,
   CompanyCard,
-  ESGTag,
-  NetAssetTag,
   Tag,
   CaseAccordion,
   ToolTip,

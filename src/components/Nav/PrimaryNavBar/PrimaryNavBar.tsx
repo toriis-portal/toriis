@@ -4,8 +4,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Navbar } from 'flowbite-react'
 
-import { AuthButton, NavButton } from '../index'
-import toriisLogo from '../../../public/toriis.png'
+import { AuthButton, NavButton } from '../../index'
+import toriisLogo from '../../../../public/toriis.png'
 
 const PrimaryNavBar: FC = () => {
   return (

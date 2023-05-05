@@ -3,11 +3,39 @@ import type { Company, EnvGrade } from '@prisma/client'
 import Link from 'next/link'
 import clsx from 'clsx'
 
-import { sectorEnum } from '../../utils/enums'
-import { Tag, NetAssetTag, ESGTag } from '..'
+import { sectorEnum, envGradeEnum } from '../../utils/enums'
+import { envGradeToColor, assetAmountToString } from '../../utils/helpers'
+import { Tag } from '..'
 
 export interface CardProps {
   companyInfo: { ESG: EnvGrade | undefined } & { company: Company }
+}
+
+const ESGTag: FC<{ grade: string | undefined }> = ({ grade }) => {
+  let display = grade
+  if (!grade || !Object.values(envGradeEnum).includes(grade)) {
+    display = 'N/A'
+  }
+  return (
+    <div
+      className={`flex ${envGradeToColor(
+        grade,
+      )} header-2 aspect-square max-w-fit items-center rounded-xl text-center leading-8 text-white`}
+    >
+      <div className="w-[109px] align-middle">{display}</div>
+    </div>
+  )
+}
+
+const NetAssetTag: FC<{ assetsum: number }> = ({ assetsum }) => {
+  return (
+    <div className="flex min-w-[150px] max-w-fit flex-col items-center justify-center gap-2 rounded-xl bg-lightBlue px-4 py-2">
+      <div className="flex text-center">{'net asset value'}</div>
+      <div className="header-2 flex pb-1 text-cobalt">
+        {assetAmountToString(assetsum)}
+      </div>
+    </div>
+  )
 }
 
 const CompanyCard: FC<CardProps> = ({ companyInfo }) => {

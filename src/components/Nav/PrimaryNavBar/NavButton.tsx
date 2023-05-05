@@ -11,6 +11,7 @@ interface NavButtonProps {
 
 const NavButton: FC<NavButtonProps> = ({ title, link }) => {
   const isActive = useRouter().pathname === link
+
   return (
     <Link
       href={link}
