@@ -2,7 +2,7 @@ import type { FC } from 'react'
 import Link from 'next/link'
 import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
 
-import { ShadowTitle } from '../../components'
+import { ShadowTitle } from '..'
 import type { LinkEntry } from '../../types'
 
 interface LinkBoxProps {

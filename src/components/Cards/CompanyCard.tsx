@@ -4,7 +4,7 @@ import Link from 'next/link'
 import clsx from 'clsx'
 
 import { sectorEnum } from '../../utils/enums'
-import { Tag, NetAssetTag, ESGTag } from '../'
+import { Tag, NetAssetTag, ESGTag } from '..'
 
 export interface CardProps {
   companyInfo: { ESG: EnvGrade | undefined } & { company: Company }

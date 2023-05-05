@@ -43,7 +43,6 @@ const InviteAdminBar: FC<InviteAdminBarProps> = ({ refetch }) => {
         <PrimaryButton
           text="Invite"
           type="submit"
-          hasArrow={false}
           className="body-normal w-48 px-5 py-2"
         />
       </form>
