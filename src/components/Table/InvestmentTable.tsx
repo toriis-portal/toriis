@@ -7,7 +7,7 @@ import { Spinner } from 'flowbite-react'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid'
 
 import { api } from '../../utils/api'
-import LoadMoreButton from '../Buttons/LoadMoreButton'
+import PrimaryButton from '../Buttons/PrimaryButton'
 interface ChevronFilterProps {
   text: string
   onClickUp: VoidFunction
@@ -171,12 +171,16 @@ const InvestmentTable: FC<{ companyId: string }> = (companyId) => {
         </tbody>
       </table>
       <div className="text-center">
-        <LoadMoreButton
-          onClick={() => {
-            void fetchNextPage()
-          }}
-          disabled={!hasNextPage || isFetchingNextPage}
-        ></LoadMoreButton>
+        {hasNextPage && !isFetchingNextPage && (
+          <PrimaryButton
+            text="Load More"
+            variant="clementine"
+            onClick={() => {
+              void fetchNextPage()
+            }}
+            className="m-6 !px-20 py-3"
+          />
+        )}
       </div>
     </div>
   )
