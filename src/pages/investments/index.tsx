@@ -13,7 +13,7 @@ import {
   SearchBar,
   Tag,
   CompanyCard,
-  PrimaryButton,
+  LoadMoreButton,
   ToolTip,
   Footer,
 } from '../../components'
@@ -330,19 +330,13 @@ const InvestmentPage: FC = () => {
               </div>
             )
           })}
-
           {isLoading && <Spinner />}
-
-          {hasNextPage && !isFetchingNextPage && (
-            <PrimaryButton
-              text="Load More"
-              variant="clementine"
-              onClick={() => {
-                void fetchNextPage()
-              }}
-              className="m-6 !px-20 py-3"
-            />
-          )}
+          <LoadMoreButton
+            onClick={() => {
+              void fetchNextPage()
+            }}
+            disabled={!hasNextPage || isFetchingNextPage}
+          />
           <ToTopButton />
         </div>
       </div>

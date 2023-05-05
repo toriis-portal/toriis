@@ -10,7 +10,7 @@ import {
   RequestReviewTable,
   AdminNavBar,
   TabButton,
-  PrimaryButton,
+  LoadMoreButton,
 } from '../../../components'
 
 const RequestPage: FC = () => {
@@ -93,16 +93,12 @@ const RequestPage: FC = () => {
               className={'w-5/6 pt-16 pb-4'}
             />
             {(isLoading || !data || isFetchingNextPage) && <Spinner />}
-            {hasNextPage && !isFetchingNextPage && (
-              <PrimaryButton
-                text="Load More"
-                variant="clementine"
-                onClick={() => {
-                  void fetchNextPage()
-                }}
-                className="m-6 !px-20 py-3"
-              />
-            )}
+            <LoadMoreButton
+              onClick={() => {
+                void fetchNextPage()
+              }}
+              disabled={!hasNextPage || isFetchingNextPage}
+            />
           </div>
         </>
       )}
