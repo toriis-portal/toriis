@@ -1,13 +1,17 @@
 import type { FC } from 'react'
 import Link from 'next/link'
 
-interface AdminBoxProps {
+interface AdminSelectCardProps {
   title: string
   description: string
   link: string
 }
 
-const NetAssetTag: FC<AdminBoxProps> = ({ title, description, link }) => {
+const AdminSelectCard: FC<AdminSelectCardProps> = ({
+  title,
+  description,
+  link,
+}) => {
   return (
     <Link href={link}>
       <div className="mb-5 h-[17rem] w-[25rem] rounded-lg border border-black py-[20%] text-center shadow-md hover:border-2 hover:border-cobalt">
@@ -21,4 +25,4 @@ const NetAssetTag: FC<AdminBoxProps> = ({ title, description, link }) => {
   )
 }
 
-export default NetAssetTag
+export default AdminSelectCard

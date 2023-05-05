@@ -9,7 +9,7 @@ import LoadMoreButton from './Buttons/LoadMoreButton'
 import TabButton from './Buttons/TabButton'
 // Card
 import CompanyCard from './Cards/CompanyCard'
-import AdminBox from './Cards/AdminBox'
+import AdminSelectCard from './Cards/AdminSelectCard'
 import DataCard from './Cards/DataCard'
 import LinkBox from './Cards/LinkBox'
 // Charts
@@ -95,7 +95,7 @@ export {
   EnergyRadialChart,
   AdminNavBar,
   ClimateClock,
-  AdminBox,
+  AdminSelectCard,
   AdminListTable,
   InviteAdminBar,
   RequestReviewTable,
