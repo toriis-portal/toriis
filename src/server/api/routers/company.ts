@@ -293,25 +293,6 @@ export const companyRouter = createTRPCRouter({
         nextCursor,
       }
     }),
-  /*
-   * TODO: getNetEmissionsByFFClass
-   *
-   * STEPS:
-   * A) get company market cap                            (mark_cap)
-   * B) lookup investments
-   * C) add field
-   * 	a) total value of investments                     (invest_val)
-   * 0) lookup emissions based on ticker
-   * 1) add field
-   * 	a) fossil fuel classification field               (FFClass)
-   * 	b) (invest_val/mark_cap)*(scope 1 + scope 2)*1e+3 (total_emissions_MT)
-   * 2) group by FFClass
-   * 	a) <addToSet or Push> docs to array
-   * 	b) save
-   *    	i) company_name
-   *    	ii) ticker
-   *    	iii) total_emissions_MT
-   */
   getEmissionsAndFFClass: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.company.aggregate([
       {
