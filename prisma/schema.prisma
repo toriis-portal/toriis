@@ -78,6 +78,7 @@ model Company {
   fuel             Fuel?
   energy           Energy?
   emission         Emission?
+  market_cap       Float
 }
 
 model Account {

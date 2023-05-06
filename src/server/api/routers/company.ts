@@ -312,4 +312,45 @@ export const companyRouter = createTRPCRouter({
    *    	ii) ticker
    *    	iii) total_emissions_MT
    */
+  getEmissionsAndFFClass: publicProcedure.query(({ ctx }) => {
+    return ctx.prisma.company.aggregate([
+      {
+        $lookup: {
+          from: 'Emission',
+          localField: 'emission',
+          foreignField: '_id',
+          as: 'emission_info',
+        },
+      },
+      {
+        $unwind: {
+          path: '$emission_info',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $addFields: {
+          financed_emissions: {
+            $multiply: [
+              { $divide: ['$netAssetVal', '$market_cap'] },
+              { $add: ['$emission_info.scopeOne', '$emission_info.scopeTwo'] },
+              1e3,
+            ],
+          },
+          fossil_fuel_class: {
+            $cond: [
+              {
+                $or: [
+                  { $regexMatch: { input: '$sector', regex: /^OIL/i } },
+                  { $regexMatch: { input: '$sector', regex: /^UTILITIES/i } },
+                ],
+              },
+              'y',
+              'n',
+            ],
+          },
+        },
+      },
+    ])
+  }),
 })
