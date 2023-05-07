@@ -33,8 +33,8 @@ const HighlightedTitle: FC<TitleProps> = ({
         <p
           className={clsx(
             'relative z-10 whitespace-nowrap font-medium',
-            { 'header-1': size == 'large' },
-            { 'header-2': size == 'medium' },
+            { 'header-2 md:header-1': size == 'large' },
+            { 'header-3 md:header-2': size == 'medium' },
           )}
         >
           {title}

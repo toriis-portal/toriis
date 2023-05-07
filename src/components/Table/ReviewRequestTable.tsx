@@ -3,7 +3,7 @@ import type { Request } from '@prisma/client'
 import clsx from 'clsx'
 
 import { datasetEnum } from '../../utils/enums'
-import { CommentModal, StatusTag } from '../../components'
+import { CommentModal, StatusTag } from '..'
 
 interface RequestTableProps {
   requests: Request[]

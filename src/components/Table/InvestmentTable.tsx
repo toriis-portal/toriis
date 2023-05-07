@@ -7,7 +7,7 @@ import { Spinner } from 'flowbite-react'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid'
 
 import { api } from '../../utils/api'
-import LoadMoreButton from '../Buttons/LoadMoreButton'
+import LoadMoreButton from '../button/LoadMoreButton'
 
 interface ChevronFilterProps {
   text: string

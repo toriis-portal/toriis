@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import clsx from 'clsx'
 
-import Tag from '../Text/Tag'
+import Tag from '../text/Tag'
 
 interface TabButtonProps {
   text: string

@@ -2,7 +2,7 @@ import React from 'react'
 import type { FC } from 'react'
 import clsx from 'clsx'
 
-import PrimaryButton from '../Buttons/PrimaryButton'
+import PrimaryButton from '../button/PrimaryButton'
 
 import GeneralModal from './GeneralModal'
 

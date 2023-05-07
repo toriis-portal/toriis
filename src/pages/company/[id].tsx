@@ -13,7 +13,7 @@ import { useState, useRef } from 'react'
 
 import { FuelEnum } from '../../utils/enums'
 import { ContentWrapper } from '../../utils/content'
-import FinanceBrushChart from '../../components/Charts/FinanceBrushChart'
+import FinanceBrushChart from '../../components/chart/FinanceBrushChart'
 import {
   HighlightedTitle,
   InvestmentTable,

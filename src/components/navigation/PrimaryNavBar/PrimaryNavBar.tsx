@@ -23,7 +23,7 @@ const PrimaryNavBar: FC = () => {
           <NavButton title="Home" link="/home" />
           <NavButton title="Fossil Fuels" link="/fossil-fuel" />
           <NavButton title="Learn about Investments" link="/investments" />
-          <div className="flex w-fit flex-col justify-center">
+          <div className="hidden w-fit flex-col justify-center md:flex">
             <AuthButton />
           </div>
         </Navbar.Collapse>

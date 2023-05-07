@@ -2,11 +2,11 @@ import type { FC, ReactNode } from 'react'
 import { ArrowUpRightIcon, HeartIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 
-import CapitalizedTitle from '../Text/CapitalizedTitle'
-import InstagramIcon from '../Icon/InstagramIcon'
-import FacebookIcon from '../Icon/FacebookIcon'
-import TwitterIcon from '../Icon/TwitterIcon'
-import GitHubIcon from '../Icon/GitHubIcon'
+import CapitalizedTitle from '../text/CapitalizedTitle'
+import InstagramIcon from '../icon/InstagramIcon'
+import FacebookIcon from '../icon/FacebookIcon'
+import TwitterIcon from '../icon/TwitterIcon'
+import GitHubIcon from '../icon/GitHubIcon'
 
 interface LinkSubsectionProps {
   title: string

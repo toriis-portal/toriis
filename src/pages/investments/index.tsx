@@ -170,7 +170,7 @@ const InvestmentPage: FC = () => {
             size="large"
             color="clementine"
           />
-          <div className="w-11/12 lg:w-9/12">
+          <div className="w-full md:w-9/12">
             <SearchBar setCompanySearchQuery={setCompanySearchQuery} />
           </div>
         </div>

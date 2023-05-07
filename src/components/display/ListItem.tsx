@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 
-import NumberCircle from '../Text/NumberCircle'
+import NumberCircle from '../text/NumberCircle'
 
 interface ListItemProps {
   listVal: number
