@@ -4,23 +4,14 @@ import { ArrowSmallLeftIcon } from '@heroicons/react/24/solid'
 import clsx from 'clsx'
 
 interface BackButtonProps {
-  customText?: string
-  customLink?: string
+  text?: string
+  link?: string
 }
 
-const BackButton: FC<BackButtonProps> = ({
-  customText = 'Back',
-  customLink,
-}) => {
+const BackButton: FC<BackButtonProps> = ({ text = 'Back', link }) => {
   const router = useRouter()
 
-  const handleClick = () => {
-    if (customLink) {
-      void router.push(customLink)
-    } else {
-      router.back()
-    }
-  }
+  const handleClick = () => (link ? void router.push(link) : router.back())
 
   return (
     <button
@@ -34,7 +25,7 @@ const BackButton: FC<BackButtonProps> = ({
       )}
     >
       <ArrowSmallLeftIcon className="mr-1.5 inline w-[1rem] stroke-current stroke-1" />
-      <p> {customText}</p>
+      <p>{text}</p>
     </button>
   )
 }

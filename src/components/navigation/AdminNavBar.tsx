@@ -91,9 +91,9 @@ const AdminNavBar: FC = () => {
     <div className="flex items-center  border-b-[3px] border-cobalt px-10">
       <div className="h-10 basis-1/4">
         {path == '/admin' ? (
-          <BackButton customLink="/home" customText="Back To Toriis" />
+          <BackButton link="/home" text="Back To Toriis" />
         ) : (
-          <BackButton customLink="/admin" />
+          <BackButton link="/admin" />
         )}
       </div>
       <div className="mb-8 mt-5 flex basis-2/4 justify-center">

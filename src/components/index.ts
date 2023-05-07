@@ -10,8 +10,8 @@ import TabButton from './button/TabButton'
 // Card
 import CompanyCard from './card/CompanyCard'
 import AdminSelectCard from './card/AdminSelectCard'
-import DataCard from './card/DataCard'
-import LinkBox from './card/LinkBox'
+import ChartDetailsCard from './card/ChartDetailsCard'
+import LinkBox from './display/LinkBox'
 // Charts
 import EnergyRadialChart from './chart/EnergyRadialChart'
 import LandingDonutChart from './chart/LandingDonutChart'
@@ -42,7 +42,6 @@ import HighlightedTitle from './text/HighlightedTitle'
 import CommentModal from './modal/CommentModal'
 import SubmitRequestModal from './modal/SubmitRequestModal'
 import CapitalizedTitle from './text/CapitalizedTitle'
-import ShadowTitle from './text/ShadowTitle'
 import StatusTag from './text/StatusTag'
 import Tag from './text/Tag'
 // Tables
@@ -77,7 +76,6 @@ export {
   CapitalizedTitle,
   RequestAccordion,
   SecondaryNavBar,
-  ShadowTitle,
   ReadMoreButton,
   InvestmentTable,
   GeneralModal,
@@ -90,7 +88,7 @@ export {
   ToolTip,
   FuelRadialChart,
   EmissionBarChart,
-  DataCard,
+  ChartDetailsCard,
   ReadMoreAccordion,
   EnergyRadialChart,
   AdminNavBar,

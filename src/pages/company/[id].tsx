@@ -13,16 +13,16 @@ import { useState, useRef } from 'react'
 
 import { FuelEnum } from '../../utils/enums'
 import { ContentWrapper } from '../../utils/content'
-import FinanceBrushChart from '../../components/chart/FinanceBrushChart'
 import {
   HighlightedTitle,
   InvestmentTable,
   EmissionBarChart,
   ReadMoreAccordion,
   EnergyRadialChart,
+  FinanceBrushChart,
   BackButton,
   FuelRadialChart,
-  DataCard,
+  ChartDetailsCard,
 } from '../../components'
 import { api } from '../../utils/api'
 import { CompanyTooltipGroup, ChartGroup } from '../../sections'
@@ -208,12 +208,12 @@ const Company: FC<CompanyDetailsProps> = ({
               title="Carbon Accounting"
               chart={<EmissionBarChart emissionData={company.emission} />}
               interpretation={
-                <DataCard>
+                <ChartDetailsCard>
                   {documentToReactComponents(
                     carbonAccountingDetails.description,
                     contentfulOptions,
                   )}
-                </DataCard>
+                </ChartDetailsCard>
               }
               chartOnLeft={chartDirections['emission']}
               chartSize="md"
@@ -229,7 +229,7 @@ const Company: FC<CompanyDetailsProps> = ({
                 />
               }
               interpretation={
-                <DataCard>
+                <ChartDetailsCard>
                   {labels.map((label, key) => {
                     const item = fuelDetails.find(
                       (item) => item && item.name == label,
@@ -246,7 +246,7 @@ const Company: FC<CompanyDetailsProps> = ({
                       )
                     }
                   })}
-                </DataCard>
+                </ChartDetailsCard>
               }
               chartOnLeft={chartDirections['fuel']}
               chartSize="md"
@@ -257,12 +257,12 @@ const Company: FC<CompanyDetailsProps> = ({
               title="CDP-Energy"
               chart={<EnergyRadialChart energyData={company.energy} />}
               interpretation={
-                <DataCard>
+                <ChartDetailsCard>
                   {documentToReactComponents(
                     renewableEnergyDetails.description,
                     contentfulOptions,
                   )}
-                </DataCard>
+                </ChartDetailsCard>
               }
               chartOnLeft={chartDirections['energy']}
               chartSize="sm"
@@ -273,12 +273,12 @@ const Company: FC<CompanyDetailsProps> = ({
               title="Yahoo Finance"
               chart={<FinanceBrushChart companyId={companyId} />}
               interpretation={
-                <DataCard>
+                <ChartDetailsCard>
                   {documentToReactComponents(
                     yahooFinanceDetails.description,
                     contentfulOptions,
                   )}
-                </DataCard>
+                </ChartDetailsCard>
               }
               chartOnLeft={chartDirections['ticker']}
               chartSize="lg"

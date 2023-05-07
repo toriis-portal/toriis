@@ -11,6 +11,7 @@ interface EnergyRadialChartProps {
 const EnergyRadialChart: FC<EnergyRadialChartProps> = ({ energyData }) => {
   const labels = ['Renewable Energy']
 
+  // Calculate percentage of renewable energy (totalRenewableConsumption / totalConsumption)
   const data = [
     energyData.totalConsumption && energyData.totalRenewableConsumption
       ? (energyData.totalRenewableConsumption * 100) /
