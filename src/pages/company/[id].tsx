@@ -2,17 +2,12 @@ import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
 import { Company } from '@prisma/client'
 import type { FC } from 'react'
-import { MARKS, BLOCKS, INLINES } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
-import type {
-  Block,
-  Inline,
-} from '@contentful/rich-text-types/dist/types/types'
 import { useState, useRef } from 'react'
 
 import { FuelEnum } from '../../utils/enums'
 import { ContentWrapper } from '../../utils/content'
+import { api } from '../../utils/api'
 import {
   HighlightedTitle,
   InvestmentTable,
@@ -24,9 +19,9 @@ import {
   FuelRadialChart,
   ChartDetailsCard,
 } from '../../components'
-import { api } from '../../utils/api'
 import { CompanyTooltipGroup, ChartGroup } from '../../sections'
 import type { CompanyDetailsEntry } from '../../types'
+import { mainParagraphStyle } from '../../utils/renderer'
 
 export const getServerSideProps = async () => {
   const contentClient = new ContentWrapper()
@@ -97,32 +92,6 @@ const Company: FC<CompanyDetailsProps> = ({
 }) => {
   const [labels, setLabels] = useState<string[]>([])
   const previousLabels = useRef<string[]>([])
-  const contentfulOptions = {
-    renderMark: {
-      [MARKS.BOLD]: (text: any) => (
-        <span className="font-semibold underline decoration-2 underline-offset-4">
-          {text}
-        </span>
-      ),
-    },
-    renderNode: {
-      [BLOCKS.PARAGRAPH]: (node: any, children: any) => (
-        <p className="align-center">{children}</p>
-      ),
-      [INLINES.HYPERLINK]: (node: Block | Inline, children: any) => {
-        return (
-          <a
-            href={node.data.uri as string}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {children}
-            <ArrowUpRightIcon className="align-self-start ml-0.5 inline h-4 w-4 stroke-current stroke-1" />
-          </a>
-        )
-      },
-    },
-  }
   const handleSetLabels = (newLabels: string[]) => {
     if (JSON.stringify(newLabels) !== JSON.stringify(previousLabels.current)) {
       setLabels(newLabels)
@@ -134,7 +103,12 @@ const Company: FC<CompanyDetailsProps> = ({
 
   const { data, isLoading, isError } = api.company.getCompany.useQuery(
     { id: companyId },
-    { refetchOnWindowFocus: false, retry: false, enabled: !!companyId },
+    {
+      refetchOnWindowFocus: false,
+      retry: false,
+      enabled: !!companyId,
+      staleTime: Infinity,
+    },
   )
 
   if (isLoading) {
@@ -185,7 +159,7 @@ const Company: FC<CompanyDetailsProps> = ({
           industryEntry={industryEntry}
           esgExplanation={documentToReactComponents(
             esgExplanation.description,
-            contentfulOptions,
+            mainParagraphStyle,
           )}
           className="mb-10"
         />
@@ -211,7 +185,7 @@ const Company: FC<CompanyDetailsProps> = ({
                 <ChartDetailsCard>
                   {documentToReactComponents(
                     carbonAccountingDetails.description,
-                    contentfulOptions,
+                    mainParagraphStyle,
                   )}
                 </ChartDetailsCard>
               }
@@ -239,7 +213,7 @@ const Company: FC<CompanyDetailsProps> = ({
                         <div key={key}>
                           {documentToReactComponents(
                             item.description,
-                            contentfulOptions,
+                            mainParagraphStyle,
                           )}
                           <br />
                         </div>
@@ -260,7 +234,7 @@ const Company: FC<CompanyDetailsProps> = ({
                 <ChartDetailsCard>
                   {documentToReactComponents(
                     renewableEnergyDetails.description,
-                    contentfulOptions,
+                    mainParagraphStyle,
                   )}
                 </ChartDetailsCard>
               }
@@ -276,7 +250,7 @@ const Company: FC<CompanyDetailsProps> = ({
                 <ChartDetailsCard>
                   {documentToReactComponents(
                     yahooFinanceDetails.description,
-                    contentfulOptions,
+                    mainParagraphStyle,
                   )}
                 </ChartDetailsCard>
               }

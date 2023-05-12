@@ -14,9 +14,13 @@ interface companySectorCount {
   count: number
 }
 
+/**
+ * @returns - Donut chart of company net asset value by sector
+ */
 const LandingDonutChart: FC = () => {
   const source = api.company.getNetAssetValBySector.useQuery(undefined, {
     refetchOnWindowFocus: false,
+    staleTime: Infinity,
   })
 
   if (!source.data)
@@ -33,11 +37,13 @@ const LandingDonutChart: FC = () => {
       count: data._sum.netAssetVal as number,
     }))
 
-  /*
-    This function cleans our input array of sectors by aggregating all sectors under a threshold,
-    including any none-type sectors, into a category labeled "OTHER".
-  */
-  function cleanData(arr: companySectorCount[]) {
+  /**
+   * Aggregates all sectors under a threshold, including any none-type sectors, into a category labeled "OTHER"
+   *
+   * @param arr array of company labels mapped to net asset value sum
+   * @returns parsed array with "Other" category
+   */
+  const aggregateSectors = (arr: companySectorCount[]) => {
     const total = arr.reduce((sum, item) => sum + item.count, 0)
     const threshold = total * 0.04
 
@@ -57,9 +63,10 @@ const LandingDonutChart: FC = () => {
     return filtered
   }
 
-  const labels: string[] = cleanData(pairs).map((dataKey) => dataKey.label)
-
-  const sums: number[] = cleanData(pairs).map((dataKey) =>
+  const labels: string[] = aggregateSectors(pairs).map(
+    (dataKey) => dataKey.label,
+  )
+  const sums: number[] = aggregateSectors(pairs).map((dataKey) =>
     Math.round(dataKey.count),
   )
 

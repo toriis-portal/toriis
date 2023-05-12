@@ -1,7 +1,6 @@
 import type { FC } from 'react'
 import React from 'react'
 import type { Document } from '@contentful/rich-text-types'
-import { MARKS, BLOCKS } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import clsx from 'clsx'
 
@@ -10,24 +9,9 @@ import {
   LandingDonutChart,
   CapitalizedTitle,
 } from '../../components'
+import { mainParagraphStyle } from '../../utils/renderer'
 
 const Landing: FC<{ text: Document }> = ({ text }) => {
-  // Custom contentful render for bold text and paragraph
-  const contentfulOptions = {
-    renderMark: {
-      [MARKS.BOLD]: (text: any) => (
-        <span className="font-semibold underline decoration-clementine decoration-2 underline-offset-4">
-          {text}
-        </span>
-      ),
-    },
-    renderNode: {
-      [BLOCKS.PARAGRAPH]: (node: any, children: any) => (
-        <p className="mb-8">{children}</p>
-      ),
-    },
-  }
-
   return (
     <div className="flex flex-col items-center justify-center">
       <CapitalizedTitle className="mt-10 place-content-center text-lg sm:text-lg md:space-x-2 md:text-2xl lg:space-x-3 lg:text-4xl" />
@@ -40,7 +24,9 @@ const Landing: FC<{ text: Document }> = ({ text }) => {
         </div>
         <div className="basis-4/7">
           <div className="mb-6 p-4 lg:pr-14">
-            {documentToReactComponents(text, contentfulOptions)}
+            <div className="mb-8 flex flex-col gap-6">
+              {documentToReactComponents(text, mainParagraphStyle)}
+            </div>
             <div className="flex flex-col gap-12 md:flex-row">
               <PrimaryButton
                 text="More About Fossil Fuels"

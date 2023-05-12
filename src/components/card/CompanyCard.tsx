@@ -3,7 +3,7 @@ import type { Company, EnvGrade } from '@prisma/client'
 import Link from 'next/link'
 import clsx from 'clsx'
 
-import { sectorEnum, envGradeEnum } from '../../utils/enums'
+import { sectorEnum } from '../../utils/enums'
 import { envGradeToColor, assetAmountToString } from '../../utils/helpers'
 import { Tag } from '..'
 

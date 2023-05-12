@@ -1,50 +1,16 @@
 import type { FC } from 'react'
 import { useState } from 'react'
-import {
-  PlusIcon,
-  MinusIcon,
-  ArrowUpRightIcon,
-} from '@heroicons/react/24/solid'
+import { PlusIcon, MinusIcon } from '@heroicons/react/24/solid'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import { BLOCKS, INLINES } from '@contentful/rich-text-types'
-import type {
-  Block,
-  Inline,
-} from '@contentful/rich-text-types/dist/types/types'
 import clsx from 'clsx'
 
 import type { CaseEntry } from '../../types'
+import { truncateParagraphStyle } from '../../utils/renderer'
 
 const CaseAccordion: FC<{ content: CaseEntry }> = ({ content }) => {
-  const [open, setOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
   const handleOpen = () => {
-    setOpen(!open)
-  }
-
-  const contentfulOptions = {
-    renderNode: {
-      [BLOCKS.DOCUMENT]: (node: any, children: any) => {
-        return (
-          <>
-            {!open && Array.isArray(children) && children.length > 0
-              ? children[0]
-              : children}
-          </>
-        )
-      },
-      [INLINES.HYPERLINK]: (node: Block | Inline, children: any) => {
-        return (
-          <a
-            href={node.data.uri as string}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {children}
-            <ArrowUpRightIcon className="align-self-start ml-0.5 inline h-4 w-4 stroke-current stroke-1" />
-          </a>
-        )
-      },
-    },
+    setIsOpen(!isOpen)
   }
 
   return (
@@ -61,13 +27,13 @@ const CaseAccordion: FC<{ content: CaseEntry }> = ({ content }) => {
       >
         <p
           className={clsx('header-3 inline p-4 lg:ml-6', {
-            'lg:ml-6': !open,
-            '-ml-[1.5px] -mt-[1px] lg:ml-[22.5px]': open,
+            'lg:ml-6': !isOpen,
+            '-ml-[1.5px] -mt-[1px] lg:ml-[22.5px]': isOpen,
           })}
         >
           {content.title}
         </p>
-        {open ? (
+        {isOpen ? (
           <MinusIcon className="mr-10 inline h-9 w-7 stroke-current stroke-2" />
         ) : (
           <PlusIcon className="mr-10 inline h-9 w-7 stroke-current stroke-2" />
@@ -77,12 +43,15 @@ const CaseAccordion: FC<{ content: CaseEntry }> = ({ content }) => {
         className={clsx(
           'body-normal flex flex-col gap-2 border-t-[0.125rem] border-cobalt pt-6 pb-9 text-black',
           {
-            'mx-[47px]': open,
-            'mx-12': !open,
+            'mx-[47px]': isOpen,
+            'mx-12': !isOpen,
           },
         )}
       >
-        {documentToReactComponents(content.details, contentfulOptions)}
+        {documentToReactComponents(
+          content.details,
+          truncateParagraphStyle(isOpen),
+        )}
       </div>
     </div>
   )

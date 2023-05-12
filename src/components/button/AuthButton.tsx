@@ -11,7 +11,7 @@ import GoogleLogin from '../../../public/google.png'
 
 const AuthButton: FC = () => {
   const { data: session } = useSession()
-  const [open, setOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
 
   const buttonStyle = clsx(
     'bg-white border border-solid border-2 border-darkTeal text-darkTeal w-full rounded-lg py-3 px-1 my-2',
@@ -25,14 +25,14 @@ const AuthButton: FC = () => {
       {session ? (
         <button
           className="flex aspect-square items-center justify-center rounded-full bg-black p-1.5"
-          onClick={() => setOpen(!open)}
+          onClick={() => setIsOpen(!isOpen)}
         >
           <UserIcon className="w-[1.6em] text-white" />
         </button>
       ) : (
         <button
           className="w-fit rounded-full bg-lightBlue px-5 py-1 text-center text-black"
-          onClick={() => setOpen(!open)}
+          onClick={() => setIsOpen(!isOpen)}
         >
           admin login
         </button>
@@ -43,12 +43,12 @@ const AuthButton: FC = () => {
           'body-normal text-black',
           'absolute right-8 top-[5.5rem] inline-block',
           'z-[100] w-[40%] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.3)] transition-opacity duration-200 lg:w-[28%]',
-          { 'invisible opacity-0': !open, 'visible opacity-100': open },
+          { 'invisible opacity-0': !isOpen, 'visible opacity-100': isOpen },
         )}
       >
         <div className="px-4 py-4 lg:px-10">
           <div className="absolute right-4 top-4 text-right">
-            <button onClick={() => setOpen(!open)}>
+            <button onClick={() => setIsOpen(!isOpen)}>
               <XMarkIcon className="w-6 text-black" />
             </button>
           </div>

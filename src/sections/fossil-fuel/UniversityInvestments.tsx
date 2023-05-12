@@ -3,7 +3,7 @@ import type { Asset } from 'contentful'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import type { Document } from '@contentful/rich-text-types'
 
-import { mainParagraphStyle } from '../../utils/contentfulOptions'
+import { mainParagraphStyle } from '../../utils/renderer'
 import { HighlightedTitle, ImageWithCaption, Tag } from '../../components'
 
 interface UniversityInvestmentsProps {

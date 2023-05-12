@@ -1,14 +1,10 @@
 import type { ReactNode } from 'react'
 import type { FC } from 'react'
-import { BLOCKS, INLINES } from '@contentful/rich-text-types'
-import type {
-  Block,
-  Inline,
-} from '@contentful/rich-text-types/dist/types/types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
 import { HighlightedTitle, Tabs } from '../../components'
 import type { DirtyCompanyEntry } from '../../types'
+import { mainParagraphStyle } from '../../utils/renderer'
 
 interface TabDetails {
   index: number
@@ -20,26 +16,6 @@ interface TabDetails {
 const DirtyIndustries: FC<{ companies: DirtyCompanyEntry[] }> = ({
   companies,
 }) => {
-  const contentfulOptions = {
-    renderNode: {
-      [BLOCKS.UL_LIST]: (node: any, children: any) => (
-        <ul className="list-disc">{children}</ul>
-      ),
-      [INLINES.HYPERLINK]: (node: Block | Inline, children: any) => {
-        return (
-          <a
-            href={node.data.uri as string}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline"
-          >
-            {children}
-          </a>
-        )
-      },
-    },
-  }
-
   const tabDetails: TabDetails[] = []
   companies
     .map((company, i) => {
@@ -49,7 +25,7 @@ const DirtyIndustries: FC<{ companies: DirtyCompanyEntry[] }> = ({
           title: company.companyName ?? '',
           content: documentToReactComponents(
             company.details,
-            contentfulOptions,
+            mainParagraphStyle,
           ),
           url: company.url ?? '',
         }

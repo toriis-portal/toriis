@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import type { Company, ESG } from '@prisma/client'
 
-import { mainParagraphStyle } from '../../utils/contentfulOptions'
+import { mainParagraphStyle } from '../../utils/renderer'
 import { Tag, ToolTip } from '../../components'
 import { envGradeToColor, assetAmountToString } from '../../utils/helpers'
 import type { SectorEntry, IndustryEntry } from '../../types'
