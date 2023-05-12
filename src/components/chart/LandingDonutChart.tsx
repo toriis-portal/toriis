@@ -15,6 +15,8 @@ interface companySectorCount {
 }
 
 /**
+ * Renders donut chart on the landing page
+ *
  * @returns - Donut chart of company net asset value by sector
  */
 const LandingDonutChart: FC = () => {

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { Company } from '@prisma/client'
 import type { FC } from 'react'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 
 import { FuelEnum } from '../../utils/enums'
 import { ContentWrapper } from '../../utils/content'
@@ -28,30 +28,27 @@ export const getServerSideProps = async () => {
   const companyDetails: CompanyDetailsEntry[] = await contentClient.get(
     'companyDetailsPage',
   )
-  const yahooFinance = companyDetails.find(
-    (item) => item.name == 'Yahoo Finance',
-  )
-  const carbonAccounting = companyDetails.find(
-    (item) => item.name == 'Carbon Accounting',
-  )
-  const renewableEnergy = companyDetails.find(
-    (item) => item.name == 'Renewable Energy',
-  )
-  const esgExplanation = companyDetails.find(
-    (item) => item.name == 'ESG Explanation',
-  )
-  const fuelTypes = Object.values(FuelEnum)
-  const fuelDetails = fuelTypes.map(
-    (fuelName) => companyDetails.find((item) => item.name == fuelName) ?? null,
-  )
+  const names = [
+    'Yahoo Finance',
+    'Carbon Accounting',
+    'Renewable Energy',
+    'ESG Explanation',
+    ...Object.values(FuelEnum),
+  ]
+  const detailsMap: { [name: string]: CompanyDetailsEntry | null } = {}
+  names.forEach((name) => {
+    detailsMap[name] = companyDetails.find((item) => item.name == name) || null
+  })
 
   return {
     props: {
-      yahooFinanceDetails: yahooFinance,
-      carbonAccountingDetails: carbonAccounting,
-      renewableEnergyDetails: renewableEnergy,
-      esgExplanation: esgExplanation,
-      fuelDetails: fuelDetails,
+      yahooFinanceDetails: detailsMap['Yahoo Finance'],
+      carbonAccountingDetails: detailsMap['Carbon Accounting'],
+      renewableEnergyDetails: detailsMap['Renewable Energy'],
+      esgExplanation: detailsMap['Renewable Energy'],
+      fuelDetails: Object.values(FuelEnum).map(
+        (fuelName) => detailsMap[fuelName],
+      ),
     },
   }
 }
@@ -61,7 +58,7 @@ interface CompanyDetailsProps {
   carbonAccountingDetails: CompanyDetailsEntry
   renewableEnergyDetails: CompanyDetailsEntry
   esgExplanation: CompanyDetailsEntry
-  fuelDetails: (CompanyDetailsEntry | undefined)[]
+  fuelDetails: CompanyDetailsEntry[]
 }
 
 /**
@@ -91,15 +88,7 @@ const Company: FC<CompanyDetailsProps> = ({
   fuelDetails,
 }) => {
   const [labels, setLabels] = useState<string[]>([])
-  const previousLabels = useRef<string[]>([])
-  const handleSetLabels = (newLabels: string[]) => {
-    if (JSON.stringify(newLabels) !== JSON.stringify(previousLabels.current)) {
-      setLabels(newLabels)
-      previousLabels.current = newLabels
-    }
-  }
-
-  const companyId = (useRouter().query.id as string) ?? ''
+  const companyId = useRouter().query.id as string
 
   const { data, isLoading, isError } = api.company.getCompany.useQuery(
     { id: companyId },
@@ -119,13 +108,7 @@ const Company: FC<CompanyDetailsProps> = ({
     )
   }
 
-  if (
-    isError ||
-    !data ||
-    !data.industryEntry ||
-    !data.sectorEntry ||
-    !data.company
-  ) {
+  if (isError || !data) {
     return (
       <div className="flex flex-col items-center p-12">
         <HighlightedTitle
@@ -197,29 +180,27 @@ const Company: FC<CompanyDetailsProps> = ({
             <ChartGroup
               title="CDP-Fuel"
               chart={
-                <FuelRadialChart
-                  source={company.fuel}
-                  setLabels={handleSetLabels}
-                />
+                <FuelRadialChart source={company.fuel} setLabels={setLabels} />
               }
               interpretation={
                 <ChartDetailsCard>
-                  {labels.map((label, key) => {
-                    const item = fuelDetails.find(
-                      (item) => item && item.name == label,
-                    )
-                    if (item && item.description) {
-                      return (
-                        <div key={key}>
-                          {documentToReactComponents(
-                            item.description,
-                            mainParagraphStyle,
-                          )}
-                          <br />
-                        </div>
+                  <div className="flex flex-col gap-4">
+                    {labels.map((label, key) => {
+                      const item = fuelDetails.find(
+                        (item) => item && item.name == label,
                       )
-                    }
-                  })}
+                      if (item && item.description) {
+                        return (
+                          <div key={key}>
+                            {documentToReactComponents(
+                              item.description,
+                              mainParagraphStyle,
+                            )}
+                          </div>
+                        )
+                      }
+                    })}
+                  </div>
                 </ChartDetailsCard>
               }
               chartOnLeft={chartDirections['fuel']}

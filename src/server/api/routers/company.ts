@@ -9,6 +9,8 @@ import { ContentWrapper } from '../../../utils/content'
 import { createTRPCRouter, publicProcedure } from '../trpc'
 import type { IndustryEntry, SectorEntry } from '../../../types'
 
+const contentClient = new ContentWrapper()
+
 const createNetAssetValFilter = (range: number[]) => {
   return {
     netAssetVal: {
@@ -17,9 +19,8 @@ const createNetAssetValFilter = (range: number[]) => {
     },
   }
 }
-const contentClient = new ContentWrapper()
 
-const getIndustryEntry = async (company: Company) => {
+const getIndustryEntry = async (company: Company): Promise<IndustryEntry> => {
   const industryEntries: IndustryEntry[] = await contentClient.get('industry')
 
   let industryEntry: IndustryEntry = {
@@ -36,9 +37,9 @@ const getIndustryEntry = async (company: Company) => {
   return industryEntry
 }
 
-const getSectorEntry = async (company: Company) => {
+const getSectorEntry = async (company: Company): Promise<SectorEntry> => {
   const sectorName = (
-    company.sector ? sectorEnum[company.sector] : 'NA'
+    company.sector ? sectorEnum[company.sector] : 'N/A'
   ) as Sector
 
   const sectorEntries: SectorEntry[] = await contentClient.get('sector')
@@ -107,7 +108,7 @@ export const companyRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const options = input.options
 
-      const company: Company | null = await ctx.prisma.company.findUnique({
+      const company = await ctx.prisma.company.findUnique({
         where: {
           id: input.id,
         },

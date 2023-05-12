@@ -5,6 +5,7 @@ import type { HistoricalRowHistory } from 'yahoo-finance2/dist/esm/src/modules/h
 import { Spinner } from 'flowbite-react'
 
 import { api } from '../../utils/api'
+import Toast from '../toast/Toast'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 const ChartLine = dynamic(() => import('react-apexcharts'), { ssr: false })
@@ -18,21 +19,22 @@ interface DateClosePair {
   y: number // closing cost, called y for apex
 }
 
+/**
+ * Renders a brush chart for a given company's closing market value from Yahoo Finance
+ *
+ * @param companyId The company id to get the finance data for
+ * @returns Brush chart for the company's finance data
+ */
 export const FinanceBrushChart: FC<FinanceBrushChartProps> = ({
   companyId,
 }) => {
   const today = new Date()
-
   const yearAgo = new Date()
   yearAgo.setFullYear(today.getFullYear() - 1)
 
-  const yahooOptions = {
-    period1: yearAgo.toDateString(),
-  }
-
-  const { data, isLoading, isError } =
+  const { data, isLoading, isError, error } =
     api.company.getCompanyFinanceData.useQuery(
-      { id: companyId, options: yahooOptions },
+      { id: companyId, options: { period1: yearAgo.toDateString() } },
       { refetchOnWindowFocus: false, enabled: !!companyId, retry: false },
     )
 
@@ -45,7 +47,7 @@ export const FinanceBrushChart: FC<FinanceBrushChartProps> = ({
   }
 
   if (isError || !data) {
-    return <></>
+    return <Toast type="error" message={error.message}></Toast>
   }
 
   const chartData: DateClosePair[] = data.map(

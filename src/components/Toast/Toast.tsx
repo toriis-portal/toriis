@@ -26,7 +26,7 @@ const Toast: FC<ToastProps> = ({ type, message }) => {
     <div className="absolute right-5 bottom-5">
       <div
         className={clsx(
-          'mb-4 flex w-fit flex-row items-center justify-center gap-2 rounded-lg border p-2',
+          'mb-4 flex w-fit flex-row items-center justify-center gap-2 rounded-lg border bg-white p-2',
           {
             'border-clementine': type === 'error',
             'border-cobalt': type === 'success',

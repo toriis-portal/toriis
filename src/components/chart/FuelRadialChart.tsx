@@ -19,6 +19,7 @@ interface FuelRadialChartProps {
 
 /**
  * Renders radial chart for fuel data
+ *
  * @param source - Fuel object to parse and render
  * @returns - Radial chart
  */
@@ -45,8 +46,6 @@ const FuelRadialChart: FC<FuelRadialChartProps> = ({ source, setLabels }) => {
         labels.push(FuelEnum[key as keyof typeof FuelEnum])
       }
     })
-
-    setLabels(labels)
     return labels
   }
   const [series, setSeries] = useState([0, 0, 0, 0])
@@ -87,8 +86,9 @@ const FuelRadialChart: FC<FuelRadialChartProps> = ({ source, setLabels }) => {
 
     if (source) {
       setSeries(getExistingPercentages(rest, totalConsumption ?? 1))
+      setLabels(getLabels(source))
     }
-  }, [source])
+  }, [setLabels, source])
 
   if (!source) {
     return (

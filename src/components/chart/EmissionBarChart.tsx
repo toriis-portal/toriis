@@ -8,6 +8,12 @@ interface EmissionBarChartProps {
   emissionData: Emission
 }
 
+/**
+ * Renders a bar chart for carbon accounting data
+ *
+ * @param emissionData Emission object to parse and render
+ * @returns Bar chart
+ */
 const EmissionBarChart: FC<EmissionBarChartProps> = ({ emissionData }) => {
   const labels = ['Scope 1 Estimate', 'Scope 2 Estimate', 'Scope 3 Estimate']
 

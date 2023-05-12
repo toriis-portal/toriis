@@ -8,6 +8,12 @@ interface EnergyRadialChartProps {
   energyData: Energy
 }
 
+/**
+ * Renders radial chart for energy data
+ *
+ * @param energyData Energy object to parse and render
+ * @returns Radial chart
+ */
 const EnergyRadialChart: FC<EnergyRadialChartProps> = ({ energyData }) => {
   const labels = ['Renewable Energy']
 
