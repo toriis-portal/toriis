@@ -20,7 +20,7 @@ import EmissionBarChart from './chart/EmissionBarChart'
 import FinanceBrushChart from './chart/FinanceBrushChart'
 // Displays
 import ListItem from './display/ListItem'
-import Carousel from './display/Carousel/Carousel'
+import Carousel from './display/Carousel'
 import Tabs from './display/Tabs'
 import ClimateClock from './display/ClimateClock'
 import ImageWithCaption from './display/ImageWithCaption'
