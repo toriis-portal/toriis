@@ -122,6 +122,7 @@ const InvestmentPage: FC = () => {
       refetchOnWindowFocus: false,
       cacheTime: 0,
       retry: false,
+      keepPreviousData: true,
     },
   )
 

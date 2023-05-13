@@ -1,6 +1,7 @@
 import type { FC } from 'react'
 import clsx from 'clsx'
 import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
+import Link from 'next/link'
 
 interface ReadMoreButtonProps {
   isOpen: boolean
@@ -24,10 +25,15 @@ const ReadMoreButton: FC<ReadMoreButtonProps> = ({
       )}
     >
       {link ? (
-        <a href={link} target="_blank" rel="noopener noreferrer">
+        <Link
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline"
+        >
           {isOpen ? 'Show less' : 'Read more'}
-          <ArrowUpRightIcon className="align-self-start ml-2 mb-[1px] inline h-3.5 w-4 stroke-current stroke-1" />
-        </a>
+          <ArrowUpRightIcon className="align-self-start ml-0.5 inline h-[1em] w-[1em] stroke-current stroke-1" />
+        </Link>
       ) : (
         <button className="italic" onClick={handleOpen}>
           {isOpen ? 'Show less' : 'Read more'}

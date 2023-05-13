@@ -21,11 +21,11 @@ const CarouselChild: FC<{
   return (
     <>
       {sectionName === 'Home' ? (
-        <div className="inline-flex leading-snug" style={{ width: '100%' }}>
+        <div className="w-full leading-snug">
           {documentToReactComponents(childData.details as Document)}
         </div>
       ) : (
-        <div className="grid w-screen grid-cols-3 text-center">
+        <div className="grid w-full grid-cols-3 text-center">
           {columns.map((column, i) => (
             <div key={i}>
               <ul>

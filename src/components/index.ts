@@ -21,9 +21,9 @@ import FinanceBrushChart from './chart/FinanceBrushChart'
 // Displays
 import ListItem from './display/ListItem'
 import Carousel from './display/Carousel/Carousel'
-import Tabs from './display/Tabs/Tabs'
-import ClimateClock from './display/ClimateClock/ClimateClock'
-import ImageWithCaption from './display/Image/ImageWithCaption'
+import Tabs from './display/Tabs'
+import ClimateClock from './display/ClimateClock'
+import ImageWithCaption from './display/ImageWithCaption'
 // Accordions
 import RequestAccordion from './accordion/RequestAccordion'
 import CaseAccordion from './accordion/CaseAccordion'
@@ -34,8 +34,8 @@ import SecondaryNavBar from './navigation/SecondaryNavBar'
 import AdminNavBar from './navigation/AdminNavBar'
 // Selects
 import Select from './select/Select'
-import SearchBar from './select/SearchBar'
-import InviteAdminBar from './select/InviteAdminBar'
+import SearchBar from './input/SearchBar'
+import InviteAdminBar from './input/InviteAdminBar'
 // Text
 import NumberCircle from './text/NumberCircle'
 import HighlightedTitle from './text/HighlightedTitle'

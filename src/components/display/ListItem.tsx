@@ -3,15 +3,15 @@ import type { FC } from 'react'
 import NumberCircle from '../text/NumberCircle'
 
 interface ListItemProps {
-  listVal: number
+  listIndex: number
   listContent: string
 }
 
-const ListItem: FC<ListItemProps> = ({ listVal, listContent }) => {
+const ListItem: FC<ListItemProps> = ({ listIndex, listContent }) => {
   return (
     <>
       <div className="flex w-full items-center space-x-8">
-        <NumberCircle val={listVal} />
+        <NumberCircle val={listIndex} />
         <p className="header-3">{listContent}</p>
       </div>
     </>

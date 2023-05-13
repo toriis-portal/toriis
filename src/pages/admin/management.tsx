@@ -104,13 +104,13 @@ const AdminAdminPage: FC = () => {
             className="w-3/4"
             users={data}
             editEnabled={edit}
-            onTrash={(currentId) => {
+            onTrash={(currentId: string) => {
               setUsersToDelete([...usersToDelete, currentId])
             }}
-            onUndo={(currentId) => {
+            onUndo={(currentId: string) => {
               setUsersToDelete(usersToDelete.filter((id) => id !== currentId))
             }}
-            onCheck={(currentId) => {
+            onCheck={(currentId: string) => {
               setUsersEmailUpdate(
                 !usersEmailUpdate.includes(currentId)
                   ? [...usersEmailUpdate, currentId]

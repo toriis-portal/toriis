@@ -38,8 +38,10 @@ const Carousel: FC<{
         <div
           className="flex flex-row whitespace-normal transition-transform"
           style={{
-            transform: `translateX(-${activeIndex * 25}%)`,
-            width: '400%',
+            transform: `translateX(-${
+              activeIndex * (100 / carouselChildrenData.length)
+            }%)`,
+            width: `${carouselChildrenData.length * 100}%`,
           }}
         >
           {carouselChildrenData.map((childData, index) => {

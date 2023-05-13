@@ -4,6 +4,7 @@ import type {
   Inline,
 } from '@contentful/rich-text-types/dist/types/types'
 import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
+import Link from 'next/link'
 
 export const mainParagraphStyle = {
   renderMark: {
@@ -22,14 +23,15 @@ export const mainParagraphStyle = {
     ),
     [INLINES.HYPERLINK]: (node: Block | Inline, children: any) => {
       return (
-        <a
+        <Link
           href={node.data.uri as string}
           target="_blank"
           rel="noopener noreferrer"
+          className="underline"
         >
           {children}
           <ArrowUpRightIcon className="align-self-start ml-0.5 inline h-[1em] w-[1em] stroke-current" />
-        </a>
+        </Link>
       )
     },
   },

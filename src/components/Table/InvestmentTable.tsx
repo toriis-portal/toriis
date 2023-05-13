@@ -73,6 +73,7 @@ const InvestmentTable: FC<{ companyId: string }> = (companyId) => {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
       refetchOnWindowFocus: false,
       cacheTime: 0,
+      keepPreviousData: true,
     },
   )
 
