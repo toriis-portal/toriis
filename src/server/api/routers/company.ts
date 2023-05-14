@@ -9,6 +9,15 @@ import { ContentWrapper } from '../../../utils/content'
 import { createTRPCRouter, publicProcedure } from '../trpc'
 import type { IndustryEntry, SectorEntry } from '../../../types'
 
+interface SortOrder {
+  netAssetVal?: 'asc' | 'desc'
+  ESG?: {
+    environmentGrade?: 'asc' | 'desc'
+  }
+}
+
+type SortByString = 'asc' | 'desc'
+
 const contentClient = new ContentWrapper()
 
 const createNetAssetValFilter = (range: number[]) => {
@@ -56,19 +65,6 @@ const getSectorEntry = async (company: Company): Promise<SectorEntry> => {
 
   return sectorEntry
 }
-
-interface SortOrder {
-  netAssetVal?: 'asc' | 'desc'
-  ESG?: {
-    environmentGrade?: 'asc' | 'desc'
-  }
-}
-
-type SortByString = 'asc' | 'desc'
-
-const sortStringZodType = z
-  .union([z.literal('asc'), z.literal('desc')])
-  .nullish()
 
 const createSortOrder = (
   sortByNetAssetVal?: SortByString | null,
@@ -172,8 +168,8 @@ export const companyRouter = createTRPCRouter({
       z.object({
         limit: z.number().min(1).max(100).nullish(),
         cursor: z.string().nullish(),
-        sortByEnvGrade: sortStringZodType,
-        sortByNetAssetVal: sortStringZodType,
+        sortByEnvGrade: z.enum(['asc', 'desc']).nullish(),
+        sortByNetAssetVal: z.enum(['asc', 'desc']).nullish(),
         filterBySector: z.array(z.nativeEnum(Sector)).nullish(),
         filterByIndustry: z.array(z.string()).nullish(),
         filterByEnvGrade: z.array(z.nativeEnum(EnvGrade)).nullish(),
