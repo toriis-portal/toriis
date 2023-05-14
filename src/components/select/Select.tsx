@@ -108,7 +108,7 @@ export const Select: FC<SelectProps> = ({
   }, [isOpen, onClose])
 
   useEffect(() => {
-    if (updateControl.type === 'on-change') {
+    if (updateControl.type === 'on-change' && shouldClearChecked) {
       setSelected([])
     }
   }, [shouldClearChecked, updateControl.type])

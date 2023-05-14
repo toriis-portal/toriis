@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import type { Company, EnvGrade, Sector } from '@prisma/client'
@@ -32,7 +32,6 @@ const netAssetValCallback = (selectedOptions: string[]) => {
   const selectedNetAssetVal = selectedOptions.map((item) => {
     return netAssetValEnum[item as keyof typeof netAssetValEnum]
   })
-
   return selectedNetAssetVal
 }
 
@@ -44,19 +43,15 @@ const extractSortyByQueryKey = (
     const [field, _order] = item.split('-')
     return field === key
   })
-
   if (!selectedSort) {
     return null
   }
-
   const [_field, order] = selectedSort.split('-')
-
   if (order === 'low to high') {
     return key == 'Environment Grade' ? 'desc' : 'asc'
   } else if (order === 'high to low') {
     return key == 'Environment Grade' ? 'asc' : 'desc'
   }
-
   return null
 }
 
@@ -64,10 +59,10 @@ const convertToFilterOptions = (selectedFilters: string[]) => {
   if (selectedFilters && selectedFilters.length === 0) {
     return undefined
   }
-
   return selectedFilters
 }
 
+const limit = 10
 const initialSearchQuery = ' '
 const initialFilterOptions: FilterOptions = {
   sectors: [],
@@ -81,13 +76,11 @@ const SelectGroupStyle = clsx('flex flex-row gap-2 basis-1/4')
 const InvestmentPage: FC = () => {
   const [companySearchQuery, setCompanySearchQuery] =
     useState<string>(initialSearchQuery)
-  const [dataLengthArr, setDataLengthArr] = useState<number[]>([])
   const [lastSearchIsEmpty, setLastSearchIsEmpty] = useState<boolean>(false)
   const [selectedSortKeys, setSelectedSortKeys] = useState<string[]>([])
   const [filterOptions, setFilterOptions] =
     useState<FilterOptions>(initialFilterOptions)
-
-  const limit = 10
+  const previousDataLength = useRef<number>(limit)
 
   const {
     fetchNextPage,
@@ -96,7 +89,6 @@ const InvestmentPage: FC = () => {
     isFetchingNextPage,
     data,
     refetch,
-    isInitialLoading,
   } = api.company.getCompanies.useInfiniteQuery(
     {
       limit: limit,
@@ -123,46 +115,29 @@ const InvestmentPage: FC = () => {
       refetchOnWindowFocus: false,
       cacheTime: 0,
       retry: false,
+      onSuccess: (newData) => {
+        const newDataLength = newData.pages[0]?.items?.length || 0
+        if (previousDataLength.current !== 0) {
+          setLastSearchIsEmpty(false)
+        }
+        if (newDataLength === 0) {
+          setCompanySearchQuery(initialSearchQuery)
+          setFilterOptions(initialFilterOptions)
+          setLastSearchIsEmpty(true)
+        }
+        previousDataLength.current = newDataLength
+      },
     },
   )
-
-  const dataLength = data?.pages
-    ? (data.pages.length - 1) * limit +
-      (data.pages[data.pages.length - 1]?.items.length || 0)
-    : 0
 
   useEffect(() => {
     const refetchData = async () => {
       await refetch()
-
       refetchData().catch((err) => {
         console.error(err)
       })
     }
-    if (!isInitialLoading) {
-      setDataLengthArr((prev) => [...prev, dataLength])
-    }
-  }, [
-    selectedSortKeys,
-    companySearchQuery,
-    refetch,
-    dataLength,
-    isInitialLoading,
-  ])
-
-  useEffect(() => {
-    // Refetch on previous search result is empty
-    if (dataLengthArr.at(-1) === 0) {
-      setCompanySearchQuery(initialSearchQuery)
-      setFilterOptions(initialFilterOptions)
-    }
-    // Clear query after refetch
-    if (dataLengthArr.length > 2 && dataLengthArr.at(-2) === 0) {
-      setLastSearchIsEmpty(true)
-    } else {
-      setLastSearchIsEmpty(false)
-    }
-  }, [dataLengthArr])
+  }, [selectedSortKeys, companySearchQuery, refetch])
 
   return (
     <>
