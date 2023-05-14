@@ -82,6 +82,7 @@ const InvestmentPage: FC = () => {
   const [companySearchQuery, setCompanySearchQuery] =
     useState<string>(initialSearchQuery)
   const [dataLengthArr, setDataLengthArr] = useState<number[]>([])
+  const [lastSearchIsEmpty, setLastSearchIsEmpty] = useState<boolean>(false)
   const [selectedSortKeys, setSelectedSortKeys] = useState<string[]>([])
   const [filterOptions, setFilterOptions] =
     useState<FilterOptions>(initialFilterOptions)
@@ -130,9 +131,6 @@ const InvestmentPage: FC = () => {
       (data.pages[data.pages.length - 1]?.items.length || 0)
     : 0
 
-  const lastSearchIsEmpty =
-    dataLengthArr.length > 2 && dataLengthArr.at(-2) === 0
-
   useEffect(() => {
     const refetchData = async () => {
       await refetch()
@@ -152,13 +150,19 @@ const InvestmentPage: FC = () => {
     isInitialLoading,
   ])
 
-  // Refetch on search result is empty
   useEffect(() => {
+    // Refetch on previous search result is empty
     if (dataLengthArr.at(-1) === 0) {
       setCompanySearchQuery(initialSearchQuery)
       setFilterOptions(initialFilterOptions)
     }
-  }, [dataLengthArr, refetch])
+    // Clear query after refetch
+    if (dataLengthArr.length > 2 && dataLengthArr.at(-2) === 0) {
+      setLastSearchIsEmpty(true)
+    } else {
+      setLastSearchIsEmpty(false)
+    }
+  }, [dataLengthArr])
 
   return (
     <>
@@ -191,6 +195,7 @@ const InvestmentPage: FC = () => {
                   })
                 },
               }}
+              shouldClearChecked={lastSearchIsEmpty}
             />
             <ToolTip
               title="Definition"
@@ -213,6 +218,7 @@ const InvestmentPage: FC = () => {
                   })
                 },
               }}
+              shouldClearChecked={lastSearchIsEmpty}
             />
             <ToolTip
               title="Definition"
@@ -234,6 +240,7 @@ const InvestmentPage: FC = () => {
                   })
                 },
               }}
+              shouldClearChecked={lastSearchIsEmpty}
             />
             <ToolTip
               title="Definition"
@@ -274,6 +281,7 @@ const InvestmentPage: FC = () => {
                   })
                 },
               }}
+              shouldClearChecked={lastSearchIsEmpty}
             />
             <ToolTip
               title="Definition"
@@ -309,6 +317,7 @@ const InvestmentPage: FC = () => {
                 type: 'on-apply',
                 cb: setSelectedSortKeys,
               }}
+              shouldClearChecked={lastSearchIsEmpty}
             />
           </div>
           {data?.pages.map((page, idx) => {

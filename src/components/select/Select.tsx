@@ -20,6 +20,7 @@ interface SelectProps {
   isFilter?: boolean
   containerHeight?: string // Only handles 1/4, 1/2, 3/4
   shortText?: string
+  shouldClearChecked: boolean
 }
 
 /**
@@ -79,6 +80,7 @@ export const Select: FC<SelectProps> = ({
   isFilter = false,
   containerHeight,
   shortText,
+  shouldClearChecked,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [selected, setSelected] = useState<string[]>([])
@@ -104,6 +106,12 @@ export const Select: FC<SelectProps> = ({
       setSearchQuery('')
     }
   }, [isOpen, onClose])
+
+  useEffect(() => {
+    if (updateControl.type === 'on-change') {
+      setSelected([])
+    }
+  }, [shouldClearChecked, updateControl.type])
 
   useMediaBreakPoint(
     1000,
