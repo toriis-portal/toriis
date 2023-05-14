@@ -8,13 +8,13 @@ import type {
   RefuteResponseEntry,
   ListEntry,
   LinkEntry,
-  Info,
+  HomePageInfo,
   CaseEntry,
   DirtyCompanyEntry,
   FossilFuelPage,
 } from '../types/index.js'
 
-const homePageEntryTypes = [
+const homePageEntryNames = [
   'timeline',
   'request',
   'response',
@@ -23,12 +23,26 @@ const homePageEntryTypes = [
   'info',
 ]
 
-const fossilFuelPageEntryTypes = [
+const fossilFuelPageEntryNames = [
   'fossilFuelPage',
   'case',
   'dirtyCompanies',
   'link',
 ]
+
+type HomePageEntryType =
+  | TimelineEntry
+  | OurRequestsEntry
+  | RefuteResponseEntry
+  | ListEntry
+  | LinkEntry
+  | HomePageInfo
+
+type FossilFuelPageEntryType =
+  | FossilFuelPage
+  | CaseEntry
+  | DirtyCompanyEntry
+  | LinkEntry
 
 export class ContentWrapper {
   client: ContentfulClientApi
@@ -40,25 +54,26 @@ export class ContentWrapper {
     })
   }
 
+  /**
+   * Generic function to get entries of a given type from Contentful
+   *
+   * @param entity Type of entry
+   * @returns Entries in entity type
+   */
   async get<T>(entity: string): Promise<T> {
     const client = this.client
     const entries = await client.getEntries({ content_type: entity })
     return entries.items.map((item) => item.fields) as T
   }
 
-  getSingleHomePageEntry = async (entity: string) => {
-    const client = this.client
-
-    const entries = await client.getEntries({
-      content_type: entity,
-    })
-    return this.parseHomePageEntries(
-      entries.items.map((item) => item.fields),
-      entity,
-    )
-  }
-
-  parseHomePageEntries = (entries: any, entity: string) => {
+  /**
+   * Handles type casting, filtering, and sorting for home page entries
+   *
+   * @param entries Home page entries from Contentful
+   * @param entity Type of entry
+   * @returns Parsed home page entries
+   */
+  parseHomePageEntries = (entries: HomePageEntryType[], entity: string) => {
     switch (entity) {
       case 'timeline':
         return (entries as TimelineEntry[]).sort((a, b) => a.year - b.year)
@@ -73,30 +88,43 @@ export class ContentWrapper {
       case 'link':
         return (entries as LinkEntry[]).filter((entry) => entry.type === 'Home')
       default:
-        return (entries as Info[])[0] as Info
+        return (entries as HomePageInfo[])[0] as HomePageInfo
     }
   }
 
+  /**
+   * Get all entries from Contentful for the home page
+   * @returns Home page entries in a map
+   */
   getAllHomePageEntries = async () => {
     const homePageEntryMap: Record<
       string,
-      | TimelineEntry[]
-      | RefuteResponseEntry[]
-      | OurRequestsEntry[]
-      | ListEntry[]
-      | Info
-      | LinkEntry[]
+      HomePageEntryType | HomePageEntryType[]
     > = {}
     await Promise.all(
-      homePageEntryTypes.map(async (entity) => {
-        const results = await this.getSingleHomePageEntry(entity)
+      homePageEntryNames.map(async (entity) => {
+        const results = await this.get<HomePageEntryType[]>(entity).then(
+          (entries) => {
+            return this.parseHomePageEntries(entries, entity)
+          },
+        )
         homePageEntryMap[entity] = results
       }),
     )
     return homePageEntryMap
   }
 
-  parseFossilFuelPageEntries = (entries: any, entity: string) => {
+  /**
+   * Handles type casting and filtering for fossil fuel page entries
+   *
+   * @param entries Home page entries from Contentful
+   * @param entity Type of entry
+   * @returns Parsed home page entries
+   */
+  parseFossilFuelPageEntries = (
+    entries: FossilFuelPageEntryType[],
+    entity: string,
+  ) => {
     switch (entity) {
       case 'fossilFuelPage':
         return (entries as FossilFuelPage[])[0] as FossilFuelPage
@@ -109,26 +137,22 @@ export class ContentWrapper {
     }
   }
 
-  getSingleFossilFuelPageEntry = async (entity: string) => {
-    const client = this.client
-
-    const entries = await client.getEntries({
-      content_type: entity,
-    })
-    return this.parseFossilFuelPageEntries(
-      entries.items.map((item) => item.fields),
-      entity,
-    )
-  }
-
+  /**
+   * Get all entries from Contentful for the fossil fuel page
+   * @returns Fossil fuel page entries in a map
+   */
   getAllFossilFuelPageEntries = async () => {
     const fossilFuelPageEntryMap: Record<
       string,
-      FossilFuelPage | CaseEntry[] | DirtyCompanyEntry[] | LinkEntry[]
+      FossilFuelPageEntryType | FossilFuelPageEntryType[]
     > = {}
     await Promise.all(
-      fossilFuelPageEntryTypes.map(async (entity) => {
-        const results = await this.getSingleFossilFuelPageEntry(entity)
+      fossilFuelPageEntryNames.map(async (entity) => {
+        const results = await this.get<FossilFuelPageEntryType[]>(entity).then(
+          (entries) => {
+            return this.parseFossilFuelPageEntries(entries, entity)
+          },
+        )
         fossilFuelPageEntryMap[entity] = results
       }),
     )
