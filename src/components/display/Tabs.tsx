@@ -3,21 +3,28 @@ import React, { useState, useEffect } from 'react'
 import clsx from 'clsx'
 
 import ReadMoreButton from '../button/ReadMoreButton'
+import { useMediaBreakPoint } from '../../utils/hooks'
 
 const TabHeader: FC<{ title: string; active: boolean }> = ({
   title,
   active,
 }) => {
   const [truncatedTitle, setTruncatedTitle] = useState(title)
+  const [maxTitleLength, setMaxTitleLength] = useState(5)
 
   useEffect(() => {
-    const MAX_TITLE_LENGTH = window.innerWidth > 1000 ? 5 : 2
     setTruncatedTitle(
-      title.length > MAX_TITLE_LENGTH
-        ? title.substring(0, MAX_TITLE_LENGTH) + '...'
+      title.length > maxTitleLength
+        ? title.substring(0, maxTitleLength) + '...'
         : title,
     )
-  }, [title, truncatedTitle])
+  }, [title, truncatedTitle, maxTitleLength])
+
+  useMediaBreakPoint(
+    1000,
+    () => setMaxTitleLength(2),
+    () => setMaxTitleLength(5),
+  )
 
   return (
     <div

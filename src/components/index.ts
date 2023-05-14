@@ -1,6 +1,5 @@
 // Buttons
 import AuthButton from './button/AuthButton'
-import NavButton from './navigation/PrimaryNavBar/NavButton'
 import PrimaryButton from './button/PrimaryButton'
 import ToTopButton from './button/ToTopButton'
 import ReadMoreButton from './button/ReadMoreButton'
@@ -11,7 +10,6 @@ import TabButton from './button/TabButton'
 import CompanyCard from './card/CompanyCard'
 import AdminSelectCard from './card/AdminSelectCard'
 import ChartDetailsCard from './card/ChartDetailsCard'
-import LinkBox from './display/LinkBox'
 // Charts
 import EnergyRadialChart from './chart/EnergyRadialChart'
 import LandingDonutChart from './chart/LandingDonutChart'
@@ -24,23 +22,23 @@ import Carousel from './display/Carousel'
 import Tabs from './display/Tabs'
 import ClimateClock from './display/ClimateClock'
 import ImageWithCaption from './display/ImageWithCaption'
+import LinkBox from './display/LinkBox'
 // Accordions
 import RequestAccordion from './accordion/RequestAccordion'
 import CaseAccordion from './accordion/CaseAccordion'
 import ReadMoreAccordion from './accordion/ReadMoreAccordion'
 // Nav
-import PrimaryNavBar from './navigation/PrimaryNavBar/PrimaryNavBar'
+import PrimaryNavBar from './navigation/PrimaryNavBar'
 import SecondaryNavBar from './navigation/SecondaryNavBar'
 import AdminNavBar from './navigation/AdminNavBar'
 // Selects
 import Select from './select/Select'
+// Inputs
 import SearchBar from './input/SearchBar'
 import InviteAdminBar from './input/InviteAdminBar'
 // Text
 import NumberCircle from './text/NumberCircle'
 import HighlightedTitle from './text/HighlightedTitle'
-import CommentModal from './modal/CommentModal'
-import SubmitRequestModal from './modal/SubmitRequestModal'
 import CapitalizedTitle from './text/CapitalizedTitle'
 import StatusTag from './text/StatusTag'
 import Tag from './text/Tag'
@@ -52,6 +50,8 @@ import RequestReviewTable from './table/ReviewRequestTable'
 import ToolTip from './tooltip/ToolTip'
 // Modals
 import GeneralModal from './modal/GeneralModal'
+import CommentModal from './modal/CommentModal'
+import SubmitRequestModal from './modal/SubmitRequestModal'
 import LeaveConfirmationModal from './modal/LeaveConfirmationModal'
 // Toast
 import Toast from './toast/Toast'
@@ -62,7 +62,6 @@ export {
   ListItem,
   NumberCircle,
   HighlightedTitle,
-  NavButton,
   TabButton,
   PrimaryNavBar,
   PrimaryButton,

@@ -3,9 +3,36 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Navbar } from 'flowbite-react'
+import { useRouter } from 'next/router'
+import clsx from 'clsx'
 
-import { AuthButton, NavButton } from '../../index'
-import toriisLogo from '../../../../public/toriis.png'
+import { AuthButton } from '../index'
+import toriisLogo from '../../../public/toriis.png'
+
+interface NavButtonProps {
+  title: string
+  link: string
+}
+
+const NavButton: FC<NavButtonProps> = ({ title, link }) => {
+  const isActive = useRouter().pathname === link
+
+  return (
+    <Link
+      href={link}
+      className={clsx(
+        'border-b-4 bg-white py-2 text-center text-black',
+        {
+          'border-cobalt': isActive,
+          'border-white': !isActive,
+        },
+        'header-3 text-[20px] hover:border-b-4 hover:border-cobalt hover:duration-100',
+      )}
+    >
+      {title}
+    </Link>
+  )
+}
 
 const PrimaryNavBar: FC = () => {
   return (

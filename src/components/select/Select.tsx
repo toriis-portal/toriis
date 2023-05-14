@@ -3,6 +3,8 @@ import type { FC } from 'react'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import clsx from 'clsx'
 
+import { useClickedOutside, useMediaBreakPoint } from '../../utils/hooks'
+
 type Options = string[] | Record<string, string[]>
 
 interface SelectProps {
@@ -10,7 +12,7 @@ interface SelectProps {
   options: Options
   onClose?: () => void
   onOpen?: () => void
-  updateControl?: {
+  updateControl: {
     type: 'on-change' | 'on-apply'
     cb: (value: string[]) => void
   }
@@ -85,6 +87,10 @@ export const Select: FC<SelectProps> = ({
 
   const ref = useRef<HTMLDivElement>(null)
 
+  useClickedOutside(ref, () => {
+    isOpen && setIsOpen(false)
+  })
+
   useEffect(() => {
     if (isOpen) {
       onOpen?.()
@@ -99,28 +105,15 @@ export const Select: FC<SelectProps> = ({
     }
   }, [isOpen, onClose])
 
-  useEffect(() => {
-    window.innerWidth < 1200 && shortText
-      ? setTextOption(shortText)
-      : setTextOption(text)
-  }, [shortText, text])
-
-  useEffect(() => {
-    const checkIfClickedOutside = (e: MouseEvent) => {
-      // If the menu is open and the clicked target is not within the menu,
-      // then close the menu
-      if (isOpen && ref.current && !ref.current.contains(e.target as Node)) {
-        setIsOpen(false)
-      }
-    }
-
-    document.addEventListener('mousedown', checkIfClickedOutside)
-
-    return () => {
-      // Cleanup the event listener
-      document.removeEventListener('mousedown', checkIfClickedOutside)
-    }
-  }, [isOpen])
+  useMediaBreakPoint(
+    1000,
+    () => {
+      shortText && setTextOption(shortText)
+    },
+    () => {
+      setTextOption(text)
+    },
+  )
 
   /**
    * Updates the selected state and calls the onChange callback
@@ -138,8 +131,8 @@ export const Select: FC<SelectProps> = ({
 
     setSelected(currentSelected)
 
-    if (updateControl?.type === 'on-change') {
-      updateControl?.cb(currentSelected)
+    if (updateControl.type === 'on-change') {
+      updateControl.cb(currentSelected)
     }
   }
 
@@ -166,8 +159,8 @@ export const Select: FC<SelectProps> = ({
 
     setSelected(currentSelected)
 
-    if (updateControl?.type === 'on-change') {
-      updateControl?.cb(currentSelected)
+    if (updateControl.type === 'on-change') {
+      updateControl.cb(currentSelected)
     }
   }
 
@@ -175,10 +168,9 @@ export const Select: FC<SelectProps> = ({
    * Called when the apply option is clicked and validates whether this dropdown should trigger
    */
   const handleApply = () => {
-    if (updateControl?.type !== 'on-apply') {
+    if (updateControl.type !== 'on-apply') {
       return
     }
-
     updateControl.cb(selected)
   }
 
@@ -195,11 +187,12 @@ export const Select: FC<SelectProps> = ({
 
   return (
     <div
-      ref={updateControl?.type == 'on-change' ? ref : null}
+      ref={updateControl.type == 'on-change' ? ref : null}
       className={clsx('relative', {
         'flex-grow basis-0': isFilter,
       })}
     >
+      {/* Select Bar */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={clsx(
@@ -238,7 +231,7 @@ export const Select: FC<SelectProps> = ({
           <SelectChevron isFilter={isFilter} isOpen={isOpen} />
         </span>
       </button>
-
+      {/* Dropdown */}
       {isOpen && (
         <div
           className={clsx(
@@ -321,7 +314,7 @@ export const Select: FC<SelectProps> = ({
                 ))}
               </ul>
             )}
-            {updateControl?.type === 'on-apply' && (
+            {updateControl.type === 'on-apply' && (
               <button
                 className="body-normal m-[auto] mt-5 flex w-9/12 justify-center rounded-full bg-black text-white"
                 onClick={handleApply}
