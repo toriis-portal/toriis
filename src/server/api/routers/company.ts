@@ -293,45 +293,50 @@ export const companyRouter = createTRPCRouter({
         nextCursor,
       }
     }),
-  getEmissionsAndFFClass: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.company.aggregate([
-      {
-        $lookup: {
-          from: 'Emission',
-          localField: 'emission',
-          foreignField: '_id',
-          as: 'emission_info',
-        },
+
+  getEmissionsAndFFClass: publicProcedure.query(async ({ ctx }) => {
+    const companies = await ctx.prisma.company.findMany({
+      include: {
+        emission: true,
       },
-      {
-        $unwind: {
-          path: '$emission_info',
-          preserveNullAndEmptyArrays: true,
-        },
-      },
-      {
-        $addFields: {
-          financed_emissions: {
-            $multiply: [
-              { $divide: ['$netAssetVal', '$market_cap'] },
-              { $add: ['$emission_info.scopeOne', '$emission_info.scopeTwo'] },
-              1e3,
-            ],
-          },
-          fossil_fuel_class: {
-            $cond: [
-              {
-                $or: [
-                  { $regexMatch: { input: '$sector', regex: /^OIL/i } },
-                  { $regexMatch: { input: '$sector', regex: /^UTILITIES/i } },
-                ],
-              },
-              'y',
-              'n',
-            ],
-          },
-        },
-      },
-    ])
+    })
+
+    const emissionsAndFFClass = companies.map((company) => {
+      const netAssetVal = company.netAssetVal
+      const marketCap = company.market_cap
+      const emissionInfo = company.emission
+
+      if (
+        netAssetVal &&
+        marketCap &&
+        emissionInfo &&
+        emissionInfo.scopeOne &&
+        emissionInfo.scopeTwo
+      ) {
+        const financedEmissions =
+          (netAssetVal / marketCap) *
+          (emissionInfo.scopeOne + emissionInfo.scopeTwo) *
+          1000
+
+        let fossilFuelClass = 'n'
+        if (
+          company.sector &&
+          (company.sector.toUpperCase().startsWith('OIL') ||
+            company.sector.toUpperCase().startsWith('UTILITIES'))
+        ) {
+          fossilFuelClass = 'y'
+        }
+
+        return {
+          companyId: company.id,
+          financedEmissions,
+          fossilFuelClass,
+        }
+      }
+
+      return null
+    })
+
+    return emissionsAndFFClass.filter(Boolean)
   }),
 })

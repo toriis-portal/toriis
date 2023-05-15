@@ -1,115 +1,69 @@
 import type { FC } from 'react'
 import dynamic from 'next/dynamic'
-import type { Sector } from '@prisma/client'
 import { Spinner } from 'flowbite-react'
 
 import { api } from '../../utils/api'
-import { sectorEnum } from '../../utils/enums'
-import { assetAmountToString } from '../../utils/helpers'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
-/* Interface
- *
- */
+/* Interface */
 
-interface companySectorCount {
-  label: string
-  count: number
+interface FinancedEmissionsByCompany {
+  company: string
+  emissions: number
+  classification: string
 }
 
-/*
- * const EmissionTressMap
- */
+/* EmissionTreeMap component */
 
-const EmissionTreemap: FC = () => {
-  // TODO: Write API query for getNetAssetValByFFClass
-  const source = api.company.getNetAssetValBySector.useQuery(undefined, {
+const EmissionTreeMap: FC = () => {
+  const source = api.company.getEmissionsAndFFClass.useQuery(undefined, {
     refetchOnWindowFocus: false,
   })
 
-  if (!source.data)
+  if (source.isLoading) {
     return (
       <div className="text-center">
         <Spinner color="info" />
       </div>
     )
-
-  const pairs: companySectorCount[] = source.data
-    .filter((data) => data._sum.netAssetVal !== null)
-    .map((data) => ({
-      label: data.sector as Sector,
-      count: data._sum.netAssetVal as number,
-    }))
-
-  /*
-    This function cleans our input array of sectors by aggregating all sectors under a threshold,
-    including any none-type sectors, into a category labeled "OTHER".
-  */
-  function cleanData(arr: companySectorCount[]) {
-    const total = arr.reduce((sum, item) => sum + item.count, 0)
-    const threshold = total * 0.04
-
-    const filtered = arr
-      .filter((item) => item.count >= threshold && item.label != null)
-      .map((item) => ({
-        label: sectorEnum[item.label as Sector],
-        count: item.count,
-      }))
-
-    const newCount = arr
-      .filter((item) => item.count < threshold || item.label === null)
-      .reduce((sum, item) => sum + item.count, 0)
-
-    filtered.push({ label: 'Other', count: newCount })
-
-    return filtered
   }
 
-  const labels: string[] = cleanData(pairs).map((dataKey) => dataKey.label)
+  if (source.isError || !source.data) {
+    return <div>Error occurred while fetching data</div>
+  }
 
-  const sums: number[] = cleanData(pairs).map((dataKey) =>
-    Math.round(dataKey.count),
-  )
+  const emissions: FinancedEmissionsByCompany[] = source.data
+    .filter((item) => item !== null) // Filter out null items
+    .map((item) => ({
+      company: item!.companyId, // Use non-null assertion operator
+      emissions: item!.financedEmissions, // Use non-null assertion operator
+      classification: item!.fossilFuelClass, // Use non-null assertion operator
+    }))
 
-  const options = {
-    labels: labels,
-    tooltip: {
-      y: {
-        formatter: function (val: number) {
-          return '$' + assetAmountToString(val)
-        },
-      },
+  const options: ApexCharts.ApexOptions = {
+    title: {
+      text: 'Financed Emissions by Fossil Fuel Class and Company',
     },
-    fontFamily: 'Klima',
-    legend: { show: false },
-    colors: ['#FFA902', '#FF6112', '#17292E', '#0F81E8'],
-    dataLabels: {
-      enabled: true,
-      dropShadow: {
-        enabled: false,
+    series: [
+      {
+        data: emissions.map((emission) => ({
+          x: emission.classification,
+          y: emission.emissions,
+          label: emission.company,
+        })),
       },
-    },
-    plotOptions: {
-      pie: {
-        donut: {
-          size: '45%',
-        },
-      },
+    ],
+    legend: {
+      show: false,
     },
   }
 
   return (
     <>
-      <Chart
-        options={options}
-        series={sums}
-        type="treemap"
-        width="100%"
-        height="auto"
-      />
+      <Chart options={options} type="treemap" width="100%" height="auto" />
     </>
   )
 }
 
-export default LandingDonutChart
+export default EmissionTreeMap
