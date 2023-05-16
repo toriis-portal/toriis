@@ -303,7 +303,7 @@ export const companyRouter = createTRPCRouter({
 
     const emissionsAndFFClass = companies.map((company) => {
       const netAssetVal = company.netAssetVal
-      const marketCap = company.market_cap
+      const marketCap = company.marketCap
       const emissionInfo = company.emission
 
       if (
