@@ -16,6 +16,7 @@ interface EmissionData {
 interface FossilFuelSeries {
   fossilFuelClass: 'y' | 'n'
   data: EmissionData[]
+  name: string
 }
 
 const EmissionTreeMap: FC = () => {
@@ -39,7 +40,9 @@ const EmissionTreeMap: FC = () => {
       },
     },
     fontFamily: 'Klima',
-    legend: { show: false },
+    legend: {
+      show: true,
+    },
     colors: ['#FFA902', '#0F81E8', '#FF6112', '#17292E'],
     dataLabels: {
       enabled: true,
@@ -70,8 +73,13 @@ const EmissionTreeMap: FC = () => {
     states: {
       active: {
         filter: {
-          type: 'none' /* none, lighten, darken */,
+          type: 'none',
         },
+      },
+    },
+    xaxis: {
+      axisTicks: {
+        show: false,
       },
     },
   }
@@ -86,10 +94,12 @@ const EmissionTreeMap: FC = () => {
   const series: FossilFuelSeries[] = [
     {
       fossilFuelClass: 'y',
+      name: 'Fossil Fuel Companies',
       data: [],
     },
     {
       fossilFuelClass: 'n',
+      name: 'Other',
       data: [],
     },
   ]
