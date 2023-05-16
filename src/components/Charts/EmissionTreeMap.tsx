@@ -67,6 +67,13 @@ const EmissionTreeMap: FC = () => {
         },
       },
     },
+    states: {
+      active: {
+        filter: {
+          type: 'none' /* none, lighten, darken */,
+        },
+      },
+    },
   }
 
   const emissionsAndFFClass = source.data as {
