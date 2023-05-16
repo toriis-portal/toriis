@@ -28,10 +28,14 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
       />
       <div className="px-12">
         <Tag
-          title={img.fields.title}
+          title={img.fields.title} // TODO: in contentful, change title to "Financed Emissions of University of Illinois System Investments"
           className="mb-1 w-4 rounded-md bg-clementine/20 text-black"
         />
-        <EmissionTreeMap />
+        <div className="flex justify-center">
+          <div className="w-3/4">
+            <EmissionTreeMap />
+          </div>
+        </div>
         <div>{documentToReactComponents(caption, mainParagraphStyle)}</div>
       </div>
     </div>

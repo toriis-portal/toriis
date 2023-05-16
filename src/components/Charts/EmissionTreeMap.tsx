@@ -48,6 +48,11 @@ const EmissionTreeMap: FC = () => {
         enabled: false,
       },
     },
+    plotOptions: {
+      treemap: {
+        enableShades: false,
+      },
+    },
   }
 
   const emissionsAndFFClass = source.data as {
@@ -77,7 +82,12 @@ const EmissionTreeMap: FC = () => {
       (item) => item.fossilFuelClass === emission.fossilFuelClass,
     )
 
-    if (series !== undefined && index !== undefined && index !== -1) {
+    if (
+      series !== undefined &&
+      index !== undefined &&
+      series[index] !== undefined &&
+      index !== -1
+    ) {
       series[index].data.push(dataPoint)
     }
   }
