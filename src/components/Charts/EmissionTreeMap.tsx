@@ -1,67 +1,96 @@
 import type { FC } from 'react'
 import dynamic from 'next/dynamic'
+import type { Sector } from '@prisma/client'
 import { Spinner } from 'flowbite-react'
 
 import { api } from '../../utils/api'
+import { sectorEnum } from '../../utils/enums'
+import { assetAmountToString } from '../../utils/helpers'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
-/* Interface */
-
-interface FinancedEmissionsByCompany {
-  company: string
-  emissions: number
-  classification: string
+interface EmissionData {
+  x: string
+  y: number
 }
 
-/* EmissionTreeMap component */
+interface FossilFuelSeries {
+  fossilFuelClass: 'y' | 'n'
+  data: EmissionData[]
+}
 
 const EmissionTreeMap: FC = () => {
   const source = api.company.getEmissionsAndFFClass.useQuery(undefined, {
     refetchOnWindowFocus: false,
   })
 
-  if (source.isLoading) {
+  if (!source.data)
     return (
       <div className="text-center">
         <Spinner color="info" />
       </div>
     )
-  }
 
-  if (source.isError || !source.data) {
-    return <div>Error occurred while fetching data</div>
-  }
-
-  const emissions: FinancedEmissionsByCompany[] = source.data
-    .filter((item) => item !== null) // Filter out null items
-    .map((item) => ({
-      company: item!.companyId, // Use non-null assertion operator
-      emissions: item!.financedEmissions, // Use non-null assertion operator
-      classification: item!.fossilFuelClass, // Use non-null assertion operator
-    }))
-
-  const options: ApexCharts.ApexOptions = {
-    title: {
-      text: 'Financed Emissions by Fossil Fuel Class and Company',
-    },
-    series: [
-      {
-        data: emissions.map((emission) => ({
-          x: emission.classification,
-          y: emission.emissions,
-          label: emission.company,
-        })),
+  const options = {
+    tooltip: {
+      y: {
+        formatter: function (val: number) {
+          return assetAmountToString(val) + ' metric tons CO2'
+        },
       },
-    ],
-    legend: {
-      show: false,
     },
+    fontFamily: 'Klima',
+    legend: { show: false },
+    colors: ['#FFA902', '#0F81E8', '#FF6112', '#17292E'],
+    dataLabels: {
+      enabled: true,
+      dropShadow: {
+        enabled: false,
+      },
+    },
+  }
+
+  const emissionsAndFFClass = source.data as {
+    companyId: string
+    financedEmissions: number
+    fossilFuelClass: 'y' | 'n'
+  }[]
+
+  const series: FossilFuelSeries[] = [
+    {
+      fossilFuelClass: 'y',
+      data: [],
+    },
+    {
+      fossilFuelClass: 'n',
+      data: [],
+    },
+  ]
+
+  for (const emission of emissionsAndFFClass) {
+    const dataPoint: EmissionData = {
+      x: emission.companyId,
+      y: emission.financedEmissions,
+    }
+
+    const index = series.findIndex(
+      (item) => item.fossilFuelClass === emission.fossilFuelClass,
+    )
+
+    if (series !== undefined && index !== undefined && index !== -1) {
+      series[index].data.push(dataPoint)
+    }
   }
 
   return (
     <>
-      <Chart options={options} type="treemap" width="100%" height="auto" />
+      <Chart
+        options={options}
+        series={series}
+        type="treemap"
+        width="100%"
+        height="300"
+      />
     </>
   )
 }
