@@ -1,10 +1,8 @@
 import type { FC } from 'react'
 import dynamic from 'next/dynamic'
-import type { Sector } from '@prisma/client'
 import { Spinner } from 'flowbite-react'
 
 import { api } from '../../utils/api'
-import { sectorEnum } from '../../utils/enums'
 import { assetAmountToString } from '../../utils/helpers'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
@@ -12,6 +10,7 @@ const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 interface EmissionData {
   x: string
   y: number
+  companyId: string
 }
 
 interface FossilFuelSeries {
@@ -53,9 +52,25 @@ const EmissionTreeMap: FC = () => {
         enableShades: false,
       },
     },
+    chart: {
+      events: {
+        dataPointSelection: (
+          event: any,
+          chartContext: any,
+          config: { seriesIndex: number; dataPointIndex: number },
+        ) => {
+          const selectedDataPoint =
+            series[config.seriesIndex].data[config.dataPointIndex]
+          const companyId = selectedDataPoint?.companyId
+          const url = `https://www.toriis.earth/company/${companyId ?? ''}`
+          window.open(url, '_blank')
+        },
+      },
+    },
   }
 
   const emissionsAndFFClass = source.data as {
+    companyName: string
     companyId: string
     financedEmissions: number
     fossilFuelClass: 'y' | 'n'
@@ -74,8 +89,9 @@ const EmissionTreeMap: FC = () => {
 
   for (const emission of emissionsAndFFClass) {
     const dataPoint: EmissionData = {
-      x: emission.companyId,
+      x: emission.companyName,
       y: emission.financedEmissions,
+      companyId: emission.companyId,
     }
 
     const index = series.findIndex(

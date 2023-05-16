@@ -328,7 +328,8 @@ export const companyRouter = createTRPCRouter({
         }
 
         return {
-          companyId: company.name,
+          companyName: company.name,
+          companyId: company.id,
           financedEmissions,
           fossilFuelClass,
         }
