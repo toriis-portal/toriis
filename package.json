@@ -8,7 +8,9 @@
     "postinstall": "prisma generate; husky install",
     "lint": "next lint",
     "start": "next start",
-    "format": "yarn prettier --write . --plugin=prettier-plugin-tailwindcss"
+    "format": "yarn prettier --write . --plugin=prettier-plugin-tailwindcss",
+    "dev-to-prod": "bash ./scripts/dev-to-prod.sh",
+    "prod-to-dev": "bash ./scripts/prod-to-dev.sh"
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^15.16.3",
@@ -20,6 +22,7 @@
     "@trpc/next": "^10.9.0",
     "@trpc/react-query": "^10.9.0",
     "@trpc/server": "^10.9.0",
+    "@vercel/analytics": "^1.0.0",
     "apexcharts": "^3.37.1",
     "clsx": "^1.2.1",
     "contentful": "^9.3.3",
