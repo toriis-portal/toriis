@@ -9,6 +9,7 @@ const GitHubIcon = ({ className, ...props }: React.ComponentProps<'svg'>) => (
     viewBox="0 0 20 20"
     version="1.1"
     className={clsx('w', 'w-5', className)}
+    {...props}
   >
     <title>github [#142]</title>
     <desc>Created with Sketch.</desc>

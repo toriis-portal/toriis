@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { MARKS, INLINES, BLOCKS } from '@contentful/rich-text-types'
 import type {
   Block,

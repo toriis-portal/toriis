@@ -33,8 +33,13 @@ const FuelRadialChart: FC<FuelRadialChartProps> = ({ source, setLabels }) => {
   const getLabels = (fuels: Fuel) => {
     const labels: string[] = []
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { totalConsumption, id, companyId, year, ...rest } = fuels
+    const {
+      totalConsumption,
+      id: _id,
+      companyId: _companyId,
+      year: _year,
+      ...rest
+    } = fuels
     Object.keys(rest).forEach((key) => {
       if (
         rest[key as keyof FuelTypes] !== null &&

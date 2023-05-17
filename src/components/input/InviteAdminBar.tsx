@@ -1,11 +1,12 @@
 import type { FC } from 'react'
 import { useState } from 'react'
+import type { UseQueryResult } from '@tanstack/react-query'
 
 import { PrimaryButton } from '..'
 import { api } from '../../utils/api'
 
 interface InviteAdminBarProps {
-  refetch: () => Promise<any>
+  refetch: () => Promise<UseQueryResult>
 }
 
 const InviteAdminBar: FC<InviteAdminBarProps> = ({ refetch }) => {
