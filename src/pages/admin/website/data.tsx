@@ -15,13 +15,10 @@ import { AdminNavBar, TabButton } from '../../../components'
 import { DynamicPaginatedAdminTable } from '../../../components/Table/DynamicPaginatedAdminTable'
 import { api } from '../../../utils/api'
 import type { Column } from '../../../components/Table/DynamicTable/DynamicTable'
-import { IndustryEnum, sectorEnum } from '../../../utils/enums'
 import {
-  CompanyColumns,
   EmissionColumns,
   EnergyColumns,
   FuelColumns,
-  InvestmentColumns,
 } from '../../../utils/companyColumns'
 import { getColumns } from '../../../components/Table/DynamicTable/Columns'
 
@@ -146,6 +143,10 @@ const UpdateData: FC = () => {
     })
     setRows(cleanedRows)
   }, [data, setRows])
+
+  useEffect(() => {
+    setSkip(0)
+  }, [dataset])
 
   return (
     session && (

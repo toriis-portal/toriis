@@ -119,16 +119,16 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
           applyStyle: (row: Investment) => (row.coupon ? '' : errorStyle),
         },
       },
-      {
-        key: 'maturityDate',
-        label: 'Maturity Date',
-        isEditable: isEditable,
-        ctrl: {
-          type: 'text',
-          render: (row) => row.maturityDate.toISOString(),
-          applyStyle: (row: Investment) => (row.maturityDate ? '' : errorStyle),
-        },
-      },
+      // {
+      //   key: 'maturityDate',
+      //   label: 'Maturity Date',
+      //   isEditable: isEditable,
+      //   ctrl: {
+      //     type: 'text',
+      //     render: (row) => row.maturityDate?.toISOString() ?? '',
+      //     applyStyle: (row: Investment) => (row.maturityDate?.toISOString() ? '' : errorStyle),
+      //   },
+      // },
       {
         key: 'quantity',
         label: 'Quantity',

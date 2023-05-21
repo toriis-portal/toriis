@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { Company, Dataset, Sector } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 

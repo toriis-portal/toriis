@@ -209,7 +209,7 @@ export const DynamicTable = <TableRow extends BaseTableRowGeneric<TableRow>>({
               <td
                 key={String(col.key)}
                 aria-disabled={!col.isEditable}
-                className={col.cellClassName}
+                className={clsx(col.cellClassName, 'p-2')}
               >
                 <TableCell
                   row={row}

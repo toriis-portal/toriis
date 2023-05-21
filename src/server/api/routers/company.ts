@@ -8,7 +8,6 @@ import { sectorEnum } from '../../../utils/enums'
 import { ContentWrapper } from '../../../utils/content'
 import { createTRPCRouter, publicProcedure } from '../trpc'
 import type { IndustryEntry, SectorEntry } from '../../../types'
-import { skipTakeRequest } from '../helper'
 
 const createNetAssetValFilter = (range: number[]) => {
   return {
@@ -295,5 +294,24 @@ export const companyRouter = createTRPCRouter({
       }
     }),
 
-  getCompaniesBySkipTake: skipTakeRequest,
+  getCompaniesBySkipTake: publicProcedure
+    .input(
+      z.object({
+        skip: z.number().min(0).nullish(),
+        take: z.number().min(1).max(100).nullish(),
+      }),
+    )
+    .query(async ({ input, ctx }) => {
+      const skip = input.skip ?? 0
+      const take = input.take ?? 10
+
+      const items = await ctx.prisma.company.findMany({
+        take: take,
+        skip: skip,
+      })
+
+      return {
+        items,
+      }
+    }),
 })
