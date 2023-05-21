@@ -9,6 +9,7 @@ import {
   PrimaryButton,
   Tag,
   InviteAdminBar,
+  Toast,
 } from '../../components'
 import { api } from '../../utils/api'
 import { AdminNavBar } from '../../components'
@@ -129,10 +130,13 @@ const AdminAdminPage: FC = () => {
           </div>
 
           {deleteUsersMutation.error && (
-            <p>Something went wrong! {deleteUsersMutation.error.message}</p>
+            <Toast type="error" message={deleteUsersMutation.error.message} />
+          )}
+          {deleteUsersMutation.isSuccess && (
+            <Toast type="success" message="Successfully deleted users!" />
           )}
           {updateEmailsMutation.error && (
-            <p>Something went wrong! {updateEmailsMutation.error.message}</p>
+            <Toast type="error" message={updateEmailsMutation.error.message} />
           )}
 
           <div className="mb-20 w-3/4">

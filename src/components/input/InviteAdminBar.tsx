@@ -2,7 +2,7 @@ import type { FC } from 'react'
 import { useState } from 'react'
 import type { UseQueryResult } from '@tanstack/react-query'
 
-import { PrimaryButton } from '..'
+import { PrimaryButton, Toast } from '..'
 import { api } from '../../utils/api'
 
 interface InviteAdminBarProps {
@@ -47,10 +47,15 @@ const InviteAdminBar: FC<InviteAdminBarProps> = ({ refetch }) => {
           className="body-normal w-48 px-5 py-2"
         />
       </form>
-      <div className="mt-2 text-medGray">
-        {mutation.isSuccess && 'succesfully invited new administator!'}
-        {mutation.isError && 'failed to invite new administator!'}
-      </div>
+      {mutation.isSuccess && (
+        <Toast
+          type="success"
+          message="Successfully invited a new administrator!"
+        />
+      )}
+      {mutation.isError && (
+        <Toast type="error" message="Failed to invite a new administrator!" />
+      )}
     </>
   )
 }

@@ -66,7 +66,6 @@ const convertToFilterOptions = (selectedFilters: string[]) => {
   if (selectedFilters && selectedFilters.length === 0) {
     return undefined
   }
-  console.log(selectedFilters)
   return selectedFilters
 }
 
