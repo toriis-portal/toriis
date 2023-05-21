@@ -9,28 +9,18 @@ import { api } from '../../utils/api'
 const NewUserPage: FC = () => {
   const { data: session, status } = useSession()
   const { push } = useRouter()
-  const mutation = api.user.firstLogin.useMutation({
+  const { mutate } = api.user.firstLogin.useMutation({
     retry: false,
     onSuccess: () => void push('/admin'),
   })
 
-  const handleFirstLogin = (userId: string, email: string) => {
-    mutation.mutate({ userId: userId, email: email })
-  }
-
-  // If unauthenticated, redirect to error page
   useEffect(() => {
     if (status === 'unauthenticated') {
       void push('/auth/error')
+    } else if (session) {
+      mutate({ userId: session.user.id, email: session.user.email as string })
     }
-  }, [push, status])
-
-  // If authenticated, update user information
-  useEffect(() => {
-    if (session) {
-      handleFirstLogin(session.user.id, session.user.email as string)
-    }
-  }, [session])
+  }, [mutate, push, session, status])
 
   return (
     <>

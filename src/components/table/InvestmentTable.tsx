@@ -8,6 +8,7 @@ import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid'
 
 import { api } from '../../utils/api'
 import LoadMoreButton from '../button/LoadMoreButton'
+import Toast from '../toast/Toast'
 
 interface ChevronFilterProps {
   text: string
@@ -57,6 +58,7 @@ const InvestmentTable: FC<{ companyId: string }> = (companyId) => {
   const limit = 5
   const {
     fetchNextPage,
+    error,
     isLoading,
     hasNextPage,
     isFetchingNextPage,
@@ -73,6 +75,7 @@ const InvestmentTable: FC<{ companyId: string }> = (companyId) => {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
       refetchOnWindowFocus: false,
       cacheTime: 0,
+      retry: false,
       keepPreviousData: true,
     },
   )
@@ -81,9 +84,10 @@ const InvestmentTable: FC<{ companyId: string }> = (companyId) => {
     const refetchData = async () => {
       await refetch()
     }
+    void refetchData()
   }, [refetch, selectedSort])
 
-  if (!data || isLoading) {
+  if (isLoading) {
     return (
       <div className="text-center">
         <Spinner />
@@ -148,6 +152,7 @@ const InvestmentTable: FC<{ companyId: string }> = (companyId) => {
           </tr>
         </thead>
         <tbody>
+          {error && <Toast type="error" message={error.message} />}
           {data?.pages.map((page, pageIndex) => {
             return page.items.map((item, itemIndex) => {
               return (

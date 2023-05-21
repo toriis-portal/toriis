@@ -16,6 +16,7 @@ import {
   LoadMoreButton,
   ToolTip,
   Footer,
+  Toast,
 } from '../../components'
 import { api } from '../../utils/api'
 import { sectorEnum, envGradeEnum, netAssetValEnum } from '../../utils/enums'
@@ -28,14 +29,14 @@ interface FilterOptions {
   envGrade: string[]
 }
 
-const netAssetValCallback = (selectedOptions: string[]) => {
-  const selectedNetAssetVal = selectedOptions.map((item) => {
-    return netAssetValEnum[item as keyof typeof netAssetValEnum]
-  })
-  return selectedNetAssetVal
-}
-
-const extractSortyByQueryKey = (
+/**
+ * Sort options to query parsing
+ *
+ * @param key One of 'Net Asset Value' or 'Environment Grade'
+ * @param selectedSorts Sort string in the format of 'field-order' (e.g. 'Net Asset Value-low to high')
+ * @returns 'asc' or 'desc' depending on the sort order
+ */
+const extractSortByQueryKey = (
   key: 'Net Asset Value' | 'Environment Grade',
   selectedSorts: string[],
 ) => {
@@ -55,13 +56,37 @@ const extractSortyByQueryKey = (
   return null
 }
 
+/**
+ * General filter options to query parsing
+ *
+ * @param selectedFilters
+ * @returns
+ */
 const convertToFilterOptions = (selectedFilters: string[]) => {
   if (selectedFilters && selectedFilters.length === 0) {
     return undefined
   }
+  console.log(selectedFilters)
   return selectedFilters
 }
 
+/**
+ * Filter options to query parsing for net asset value,
+ * converts string[] to number[][]
+ *
+ * @param selectedOptions Array of selected Net Asset Value options
+ * @returns An array of net asset value ranges
+ */
+const convertToNetAssetValFilterOptions = (selectedOptions: string[]) => {
+  const selectedNetAssetVal = selectedOptions.map((item) => {
+    return netAssetValEnum[item as keyof typeof netAssetValEnum]
+  })
+  return selectedNetAssetVal
+}
+
+/**
+ * Initial values for the search query, filter options, and sorting options
+ */
 const limit = 10
 const initialSearchQuery = ' '
 const initialFilterOptions: FilterOptions = {
@@ -88,15 +113,16 @@ const InvestmentPage: FC = () => {
     hasNextPage,
     isFetchingNextPage,
     data,
+    error,
     refetch,
   } = api.company.getCompanies.useInfiniteQuery(
     {
       limit: limit,
-      sortByNetAssetVal: extractSortyByQueryKey(
+      sortByNetAssetVal: extractSortByQueryKey(
         'Net Asset Value',
         selectedSortKeys,
       ),
-      sortByEnvGrade: extractSortyByQueryKey(
+      sortByEnvGrade: extractSortByQueryKey(
         'Environment Grade',
         selectedSortKeys,
       ),
@@ -133,10 +159,8 @@ const InvestmentPage: FC = () => {
   useEffect(() => {
     const refetchData = async () => {
       await refetch()
-      refetchData().catch((err) => {
-        console.error(err)
-      })
     }
+    void refetchData()
   }, [selectedSortKeys, companySearchQuery, refetch])
 
   return (
@@ -252,7 +276,8 @@ const InvestmentPage: FC = () => {
                 cb: (selectedOptions) => {
                   setFilterOptions({
                     ...filterOptions,
-                    netAssetVal: netAssetValCallback(selectedOptions),
+                    netAssetVal:
+                      convertToNetAssetValFilterOptions(selectedOptions),
                   })
                 },
               }}
@@ -315,6 +340,7 @@ const InvestmentPage: FC = () => {
             )
           })}
           {isLoading && <Spinner />}
+          {error && <Toast type="error" message={error.message} />}
           <LoadMoreButton
             onClick={() => {
               void fetchNextPage()

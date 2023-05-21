@@ -102,7 +102,7 @@ const Company: FC<CompanyDetailsProps> = ({
 
   if (isLoading) {
     return (
-      <div className="flex flex-col items-center px-12">
+      <div className="flex flex-col items-center p-12">
         <Spinner color="info" />
       </div>
     )
