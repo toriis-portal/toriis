@@ -1,6 +1,7 @@
 import type { FC } from 'react'
 import dynamic from 'next/dynamic'
 import { Spinner } from 'flowbite-react'
+import type { ApexOptions } from 'apexcharts'
 
 import { api } from '../../utils/api'
 import { assetAmountToString } from '../../utils/helpers'
@@ -19,12 +20,22 @@ interface FossilFuelSeries {
   name: string
 }
 
-const EmissionTreeMap: FC = () => {
-  const source = api.company.getEmissionsAndFFClass.useQuery(undefined, {
-    refetchOnWindowFocus: false,
-  })
+interface SourceData {
+  companyName: string
+  companyId: string
+  financedEmissions: number
+  fossilFuelClass: 'y' | 'n'
+}
 
-  if (!source.data)
+const EmissionTreeMap: FC = () => {
+  const { data } = api.company.getEmissionsAndFFClass.useQuery<SourceData>(
+    undefined,
+    {
+      refetchOnWindowFocus: false,
+    },
+  )
+
+  if (!data)
     return (
       <div className="text-center">
         <Spinner color="info" />
@@ -84,13 +95,6 @@ const EmissionTreeMap: FC = () => {
     },
   }
 
-  const emissionsAndFFClass = source.data as {
-    companyName: string
-    companyId: string
-    financedEmissions: number
-    fossilFuelClass: 'y' | 'n'
-  }[]
-
   const series: FossilFuelSeries[] = [
     {
       fossilFuelClass: 'y',
@@ -104,7 +108,8 @@ const EmissionTreeMap: FC = () => {
     },
   ]
 
-  for (const emission of emissionsAndFFClass) {
+  for (const emission of data) {
+    if (!emission) continue
     const dataPoint: EmissionData = {
       x: emission.companyName,
       y: emission.financedEmissions,
@@ -115,7 +120,7 @@ const EmissionTreeMap: FC = () => {
       (item) => item.fossilFuelClass === emission.fossilFuelClass,
     )
 
-series[index]?.data.push(dataPoint)
+    series[index]?.data.push(dataPoint)
   }
 
   return (
