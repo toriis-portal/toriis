@@ -24,16 +24,47 @@ interface SourceData {
   companyName: string
   companyId: string
   financedEmissions: number
-  fossilFuelClass: 'y' | 'n'
+  fossilFuelClass: string
+}
+
+const formatSeries = (data: (SourceData | null)[]): FossilFuelSeries[] => {
+  const series: FossilFuelSeries[] = [
+    {
+      fossilFuelClass: 'y',
+      name: 'Fossil Fuel Companies',
+      data: [],
+    },
+    {
+      fossilFuelClass: 'n',
+      name: 'Other',
+      data: [],
+    },
+  ]
+
+  for (const emission of data) {
+    if (!emission) continue
+    const dataPoint: EmissionData = {
+      x: emission.companyName,
+      y: emission.financedEmissions,
+      companyId: emission.companyId,
+    }
+
+    const index = series.findIndex(
+      (item) => item.fossilFuelClass === emission.fossilFuelClass,
+    )
+
+    series[index]?.data.push(dataPoint)
+  }
+
+  return series
 }
 
 const EmissionTreeMap: FC = () => {
-  const { data } = api.company.getEmissionsAndFFClass.useQuery<SourceData>(
-    undefined,
-    {
-      refetchOnWindowFocus: false,
-    },
-  )
+  const { data } = api.company.getEmissionsAndFFClass.useQuery<
+    SourceData[] | null
+  >(undefined, {
+    refetchOnWindowFocus: false,
+  })
 
   if (!data)
     return (
@@ -95,33 +126,7 @@ const EmissionTreeMap: FC = () => {
     },
   }
 
-  const series: FossilFuelSeries[] = [
-    {
-      fossilFuelClass: 'y',
-      name: 'Fossil Fuel Companies',
-      data: [],
-    },
-    {
-      fossilFuelClass: 'n',
-      name: 'Other',
-      data: [],
-    },
-  ]
-
-  for (const emission of data) {
-    if (!emission) continue
-    const dataPoint: EmissionData = {
-      x: emission.companyName,
-      y: emission.financedEmissions,
-      companyId: emission.companyId,
-    }
-
-    const index = series.findIndex(
-      (item) => item.fossilFuelClass === emission.fossilFuelClass,
-    )
-
-    series[index]?.data.push(dataPoint)
-  }
+  const series: FossilFuelSeries[] = formatSeries(data)
 
   return (
     <>
