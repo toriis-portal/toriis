@@ -307,7 +307,6 @@ export const companyRouter = createTRPCRouter({
       const emissionInfo = company.emission
 
       if (
-        netAssetVal &&
         marketCap &&
         emissionInfo &&
         emissionInfo.scopeOne &&
