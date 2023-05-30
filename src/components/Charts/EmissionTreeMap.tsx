@@ -63,7 +63,7 @@ const EmissionTreeMap: FC = () => {
           config: { seriesIndex: number; dataPointIndex: number },
         ) => {
           const selectedDataPoint =
-            series[config.seriesIndex].data[config.dataPointIndex]
+            series[config.seriesIndex]?.data[config.dataPointIndex]
           const companyId = selectedDataPoint?.companyId
           const url = `https://www.toriis.earth/company/${companyId ?? ''}`
           window.open(url, '_blank')
