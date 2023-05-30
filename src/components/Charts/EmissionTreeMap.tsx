@@ -58,8 +58,8 @@ const EmissionTreeMap: FC = () => {
     chart: {
       events: {
         dataPointSelection: (
-          event: any,
-          chartContext: any,
+          _event: React.SyntheticEvent,
+          _chartContext: ApexOptions,
           config: { seriesIndex: number; dataPointIndex: number },
         ) => {
           const selectedDataPoint =
