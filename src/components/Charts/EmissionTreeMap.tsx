@@ -115,14 +115,7 @@ const EmissionTreeMap: FC = () => {
       (item) => item.fossilFuelClass === emission.fossilFuelClass,
     )
 
-    if (
-      series !== undefined &&
-      index !== undefined &&
-      series[index] !== undefined &&
-      index !== -1
-    ) {
-      series[index].data.push(dataPoint)
-    }
+series[index]?.data.push(dataPoint)
   }
 
   return (
