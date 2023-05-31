@@ -56,7 +56,7 @@ export const FuelEnum = {
   otherNonRenewable: 'Other Non-Renewable',
 }
 
-export const IndustryEnum = {
+export const industryEnum = {
   AEROSPACE_DEFENSE: 'Aerospace & Defense',
   AGRICULTURAL_INPUTS: 'Agricultural Inputs',
   AIRLINES: 'Airlines',

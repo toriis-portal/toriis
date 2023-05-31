@@ -4,7 +4,7 @@ import { EnvGrade, Sector } from '@prisma/client'
 import type { Company, Investment } from '@prisma/client'
 import yahooFinance from 'yahoo-finance2'
 
-import { sectorEnum } from '../../../utils/enums'
+import { sectorEnum, industryEnum } from '../../../utils/enums'
 import { ContentWrapper } from '../../../utils/content'
 import { createTRPCRouter, publicProcedure } from '../trpc'
 import type { IndustryEntry, SectorEntry } from '../../../types'
@@ -320,8 +320,18 @@ export const companyRouter = createTRPCRouter({
         let fossilFuelClass = 'n'
         if (
           company.sector &&
-          (company.sector.toUpperCase().startsWith('OIL') ||
-            company.sector.toUpperCase().startsWith('UTILITIES'))
+          (company.industry === industryEnum['OIL_GAS_EP'] ||
+            company.industry === industryEnum['OIL_GAS_EQUIPMENT_SERVICES'] ||
+            company.industry === industryEnum['OIL_GAS_INTEGRATED'] ||
+            company.industry === industryEnum['OIL_GAS_MIDSTREAM'] ||
+            company.industry === industryEnum['OIL_GAS_REFINING_MARKETING'] ||
+            company.industry ===
+              industryEnum['OTHER_INDUSTRIAL_METALS_MINING'] ||
+            company.industry === industryEnum['UTILITIES_DIVERSIFIED'] ||
+            company.industry ===
+              industryEnum['UTILITIES_INDEPENDENT_POWER_PRODUCERS'] ||
+            company.industry === industryEnum['UTILITIES_REGULATED_ELECTRIC'] ||
+            company.industry === industryEnum['UTILITIES_REGULATED_GAS'])
         ) {
           fossilFuelClass = 'y'
         }
