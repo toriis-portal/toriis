@@ -28,7 +28,7 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
       />
       <div className="px-12">
         <Tag
-          title={img.fields.title} // TODO: in contentful, change title to "Financed Emissions of University of Illinois System Investments"
+          title={img.fields.title}
           className="mb-1 w-4 rounded-md bg-clementine/20 text-black"
         />
         <div className="flex justify-center">
