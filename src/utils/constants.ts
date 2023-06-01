@@ -103,3 +103,5 @@ export const FOSSIL_FUEL_INDUSTRIES = [
 ]
 
 export const CONTENTFUL_LINK = 'https://app.contentful.com/spaces/gslvrj5c21wx/'
+
+export const BASE_URL = 'https://www.toriis.earth'
