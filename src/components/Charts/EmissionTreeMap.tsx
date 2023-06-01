@@ -60,11 +60,12 @@ const formatSeries = (data: (SourceData | null)[]): FossilFuelSeries[] => {
 }
 
 const EmissionTreeMap: FC = () => {
-  const { data } = api.company.getEmissionsAndFFClass.useQuery<
-    SourceData[] | null
-  >(undefined, {
-    refetchOnWindowFocus: false,
-  })
+  const { data } = api.company.getEmissionsAndFFClass.useQuery<SourceData[]>(
+    undefined,
+    {
+      refetchOnWindowFocus: false,
+    },
+  )
 
   if (!data)
     return (
