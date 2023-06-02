@@ -3,7 +3,6 @@ import dynamic from 'next/dynamic'
 import { Spinner } from 'flowbite-react'
 import type { ApexOptions } from 'apexcharts'
 
-import { BASE_URL } from '../../utils/constants'
 import { api } from '../../utils/api'
 import { assetAmountToString } from '../../utils/helpers'
 
@@ -109,8 +108,7 @@ const EmissionTreeMap: FC = () => {
           const selectedDataPoint =
             series[config.seriesIndex]?.data[config.dataPointIndex]
           const companyId = selectedDataPoint?.companyId
-          const url = BASE_URL + `/company/${companyId ?? ''}`
-          window.open(url, '_blank')
+          window.open(`/company/${companyId ?? ''}`, '_blank')
         },
       },
     },
