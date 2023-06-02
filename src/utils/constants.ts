@@ -89,4 +89,17 @@ export const INDUSTRIES = [
   'Waste Management',
 ]
 
+export const FOSSIL_FUEL_INDUSTRIES = [
+  'Oil & Gas E&P',
+  'Oil & Gas Equipment & Services',
+  'Oil & Gas Integrated',
+  'Oil & Gas Midstream',
+  'Oil & Gas Refining & Marketing',
+  'Other Industrial Metals & Mining',
+  'Utilities—Diversified',
+  'Utilities—Independent Power Producers',
+  'Utilities—Regulated Electric',
+  'Utilities—Regulated Gas',
+]
+
 export const CONTENTFUL_LINK = 'https://app.contentful.com/spaces/gslvrj5c21wx/'
