@@ -26,6 +26,7 @@ const LinkSubsection = ({ title, links }: LinkSubsectionProps) => {
             key={href}
             className="mb-5 w-fit text-sm transition duration-500 hover:text-clementine"
             href={href}
+            target="_blank"
           >
             {text}
           </Link>
