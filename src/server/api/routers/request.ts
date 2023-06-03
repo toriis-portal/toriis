@@ -104,8 +104,7 @@ export const requestRouter = createTRPCRouter({
 
         const updateAll = await Promise.all(
           allUpdateItems.map(async (updateItem) => {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const { id, ...fieldsToUpdate } = updateItem
+            const { id: _id, ...fieldsToUpdate } = updateItem
 
             // Cast Date to object for MongoDB query
             const fieldsToUpdateQuery: UpdateQuery = {

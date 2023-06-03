@@ -15,7 +15,7 @@ import {
 } from '../../components'
 import { ContentWrapper } from '../../utils/content'
 import type {
-  Info,
+  HomePageInfo,
   LinkEntry,
   ListEntry,
   OurRequestsEntry,
@@ -45,7 +45,7 @@ export const getServerSideProps = async () => {
 }
 
 interface HomeProps {
-  info: Info
+  info: HomePageInfo
   ourRequestsEntries: OurRequestsEntry[]
   timelineEntries: TimelineEntry[]
   divestmentListEntries: ListEntry[]

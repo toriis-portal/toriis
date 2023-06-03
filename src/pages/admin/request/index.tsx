@@ -26,37 +26,21 @@ const RequestPage: FC = () => {
   }, [push, status])
 
   const limit = 5
-  const {
-    fetchNextPage,
-    isLoading,
-    hasNextPage,
-    isFetchingNextPage,
-    data,
-    refetch,
-  } = api.request.getRequests.useInfiniteQuery(
-    {
-      limit: limit,
-      userId: userId,
-      showOnlyUserRequests: showOnlyUserRequests,
-    },
-    {
-      getNextPageParam: (lastPage) => lastPage.nextCursor,
-      refetchOnWindowFocus: false,
-      cacheTime: 0,
-      retry: false,
-      enabled: !!userId,
-    },
-  )
-
-  useEffect(() => {
-    const refetchData = async () => {
-      await refetch()
-
-      refetchData().catch((err) => {
-        console.error(err)
-      })
-    }
-  }, [refetch])
+  const { fetchNextPage, isLoading, hasNextPage, isFetchingNextPage, data } =
+    api.request.getRequests.useInfiniteQuery(
+      {
+        limit: limit,
+        userId: userId,
+        showOnlyUserRequests: showOnlyUserRequests,
+      },
+      {
+        getNextPageParam: (lastPage) => lastPage.nextCursor,
+        refetchOnWindowFocus: false,
+        cacheTime: 0,
+        retry: false,
+        enabled: !!userId,
+      },
+    )
 
   type QueryDataType = typeof data
   const parseData = (data: QueryDataType) => {

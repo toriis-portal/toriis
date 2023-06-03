@@ -1,19 +1,11 @@
 import type { FC } from 'react'
 
 import { Carousel, HighlightedTitle } from '../../components'
-import type { divestedEntity } from '../../types'
+
+import { parseEntryToColumns } from './SchoolsDivested'
 
 interface institutionsDivestedProps {
   institutionEntries: string
-}
-
-function formatInstitutionData(institutionEntries: string, limit: number) {
-  const list = institutionEntries.split('\n')
-  const result: divestedEntity[] = []
-  for (let i = 0; i < list.length; i += limit) {
-    result.push({ order: i / limit, details: list.slice(i, i + limit) })
-  }
-  return result
 }
 
 const InstitutionsDivested: FC<institutionsDivestedProps> = ({
@@ -29,8 +21,9 @@ const InstitutionsDivested: FC<institutionsDivestedProps> = ({
         />
       </div>
       <Carousel
-        carouselChildrenData={formatInstitutionData(institutionEntries, 18)}
-        sectionName="InstitutionsDivested"
+        carouselChildren={parseEntryToColumns(institutionEntries, 6, 3)}
+        controlSize="sm"
+        variant="clementine"
       />
       <div className="body-small pl-16 pt-2 pb-8 text-footnoteGray">
         source:

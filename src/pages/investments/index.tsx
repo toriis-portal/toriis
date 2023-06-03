@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import type { Company, EnvGrade, Sector } from '@prisma/client'
@@ -16,6 +16,7 @@ import {
   LoadMoreButton,
   ToolTip,
   Footer,
+  Toast,
 } from '../../components'
 import { api } from '../../utils/api'
 import { sectorEnum, envGradeEnum, netAssetValEnum } from '../../utils/enums'
@@ -28,15 +29,14 @@ interface FilterOptions {
   envGrade: string[]
 }
 
-const netAssetValCallback = (selectedOptions: string[]) => {
-  const selectedNetAssetVal = selectedOptions.map((item) => {
-    return netAssetValEnum[item as keyof typeof netAssetValEnum]
-  })
-
-  return selectedNetAssetVal
-}
-
-const extractSortyByQueryKey = (
+/**
+ * Sort options to query parsing
+ *
+ * @param key One of 'Net Asset Value' or 'Environment Grade'
+ * @param selectedSorts Sort string in the format of 'field-order' (e.g. 'Net Asset Value-low to high')
+ * @returns 'asc' or 'desc' depending on the sort order
+ */
+const extractSortByQueryKey = (
   key: 'Net Asset Value' | 'Environment Grade',
   selectedSorts: string[],
 ) => {
@@ -44,30 +44,49 @@ const extractSortyByQueryKey = (
     const [field, _order] = item.split('-')
     return field === key
   })
-
   if (!selectedSort) {
     return null
   }
-
   const [_field, order] = selectedSort.split('-')
-
   if (order === 'low to high') {
     return key == 'Environment Grade' ? 'desc' : 'asc'
   } else if (order === 'high to low') {
     return key == 'Environment Grade' ? 'asc' : 'desc'
   }
-
   return null
 }
 
+/**
+ * General filter options to query parsing
+ *
+ * @param selectedFilters
+ * @returns
+ */
 const convertToFilterOptions = (selectedFilters: string[]) => {
   if (selectedFilters && selectedFilters.length === 0) {
     return undefined
   }
-
   return selectedFilters
 }
 
+/**
+ * Filter options to query parsing for net asset value,
+ * converts string[] to number[][]
+ *
+ * @param selectedOptions Array of selected Net Asset Value options
+ * @returns An array of net asset value ranges
+ */
+const convertToNetAssetValFilterOptions = (selectedOptions: string[]) => {
+  const selectedNetAssetVal = selectedOptions.map((item) => {
+    return netAssetValEnum[item as keyof typeof netAssetValEnum]
+  })
+  return selectedNetAssetVal
+}
+
+/**
+ * Initial values for the search query, filter options, and sorting options
+ */
+const limit = 10
 const initialSearchQuery = ' '
 const initialFilterOptions: FilterOptions = {
   sectors: [],
@@ -81,12 +100,11 @@ const SelectGroupStyle = clsx('flex flex-row gap-2 basis-1/4')
 const InvestmentPage: FC = () => {
   const [companySearchQuery, setCompanySearchQuery] =
     useState<string>(initialSearchQuery)
-  const [dataLengthArr, setDataLengthArr] = useState<number[]>([])
+  const [lastSearchIsEmpty, setLastSearchIsEmpty] = useState<boolean>(false)
   const [selectedSortKeys, setSelectedSortKeys] = useState<string[]>([])
   const [filterOptions, setFilterOptions] =
     useState<FilterOptions>(initialFilterOptions)
-
-  const limit = 10
+  const previousDataLength = useRef<number>(limit)
 
   const {
     fetchNextPage,
@@ -94,16 +112,16 @@ const InvestmentPage: FC = () => {
     hasNextPage,
     isFetchingNextPage,
     data,
+    error,
     refetch,
-    isInitialLoading,
   } = api.company.getCompanies.useInfiniteQuery(
     {
       limit: limit,
-      sortByNetAssetVal: extractSortyByQueryKey(
+      sortByNetAssetVal: extractSortByQueryKey(
         'Net Asset Value',
         selectedSortKeys,
       ),
-      sortByEnvGrade: extractSortyByQueryKey(
+      sortByEnvGrade: extractSortByQueryKey(
         'Environment Grade',
         selectedSortKeys,
       ),
@@ -122,43 +140,27 @@ const InvestmentPage: FC = () => {
       refetchOnWindowFocus: false,
       cacheTime: 0,
       retry: false,
+      onSuccess: (newData) => {
+        const newDataLength = newData.pages[0]?.items?.length || 0
+        if (previousDataLength.current !== 0) {
+          setLastSearchIsEmpty(false)
+        }
+        if (newDataLength === 0) {
+          setCompanySearchQuery(initialSearchQuery)
+          setFilterOptions(initialFilterOptions)
+          setLastSearchIsEmpty(true)
+        }
+        previousDataLength.current = newDataLength
+      },
     },
   )
-
-  const dataLength = data?.pages
-    ? (data.pages.length - 1) * limit +
-      (data.pages[data.pages.length - 1]?.items.length || 0)
-    : 0
-
-  const lastSearchIsEmpty =
-    dataLengthArr.length > 2 && dataLengthArr.at(-2) === 0
 
   useEffect(() => {
     const refetchData = async () => {
       await refetch()
-
-      refetchData().catch((err) => {
-        console.error(err)
-      })
     }
-    if (!isInitialLoading) {
-      setDataLengthArr((prev) => [...prev, dataLength])
-    }
-  }, [
-    selectedSortKeys,
-    companySearchQuery,
-    refetch,
-    dataLength,
-    isInitialLoading,
-  ])
-
-  // Refetch on search result is empty
-  useEffect(() => {
-    if (dataLengthArr.at(-1) === 0) {
-      setCompanySearchQuery(initialSearchQuery)
-      setFilterOptions(initialFilterOptions)
-    }
-  }, [dataLengthArr, refetch])
+    void refetchData()
+  }, [selectedSortKeys, companySearchQuery, refetch])
 
   return (
     <>
@@ -170,7 +172,7 @@ const InvestmentPage: FC = () => {
             size="large"
             color="clementine"
           />
-          <div className="w-11/12 lg:w-9/12">
+          <div className="w-full md:w-9/12">
             <SearchBar setCompanySearchQuery={setCompanySearchQuery} />
           </div>
         </div>
@@ -191,6 +193,7 @@ const InvestmentPage: FC = () => {
                   })
                 },
               }}
+              shouldClearChecked={lastSearchIsEmpty}
             />
             <ToolTip
               title="Definition"
@@ -213,6 +216,7 @@ const InvestmentPage: FC = () => {
                   })
                 },
               }}
+              shouldClearChecked={lastSearchIsEmpty}
             />
             <ToolTip
               title="Definition"
@@ -234,6 +238,7 @@ const InvestmentPage: FC = () => {
                   })
                 },
               }}
+              shouldClearChecked={lastSearchIsEmpty}
             />
             <ToolTip
               title="Definition"
@@ -270,10 +275,12 @@ const InvestmentPage: FC = () => {
                 cb: (selectedOptions) => {
                   setFilterOptions({
                     ...filterOptions,
-                    netAssetVal: netAssetValCallback(selectedOptions),
+                    netAssetVal:
+                      convertToNetAssetValFilterOptions(selectedOptions),
                   })
                 },
               }}
+              shouldClearChecked={lastSearchIsEmpty}
             />
             <ToolTip
               title="Definition"
@@ -309,6 +316,7 @@ const InvestmentPage: FC = () => {
                 type: 'on-apply',
                 cb: setSelectedSortKeys,
               }}
+              shouldClearChecked={lastSearchIsEmpty}
             />
           </div>
           {data?.pages.map((page, idx) => {
@@ -330,9 +338,8 @@ const InvestmentPage: FC = () => {
               </div>
             )
           })}
-
           {isLoading && <Spinner />}
-
+          {error && <Toast type="error" message={error.message} />}
           <LoadMoreButton
             onClick={() => {
               void fetchNextPage()

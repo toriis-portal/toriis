@@ -31,7 +31,7 @@ export interface OurRequestsEntry {
 export interface LinkEntry {
   name: string
   url: string
-  type: 'Home' | 'FossilFuelPage' | 'Link'
+  type: 'Home' | 'FossilFuelPage'
 }
 
 export interface ListEntry {
@@ -49,7 +49,7 @@ export interface TimelineEntry {
   details: string
 }
 
-export interface Info {
+export interface HomePageInfo {
   landing: Document
   refuteUisResponse: Document
 }
@@ -76,6 +76,7 @@ export interface SectorEntry {
   details?: Document
   avgGrade?: string
 }
+
 export interface FossilFuelPage {
   treeMap: Asset
   uofIInvestments: Document
@@ -93,9 +94,4 @@ export interface FossilFuelPage {
 export interface CompanyDetailsEntry {
   name: string
   description: Document
-}
-
-export interface divestedEntity {
-  order: number
-  details: string[]
 }

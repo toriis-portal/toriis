@@ -1,72 +1,68 @@
 // Buttons
-import AuthButton from './Buttons/AuthButton'
-import NavButton from './Buttons/NavButton'
-import PrimaryButton from './Buttons/PrimaryButton'
-import ToTopButton from './Buttons/ToTopButton'
-import ReadMoreButton from './Buttons/ReadMoreButton'
-import BackButton from './Buttons/BackButton'
-import LoadMoreButton from './Buttons/LoadMoreButton'
-import TabButton from './Buttons/TabButton'
+import AuthButton from './button/AuthButton'
+import PrimaryButton from './button/PrimaryButton'
+import ToTopButton from './button/ToTopButton'
+import ReadMoreButton from './button/ReadMoreButton'
+import BackButton from './button/BackButton'
+import LoadMoreButton from './button/LoadMoreButton'
+import TabButton from './button/TabButton'
 // Card
-import CompanyCard from './Card/CompanyCard'
-import ESGTag from './Card/ESGTag'
-import NetAssetTag from './Card/NetAssetTag'
-import AdminBox from './Card/AdminBox'
-import DataCard from './Card/DataCard'
-import LinkBox from './Card/LinkBox'
+import CompanyCard from './card/CompanyCard'
+import AdminSelectCard from './card/AdminSelectCard'
+import ChartDetailsCard from './card/ChartDetailsCard'
 // Charts
-import EnergyRadialChart from './Charts/EnergyRadialChart'
-import LandingDonutChart from './Charts/LandingDonutChart'
-import FuelRadialChart from './Charts/FuelRadialChart'
-import EmissionBarChart from './Charts/EmissionBarChart'
-import FinanceBrushChart from './Charts/FinanceBrushChart'
-import EmissionTreeMap from './Charts/EmissionTreeMap'
+import EnergyRadialChart from './chart/EnergyRadialChart'
+import LandingDonutChart from './chart/LandingDonutChart'
+import FuelRadialChart from './chart/FuelRadialChart'
+import EmissionBarChart from './chart/EmissionBarChart'
+import FinanceBrushChart from './chart/FinanceBrushChart'
+import EmissionTreeMap from './chart/EmissionTreeMap'
 // Displays
-import ListItem from './Displays/ListItem'
-import Carousel from './Displays/Carousel/Carousel'
-import Tabs from './Displays/Tabs/Tabs'
-import ClimateClock from './Displays/ClimateClock/ClimateClock'
-import ImageWithCaption from './Displays/Image/ImageWithCaption'
+import ListItem from './display/ListItem'
+import Carousel from './display/Carousel'
+import Tabs from './display/Tabs'
+import ClimateClock from './display/ClimateClock'
+import ImageWithCaption from './display/ImageWithCaption'
+import LinkBox from './display/LinkBox'
 // Accordions
-import RequestAccordion from './Accordions/RequestAccordion'
-import CaseAccordion from './Accordions/CaseAccordion'
-import ReadMoreAccordion from './Accordions/ReadMoreAccordion'
+import RequestAccordion from './accordion/RequestAccordion'
+import CaseAccordion from './accordion/CaseAccordion'
+import ReadMoreAccordion from './accordion/ReadMoreAccordion'
 // Nav
-import PrimaryNavBar from './Nav/PrimaryNavBar'
-import SecondaryNavBar from './Nav/SecondaryNavBar'
-import AdminNavBar from './Nav/AdminNavBar'
+import PrimaryNavBar from './navigation/PrimaryNavBar'
+import SecondaryNavBar from './navigation/SecondaryNavBar'
+import AdminNavBar from './navigation/AdminNavBar'
 // Selects
-import Select from './Selects/Select'
-import SearchBar from './Selects/SearchBar'
-import InviteAdminBar from './Selects/InviteAdminBar'
+import Select from './select/Select'
+// Inputs
+import SearchBar from './input/SearchBar'
+import InviteAdminBar from './input/InviteAdminBar'
 // Text
-import NumberCircle from './Text/NumberCircle'
-import HighlightedTitle from './Text/HighlightedTitle'
-import CommentModal from './Modals/CommentModal'
-import SubmitRequestModal from './Modals/SubmitRequestModal'
-import CapitalizedTitle from './Text/CapitalizedTitle'
-import ShadowTitle from './Text/ShadowTitle'
-import StatusTag from './Text/StatusTag'
-import Tag from './Text/Tag'
+import NumberCircle from './text/NumberCircle'
+import HighlightedTitle from './text/HighlightedTitle'
+import CapitalizedTitle from './text/CapitalizedTitle'
+import StatusTag from './text/StatusTag'
+import Tag from './text/Tag'
 // Tables
-import AdminListTable from './Table/AdminListTable'
-import InvestmentTable from './Table/InvestmentTable'
-import RequestReviewTable from './Table/ReviewRequestTable'
+import AdminListTable from './table/AdminListTable'
+import InvestmentTable from './table/InvestmentTable'
+import RequestReviewTable from './table/ReviewRequestTable'
 //Tooltips
-import ToolTip from './Tooltips/ToolTip'
+import ToolTip from './tooltip/ToolTip'
 // Modals
-import GeneralModal from './Modals/GeneralModal'
-import LeaveConfirmationModal from './Modals/LeaveConfirmationModal'
+import GeneralModal from './modal/GeneralModal'
+import CommentModal from './modal/CommentModal'
+import SubmitRequestModal from './modal/SubmitRequestModal'
+import LeaveConfirmationModal from './modal/LeaveConfirmationModal'
 // Toast
-import Toast from './Toast/Toast'
+import Toast from './toast/Toast'
 // Footer
-import Footer from './Footer/Footer'
+import Footer from './footer/Footer'
 export {
   AuthButton,
   ListItem,
   NumberCircle,
   HighlightedTitle,
-  NavButton,
   TabButton,
   PrimaryNavBar,
   PrimaryButton,
@@ -81,7 +77,6 @@ export {
   CapitalizedTitle,
   RequestAccordion,
   SecondaryNavBar,
-  ShadowTitle,
   ReadMoreButton,
   InvestmentTable,
   GeneralModal,
@@ -89,19 +84,17 @@ export {
   SearchBar,
   BackButton,
   CompanyCard,
-  ESGTag,
-  NetAssetTag,
   Tag,
   CaseAccordion,
   ToolTip,
   FuelRadialChart,
   EmissionBarChart,
-  DataCard,
+  ChartDetailsCard,
   ReadMoreAccordion,
   EnergyRadialChart,
   AdminNavBar,
   ClimateClock,
-  AdminBox,
+  AdminSelectCard,
   AdminListTable,
   InviteAdminBar,
   RequestReviewTable,

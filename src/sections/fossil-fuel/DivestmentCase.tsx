@@ -3,7 +3,7 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import type { Document } from '@contentful/rich-text-types'
 import type { Asset } from 'contentful'
 
-import { mainParagraphStyle } from '../../utils/contentfulOptions'
+import { mainParagraphStyle } from '../../utils/renderer'
 import type { CaseEntry } from '../../types'
 import {
   HighlightedTitle,

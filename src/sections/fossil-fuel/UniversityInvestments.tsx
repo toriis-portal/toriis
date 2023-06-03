@@ -3,13 +3,8 @@ import type { Asset } from 'contentful'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import type { Document } from '@contentful/rich-text-types'
 
-import { mainParagraphStyle } from '../../utils/contentfulOptions'
-import {
-  HighlightedTitle,
-  ImageWithCaption,
-  Tag,
-  EmissionTreeMap,
-} from '../../components'
+import { mainParagraphStyle } from '../../utils/renderer'
+import { HighlightedTitle, Tag, EmissionTreeMap } from '../../components'
 
 interface UniversityInvestmentsProps {
   img: Asset
