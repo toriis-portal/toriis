@@ -5,6 +5,7 @@ import type { Company, Investment } from '@prisma/client'
 import yahooFinance from 'yahoo-finance2'
 
 import { sectorEnum } from '../../../utils/enums'
+import { FOSSIL_FUEL_INDUSTRIES } from '../../../utils/constants'
 import { ContentWrapper } from '../../../utils/content'
 import { createTRPCRouter, publicProcedure } from '../trpc'
 import type { IndustryEntry, SectorEntry } from '../../../types'
@@ -290,4 +291,47 @@ export const companyRouter = createTRPCRouter({
         nextCursor,
       }
     }),
+
+  getEmissionsAndFFClass: publicProcedure.query(async ({ ctx }) => {
+    const companies = await ctx.prisma.company.findMany({
+      include: {
+        emission: true,
+      },
+    })
+
+    const emissionsAndFFClass = companies.map((company) => {
+      const netAssetVal = company.netAssetVal
+      const marketCap = company.marketCap
+      const emissionInfo = company.emission
+
+      if (
+        marketCap &&
+        emissionInfo &&
+        emissionInfo.scopeOne &&
+        emissionInfo.scopeTwo
+      ) {
+        const financedEmissions =
+          (netAssetVal / marketCap) *
+          (emissionInfo.scopeOne + emissionInfo.scopeTwo) *
+          1000
+
+        const fossilFuelClass =
+          company.industry !== null &&
+          FOSSIL_FUEL_INDUSTRIES.includes(company.industry)
+            ? 'y'
+            : 'n'
+
+        return {
+          companyName: company.name,
+          companyId: company.id,
+          financedEmissions,
+          fossilFuelClass,
+        }
+      }
+
+      return null
+    })
+
+    return emissionsAndFFClass.filter(Boolean)
+  }),
 })

@@ -16,6 +16,7 @@ import LandingDonutChart from './chart/LandingDonutChart'
 import FuelRadialChart from './chart/FuelRadialChart'
 import EmissionBarChart from './chart/EmissionBarChart'
 import FinanceBrushChart from './chart/FinanceBrushChart'
+import EmissionTreeMap from './chart/EmissionTreeMap'
 // Displays
 import ListItem from './display/ListItem'
 import Carousel from './display/Carousel'
@@ -71,6 +72,7 @@ export {
   Tabs,
   Select,
   LandingDonutChart,
+  EmissionTreeMap,
   FinanceBrushChart,
   CapitalizedTitle,
   RequestAccordion,
