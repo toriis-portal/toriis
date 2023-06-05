@@ -1,4 +1,5 @@
 import type { FC } from 'react'
+import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import { Spinner } from 'flowbite-react'
 import type { ApexOptions } from 'apexcharts'
@@ -25,10 +26,14 @@ interface SourceData {
   companyName: string
   companyId: string
   financedEmissions: number
+  netAssetVal: number
   fossilFuelClass: string
 }
 
-const formatSeries = (data: (SourceData | null)[]): FossilFuelSeries[] => {
+const formatSeries = (
+  data: (SourceData | null)[],
+  flag?: 'financedEmissions' | 'netAssetValue',
+): FossilFuelSeries[] => {
   const series: FossilFuelSeries[] = [
     {
       fossilFuelClass: 'y',
@@ -84,9 +89,13 @@ const formatSeries = (data: (SourceData | null)[]): FossilFuelSeries[] => {
 
   for (const emission of data) {
     if (!emission) continue
+    const yVal =
+      flag === 'financedEmissions'
+        ? emission.financedEmissions
+        : emission.netAssetVal
     const dataPoint: EmissionData = {
       x: emission.companyName,
-      y: emission.financedEmissions,
+      y: yVal,
       companyId: emission.companyId,
     }
 
@@ -107,6 +116,14 @@ const EmissionTreeMap: FC = () => {
       refetchOnWindowFocus: false,
     },
   )
+
+  const [selectedData, setSelectedData] = useState<FossilFuelSeries[]>([])
+
+  useEffect(() => {
+    if (data) {
+      setSelectedData(formatSeries(data))
+    }
+  }, [data])
 
   if (!data)
     return (
@@ -138,7 +155,7 @@ const EmissionTreeMap: FC = () => {
       '#40D7D4',
       '#335577',
       '#17292E',
-    ], // Need 4 more colors
+    ],
     dataLabels: {
       enabled: true,
       dropShadow: {
@@ -180,11 +197,29 @@ const EmissionTreeMap: FC = () => {
 
   const series: FossilFuelSeries[] = formatSeries(data)
 
+  const handleSwitchData = (data: FossilFuelSeries[]) => {
+    setSelectedData(data)
+  }
+
   return (
     <>
+      <div>
+        <button
+          onClick={() =>
+            handleSwitchData(formatSeries(data, 'financedEmissions'))
+          }
+        >
+          All Data
+        </button>
+        <button
+          onClick={() => handleSwitchData(formatSeries(data, 'netAssetValue'))}
+        >
+          Filtered Data
+        </button>
+      </div>
       <Chart
         options={options}
-        series={series}
+        series={selectedData}
         type="treemap"
         width="100%"
         height="300"
