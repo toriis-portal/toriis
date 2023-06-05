@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic'
 import { Spinner } from 'flowbite-react'
 import type { ApexOptions } from 'apexcharts'
 
+import { sectorEnum } from '../../utils/enums'
 import { api } from '../../utils/api'
 import { assetAmountToString } from '../../utils/helpers'
 
@@ -15,7 +16,7 @@ interface EmissionData {
 }
 
 interface FossilFuelSeries {
-  fossilFuelClass: 'y' | 'n'
+  fossilFuelClass: string
   data: EmissionData[]
   name: string
 }
@@ -35,8 +36,48 @@ const formatSeries = (data: (SourceData | null)[]): FossilFuelSeries[] => {
       data: [],
     },
     {
-      fossilFuelClass: 'n',
-      name: 'Other',
+      fossilFuelClass: sectorEnum.FINANCIAL_SERVICES,
+      name: sectorEnum.FINANCIAL_SERVICES,
+      data: [],
+    },
+    {
+      fossilFuelClass: sectorEnum.INDUSTRIALS,
+      name: sectorEnum.INDUSTRIALS,
+      data: [],
+    },
+    {
+      fossilFuelClass: sectorEnum.TECHNOLOGY,
+      name: sectorEnum.TECHNOLOGY,
+      data: [],
+    },
+    {
+      fossilFuelClass: sectorEnum.HEALTHCARE,
+      name: sectorEnum.HEALTHCARE,
+      data: [],
+    },
+    {
+      fossilFuelClass: sectorEnum.CONSUMER_CYCLICAL,
+      name: sectorEnum.CONSUMER_CYCLICAL,
+      data: [],
+    },
+    {
+      fossilFuelClass: sectorEnum.COMMUNICATION_SERVICES,
+      name: sectorEnum.COMMUNICATION_SERVICES,
+      data: [],
+    },
+    {
+      fossilFuelClass: sectorEnum.CONSUMER_DEFENSIVE,
+      name: sectorEnum.CONSUMER_DEFENSIVE,
+      data: [],
+    },
+    {
+      fossilFuelClass: sectorEnum.REAL_ESTATE,
+      name: sectorEnum.REAL_ESTATE,
+      data: [],
+    },
+    {
+      fossilFuelClass: sectorEnum.BASIC_MATERIALS,
+      name: sectorEnum.BASIC_MATERIALS,
       data: [],
     },
   ]
@@ -86,7 +127,18 @@ const EmissionTreeMap: FC = () => {
     legend: {
       show: true,
     },
-    colors: ['#FFA902', '#0F81E8', '#FF6112', '#17292E'],
+    colors: [
+      '#FF6112',
+      '#FFA902',
+      '#FF4081',
+      '#0F81E8',
+      '#CD8500',
+      '#4CAF50',
+      '#AA66CC',
+      '#40D7D4',
+      '#335577',
+      '#17292E',
+    ], // Need 4 more colors
     dataLabels: {
       enabled: true,
       dropShadow: {
