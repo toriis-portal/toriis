@@ -141,7 +141,9 @@ const EmissionTreeMap: FC<TreemapProps> = ({ flag }) => {
     tooltip: {
       y: {
         formatter: function (val: number) {
-          return assetAmountToString(val) + ' metric tons CO2'
+          return flag === 'financedEmissions'
+            ? assetAmountToString(val) + ' metric tons CO2'
+            : '$' + assetAmountToString(val)
         },
       },
     },
