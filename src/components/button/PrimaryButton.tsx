@@ -9,7 +9,7 @@ interface PrimaryButtonProps
   link?: string
   onClick?: () => void
   className?: string
-  variant?: 'cobalt' | 'clementine'
+  variant?: 'cobalt' | 'clementine' | 'clementine-toggled'
 }
 
 const PrimaryButton: FC<PrimaryButtonProps> = ({
@@ -30,6 +30,8 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
         variant === 'cobalt',
       'bg-white border-clementine shadow-clementine hover:shadow-clementine':
         variant === 'clementine',
+      'bg-lightClementine border-clementine shadow-clementine hover:shadow-clementine':
+        variant === 'clementine-toggled',
     },
     className,
   )

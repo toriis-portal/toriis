@@ -30,9 +30,13 @@ interface SourceData {
   fossilFuelClass: string
 }
 
+interface TreemapProps {
+  flag: 'financedEmissions' | 'netAssetValue'
+}
+
 const formatSeries = (
   data: (SourceData | null)[],
-  flag?: 'financedEmissions' | 'netAssetValue',
+  flag: 'financedEmissions' | 'netAssetValue',
 ): FossilFuelSeries[] => {
   const series: FossilFuelSeries[] = [
     {
@@ -109,7 +113,7 @@ const formatSeries = (
   return series
 }
 
-const EmissionTreeMap: FC = () => {
+const EmissionTreeMap: FC<TreemapProps> = ({ flag }) => {
   const { data } = api.company.getEmissionsAndFFClass.useQuery<SourceData[]>(
     undefined,
     {
@@ -121,9 +125,10 @@ const EmissionTreeMap: FC = () => {
 
   useEffect(() => {
     if (data) {
-      setSelectedData(formatSeries(data))
+      const formattedData = formatSeries(data, flag)
+      setSelectedData(formattedData)
     }
-  }, [data])
+  }, [data, flag])
 
   if (!data)
     return (
@@ -195,28 +200,10 @@ const EmissionTreeMap: FC = () => {
     },
   }
 
-  const series: FossilFuelSeries[] = formatSeries(data)
-
-  const handleSwitchData = (data: FossilFuelSeries[]) => {
-    setSelectedData(data)
-  }
+  const series: FossilFuelSeries[] = formatSeries(data, flag)
 
   return (
     <>
-      <div>
-        <button
-          onClick={() =>
-            handleSwitchData(formatSeries(data, 'financedEmissions'))
-          }
-        >
-          All Data
-        </button>
-        <button
-          onClick={() => handleSwitchData(formatSeries(data, 'netAssetValue'))}
-        >
-          Filtered Data
-        </button>
-      </div>
       <Chart
         options={options}
         series={selectedData}
