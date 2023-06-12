@@ -211,7 +211,7 @@ const EmissionTreeMap: FC<TreemapProps> = ({ flag }) => {
         series={selectedData}
         type="treemap"
         width="100%"
-        height="300"
+        height="460"
       />
     </>
   )
