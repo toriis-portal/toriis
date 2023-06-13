@@ -3,10 +3,16 @@ import { ArrowRightIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 import clsx from 'clsx'
 
+import ToolTip from '../tooltip/ToolTip'
+
 interface PrimaryButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   text: string
   link?: string
+  toolTip?: {
+    title?: string
+    details?: string | React.ReactNode
+  }
   onClick?: () => void
   className?: string
   variant?: 'cobalt' | 'clementine' | 'clementine-toggled'
@@ -16,6 +22,7 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
   text,
   link,
   onClick,
+  toolTip,
   className = '',
   variant = 'cobalt',
   ...props
@@ -40,14 +47,24 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
     <div>
       {link ? (
         <Link href={link}>
-          <button className={buttonStyle} {...props}>
-            {text}
+          <button onClick={onClick} className={buttonStyle} {...props}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <span>{text}</span>
+              {toolTip && toolTip.title && toolTip.details && (
+                <ToolTip title={toolTip.title} details={toolTip.details} />
+              )}
+            </div>
             <ArrowRightIcon className="ml-1 inline h-9 w-5 stroke-current stroke-1" />
           </button>
         </Link>
       ) : (
         <button onClick={onClick} className={buttonStyle} {...props}>
-          {text}
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <span>{text}</span>
+            {toolTip && (
+              <ToolTip title={toolTip?.title} details={toolTip?.details} />
+            )}
+          </div>
         </button>
       )}
     </div>

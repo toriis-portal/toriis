@@ -1,5 +1,4 @@
 import type { FC } from 'react'
-import type { Asset } from 'contentful'
 import { useState } from 'react'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import type { Document } from '@contentful/rich-text-types'
@@ -7,7 +6,6 @@ import type { Document } from '@contentful/rich-text-types'
 import { mainParagraphStyle } from '../../utils/renderer'
 import {
   HighlightedTitle,
-  Tag,
   EmissionTreeMap,
   PrimaryButton,
 } from '../../components'
@@ -38,13 +36,24 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
             variant={
               flag === 'financedEmissions' ? 'clementine-toggled' : 'clementine'
             }
+            toolTip={{
+              title: 'Financed Emission',
+              details:
+                'Greenhouse gas (GHG) emissions indirectly caused by financial activities, investments, or lending practices of individuals, organizations, or institutions that support projects or activities contributing to climate change.',
+            }}
           />
+
           <PrimaryButton
             text="Net Asset Value"
             onClick={() => setFlag('netAssetValue')}
             variant={
               flag === 'netAssetValue' ? 'clementine-toggled' : 'clementine'
             }
+            toolTip={{
+              title: 'Net Asset Value',
+              details:
+                "The total market value of all of a company's corporate bonds.",
+            }}
           />
         </div>
         <div className="flex justify-center">
