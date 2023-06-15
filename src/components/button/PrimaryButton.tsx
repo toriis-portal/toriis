@@ -50,12 +50,13 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
           <button onClick={onClick} className={buttonStyle} {...props}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <span>{text}</span>
-              {toolTip && (
-                <>
-                  <div style={{ width: '0.5rem' }} />
+              <>
+                {toolTip ? (
                   <ToolTip title={toolTip?.title} details={toolTip?.details} />
-                </>
-              )}
+                ) : (
+                  {}
+                )}
+              </>
             </div>
             <ArrowRightIcon className="ml-1 inline h-9 w-5 stroke-current stroke-1" />
           </button>
@@ -64,12 +65,13 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
         <button onClick={onClick} className={buttonStyle} {...props}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <span>{text}</span>
-            {toolTip && (
-              <>
-                <div style={{ width: '0.5rem' }} />
+            <>
+              {toolTip ? (
                 <ToolTip title={toolTip?.title} details={toolTip?.details} />
-              </>
-            )}
+              ) : (
+                {}
+              )}
+            </>
           </div>
         </button>
       )}
