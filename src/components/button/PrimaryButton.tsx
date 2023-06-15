@@ -47,33 +47,33 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
     <div>
       {link ? (
         <Link href={link}>
-          <button onClick={onClick} className={buttonStyle} {...props}>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <span>{text}</span>
-              <>
-                {toolTip ? (
-                  <ToolTip title={toolTip?.title} details={toolTip?.details} />
-                ) : (
-                  []
-                )}
-              </>
-            </div>
-            <ArrowRightIcon className="ml-1 inline h-9 w-5 stroke-current stroke-1" />
-          </button>
-        </Link>
-      ) : (
-        <button onClick={onClick} className={buttonStyle} {...props}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <span>{text}</span>
-            <>
+            <button onClick={onClick} className={buttonStyle} {...props}>
+              <span>{text}</span>
+              <ArrowRightIcon className="ml-1 inline h-9 w-5 stroke-current stroke-1" />
+            </button>
+            <div style={{ position: 'relative', right: '33px', zIndex: 10 }}>
               {toolTip ? (
                 <ToolTip title={toolTip?.title} details={toolTip?.details} />
               ) : (
                 []
               )}
-            </>
+            </div>
           </div>
-        </button>
+        </Link>
+      ) : (
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <button onClick={onClick} className={buttonStyle} {...props}>
+            <span className="pr-4">{text}</span>
+          </button>
+          <div style={{ position: 'relative', right: '33px', zIndex: 10 }}>
+            {toolTip ? (
+              <ToolTip title={toolTip?.title} details={toolTip?.details} />
+            ) : (
+              []
+            )}
+          </div>
+        </div>
       )}
     </div>
   )
