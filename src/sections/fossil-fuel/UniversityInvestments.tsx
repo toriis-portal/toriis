@@ -41,6 +41,7 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
               details:
                 'Greenhouse gas (GHG) emissions indirectly caused by financial activities, investments, or lending practices of individuals, organizations, or institutions that support projects or activities contributing to climate change.',
             }}
+            style={{ zIndex: 1, position: 'relative' }}
           />
 
           <PrimaryButton
@@ -54,6 +55,7 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
               details:
                 "The total market value of all of a company's corporate bonds.",
             }}
+            style={{ zIndex: -1 }}
           />
         </div>
         <div className="flex justify-center">
