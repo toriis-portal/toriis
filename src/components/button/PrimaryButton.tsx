@@ -66,7 +66,7 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
           <button onClick={onClick} className={buttonStyle} {...props}>
             <span className="pr-4">{text}</span>
           </button>
-          <div style={{ position: 'relative', right: '33px', zIndex: 10 }}>
+          <div style={{ position: 'relative', right: '33px', zIndex: 2 }}>
             {toolTip ? (
               <ToolTip title={toolTip?.title} details={toolTip?.details} />
             ) : (
