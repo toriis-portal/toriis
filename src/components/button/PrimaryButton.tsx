@@ -54,7 +54,7 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
                 {toolTip ? (
                   <ToolTip title={toolTip?.title} details={toolTip?.details} />
                 ) : (
-                  {}
+                  []
                 )}
               </>
             </div>
@@ -69,7 +69,7 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
               {toolTip ? (
                 <ToolTip title={toolTip?.title} details={toolTip?.details} />
               ) : (
-                {}
+                []
               )}
             </>
           </div>
