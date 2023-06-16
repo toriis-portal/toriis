@@ -55,7 +55,7 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
               details:
                 "The total market value of all of a company's corporate bonds.",
             }}
-            style={{ zIndex: 0, marginLeft: '-29px' }}
+            style={{ zIndex: 0, marginLeft: '-26px' }}
           />
         </div>
         <div className="flex justify-center">
