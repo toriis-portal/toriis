@@ -30,13 +30,13 @@ const ToolTip: FC<TitleProps> = ({ title, details, children }) => {
 
   return (
     <div className="group relative flex w-fit justify-center">
-      <button
+      <div
         className={clsx('bg-primary rounded')}
         onMouseEnter={() => setIsShown(true)}
         onMouseLeave={handleMouseLeave}
       >
         <InformationCircleIcon className="w-6" />
-      </button>
+      </div>
       {isShown && (
         <div
           className={clsx(

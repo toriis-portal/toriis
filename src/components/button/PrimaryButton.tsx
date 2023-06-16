@@ -47,33 +47,31 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
     <div>
       {link ? (
         <Link href={link}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <button onClick={onClick} className={buttonStyle} {...props}>
+          <button onClick={onClick} className={buttonStyle} {...props}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
               <span>{text}</span>
-              <ArrowRightIcon className="ml-1 inline h-9 w-5 stroke-current stroke-1" />
-            </button>
-            <div style={{ position: 'relative', right: '33px', zIndex: 10 }}>
-              {toolTip ? (
-                <ToolTip title={toolTip?.title} details={toolTip?.details} />
-              ) : (
-                []
+              {toolTip && (
+                <>
+                  <div style={{ width: '0.5rem' }} />
+                  <ToolTip title={toolTip?.title} details={toolTip?.details} />
+                </>
               )}
             </div>
-          </div>
+            <ArrowRightIcon className="ml-1 inline h-9 w-5 stroke-current stroke-1" />
+          </button>
         </Link>
       ) : (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <button onClick={onClick} className={buttonStyle} {...props}>
-            <span className="pr-4">{text}</span>
-          </button>
-          <div style={{ position: 'relative', right: '33px', zIndex: 2 }}>
-            {toolTip ? (
-              <ToolTip title={toolTip?.title} details={toolTip?.details} />
-            ) : (
-              []
+        <button onClick={onClick} className={buttonStyle} {...props}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <span>{text}</span>
+            {toolTip && (
+              <>
+                <div style={{ width: '0.5rem' }} />
+                <ToolTip title={toolTip?.title} details={toolTip?.details} />
+              </>
             )}
           </div>
-        </div>
+        </button>
       )}
     </div>
   )
