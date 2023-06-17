@@ -39,7 +39,6 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
             }
             style={{ zIndex: 1, position: 'relative' }}
           >
-            children
             {
               <ToolTip
                 title={'Financed Emission'}
@@ -58,7 +57,6 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
             }
             style={{ zIndex: -1 }}
           >
-            children
             {
               <ToolTip
                 title={'Net Asset Value'}
