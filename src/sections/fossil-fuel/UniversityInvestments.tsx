@@ -8,6 +8,7 @@ import {
   HighlightedTitle,
   EmissionTreeMap,
   PrimaryButton,
+  ToolTip,
 } from '../../components'
 
 interface UniversityInvestmentsProps {
@@ -36,13 +37,18 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
             variant={
               flag === 'financedEmissions' ? 'clementine-toggled' : 'clementine'
             }
-            toolTip={{
-              title: 'Financed Emission',
-              details:
-                'Greenhouse gas (GHG) emissions indirectly caused by financial activities, investments, or lending practices of individuals, organizations, or institutions that support projects or activities contributing to climate change.',
-            }}
             style={{ zIndex: 1, position: 'relative' }}
-          />
+          >
+            children
+            {
+              <ToolTip
+                title={'Financed Emission'}
+                details={
+                  'Greenhouse gas (GHG) emissions indirectly caused by financial activities, investments, or lending practices of individuals, organizations, or institutions that support projects or activities contributing to climate change.'
+                }
+              />
+            }
+          </PrimaryButton>
 
           <PrimaryButton
             text="Net Asset Value"
@@ -50,13 +56,18 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
             variant={
               flag === 'netAssetValue' ? 'clementine-toggled' : 'clementine'
             }
-            toolTip={{
-              title: 'Net Asset Value',
-              details:
-                "The total market value of all of a company's corporate bonds.",
-            }}
             style={{ zIndex: -1 }}
-          />
+          >
+            children
+            {
+              <ToolTip
+                title={'Net Asset Value'}
+                details={
+                  "The total market value of all of a company's corporate bonds."
+                }
+              />
+            }
+          </PrimaryButton>
         </div>
         <div className="flex justify-center">
           <div className="w-3/4">
