@@ -37,7 +37,7 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
             variant={
               flag === 'financedEmissions' ? 'clementine-toggled' : 'clementine'
             }
-            style={{ zIndex: 1, position: 'relative' }}
+            className="z-1 relative"
           >
             {
               <ToolTip
@@ -55,7 +55,6 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
             variant={
               flag === 'netAssetValue' ? 'clementine-toggled' : 'clementine'
             }
-            style={{ zIndex: -1 }}
           >
             {
               <ToolTip
