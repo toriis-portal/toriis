@@ -1,8 +1,8 @@
 import type { FC } from 'react'
-import clsx from 'clsx'
-import { InformationCircleIcon } from '@heroicons/react/24/outline'
-import 'flowbite'
 import { useState } from 'react'
+import clsx from 'clsx'
+import 'flowbite'
+import { InformationCircleIcon } from '@heroicons/react/24/outline'
 
 interface TitleProps {
   title?: string
@@ -37,13 +37,11 @@ const ToolTip: FC<TitleProps> = ({ title, details, children }) => {
                 'body-small border-black bg-white',
               )}
             />
-            <>
-              <div className="body-small">
-                <div className="font-bold">{title}</div>
-                <div>{details}</div>
-                {children}
-              </div>
-            </>
+            <div className="body-small">
+              <div className="font-bold">{title}</div>
+              <div>{details}</div>
+              {children}
+            </div>
           </div>
         )}
       </div>
