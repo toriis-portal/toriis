@@ -159,7 +159,7 @@ const Company: FC<CompanyDetailsProps> = ({
             color="brightTeal"
           />
         )}
-        <div className="mx-4 mb-4">
+        <div className="mx-4 mb-4 max-w-full">
           {company.emission && (
             <ChartGroup
               title="Carbon Accounting"
