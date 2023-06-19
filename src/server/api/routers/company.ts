@@ -318,7 +318,7 @@ export const companyRouter = createTRPCRouter({
         const fossilFuelClass =
           company.industry !== null &&
           FOSSIL_FUEL_INDUSTRIES.includes(company.industry)
-            ? 'y'
+            ? 'Fossil Fuel Companies'
             : company.sector
             ? sectorEnum[company.sector]
             : 'N/A'

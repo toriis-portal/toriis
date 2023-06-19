@@ -40,7 +40,7 @@ const formatSeries = (
 ): FossilFuelSeries[] => {
   const series: FossilFuelSeries[] = [
     {
-      fossilFuelClass: 'y',
+      fossilFuelClass: 'Fossil Fuel Companies',
       name: 'Fossil Fuel Companies',
       data: [],
     },
