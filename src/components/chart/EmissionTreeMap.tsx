@@ -44,51 +44,15 @@ const formatSeries = (
       name: 'Fossil Fuel Companies',
       data: [],
     },
-    {
-      fossilFuelClass: sectorEnum.FINANCIAL_SERVICES,
-      name: sectorEnum.FINANCIAL_SERVICES,
-      data: [],
-    },
-    {
-      fossilFuelClass: sectorEnum.INDUSTRIALS,
-      name: sectorEnum.INDUSTRIALS,
-      data: [],
-    },
-    {
-      fossilFuelClass: sectorEnum.TECHNOLOGY,
-      name: sectorEnum.TECHNOLOGY,
-      data: [],
-    },
-    {
-      fossilFuelClass: sectorEnum.HEALTHCARE,
-      name: sectorEnum.HEALTHCARE,
-      data: [],
-    },
-    {
-      fossilFuelClass: sectorEnum.CONSUMER_CYCLICAL,
-      name: sectorEnum.CONSUMER_CYCLICAL,
-      data: [],
-    },
-    {
-      fossilFuelClass: sectorEnum.COMMUNICATION_SERVICES,
-      name: sectorEnum.COMMUNICATION_SERVICES,
-      data: [],
-    },
-    {
-      fossilFuelClass: sectorEnum.CONSUMER_DEFENSIVE,
-      name: sectorEnum.CONSUMER_DEFENSIVE,
-      data: [],
-    },
-    {
-      fossilFuelClass: sectorEnum.REAL_ESTATE,
-      name: sectorEnum.REAL_ESTATE,
-      data: [],
-    },
-    {
-      fossilFuelClass: sectorEnum.BASIC_MATERIALS,
-      name: sectorEnum.BASIC_MATERIALS,
-      data: [],
-    },
+    ...Object.values(sectorEnum)
+      .filter(
+        (sector) => ![sectorEnum.UTILITIES, sectorEnum.ENERGY].includes(sector),
+      )
+      .map((sector) => ({
+        fossilFuelClass: sector,
+        name: sector,
+        data: [],
+      })),
   ]
 
   for (const emission of data) {
