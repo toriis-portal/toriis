@@ -331,8 +331,6 @@ export const companyRouter = createTRPCRouter({
           fossilFuelClass,
         }
       }
-
-      return null
     })
 
     return emissionsAndFFClass.filter(Boolean)
