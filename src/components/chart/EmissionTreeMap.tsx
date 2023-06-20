@@ -17,9 +17,8 @@ interface EmissionData {
 }
 
 interface FossilFuelSeries {
-  fossilFuelClass: string
-  data: EmissionData[]
   name: string
+  data: EmissionData[]
 }
 
 interface SourceData {
@@ -38,43 +37,35 @@ const formatSeries = (
   data: (SourceData | null)[],
   flag: 'financedEmissions' | 'netAssetValue',
 ): FossilFuelSeries[] => {
-  const series: FossilFuelSeries[] = [
-    {
-      fossilFuelClass: 'Fossil Fuel Companies',
-      name: 'Fossil Fuel Companies',
-      data: [],
-    },
-    ...Object.values(sectorEnum)
-      .filter(
-        (sector) => ![sectorEnum.UTILITIES, sectorEnum.ENERGY].includes(sector),
-      )
-      .map((sector) => ({
-        fossilFuelClass: sector,
-        name: sector,
-        data: [],
-      })),
-  ]
+  const fossilFuelClass = ['Fossil Fuel Companies'].concat(
+    Object.values(sectorEnum),
+  )
 
-  for (const emission of data) {
-    if (!emission) continue
+  const series: FossilFuelSeries[] = fossilFuelClass.map((classification) => ({
+    name: classification,
+    data: [],
+  }))
+
+  data.forEach((company) => {
+    if (!company) return
     const yVal =
       flag === 'financedEmissions'
-        ? emission.financedEmissions
-        : emission.netAssetVal
-    const dataPoint: EmissionData = {
-      x: emission.companyName,
+        ? company.financedEmissions
+        : company.netAssetVal
+    const dataPoint = {
+      x: company.companyName,
       y: yVal,
-      companyId: emission.companyId,
+      companyId: company.companyId,
     }
 
     const index = series.findIndex(
-      (item) => item.fossilFuelClass === emission.fossilFuelClass,
+      (item) => item.name === company.fossilFuelClass,
     )
 
     series[index]?.data.push(dataPoint)
-  }
+  })
 
-  return series
+  return series.filter((item) => item.data.length > 0)
 }
 
 const EmissionTreeMap: FC<TreemapProps> = ({ flag }) => {
