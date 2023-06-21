@@ -1,9 +1,11 @@
 import type { FC } from 'react'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import type { Document } from '@contentful/rich-text-types'
 
 import { Carousel, HighlightedTitle } from '../../components'
 
 interface schoolsDivestedProps {
-  schoolEntries: string
+  schoolEntries: Document
 }
 
 /**
@@ -15,12 +17,13 @@ interface schoolsDivestedProps {
  * @returns React nodes array for Carousel
  */
 export const parseEntryToColumns = (
-  entry: string,
+  entry: React.ReactNode,
   numRows: number,
   numCols: number,
 ): React.ReactNode[] => {
   // Segment string by new line
-  const list = entry.split('\n')
+
+  const list = entry ? entry.toString().split('\n') : ['']
 
   // Parse into a 2D array by numRows
   const segmentedList: string[][] = []
@@ -61,7 +64,11 @@ const SchoolsDivested: FC<schoolsDivestedProps> = ({ schoolEntries }) => {
         />
       </div>
       <Carousel
-        carouselChildren={parseEntryToColumns(schoolEntries, 6, 3)}
+        carouselChildren={parseEntryToColumns(
+          documentToReactComponents(schoolEntries),
+          6,
+          3,
+        )}
         controlSize="sm"
         variant="lightBlue"
       />
