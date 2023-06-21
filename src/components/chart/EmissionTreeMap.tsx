@@ -34,7 +34,7 @@ interface TreemapProps {
 }
 
 const formatSeries = (
-  data: (SourceData | null)[],
+  data: (SourceData | undefined)[],
   flag: 'financedEmissions' | 'netAssetValue',
 ): FossilFuelSeries[] => {
   const fossilFuelClass = ['Fossil Fuel Companies'].concat(
