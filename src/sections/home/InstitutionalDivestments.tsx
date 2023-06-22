@@ -24,7 +24,7 @@ const InstitutionalDivestments: FC<InstitutionalDivestmentsProps> = ({
           {listEntries.map((entry, index) => (
             <ListItem
               key={index}
-              listVal={entry.order}
+              listIndex={entry.order}
               listContent={entry.details}
             />
           ))}

@@ -13,6 +13,9 @@ interface ErrorMessage {
 }
 
 const MAX_API_CALLS = 40
+const MAX_DAILY_CALLS_REACHED_MESSAGE =
+  "Specified argument was out of the range of valid values. (Parameter 'You've reached your daily limit')"
+
 const consumeExternalApi = async <T>(
   url: string,
 ): Promise<T | ErrorMessage> => {
@@ -26,9 +29,6 @@ const isErrorMessage = (
 ): res is ErrorMessage => {
   return 'error' in res || 'message' in res
 }
-
-const MAX_DAILY_CALLS_REACHED_MESSAGE =
-  "Specified argument was out of the range of valid values. (Parameter 'You've reached your daily limit')"
 
 const getFirstCompany = async (
   ctx: Context,

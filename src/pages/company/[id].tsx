@@ -2,61 +2,53 @@ import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
 import { Company } from '@prisma/client'
 import type { FC } from 'react'
-import { MARKS, BLOCKS, INLINES } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
-import type {
-  Block,
-  Inline,
-} from '@contentful/rich-text-types/dist/types/types'
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 
 import { FuelEnum } from '../../utils/enums'
 import { ContentWrapper } from '../../utils/content'
-import FinanceBrushChart from '../../components/Charts/FinanceBrushChart'
+import { api } from '../../utils/api'
 import {
   HighlightedTitle,
   InvestmentTable,
   EmissionBarChart,
   ReadMoreAccordion,
   EnergyRadialChart,
+  FinanceBrushChart,
   BackButton,
   FuelRadialChart,
-  DataCard,
+  ChartDetailsCard,
 } from '../../components'
-import { api } from '../../utils/api'
 import { CompanyTooltipGroup, ChartGroup } from '../../sections'
 import type { CompanyDetailsEntry } from '../../types'
+import { mainParagraphStyle } from '../../utils/renderer'
 
 export const getServerSideProps = async () => {
   const contentClient = new ContentWrapper()
   const companyDetails: CompanyDetailsEntry[] = await contentClient.get(
     'companyDetailsPage',
   )
-  const yahooFinance = companyDetails.find(
-    (item) => item.name == 'Yahoo Finance',
-  )
-  const carbonAccounting = companyDetails.find(
-    (item) => item.name == 'Carbon Accounting',
-  )
-  const renewableEnergy = companyDetails.find(
-    (item) => item.name == 'Renewable Energy',
-  )
-  const esgExplanation = companyDetails.find(
-    (item) => item.name == 'ESG Explanation',
-  )
-  const fuelTypes = Object.values(FuelEnum)
-  const fuelDetails = fuelTypes.map(
-    (fuelName) => companyDetails.find((item) => item.name == fuelName) ?? null,
-  )
+  const names = [
+    'Yahoo Finance',
+    'Carbon Accounting',
+    'Renewable Energy',
+    'ESG Explanation',
+    ...Object.values(FuelEnum),
+  ]
+  const detailsMap: { [name: string]: CompanyDetailsEntry | null } = {}
+  names.forEach((name) => {
+    detailsMap[name] = companyDetails.find((item) => item.name == name) || null
+  })
 
   return {
     props: {
-      yahooFinanceDetails: yahooFinance,
-      carbonAccountingDetails: carbonAccounting,
-      renewableEnergyDetails: renewableEnergy,
-      esgExplanation: esgExplanation,
-      fuelDetails: fuelDetails,
+      yahooFinanceDetails: detailsMap['Yahoo Finance'],
+      carbonAccountingDetails: detailsMap['Carbon Accounting'],
+      renewableEnergyDetails: detailsMap['Renewable Energy'],
+      esgExplanation: detailsMap['Renewable Energy'],
+      fuelDetails: Object.values(FuelEnum).map(
+        (fuelName) => detailsMap[fuelName],
+      ),
     },
   }
 }
@@ -66,7 +58,7 @@ interface CompanyDetailsProps {
   carbonAccountingDetails: CompanyDetailsEntry
   renewableEnergyDetails: CompanyDetailsEntry
   esgExplanation: CompanyDetailsEntry
-  fuelDetails: (CompanyDetailsEntry | undefined)[]
+  fuelDetails: CompanyDetailsEntry[]
 }
 
 /**
@@ -96,62 +88,27 @@ const Company: FC<CompanyDetailsProps> = ({
   fuelDetails,
 }) => {
   const [labels, setLabels] = useState<string[]>([])
-  const previousLabels = useRef<string[]>([])
-  const contentfulOptions = {
-    renderMark: {
-      [MARKS.BOLD]: (text: any) => (
-        <span className="font-semibold underline decoration-2 underline-offset-4">
-          {text}
-        </span>
-      ),
-    },
-    renderNode: {
-      [BLOCKS.PARAGRAPH]: (node: any, children: any) => (
-        <p className="align-center">{children}</p>
-      ),
-      [INLINES.HYPERLINK]: (node: Block | Inline, children: any) => {
-        return (
-          <a
-            href={node.data.uri as string}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {children}
-            <ArrowUpRightIcon className="align-self-start ml-0.5 inline h-4 w-4 stroke-current stroke-1" />
-          </a>
-        )
-      },
-    },
-  }
-  const handleSetLabels = (newLabels: string[]) => {
-    if (JSON.stringify(newLabels) !== JSON.stringify(previousLabels.current)) {
-      setLabels(newLabels)
-      previousLabels.current = newLabels
-    }
-  }
-
-  const companyId = (useRouter().query.id as string) ?? ''
+  const companyId = useRouter().query.id as string
 
   const { data, isLoading, isError } = api.company.getCompany.useQuery(
     { id: companyId },
-    { refetchOnWindowFocus: false, retry: false, enabled: !!companyId },
+    {
+      refetchOnWindowFocus: false,
+      retry: false,
+      enabled: !!companyId,
+      staleTime: Infinity,
+    },
   )
 
   if (isLoading) {
     return (
-      <div className="flex flex-col items-center px-12">
+      <div className="flex flex-col items-center p-12">
         <Spinner color="info" />
       </div>
     )
   }
 
-  if (
-    isError ||
-    !data ||
-    !data.industryEntry ||
-    !data.sectorEntry ||
-    !data.company
-  ) {
+  if (isError || !data) {
     return (
       <div className="flex flex-col items-center p-12">
         <HighlightedTitle
@@ -185,7 +142,7 @@ const Company: FC<CompanyDetailsProps> = ({
           industryEntry={industryEntry}
           esgExplanation={documentToReactComponents(
             esgExplanation.description,
-            contentfulOptions,
+            mainParagraphStyle,
           )}
           className="mb-10"
         />
@@ -202,18 +159,18 @@ const Company: FC<CompanyDetailsProps> = ({
             color="brightTeal"
           />
         )}
-        <div className="mx-4 mb-4">
+        <div className="mx-4 mb-4 max-w-full">
           {company.emission && (
             <ChartGroup
               title="Carbon Accounting"
               chart={<EmissionBarChart emissionData={company.emission} />}
               interpretation={
-                <DataCard>
+                <ChartDetailsCard>
                   {documentToReactComponents(
                     carbonAccountingDetails.description,
-                    contentfulOptions,
+                    mainParagraphStyle,
                   )}
-                </DataCard>
+                </ChartDetailsCard>
               }
               chartOnLeft={chartDirections['emission']}
               chartSize="md"
@@ -223,30 +180,28 @@ const Company: FC<CompanyDetailsProps> = ({
             <ChartGroup
               title="CDP-Fuel"
               chart={
-                <FuelRadialChart
-                  source={company.fuel}
-                  setLabels={handleSetLabels}
-                />
+                <FuelRadialChart source={company.fuel} setLabels={setLabels} />
               }
               interpretation={
-                <DataCard>
-                  {labels.map((label, key) => {
-                    const item = fuelDetails.find(
-                      (item) => item && item.name == label,
-                    )
-                    if (item && item.description) {
-                      return (
-                        <div key={key}>
-                          {documentToReactComponents(
-                            item.description,
-                            contentfulOptions,
-                          )}
-                          <br />
-                        </div>
+                <ChartDetailsCard>
+                  <div className="flex flex-col gap-4">
+                    {labels.map((label, key) => {
+                      const item = fuelDetails.find(
+                        (item) => item && item.name == label,
                       )
-                    }
-                  })}
-                </DataCard>
+                      if (item && item.description) {
+                        return (
+                          <div key={key}>
+                            {documentToReactComponents(
+                              item.description,
+                              mainParagraphStyle,
+                            )}
+                          </div>
+                        )
+                      }
+                    })}
+                  </div>
+                </ChartDetailsCard>
               }
               chartOnLeft={chartDirections['fuel']}
               chartSize="md"
@@ -257,12 +212,12 @@ const Company: FC<CompanyDetailsProps> = ({
               title="CDP-Energy"
               chart={<EnergyRadialChart energyData={company.energy} />}
               interpretation={
-                <DataCard>
+                <ChartDetailsCard>
                   {documentToReactComponents(
                     renewableEnergyDetails.description,
-                    contentfulOptions,
+                    mainParagraphStyle,
                   )}
-                </DataCard>
+                </ChartDetailsCard>
               }
               chartOnLeft={chartDirections['energy']}
               chartSize="sm"
@@ -273,12 +228,12 @@ const Company: FC<CompanyDetailsProps> = ({
               title="Yahoo Finance"
               chart={<FinanceBrushChart companyId={companyId} />}
               interpretation={
-                <DataCard>
+                <ChartDetailsCard>
                   {documentToReactComponents(
                     yahooFinanceDetails.description,
-                    contentfulOptions,
+                    mainParagraphStyle,
                   )}
-                </DataCard>
+                </ChartDetailsCard>
               }
               chartOnLeft={chartDirections['ticker']}
               chartSize="lg"

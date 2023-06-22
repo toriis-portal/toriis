@@ -4,6 +4,7 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
 import { Carousel, HighlightedTitle } from '../../components'
 import type { RefuteResponseEntry } from '../../types'
+import { mainParagraphStyle } from '../../utils/renderer'
 
 interface RefuteUISResponseProps {
   leftText: Document
@@ -14,6 +15,9 @@ const RefuteUISResponse: FC<RefuteUISResponseProps> = ({
   leftText,
   entries,
 }) => {
+  const carouselChildren = entries.map((entry) =>
+    documentToReactComponents(entry.details, mainParagraphStyle),
+  )
   return (
     <div className="bg-clementine/20 p-12">
       <HighlightedTitle
@@ -26,7 +30,12 @@ const RefuteUISResponse: FC<RefuteUISResponseProps> = ({
           {documentToReactComponents(leftText)}
         </div>
         <div className="basis-4/7 lg:pr-8">
-          <Carousel carouselChildrenData={entries} />
+          <Carousel
+            carouselChildren={carouselChildren}
+            controlSize="lg"
+            variant="white"
+            className="rounded-md border-4 border-clementine bg-white px-12 shadow-[-16px_16px_0px_0px] shadow-clementine"
+          />
         </div>
       </div>
     </div>

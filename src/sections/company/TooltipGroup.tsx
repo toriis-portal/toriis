@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import type { Company, ESG } from '@prisma/client'
 
-import { mainParagraphStyle } from '../../utils/contentfulOptions'
+import { mainParagraphStyle } from '../../utils/renderer'
 import { Tag, ToolTip } from '../../components'
 import { envGradeToColor, assetAmountToString } from '../../utils/helpers'
 import type { SectorEntry, IndustryEntry } from '../../types'
@@ -30,7 +30,7 @@ const CompanyTooltipGroup: FC<CompanyTooltipGroupProps> = ({
   return (
     <div
       className={clsx(
-        'mx-8 flex flex-wrap items-center justify-between gap-y-4',
+        'flex max-w-full flex-wrap items-center justify-between gap-y-2 px-8 md:gap-y-4',
         className,
       )}
     >

@@ -9,6 +9,7 @@ import {
   PrimaryButton,
   Tag,
   InviteAdminBar,
+  Toast,
 } from '../../components'
 import { api } from '../../utils/api'
 import { AdminNavBar } from '../../components'
@@ -28,6 +29,14 @@ const AdminAdminPage: FC = () => {
     },
   })
 
+  const deleteWhitelistedUsersMutation =
+    api.user.deleteManyWhitelistedUsers.useMutation({
+      async onSuccess() {
+        setUsersToDelete([])
+        await refetch()
+      },
+    })
+
   const updateEmailsMutation = api.user.updateUserEmailPreference.useMutation({
     async onSuccess() {
       setUsersEmailUpdate([])
@@ -45,6 +54,7 @@ const AdminAdminPage: FC = () => {
 
   const handleUpdateUsers = () => {
     updateEmailsMutation.mutate({ ids: usersEmailUpdate })
+    deleteWhitelistedUsersMutation.mutate({ ids: usersToDelete })
     deleteUsersMutation.mutate({ ids: usersToDelete })
     setEdit(false)
   }
@@ -95,13 +105,13 @@ const AdminAdminPage: FC = () => {
             className="w-3/4"
             users={data}
             editEnabled={edit}
-            onTrash={(currentId) => {
+            onTrash={(currentId: string) => {
               setUsersToDelete([...usersToDelete, currentId])
             }}
-            onUndo={(currentId) => {
+            onUndo={(currentId: string) => {
               setUsersToDelete(usersToDelete.filter((id) => id !== currentId))
             }}
-            onCheck={(currentId) => {
+            onCheck={(currentId: string) => {
               setUsersEmailUpdate(
                 !usersEmailUpdate.includes(currentId)
                   ? [...usersEmailUpdate, currentId]
@@ -120,10 +130,13 @@ const AdminAdminPage: FC = () => {
           </div>
 
           {deleteUsersMutation.error && (
-            <p>Something went wrong! {deleteUsersMutation.error.message}</p>
+            <Toast type="error" message={deleteUsersMutation.error.message} />
+          )}
+          {deleteUsersMutation.isSuccess && (
+            <Toast type="success" message="Successfully deleted users!" />
           )}
           {updateEmailsMutation.error && (
-            <p>Something went wrong! {updateEmailsMutation.error.message}</p>
+            <Toast type="error" message={updateEmailsMutation.error.message} />
           )}
 
           <div className="mb-20 w-3/4">
@@ -134,7 +147,7 @@ const AdminAdminPage: FC = () => {
                 color="clementine"
               />
             </div>
-            <InviteAdminBar />
+            <InviteAdminBar refetch={refetch} />
           </div>
         </div>
       </>

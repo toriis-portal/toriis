@@ -2,7 +2,7 @@ import type { FC } from 'react'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import type { Document } from '@contentful/rich-text-types'
 
-import { mainParagraphStyle } from '../../utils/contentfulOptions'
+import { mainParagraphStyle } from '../../utils/renderer'
 import { HighlightedTitle, ClimateClock } from '../../components'
 
 interface FossilFuelsBadProps {
@@ -21,7 +21,7 @@ const FossilFuelsBad: FC<FossilFuelsBadProps> = ({ text, caption }) => {
       <div className="px-12 pb-6">
         {documentToReactComponents(text, mainParagraphStyle)}
         <ClimateClock />
-        <div className="bg-white p-6">
+        <div className="rounded-md bg-white p-6">
           {documentToReactComponents(caption, mainParagraphStyle)}
         </div>
       </div>

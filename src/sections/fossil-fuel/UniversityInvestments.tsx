@@ -3,8 +3,8 @@ import type { Asset } from 'contentful'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import type { Document } from '@contentful/rich-text-types'
 
-import { mainParagraphStyle } from '../../utils/contentfulOptions'
-import { HighlightedTitle, ImageWithCaption, Tag } from '../../components'
+import { mainParagraphStyle } from '../../utils/renderer'
+import { HighlightedTitle, Tag, EmissionTreeMap } from '../../components'
 
 interface UniversityInvestmentsProps {
   img: Asset
@@ -26,7 +26,11 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
           title={img.fields.title}
           className="mb-1 w-4 rounded-md bg-clementine/20 text-black"
         />
-        <ImageWithCaption img={img} />
+        <div className="flex justify-center">
+          <div className="w-3/4">
+            <EmissionTreeMap />
+          </div>
+        </div>
         <div>{documentToReactComponents(caption, mainParagraphStyle)}</div>
       </div>
     </div>
