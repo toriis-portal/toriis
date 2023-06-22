@@ -76,7 +76,7 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
 
       <div id="uofiInvestments" className="pt-10">
         <UniversityInvestments
-          img={fossilFuelPageEntries['treeMap']}
+          flag="financedEmissions"
           caption={fossilFuelPageEntries['uofIInvestments']}
         />
       </div>
