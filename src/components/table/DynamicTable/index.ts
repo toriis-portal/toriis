@@ -1,2 +1,4 @@
-export { DynamicTable } from './DynamicTable'
-export { PaginatedDynamicTable } from './PaginatedDynamicTable'
+import DynamicTable from './DynamicTable'
+import PaginatedDynamicTable from './PaginatedDynamicTable'
+
+export { DynamicTable, PaginatedDynamicTable }

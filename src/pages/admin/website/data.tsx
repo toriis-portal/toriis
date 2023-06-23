@@ -12,15 +12,15 @@ import type {
 import type { Company } from '@prisma/client'
 
 import { AdminNavBar, TabButton } from '../../../components'
-import { DynamicPaginatedAdminTable } from '../../../components/Table/DynamicPaginatedAdminTable'
+import { DynamicPaginatedAdminTable } from '../../../components/table/DynamicPaginatedAdminTable'
 import { api } from '../../../utils/api'
-import type { Column } from '../../../components/Table/DynamicTable/DynamicTable'
+import type { Column } from '../../../components/table/DynamicTable/DynamicTable'
 import {
   EmissionColumns,
   EnergyColumns,
   FuelColumns,
 } from '../../../utils/companyColumns'
-import { getColumns } from '../../../components/Table/DynamicTable/Columns'
+import { getColumns } from '../../../components/table/DynamicTable/Columns'
 
 interface baseChangedEntries {
   id: string

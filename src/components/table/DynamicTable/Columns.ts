@@ -7,7 +7,7 @@ import type {
 } from '@prisma/client'
 import { Dataset } from '@prisma/client'
 
-import type { Column } from '../../../components/Table/DynamicTable/DynamicTable'
+import type { Column } from '../../../components/table/DynamicTable/DynamicTable'
 import { IndustryEnum, sectorEnum } from '../../../utils/enums'
 
 const errorStyle = 'border-2 border-pumpkin'

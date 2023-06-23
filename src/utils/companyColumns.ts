@@ -6,7 +6,7 @@ import type {
   Investment,
 } from '@prisma/client'
 
-import type { Column } from '../components/Table/DynamicTable/DynamicTable'
+import type { Column } from '../components/table/DynamicTable/DynamicTable'
 
 import { IndustryEnum, sectorEnum } from './enums'
 

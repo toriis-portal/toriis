@@ -1,7 +1,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 
-import DynamicTable from './DynamicTable'
 import type { BaseTableRowGeneric, DynamicTableProps } from './DynamicTable'
+import { DynamicTable } from './DynamicTable'
 
 /**
  * Paginated interface that describes the properties of a paginated table
@@ -25,7 +25,6 @@ export const PaginatedDynamicTable = <
   capturePageChanges,
   ...tableProps
 }: Props<TableRow>) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { rowCount: _rowCount, pageCount, page, onPageChange } = paginated ?? {}
 
   const handlePageChange = (page: number, changeBy: number) => {
@@ -54,3 +53,5 @@ export const PaginatedDynamicTable = <
     </div>
   )
 }
+
+export default PaginatedDynamicTable

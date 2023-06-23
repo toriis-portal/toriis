@@ -13,9 +13,9 @@ import type {
 
 import { AdminNavBar, PrimaryButton, Toast } from '../../../components'
 import { api } from '../../../utils/api'
-import { DynamicTable } from '../../../components/Table/DynamicTable'
-import { getColumns } from '../../../components/Table/DynamicTable/Columns'
-import type { Column } from '../../../components/Table/DynamicTable/DynamicTable'
+import { DynamicTable } from '../../../components/table/DynamicTable'
+import { getColumns } from '../../../components/table/DynamicTable/Columns'
+import type { Column } from '../../../components/table/DynamicTable/DynamicTable'
 import type { StrictUpdateType } from '../../../types'
 
 const ReviewPage: FC = () => {
@@ -48,6 +48,8 @@ const ReviewPage: FC = () => {
     { id: requestId },
     { enabled: !!requestId, refetchOnWindowFocus: false, retry: false },
   )
+
+  console.log(data)
 
   type DataDiffType = {
     old: Company[] | Investment[]
