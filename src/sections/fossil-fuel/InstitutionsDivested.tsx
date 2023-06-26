@@ -27,7 +27,10 @@ const InstitutionsDivested: FC<institutionsDivestedProps> = ({
       />
       <div className="body-small pl-16 pt-2 pb-8 text-footnoteGray">
         source:
-        https://en.wikipedia.org/wiki/Fossil_fuel_divestment#Colleges_and_universities_in_the_US
+        <a href="https://en.wikipedia.org/wiki/Fossil_fuel_divestment#Colleges_and_universities_in_the_US">
+          {' '}
+          https://en.wikipedia.org/wiki/Fossil_fuel_divestment#Governments_and_pension_funds_in_the_US
+        </a>
       </div>
     </>
   )
