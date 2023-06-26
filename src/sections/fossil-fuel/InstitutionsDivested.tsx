@@ -1,6 +1,7 @@
 import type { FC } from 'react'
 import type { Document } from '@contentful/rich-text-types'
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
 import { Carousel, HighlightedTitle } from '../../components'
 
@@ -8,10 +9,12 @@ import { parseEntryToColumns } from './SchoolsDivested'
 
 interface institutionsDivestedProps {
   institutionEntries: Document
+  footnote: Document
 }
 
 const InstitutionsDivested: FC<institutionsDivestedProps> = ({
   institutionEntries,
+  footnote,
 }) => {
   return (
     <>
@@ -32,11 +35,7 @@ const InstitutionsDivested: FC<institutionsDivestedProps> = ({
         variant="clementine"
       />
       <div className="body-small pl-16 pt-2 pb-8 text-footnoteGray">
-        source:
-        <a href="https://en.wikipedia.org/wiki/Fossil_fuel_divestment#Colleges_and_universities_in_the_US">
-          {' '}
-          https://en.wikipedia.org/wiki/Fossil_fuel_divestment#Governments_and_pension_funds_in_the_US
-        </a>
+        {documentToReactComponents(footnote)}
       </div>
     </>
   )

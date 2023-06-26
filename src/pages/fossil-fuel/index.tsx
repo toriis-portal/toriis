@@ -109,11 +109,13 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
       <div id="divestedSchools" className="pt-20">
         <SchoolsDivested
           schoolEntries={fossilFuelPageEntries['divestedSchoolsNew']}
+          footnote={fossilFuelPageEntries['divestedSchoolsFootnote']}
         />
       </div>
       <div id="divestedInstitutions" className="pt-20">
         <InstitutionsDivested
           institutionEntries={fossilFuelPageEntries['divestedInstitutionsNew']}
+          footnote={fossilFuelPageEntries['divestedInstitutionsFootnote']}
         />
       </div>
       <Footer />
