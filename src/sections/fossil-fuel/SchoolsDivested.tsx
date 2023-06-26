@@ -9,6 +9,23 @@ interface schoolsDivestedProps {
 }
 
 /**
+ * Parse a string of the type "<a href="https://www.insidehighered.com/quicktakes/2020/04/22/american-u-divests-fossil-fuels">American University</a>"" to HTML
+ *
+ * @param str string of the type <a href="https://www.insidehighered.com/quicktakes/2020/04/22/american-u-divests-fossil-fuels">American University</a>
+ * @returns html of the type <a href="https://www.insidehighered.com/quicktakes/2020/04/22/american-u-divests-fossil-fuels" target="_blank">American University</a>
+ */
+const parseHREFStringToHTML = (str: string): React.ReactNode => {
+  const list = str.split('"')
+  const link = list[1]
+  const value = list[2]?.slice(1, -4)
+  return (
+    <a href={link} target="_blank" rel="noreferrer">
+      {value}
+    </a>
+  )
+}
+
+/**
  * Parse string of divested entities into an array of React nodes for Carousel
  *
  * @param entry Divested entities as a string, separated by new line
@@ -40,11 +57,9 @@ export const parseEntryToColumns = (
           .map((column, i) => (
             <ul key={i}>
               {column.map((item, j) => (
-                <li
-                  className="py-2"
-                  key={j}
-                  dangerouslySetInnerHTML={{ __html: item }}
-                ></li>
+                <li className="py-2" key={j}>
+                  {parseHREFStringToHTML(item)}
+                </li>
               ))}
             </ul>
           ))}
