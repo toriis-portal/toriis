@@ -22,21 +22,6 @@ export const parseEntryToColumns = (
   numCols: number,
 ): React.ReactNode[] => {
   // Segment string by new line
-
-  console.log(entry)
-
-  // const dict: Record<string, string> = {};
-  // const tmp1 = (JSON.parse(JSON.stringify(entry)))
-  // const jsonResponse = tmp1.content[0].content as [{ nodeType: string; content?: { value: string }[]; data: { uri: string } }]
-
-  // jsonResponse.forEach((item: { nodeType: string; content?: { value: string }[]; data: { uri: string } }) => {
-  //   if (item.nodeType === "hyperlink") {
-  //     const value = item.content?.[0]?.value ?? "";
-  //     const link = item.data.uri;
-  //     dict[value] = link;
-  //   }
-  // });
-
   const list = entry.slice(3, -4).split('\n')
 
   // Parse into a 2D array by numRows
