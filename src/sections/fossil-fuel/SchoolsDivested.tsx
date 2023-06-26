@@ -1,6 +1,6 @@
 import type { FC } from 'react'
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import type { Document } from '@contentful/rich-text-types'
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
 
 import { Carousel, HighlightedTitle } from '../../components'
 
@@ -17,13 +17,27 @@ interface schoolsDivestedProps {
  * @returns React nodes array for Carousel
  */
 export const parseEntryToColumns = (
-  entry: React.ReactNode,
+  entry: string,
   numRows: number,
   numCols: number,
 ): React.ReactNode[] => {
   // Segment string by new line
 
-  const list = entry ? entry.toString().split('\n') : ['']
+  console.log(entry)
+
+  // const dict: Record<string, string> = {};
+  // const tmp1 = (JSON.parse(JSON.stringify(entry)))
+  // const jsonResponse = tmp1.content[0].content as [{ nodeType: string; content?: { value: string }[]; data: { uri: string } }]
+
+  // jsonResponse.forEach((item: { nodeType: string; content?: { value: string }[]; data: { uri: string } }) => {
+  //   if (item.nodeType === "hyperlink") {
+  //     const value = item.content?.[0]?.value ?? "";
+  //     const link = item.data.uri;
+  //     dict[value] = link;
+  //   }
+  // });
+
+  const list = entry.slice(3, -4).split('\n')
 
   // Parse into a 2D array by numRows
   const segmentedList: string[][] = []
@@ -65,7 +79,7 @@ const SchoolsDivested: FC<schoolsDivestedProps> = ({ schoolEntries }) => {
       </div>
       <Carousel
         carouselChildren={parseEntryToColumns(
-          documentToReactComponents(schoolEntries),
+          documentToHtmlString(schoolEntries),
           6,
           3,
         )}

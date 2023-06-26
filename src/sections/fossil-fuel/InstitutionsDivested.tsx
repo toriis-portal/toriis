@@ -1,11 +1,13 @@
 import type { FC } from 'react'
+import type { Document } from '@contentful/rich-text-types'
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
 
 import { Carousel, HighlightedTitle } from '../../components'
 
 import { parseEntryToColumns } from './SchoolsDivested'
 
 interface institutionsDivestedProps {
-  institutionEntries: string
+  institutionEntries: Document
 }
 
 const InstitutionsDivested: FC<institutionsDivestedProps> = ({
@@ -21,7 +23,11 @@ const InstitutionsDivested: FC<institutionsDivestedProps> = ({
         />
       </div>
       <Carousel
-        carouselChildren={parseEntryToColumns(institutionEntries, 6, 3)}
+        carouselChildren={parseEntryToColumns(
+          documentToHtmlString(institutionEntries),
+          6,
+          3,
+        )}
         controlSize="sm"
         variant="clementine"
       />

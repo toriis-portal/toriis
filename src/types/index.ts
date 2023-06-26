@@ -90,6 +90,7 @@ export interface FossilFuelPage {
   divestedSchools: string
   divestedSchoolsNew: Document
   divestedInstitutions: string
+  divestedInstitutionsNew: Document
 }
 
 export interface CompanyDetailsEntry {
