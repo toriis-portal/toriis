@@ -15,7 +15,7 @@ const InstitutionsDivested: FC<institutionsDivestedProps> = ({
     <>
       <div className="bg-white px-12">
         <HighlightedTitle
-          title="Institutions That Have Divested"
+          title="Governments & Pension Funds That Have Divested"
           size="large"
           color="clementine"
         />

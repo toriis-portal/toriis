@@ -59,7 +59,10 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
     { path: 'warming', text: 'What 1.5C Warming Means' },
     { path: 'divestmentCase', text: 'The Case For Institutional Divestments' },
     { path: 'divestedSchools', text: 'Schools That Have Divested ' },
-    { path: 'divestedInstitutions', text: 'Institutions That Have Divested' },
+    {
+      path: 'divestedInstitutions',
+      text: 'Governments & Pension Funds That Have Divested',
+    },
   ]
   return (
     <>
