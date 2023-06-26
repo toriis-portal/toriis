@@ -55,9 +55,11 @@ export const parseEntryToColumns = (
           .map((column, i) => (
             <ul key={i}>
               {column.map((item, j) => (
-                <li className="py-2" key={j}>
-                  {item}
-                </li>
+                <li
+                  className="py-2"
+                  key={j}
+                  dangerouslySetInnerHTML={{ __html: item }}
+                ></li>
               ))}
             </ul>
           ))}
