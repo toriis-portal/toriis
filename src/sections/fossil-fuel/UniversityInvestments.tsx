@@ -1,10 +1,9 @@
 import type { FC } from 'react'
-import type { Asset } from 'contentful'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import type { Document } from '@contentful/rich-text-types'
 
 import { mainParagraphStyle } from '../../utils/renderer'
-import { HighlightedTitle, Tag, EmissionTreeMap } from '../../components'
+import { HighlightedTitle, EmissionTreeMap } from '../../components'
 
 interface UniversityInvestmentsProps {
   caption: Document
