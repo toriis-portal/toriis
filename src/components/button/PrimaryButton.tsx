@@ -23,6 +23,7 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
   ...props
 }) => {
   const buttonStyle = clsx(
+    'flex flex-row items-center',
     'rounded border-2 border-solid',
     'rounded px-5 py-1',
     'shadow-[-8px_8px_0px_0px]',
@@ -43,19 +44,15 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
       {link ? (
         <Link href={link}>
           <button onClick={onClick} className={buttonStyle} {...props}>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              {text}
-              {children}
-            </div>
+            {text}
+            {children}
             <ArrowRightIcon className="ml-1 inline h-9 w-5 stroke-current stroke-1" />
           </button>
         </Link>
       ) : (
         <button onClick={onClick} className={buttonStyle} {...props}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            {text}
-            {children}
-          </div>
+          {text}
+          {children}
         </button>
       )}
     </div>
