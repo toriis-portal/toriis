@@ -7,13 +7,9 @@ import { mainParagraphStyle } from '../../utils/renderer'
 import { HighlightedTitle, Tag, EmissionTreeMap } from '../../components'
 
 interface UniversityInvestmentsProps {
-  img: Asset
   caption: Document
 }
-const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
-  img,
-  caption,
-}) => {
+const UniversityInvestments: FC<UniversityInvestmentsProps> = ({ caption }) => {
   return (
     <div className="bg-white px-12">
       <HighlightedTitle
@@ -22,10 +18,6 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
         color="clementine"
       />
       <div className="px-12">
-        <Tag
-          title={img.fields.title}
-          className="mb-1 w-4 rounded-md bg-clementine/20 text-black"
-        />
         <div className="flex justify-center">
           <div className="w-3/4">
             <EmissionTreeMap />
