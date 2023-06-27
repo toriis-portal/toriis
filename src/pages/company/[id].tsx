@@ -126,7 +126,7 @@ const Company: FC<CompanyDetailsProps> = ({
   return (
     <>
       <div className="mt-6 ml-8">
-        <BackButton />
+        <BackButton link="/investments" />
       </div>
       <div className="mb-20 flex flex-col flex-wrap px-12 lg:px-24">
         <div className="flex flex-col items-center ">
