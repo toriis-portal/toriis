@@ -9,7 +9,8 @@ interface PrimaryButtonProps
   link?: string
   onClick?: () => void
   className?: string
-  variant?: 'cobalt' | 'clementine'
+  variant?: 'cobalt' | 'clementine' | 'clementine-toggled'
+  children?: React.ReactNode
 }
 
 const PrimaryButton: FC<PrimaryButtonProps> = ({
@@ -18,9 +19,11 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
   onClick,
   className = '',
   variant = 'cobalt',
+  children,
   ...props
 }) => {
   const buttonStyle = clsx(
+    'flex flex-row items-center',
     'rounded border-2 border-solid',
     'rounded px-5 py-1',
     'shadow-[-8px_8px_0px_0px]',
@@ -30,6 +33,8 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
         variant === 'cobalt',
       'bg-white border-clementine shadow-clementine hover:shadow-clementine':
         variant === 'clementine',
+      'bg-lightClementine border-clementine shadow-clementine hover:shadow-clementine':
+        variant === 'clementine-toggled',
     },
     className,
   )
@@ -38,14 +43,16 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
     <div>
       {link ? (
         <Link href={link}>
-          <button className={buttonStyle} {...props}>
+          <button onClick={onClick} className={buttonStyle} {...props}>
             {text}
+            {children}
             <ArrowRightIcon className="ml-1 inline h-9 w-5 stroke-current stroke-1" />
           </button>
         </Link>
       ) : (
         <button onClick={onClick} className={buttonStyle} {...props}>
           {text}
+          {children}
         </button>
       )}
     </div>

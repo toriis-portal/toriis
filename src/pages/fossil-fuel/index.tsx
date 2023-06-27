@@ -79,6 +79,7 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
 
       <div id="uofiInvestments" className="pt-10">
         <UniversityInvestments
+          flag="financedEmissions"
           caption={fossilFuelPageEntries['uofIInvestments']}
         />
       </div>

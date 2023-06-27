@@ -19,9 +19,9 @@ const ToolTip: FC<TitleProps> = ({ title, details, children }) => {
         onMouseEnter={() => setIsShown(true)}
         onMouseLeave={() => setIsShown(false)}
       >
-        <button className={clsx('bg-primary rounded')}>
+        <div className={clsx('bg-primary rounded')}>
           <InformationCircleIcon className="w-6" />
-        </button>
+        </div>
         {isShown && (
           <div
             className={clsx(
