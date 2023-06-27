@@ -77,9 +77,9 @@ export const Footer: FC = () => (
 
           <Link
             className="bg-red text-clementine"
-            href="mailto:uiuc.secs@gmail.com"
+            href="mailto:info@toriis.earth"
           >
-            uiuc.secs@gmail.com
+            info@toriis.earth
           </Link>
         </div>
 
