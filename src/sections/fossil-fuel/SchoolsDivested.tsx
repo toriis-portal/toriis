@@ -2,6 +2,8 @@ import type { FC } from 'react'
 import type { Document } from '@contentful/rich-text-types'
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
+import Link from 'next/link'
 
 import { Carousel, HighlightedTitle } from '../../components'
 
@@ -14,16 +16,22 @@ interface schoolsDivestedProps {
  * Parse a string of the type "<a href="https://www.insidehighered.com/quicktakes/2020/04/22/american-u-divests-fossil-fuels">American University</a>"" to HTML
  *
  * @param str string of the type <a href="https://www.insidehighered.com/quicktakes/2020/04/22/american-u-divests-fossil-fuels">American University</a>
- * @returns html of the type <a href="https://www.insidehighered.com/quicktakes/2020/04/22/american-u-divests-fossil-fuels" target="_blank">American University</a>
+ * @returns html to be rendered
  */
 const parseHREFStringToHTML = (str: string): React.ReactNode => {
   const list = str.split('"')
   const link = list[1]
   const value = list[2]?.slice(1, -4)
   return (
-    <a href={link} target="_blank" rel="noreferrer">
+    <Link
+      href={link as string}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="underline"
+    >
       {value}
-    </a>
+      <ArrowUpRightIcon className="align-self-start ml-0.5 inline h-[1em] w-[1em] stroke-current" />
+    </Link>
   )
 }
 
