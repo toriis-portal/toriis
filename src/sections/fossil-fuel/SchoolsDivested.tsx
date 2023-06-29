@@ -26,9 +26,9 @@ interface schoolsDivestedProps {
  * @returns HTML to be rendered
  */
 const parseHREFStringToHTML = (str: string): React.ReactNode => {
-  const list = str.split('"')
-  const link = list[1]
-  const value = list[2]?.slice(1, -4)
+  const segmentedStr = str.split('"')
+  const link = segmentedStr[1]
+  const value = segmentedStr[2]?.slice(1, -4)
   return (
     <Link
       href={link as string}
