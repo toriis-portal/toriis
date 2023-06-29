@@ -88,7 +88,11 @@ export interface FossilFuelPage {
   divestmentGraph: Asset
   divestmentSource: Document
   divestedSchools: string
+  divestedSchoolsNew: Document
+  divestedSchoolsFootnote: Document
   divestedInstitutions: string
+  divestedInstitutionsNew: Document
+  divestedInstitutionsFootnote: Document
 }
 
 export interface CompanyDetailsEntry {
