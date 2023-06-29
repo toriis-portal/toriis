@@ -13,10 +13,17 @@ interface schoolsDivestedProps {
 }
 
 /**
- * Parse a string of the type "<a href="https://www.insidehighered.com/quicktakes/2020/04/22/american-u-divests-fossil-fuels">American University</a>"" to HTML
+ * Purpose: Parse a string of the type "<a href="https://www.insidehighered.com/quicktakes/2020/04/22/american-u-divests-fossil-fuels">American University</a>"" to
+ *          <Link> ... </Link> HTML class
+ *
+ * Rationale: When switching over to contentful richtext, we want to maintain the general functionality of the `parseEntryToColumns` function (i.e. take in a text
+ *            list from contentful, and create "array of React nodes for Carousel"). To do this, we get our string of divested entries by calling the contentful
+ *            function `documentToHtmlString()`, which returns a string of consecutive <a> ... </a> HTML classes wrapped inside a <p> </p> HTML class. We then unwrap the
+ *            <p> ... </p> class and turn the string of consecutive <a> ... </a> into a list to be parsed (see `const list = entry.slice(3, -4).split('\n')`).
+ *            Thus, this function is needed to parse the contentful richtext into the correct <Link> ... </Link> HTML class to be displayed.
  *
  * @param str string of the type <a href="https://www.insidehighered.com/quicktakes/2020/04/22/american-u-divests-fossil-fuels">American University</a>
- * @returns html to be rendered
+ * @returns HTML to be rendered
  */
 const parseHREFStringToHTML = (str: string): React.ReactNode => {
   const list = str.split('"')
@@ -48,7 +55,10 @@ export const parseEntryToColumns = (
   numRows: number,
   numCols: number,
 ): React.ReactNode[] => {
-  // Segment string by new line
+  /*
+   * Segment string by new line. We slice by (3, -4) because the documentToHtmlString function from contentful wraps <a> ... </a> classes,
+   * which we want, in a <p> </p> class, which we do not want. So we cut out <p> (3 characters) from the front and </p> (4 characters) from the back.
+   */
   const list = entry.slice(3, -4).split('\n')
 
   // Parse into a 2D array by numRows
