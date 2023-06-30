@@ -195,10 +195,7 @@ const InvestmentPage: FC = () => {
               }}
               shouldClearChecked={lastSearchIsEmpty}
             />
-            <ToolTip
-              title="Definition"
-              details={TOOLTIP_DEFINITIONS.SECTOR}
-            />
+            <ToolTip title="Definition" details={TOOLTIP_DEFINITIONS.SECTOR} />
           </div>
           <div className={SelectGroupStyle}>
             <Select
@@ -299,7 +296,7 @@ const InvestmentPage: FC = () => {
                 {'('}
                 {data?.pages
                   ? (data.pages.length - 1) * limit +
-                  (data.pages[data.pages.length - 1]?.items.length || 0)
+                    (data.pages[data.pages.length - 1]?.items.length || 0)
                   : 0}
                 {' results)'}
               </p>

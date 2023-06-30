@@ -112,4 +112,6 @@ export const TOOLTIP_DEFINITIONS = {
   ESG: 'An Environmental, Social, and Governance (ESG) rating that aims to measure how sustainably a company is conducting business and managing ESG risk factors.',
   NET_ASSET_VAL:
     "The total market value of all of a company's corporate bonds.",
+  FINANCED_EMISSIONS:
+    'Greenhouse gas (GHG) emissions indirectly caused by financial activities, investments, or lending practices of individuals, organizations, or institutions that support projects or activities contributing to climate change.',
 }
