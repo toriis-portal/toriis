@@ -10,6 +10,7 @@ import {
   PrimaryButton,
   ToolTip,
 } from '../../components'
+import { TOOLTIP_DEFINITIONS } from '../../utils/constants'
 
 interface UniversityInvestmentsProps {
   flag: 'financedEmissions' | 'netAssetValue'
@@ -42,13 +43,10 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
             {
               <ToolTip
                 title={'Financed Emission'}
-                details={
-                  'Greenhouse gas (GHG) emissions indirectly caused by financial activities, investments, or lending practices of individuals, organizations, or institutions that support projects or activities contributing to climate change.'
-                }
+                details={TOOLTIP_DEFINITIONS.FINANCED_EMISSIONS}
               />
             }
           </PrimaryButton>
-
           <PrimaryButton
             text="Net Asset Value"
             onClick={() => setFlag('netAssetValue')}
@@ -59,9 +57,7 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
             {
               <ToolTip
                 title={'Net Asset Value'}
-                details={
-                  "The total market value of all of a company's corporate bonds."
-                }
+                details={TOOLTIP_DEFINITIONS.NET_ASSET_VAL}
               />
             }
           </PrimaryButton>

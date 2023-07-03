@@ -45,7 +45,7 @@ export const getServerSideProps = async () => {
       yahooFinanceDetails: detailsMap['Yahoo Finance'],
       carbonAccountingDetails: detailsMap['Carbon Accounting'],
       renewableEnergyDetails: detailsMap['Renewable Energy'],
-      esgExplanation: detailsMap['Renewable Energy'],
+      esgExplanation: detailsMap['ESG Explanation'],
       fuelDetails: Object.values(FuelEnum).map(
         (fuelName) => detailsMap[fuelName],
       ),

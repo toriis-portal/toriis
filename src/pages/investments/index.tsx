@@ -20,7 +20,7 @@ import {
 } from '../../components'
 import { api } from '../../utils/api'
 import { sectorEnum, envGradeEnum, netAssetValEnum } from '../../utils/enums'
-import { INDUSTRIES } from '../../utils/constants'
+import { INDUSTRIES, TOOLTIP_DEFINITIONS } from '../../utils/constants'
 
 interface FilterOptions {
   sectors: Sector[]
@@ -95,7 +95,7 @@ const initialFilterOptions: FilterOptions = {
   envGrade: [],
 }
 
-const SelectGroupStyle = clsx('flex flex-row gap-2 basis-1/4')
+const SelectGroupStyle = clsx('flex flex-row gap-2 basis-1/4 items-center')
 
 const InvestmentPage: FC = () => {
   const [companySearchQuery, setCompanySearchQuery] =
@@ -195,10 +195,7 @@ const InvestmentPage: FC = () => {
               }}
               shouldClearChecked={lastSearchIsEmpty}
             />
-            <ToolTip
-              title="Definition"
-              details="A sector is comprised of many industries and is used to describe large components of the overall economy (eg, Energy)."
-            />
+            <ToolTip title="Definition" details={TOOLTIP_DEFINITIONS.SECTOR} />
           </div>
           <div className={SelectGroupStyle}>
             <Select
@@ -220,7 +217,7 @@ const InvestmentPage: FC = () => {
             />
             <ToolTip
               title="Definition"
-              details="An industry is comprised of companies that are closely related in their business activities and is used to describe nuanced components of a larger sector (eg, Oil & Gas)."
+              details={TOOLTIP_DEFINITIONS.INDUSTRY}
             />
           </div>
           <div className={SelectGroupStyle}>
@@ -244,9 +241,7 @@ const InvestmentPage: FC = () => {
               title="Definition"
               details={
                 <div className="flex flex-col gap-2">
-                  An Environmental, Social, and Governance (ESG) rating that
-                  aims to measure how sustainably a company is conducting
-                  business and managing ESG risk factors.
+                  {TOOLTIP_DEFINITIONS.ESG}
                   <div>
                     <Tag
                       title="AAA"
@@ -284,7 +279,7 @@ const InvestmentPage: FC = () => {
             />
             <ToolTip
               title="Definition"
-              details="The total market value of all of a company's corporate bonds."
+              details={TOOLTIP_DEFINITIONS.NET_ASSET_VAL}
             />
           </div>
         </div>
