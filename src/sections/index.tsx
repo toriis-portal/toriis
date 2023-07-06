@@ -16,6 +16,12 @@ import InstitutionsDivested from './fossil-fuel/InstitutionsDivested'
 import SchoolsDivested from './fossil-fuel/SchoolsDivested'
 import UniversityInvestments from './fossil-fuel/UniversityInvestments'
 import WhatWarmingMeans from './fossil-fuel/WhatWarmingMeans'
+// Open Letter Page
+import Letter from './open-letter/letter'
+import SignLetter from './open-letter/sign-letter'
+import Signatories from './open-letter/signatories'
+import Momentum from './open-letter/momentum'
+
 export {
   InstitutionalDivestments,
   Landing,
@@ -32,4 +38,8 @@ export {
   SchoolsDivested,
   UniversityInvestments,
   WhatWarmingMeans,
+  Letter,
+  SignLetter,
+  Signatories,
+  Momentum,
 }

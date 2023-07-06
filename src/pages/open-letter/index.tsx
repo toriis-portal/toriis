@@ -1,4 +1,5 @@
 import { PrimaryNavBar, SecondaryNavBar } from '../../components'
+import { Letter, SignLetter, Signatories, Momentum } from '../../sections'
 
 const LetterPage = () => {
   const navItems = [
@@ -13,16 +14,16 @@ const LetterPage = () => {
       <SecondaryNavBar navItems={navItems} />
 
       <div id="openLetter" className="pt-10">
-        openLetter placeholder
+        <Letter />
       </div>
       <div id="signLetter" className="pt-10">
-        signLetter placeholder
+        <SignLetter />
       </div>
       <div id="signatories" className="pt-10">
-        signatories placeholder
+        <Signatories />
       </div>
       <div id="momentum" className="pt-10">
-        momentum placeholder
+        <Momentum />
       </div>
     </>
   )
