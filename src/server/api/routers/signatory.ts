@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
-import { createTRPCRouter, publicProcedure } from '../trpc'
+import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc'
 
 export const signatoryRouter = createTRPCRouter({
   addSignatory: publicProcedure
@@ -17,7 +17,7 @@ export const signatoryRouter = createTRPCRouter({
         zipCode: z.number().nullish(),
         bioLink: z.string().nullish(),
         twitter: z.string().nullish(),
-        optIn: z.boolean(),
+        shouldEmail: z.boolean(),
       }),
     )
     .mutation(async ({ input, ctx }) => {
@@ -46,7 +46,7 @@ export const signatoryRouter = createTRPCRouter({
           zipCode: input.zipCode,
           bioLink: input.bioLink,
           twitter: input.twitter,
-          optIn: input.optIn,
+          shouldEmail: input.shouldEmail,
         },
       })
 
@@ -67,4 +67,22 @@ export const signatoryRouter = createTRPCRouter({
     })
     return items
   }),
+
+  deleteManySignatories: protectedProcedure
+    .input(z.object({ ids: z.array(z.string()) }))
+    .mutation(async ({ input, ctx }) => {
+      const deleteSignatories = await ctx.prisma.signatories.deleteMany({
+        where: {
+          id: {
+            in: input.ids,
+          },
+        },
+      })
+      if (!deleteSignatories) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to delete signatory',
+        })
+      }
+    }),
 })
