@@ -218,4 +218,5 @@ model Signatories {
   zipCode     Int?
   bioLink     String?
   twitter     String?
+  optIn       Boolean
 }
