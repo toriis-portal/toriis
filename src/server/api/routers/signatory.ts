@@ -85,4 +85,40 @@ export const signatoryRouter = createTRPCRouter({
         })
       }
     }),
+
+  updateSignatoryEmailPreference: protectedProcedure
+    .input(z.object({ ids: z.array(z.string()) }))
+    .mutation(async ({ input, ctx }) => {
+      const promises = input.ids.map(async (_id) => {
+        const currentEmailVal = await ctx.prisma.signatories.findUnique({
+          where: {
+            id: _id,
+          },
+        })
+
+        if (!currentEmailVal) {
+          throw new TRPCError({
+            code: 'INTERNAL_SERVER_ERROR',
+            message: `Failed to retrieve current signatory's email value (id: ${_id})`,
+          })
+        }
+
+        return ctx.prisma.signatories.update({
+          where: {
+            id: _id,
+          },
+          data: {
+            shouldEmail: !currentEmailVal.shouldEmail,
+          },
+        })
+      })
+      const updateEmailSignatories = await Promise.all(promises)
+      if (!updateEmailSignatories) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to update signatory emails',
+        })
+      }
+      return updateEmailSignatories
+    }),
 })
