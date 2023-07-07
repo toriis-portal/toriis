@@ -55,4 +55,9 @@ export const signatoryRouter = createTRPCRouter({
         message: 'Signatory added',
       }
     }),
+
+  getSignatoriesCount: publicProcedure.query(async ({ ctx }) => {
+    const signatoriesCount = await ctx.prisma.signatories.count()
+    return signatoriesCount
+  }),
 })
