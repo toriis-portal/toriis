@@ -204,3 +204,18 @@ model WhitelistedUser {
   email  String  @unique
   userId String?
 }
+
+model Signatories {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  firstName   String
+  lastName    String
+  title       Json[]
+  institution Json[]
+  email       String   @unique
+  createdAt   DateTime @default(now())
+  city        String?
+  country     String?
+  zipCode     Int?
+  bioLink     String?
+  twitter     String?
+}
