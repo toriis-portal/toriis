@@ -205,7 +205,7 @@ model WhitelistedUser {
   userId String?
 }
 
-model Signatories {
+model Signatory {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   firstName   String
   lastName    String
