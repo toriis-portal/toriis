@@ -21,7 +21,7 @@ export const signatoryRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input, ctx }) => {
-      const existingSignatory = await ctx.prisma.signatories.findUnique({
+      const existingSignatory = await ctx.prisma.signatory.findUnique({
         where: {
           email: input.email,
         },
@@ -34,7 +34,7 @@ export const signatoryRouter = createTRPCRouter({
         })
       }
 
-      await ctx.prisma.signatories.create({
+      await ctx.prisma.signatory.create({
         data: {
           firstName: input.firstName,
           lastName: input.lastName,
@@ -57,12 +57,12 @@ export const signatoryRouter = createTRPCRouter({
     }),
 
   getSignatoriesCount: publicProcedure.query(async ({ ctx }) => {
-    const signatoriesCount = await ctx.prisma.signatories.count()
+    const signatoriesCount = await ctx.prisma.signatory.count()
     return signatoriesCount
   }),
 
   getSignatories: publicProcedure.query(async ({ ctx }) => {
-    const items = await ctx.prisma.signatories.findMany({
+    const items = await ctx.prisma.signatory.findMany({
       orderBy: { createdAt: 'asc' },
     })
     return items
@@ -71,7 +71,7 @@ export const signatoryRouter = createTRPCRouter({
   deleteManySignatories: protectedProcedure
     .input(z.object({ ids: z.array(z.string()) }))
     .mutation(async ({ input, ctx }) => {
-      const deleteSignatories = await ctx.prisma.signatories.deleteMany({
+      const deleteSignatories = await ctx.prisma.signatory.deleteMany({
         where: {
           id: {
             in: input.ids,
@@ -90,7 +90,7 @@ export const signatoryRouter = createTRPCRouter({
     .input(z.object({ ids: z.array(z.string()) }))
     .mutation(async ({ input, ctx }) => {
       const promises = input.ids.map(async (_id) => {
-        const currentEmailVal = await ctx.prisma.signatories.findUnique({
+        const currentEmailVal = await ctx.prisma.signatory.findUnique({
           where: {
             id: _id,
           },
@@ -103,7 +103,7 @@ export const signatoryRouter = createTRPCRouter({
           })
         }
 
-        return ctx.prisma.signatories.update({
+        return ctx.prisma.signatory.update({
           where: {
             id: _id,
           },
