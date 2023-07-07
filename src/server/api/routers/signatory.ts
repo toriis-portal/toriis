@@ -60,4 +60,11 @@ export const signatoryRouter = createTRPCRouter({
     const signatoriesCount = await ctx.prisma.signatories.count()
     return signatoriesCount
   }),
+
+  getSignatories: publicProcedure.query(async ({ ctx }) => {
+    const items = await ctx.prisma.signatories.findMany({
+      orderBy: { createdAt: 'asc' },
+    })
+    return items
+  }),
 })
