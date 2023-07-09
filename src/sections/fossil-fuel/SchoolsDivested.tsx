@@ -1,9 +1,45 @@
 import type { FC } from 'react'
+import type { Document } from '@contentful/rich-text-types'
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
+import Link from 'next/link'
 
 import { Carousel, HighlightedTitle } from '../../components'
 
 interface schoolsDivestedProps {
-  schoolEntries: string
+  schoolEntries: Document
+  footnote: Document
+}
+
+/**
+ * Purpose: Parse a string of the type "<a href="https://www.insidehighered.com/quicktakes/2020/04/22/american-u-divests-fossil-fuels">American University</a>"" to
+ *          <Link> ... </Link> HTML class
+ *
+ * Rationale: When switching over to contentful richtext, we want to maintain the general functionality of the `parseEntryToColumns` function (i.e. take in a text
+ *            list from contentful, and create "array of React nodes for Carousel"). To do this, we get our string of divested entries by calling the contentful
+ *            function `documentToHtmlString()`, which returns a string of consecutive <a> ... </a> HTML classes wrapped inside a <p> </p> HTML class. We then unwrap the
+ *            <p> ... </p> class and turn the string of consecutive <a> ... </a> into a list to be parsed (see `const list = entry.slice(3, -4).split('\n')`).
+ *            Thus, this function is needed to parse the contentful richtext into the correct <Link> ... </Link> HTML class to be displayed.
+ *
+ * @param str string of the type <a href="https://www.insidehighered.com/quicktakes/2020/04/22/american-u-divests-fossil-fuels">American University</a>
+ * @returns HTML to be rendered
+ */
+const parseHREFStringToHTML = (str: string): React.ReactNode => {
+  const segmentedStr = str.split('"')
+  const link = segmentedStr[1]
+  const value = segmentedStr[2]?.slice(1, -4)
+  return (
+    <Link
+      href={link as string}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="underline"
+    >
+      {value}
+      <ArrowUpRightIcon className="align-self-start ml-0.5 inline h-[1em] w-[1em] stroke-current" />
+    </Link>
+  )
 }
 
 /**
@@ -19,8 +55,11 @@ export const parseEntryToColumns = (
   numRows: number,
   numCols: number,
 ): React.ReactNode[] => {
-  // Segment string by new line
-  const list = entry.split('\n')
+  /*
+   * Segment string by new line. We slice by (3, -4) because the documentToHtmlString function from contentful wraps <a> ... </a> classes,
+   * which we want, in a <p> </p> class, which we do not want. So we cut out <p> (3 characters) from the front and </p> (4 characters) from the back.
+   */
+  const list = entry.slice(3, -4).split('\n')
 
   // Parse into a 2D array by numRows
   const segmentedList: string[][] = []
@@ -39,7 +78,7 @@ export const parseEntryToColumns = (
             <ul key={i}>
               {column.map((item, j) => (
                 <li className="py-2" key={j}>
-                  {item}
+                  {parseHREFStringToHTML(item)}
                 </li>
               ))}
             </ul>
@@ -50,7 +89,10 @@ export const parseEntryToColumns = (
   return carouselChildren
 }
 
-const SchoolsDivested: FC<schoolsDivestedProps> = ({ schoolEntries }) => {
+const SchoolsDivested: FC<schoolsDivestedProps> = ({
+  schoolEntries,
+  footnote,
+}) => {
   return (
     <>
       <div className="bg-white px-12">
@@ -61,13 +103,16 @@ const SchoolsDivested: FC<schoolsDivestedProps> = ({ schoolEntries }) => {
         />
       </div>
       <Carousel
-        carouselChildren={parseEntryToColumns(schoolEntries, 6, 3)}
+        carouselChildren={parseEntryToColumns(
+          documentToHtmlString(schoolEntries),
+          6,
+          3,
+        )}
         controlSize="sm"
         variant="lightBlue"
       />
       <div className="body-small pl-16 pt-2 text-footnoteGray">
-        source:
-        https://en.wikipedia.org/wiki/Fossil_fuel_divestment#Colleges_and_universities_in_the_US
+        {documentToReactComponents(footnote)}
       </div>
     </>
   )

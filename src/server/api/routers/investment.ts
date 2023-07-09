@@ -19,8 +19,11 @@ export const investmentRouter = createTRPCRouter({
         skip: skip,
       })
 
+      const count = await ctx.prisma.investment.count()
+
       return {
         items,
+        count,
       }
     }),
 })

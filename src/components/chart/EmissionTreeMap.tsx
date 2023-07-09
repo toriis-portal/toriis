@@ -1,8 +1,10 @@
 import type { FC } from 'react'
+import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import { Spinner } from 'flowbite-react'
 import type { ApexOptions } from 'apexcharts'
 
+import { sectorEnum } from '../../utils/enums'
 import { api } from '../../utils/api'
 import { assetAmountToString } from '../../utils/helpers'
 
@@ -15,57 +17,73 @@ interface EmissionData {
 }
 
 interface FossilFuelSeries {
-  fossilFuelClass: 'y' | 'n'
-  data: EmissionData[]
   name: string
+  data: EmissionData[]
 }
 
 interface SourceData {
   companyName: string
   companyId: string
   financedEmissions: number
+  netAssetVal: number
   fossilFuelClass: string
 }
 
-const formatSeries = (data: (SourceData | null)[]): FossilFuelSeries[] => {
-  const series: FossilFuelSeries[] = [
-    {
-      fossilFuelClass: 'y',
-      name: 'Fossil Fuel Companies',
-      data: [],
-    },
-    {
-      fossilFuelClass: 'n',
-      name: 'Other',
-      data: [],
-    },
-  ]
+interface TreemapProps {
+  flag: 'financedEmissions' | 'netAssetValue'
+}
 
-  for (const emission of data) {
-    if (!emission) continue
-    const dataPoint: EmissionData = {
-      x: emission.companyName,
-      y: emission.financedEmissions,
-      companyId: emission.companyId,
+const formatSeries = (
+  data: (SourceData | undefined)[],
+  flag: 'financedEmissions' | 'netAssetValue',
+): FossilFuelSeries[] => {
+  const fossilFuelClass = ['Fossil Fuel Companies'].concat(
+    Object.values(sectorEnum),
+  )
+
+  const series: FossilFuelSeries[] = fossilFuelClass.map((classification) => ({
+    name: classification,
+    data: [],
+  }))
+
+  data.forEach((company) => {
+    if (!company) return
+    const yVal =
+      flag === 'financedEmissions'
+        ? company.financedEmissions
+        : company.netAssetVal
+    const dataPoint = {
+      x: company.companyName,
+      y: yVal,
+      companyId: company.companyId,
     }
 
     const index = series.findIndex(
-      (item) => item.fossilFuelClass === emission.fossilFuelClass,
+      (item) => item.name === company.fossilFuelClass,
     )
 
     series[index]?.data.push(dataPoint)
-  }
+  })
 
-  return series
+  return series.filter((item) => item.data.length > 0)
 }
 
-const EmissionTreeMap: FC = () => {
+const EmissionTreeMap: FC<TreemapProps> = ({ flag }) => {
   const { data } = api.company.getEmissionsAndFFClass.useQuery<SourceData[]>(
     undefined,
     {
       refetchOnWindowFocus: false,
     },
   )
+
+  const [selectedData, setSelectedData] = useState<FossilFuelSeries[]>([])
+
+  useEffect(() => {
+    if (data) {
+      const formattedData = formatSeries(data, flag)
+      setSelectedData(formattedData)
+    }
+  }, [data, flag])
 
   if (!data)
     return (
@@ -78,7 +96,9 @@ const EmissionTreeMap: FC = () => {
     tooltip: {
       y: {
         formatter: function (val: number) {
-          return assetAmountToString(val) + ' metric tons CO2'
+          return flag === 'financedEmissions'
+            ? assetAmountToString(val) + ' metric tons CO2'
+            : '$' + assetAmountToString(val)
         },
       },
     },
@@ -86,7 +106,18 @@ const EmissionTreeMap: FC = () => {
     legend: {
       show: true,
     },
-    colors: ['#FFA902', '#0F81E8', '#FF6112', '#17292E'],
+    colors: [
+      '#FF6112',
+      '#FFA902',
+      '#FF4081',
+      '#0F81E8',
+      '#CD8500',
+      '#4CAF50',
+      '#AA66CC',
+      '#40D7D4',
+      '#335577',
+      '#17292E',
+    ],
     dataLabels: {
       enabled: true,
       dropShadow: {
@@ -126,16 +157,16 @@ const EmissionTreeMap: FC = () => {
     },
   }
 
-  const series: FossilFuelSeries[] = formatSeries(data)
+  const series: FossilFuelSeries[] = formatSeries(data, flag)
 
   return (
     <>
       <Chart
         options={options}
-        series={series}
+        series={selectedData}
         type="treemap"
         width="100%"
-        height="300"
+        height="460"
       />
     </>
   )

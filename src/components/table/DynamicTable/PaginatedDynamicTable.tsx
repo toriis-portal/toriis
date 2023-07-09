@@ -28,7 +28,7 @@ export const PaginatedDynamicTable = <
   const { rowCount: _rowCount, pageCount, page, onPageChange } = paginated ?? {}
 
   const handlePageChange = (page: number, changeBy: number) => {
-    if (page + changeBy > 0 && page + changeBy <= 10) {
+    if (page + changeBy > 0 && page + changeBy <= pageCount) {
       onPageChange(page + changeBy)
       capturePageChanges?.(page)
     }

@@ -59,7 +59,10 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
     { path: 'warming', text: 'What 1.5C Warming Means' },
     { path: 'divestmentCase', text: 'The Case For Institutional Divestments' },
     { path: 'divestedSchools', text: 'Schools That Have Divested ' },
-    { path: 'divestedInstitutions', text: 'Institutions That Have Divested' },
+    {
+      path: 'divestedInstitutions',
+      text: 'Governments & Pension Funds That Have Divested',
+    },
   ]
   return (
     <>
@@ -76,7 +79,7 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
 
       <div id="uofiInvestments" className="pt-10">
         <UniversityInvestments
-          img={fossilFuelPageEntries['treeMap']}
+          flag="financedEmissions"
           caption={fossilFuelPageEntries['uofIInvestments']}
         />
       </div>
@@ -106,12 +109,14 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
       </div>
       <div id="divestedSchools" className="pt-20">
         <SchoolsDivested
-          schoolEntries={fossilFuelPageEntries['divestedSchools']}
+          schoolEntries={fossilFuelPageEntries['divestedSchoolsNew']}
+          footnote={fossilFuelPageEntries['divestedSchoolsFootnote']}
         />
       </div>
       <div id="divestedInstitutions" className="pt-20">
         <InstitutionsDivested
-          institutionEntries={fossilFuelPageEntries['divestedInstitutions']}
+          institutionEntries={fossilFuelPageEntries['divestedInstitutionsNew']}
+          footnote={fossilFuelPageEntries['divestedInstitutionsFootnote']}
         />
       </div>
       <Footer />

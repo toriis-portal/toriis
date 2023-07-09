@@ -15,11 +15,6 @@ import { AdminNavBar, TabButton } from '../../../components'
 import { DynamicPaginatedAdminTable } from '../../../components/table/DynamicPaginatedAdminTable'
 import { api } from '../../../utils/api'
 import type { Column } from '../../../components/table/DynamicTable/DynamicTable'
-import {
-  EmissionColumns,
-  EnergyColumns,
-  FuelColumns,
-} from '../../../utils/companyColumns'
 import { getColumns } from '../../../components/table/DynamicTable/Columns'
 
 interface baseChangedEntries {
@@ -41,6 +36,7 @@ const UpdateData: FC = () => {
   )
   const [data, setData] = useState<UpdateTypesWithChangedEntries[]>([])
   const [rows, setRows] = useState<UpdateTypesWithChangedEntries[]>([])
+  const [count, setCount] = useState(0)
   const [skip, setSkip] = useState(0)
 
   const { data: investment } = api.investment.getInvestmentsBySkipTake.useQuery(
@@ -53,17 +49,14 @@ const UpdateData: FC = () => {
     skip: skip,
     take: BATCH_SIZE,
   })
-
   const { data: fuel } = api.fuel.getFuelsBySkipTake.useQuery({
     skip: skip,
     take: BATCH_SIZE,
   })
-
   const { data: emission } = api.emission.getEmissionsBySkipTake.useQuery({
     skip: skip,
     take: BATCH_SIZE,
   })
-
   const { data: energy } = api.energy.getEnergyBySkipTake.useQuery({
     skip: skip,
     take: BATCH_SIZE,
@@ -86,6 +79,7 @@ const UpdateData: FC = () => {
           }
         }),
       )
+      setCount(company?.count ?? 0)
       setColumns(getColumns('COMPANY', true) as DataSetColumns)
     } else if (dataset === 'INVESTMENT') {
       const investmentData = investment?.items ?? []
@@ -95,6 +89,7 @@ const UpdateData: FC = () => {
           changedEntries: [],
         })),
       )
+      setCount(investment?.count ?? 0)
       setColumns(getColumns('INVESTMENT', true) as DataSetColumns)
     } else if (dataset === 'FUEL') {
       const fuelData = fuel?.items ?? []
@@ -104,7 +99,8 @@ const UpdateData: FC = () => {
           changedEntries: [],
         })),
       )
-      setColumns(FuelColumns as DataSetColumns)
+      setCount(fuel?.count ?? 0)
+      setColumns(getColumns('FUEL', true) as DataSetColumns)
     } else if (dataset === 'EMISSION') {
       const emissionData = emission?.items ?? []
       setData(
@@ -113,7 +109,8 @@ const UpdateData: FC = () => {
           changedEntries: [],
         })),
       )
-      setColumns(EmissionColumns as DataSetColumns)
+      setCount(emission?.count ?? 0)
+      setColumns(getColumns('EMISSION', true) as DataSetColumns)
     } else if (dataset === 'ENERGY') {
       const energyData = energy?.items ?? []
       setData(
@@ -122,7 +119,8 @@ const UpdateData: FC = () => {
           changedEntries: [],
         })),
       )
-      setColumns(EnergyColumns as DataSetColumns)
+      setCount(energy?.count ?? 0)
+      setColumns(getColumns('ENERGY', true) as DataSetColumns)
     }
   }, [
     company,
@@ -186,6 +184,7 @@ const UpdateData: FC = () => {
             setSkip={setSkip}
             dataset={dataset}
             columns={columns}
+            rowCount={count}
           />
         </div>
       </div>

@@ -45,7 +45,7 @@ export const getServerSideProps = async () => {
       yahooFinanceDetails: detailsMap['Yahoo Finance'],
       carbonAccountingDetails: detailsMap['Carbon Accounting'],
       renewableEnergyDetails: detailsMap['Renewable Energy'],
-      esgExplanation: detailsMap['Renewable Energy'],
+      esgExplanation: detailsMap['ESG Explanation'],
       fuelDetails: Object.values(FuelEnum).map(
         (fuelName) => detailsMap[fuelName],
       ),
@@ -126,7 +126,7 @@ const Company: FC<CompanyDetailsProps> = ({
   return (
     <>
       <div className="mt-6 ml-8">
-        <BackButton />
+        <BackButton link="/investments" />
       </div>
       <div className="mb-20 flex flex-col flex-wrap px-12 lg:px-24">
         <div className="flex flex-col items-center ">

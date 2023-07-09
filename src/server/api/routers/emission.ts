@@ -19,8 +19,11 @@ export const emissionRouter = createTRPCRouter({
         skip: skip,
       })
 
+      const count = await ctx.prisma.emission.count()
+
       return {
         items,
+        count,
       }
     }),
 })

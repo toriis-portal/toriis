@@ -119,16 +119,17 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
           applyStyle: (row: Investment) => (row.coupon ? '' : errorStyle),
         },
       },
-      // {
-      //   key: 'maturityDate',
-      //   label: 'Maturity Date',
-      //   isEditable: isEditable,
-      //   ctrl: {
-      //     type: 'text',
-      //     render: (row) => row.maturityDate?.toISOString() ?? '',
-      //     applyStyle: (row: Investment) => (row.maturityDate?.toISOString() ? '' : errorStyle),
-      //   },
-      // },
+      {
+        key: 'maturityDate',
+        label: 'Maturity Date',
+        isEditable: false,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.maturityDate?.toISOString() ?? '',
+          applyStyle: (row: Investment) =>
+            row.maturityDate?.toISOString() ? '' : errorStyle,
+        },
+      },
       {
         key: 'quantity',
         label: 'Quantity',
@@ -172,226 +173,209 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
     ]
     return InvestmentColumns
   }
+  if (key == Dataset.FUEL) {
+    const FuelColumns: Column<Fuel>[] = [
+      {
+        key: 'year',
+        label: 'Year',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.year,
+        },
+      },
+      {
+        key: 'totalConsumption',
+        label: 'Total Consumption',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.totalConsumption ?? 0,
+        },
+      },
+      {
+        key: 'biodiesels',
+        label: 'Biodiesels',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.biodiesels ?? 0,
+        },
+      },
+      {
+        key: 'biogases',
+        label: 'Biogases',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.biogases ?? 0,
+        },
+      },
+      {
+        key: 'crudeOil',
+        label: 'Crude Oil',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.crudeOil ?? 0,
+        },
+      },
+      {
+        key: 'coal',
+        label: 'Coal',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.coal ?? 0,
+        },
+      },
+      {
+        key: 'oil',
+        label: 'Oil',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.oil ?? 0,
+        },
+      },
+      {
+        key: 'gas',
+        label: 'Gas',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.gas ?? 0,
+        },
+      },
+      {
+        key: 'otherBiomass',
+        label: 'Other Biomass',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.otherBiomass ?? 0,
+        },
+      },
+      {
+        key: 'sustainableBiomass',
+        label: 'Sustainable Biomass',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.sustainableBiomass ?? 0,
+        },
+      },
+      {
+        key: 'otherRenewable',
+        label: 'Other Renewable',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.otherRenewable ?? 0,
+        },
+      },
+      {
+        key: 'otherNonRenewable',
+        label: 'Other Non-Renewable',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.otherNonRenewable ?? 0,
+        },
+      },
+    ]
+    return FuelColumns
+  }
+  if (key == Dataset.EMISSION) {
+    const EmissionColumns: Column<Emission>[] = [
+      {
+        key: 'date',
+        label: 'Date',
+        isEditable: false,
+        ctrl: {
+          type: 'text',
+          render: (row) => row?.date?.toISOString() ?? '',
+        },
+      },
+      {
+        key: 'version',
+        label: 'Version',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.version ?? 0,
+        },
+      },
+      {
+        key: 'scopeOne',
+        label: 'Scope One',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.scopeOne ?? 0,
+        },
+      },
+      {
+        key: 'scopeTwo',
+        label: 'Scope Two',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.scopeTwo ?? 0,
+        },
+      },
+      {
+        key: 'scopeThree',
+        label: 'Scope Three',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.scopeThree ?? 0,
+        },
+      },
+    ]
+    return EmissionColumns
+  }
+  if (key == Dataset.ENERGY) {
+    const EnergyColumns: Column<Energy>[] = [
+      {
+        key: 'year',
+        label: 'Year',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.year ?? 0,
+        },
+      },
+      {
+        key: 'totalConsumption',
+        label: 'Total Consumption',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.totalConsumption ?? 0,
+        },
+      },
+      {
+        key: 'totalRenewableConsumption',
+        label: 'Total Renewable Consumption',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.totalRenewableConsumption ?? 0,
+        },
+      },
+      {
+        key: 'totalNonRenewableConsumption',
+        label: 'Total Non-Renewable Consumption',
+        isEditable: isEditable,
+        ctrl: {
+          type: 'text',
+          render: (row) => row.totalNonRenewableConsumption ?? 0,
+        },
+      },
+    ]
+    return EnergyColumns
+  }
   return []
 }
-
-export const FuelColumns: Column<Fuel>[] = [
-  {
-    key: 'year',
-    label: 'Year',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.year,
-      applyStyle: (row: Fuel) => (row.year ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'totalConsumption',
-    label: 'Total Consumption',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.totalConsumption ?? 0,
-      applyStyle: (row: Fuel) => (row.totalConsumption ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'biodiesels',
-    label: 'Biodiesels',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.biodiesels ?? 0,
-      applyStyle: (row: Fuel) => (row.biodiesels ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'biogases',
-    label: 'Biogases',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.biogases ?? 0,
-      applyStyle: (row: Fuel) => (row.biogases ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'crudeOil',
-    label: 'Crude Oil',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.crudeOil ?? 0,
-      applyStyle: (row: Fuel) => (row.crudeOil ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'coal',
-    label: 'Coal',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.coal ?? 0,
-      applyStyle: (row: Fuel) => (row.coal ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'oil',
-    label: 'Oil',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.oil ?? 0,
-      applyStyle: (row: Fuel) => (row.oil ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'gas',
-    label: 'Gas',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.gas ?? 0,
-      applyStyle: (row: Fuel) => (row.gas ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'otherBiomass',
-    label: 'Other Biomass',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.otherBiomass ?? 0,
-      applyStyle: (row: Fuel) => (row.otherBiomass ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'sustainableBiomass',
-    label: 'Sustainable Biomass',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.sustainableBiomass ?? 0,
-      applyStyle: (row: Fuel) => (row.sustainableBiomass ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'otherRenewable',
-    label: 'Other Renewable',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.otherRenewable ?? 0,
-      applyStyle: (row: Fuel) => (row.otherRenewable ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'otherNonRenewable',
-    label: 'Other Non-Renewable',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.otherNonRenewable ?? 0,
-      applyStyle: (row: Fuel) => (row.otherNonRenewable ? '' : errorStyle),
-    },
-  },
-]
-
-export const EmissionColumns: Column<Emission>[] = [
-  {
-    key: 'date',
-    label: 'Date',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row?.date?.toISOString() ?? '',
-      applyStyle: (row: Emission) => (row.date ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'version',
-    label: 'Version',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.version ?? 0,
-      applyStyle: (row: Emission) => (row.version ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'scopeOne',
-    label: 'Scope One',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.scopeOne ?? 0,
-      applyStyle: (row: Emission) => (row.scopeOne ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'scopeTwo',
-    label: 'Scope Two',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.scopeTwo ?? 0,
-      applyStyle: (row: Emission) => (row.scopeTwo ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'scopeThree',
-    label: 'Scope Three',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.scopeThree ?? 0,
-      applyStyle: (row: Emission) => (row.scopeThree ? '' : errorStyle),
-    },
-  },
-]
-
-export const EnergyColumns: Column<Energy>[] = [
-  {
-    key: 'year',
-    label: 'Year',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.year ?? 0,
-      applyStyle: (row: Energy) => (row.year ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'totalConsumption',
-    label: 'Total Consumption',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.totalConsumption ?? 0,
-      applyStyle: (row: Energy) => (row.totalConsumption ? '' : errorStyle),
-    },
-  },
-  {
-    key: 'totalRenewableConsumption',
-    label: 'Total Renewable Consumption',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.totalRenewableConsumption ?? 0,
-      applyStyle: (row: Energy) =>
-        row.totalRenewableConsumption ? '' : errorStyle,
-    },
-  },
-  {
-    key: 'totalNonRenewableConsumption',
-    label: 'Total Non-Renewable Consumption',
-    isEditable: true,
-    ctrl: {
-      type: 'text',
-      render: (row) => row.totalNonRenewableConsumption ?? 0,
-      applyStyle: (row: Energy) =>
-        row.totalNonRenewableConsumption ? '' : errorStyle,
-    },
-  },
-]

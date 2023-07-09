@@ -103,3 +103,15 @@ export const FOSSIL_FUEL_INDUSTRIES = [
 ]
 
 export const CONTENTFUL_LINK = 'https://app.contentful.com/spaces/gslvrj5c21wx/'
+
+export const TOOLTIP_DEFINITIONS = {
+  SECTOR:
+    'A sector is comprised of many industries and is used to describe large components of the overall economy (eg, Energy).',
+  INDUSTRY:
+    'An industry is comprised of companies that are closely related in their business activities and is used to describe nuanced components of a larger sector (eg, Oil & Gas).',
+  ESG: 'An Environmental, Social, and Governance (ESG) rating that aims to measure how sustainably a company is conducting business and managing ESG risk factors.',
+  NET_ASSET_VAL:
+    "The total market value of all of a company's corporate bonds.",
+  FINANCED_EMISSIONS:
+    'Greenhouse gas (GHG) emissions indirectly caused by financial activities, investments, or lending practices of individuals, organizations, or institutions that support projects or activities contributing to climate change.',
+}

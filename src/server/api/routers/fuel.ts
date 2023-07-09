@@ -19,8 +19,11 @@ export const fuelRouter = createTRPCRouter({
         skip: skip,
       })
 
+      const count = await ctx.prisma.fuel.count()
+
       return {
         items,
+        count,
       }
     }),
 })

@@ -1,19 +1,28 @@
 import type { FC } from 'react'
-import type { Asset } from 'contentful'
+import { useState } from 'react'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import type { Document } from '@contentful/rich-text-types'
 
 import { mainParagraphStyle } from '../../utils/renderer'
-import { HighlightedTitle, Tag, EmissionTreeMap } from '../../components'
+import {
+  HighlightedTitle,
+  EmissionTreeMap,
+  PrimaryButton,
+  ToolTip,
+} from '../../components'
+import { TOOLTIP_DEFINITIONS } from '../../utils/constants'
 
 interface UniversityInvestmentsProps {
-  img: Asset
+  flag: 'financedEmissions' | 'netAssetValue'
   caption: Document
 }
+
 const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
-  img,
+  flag: initialFlag = 'financedEmissions',
   caption,
 }) => {
+  const [flag, setFlag] = useState(initialFlag)
+
   return (
     <div className="bg-white px-12">
       <HighlightedTitle
@@ -22,13 +31,40 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
         color="clementine"
       />
       <div className="px-12">
-        <Tag
-          title={img.fields.title}
-          className="mb-1 w-4 rounded-md bg-clementine/20 text-black"
-        />
+        <div className="flex flex-col md:flex-row">
+          <PrimaryButton
+            text="Financed Emissions"
+            onClick={() => setFlag('financedEmissions')}
+            variant={
+              flag === 'financedEmissions' ? 'clementine-toggled' : 'clementine'
+            }
+            className="z-1 relative"
+          >
+            {
+              <ToolTip
+                title={'Financed Emission'}
+                details={TOOLTIP_DEFINITIONS.FINANCED_EMISSIONS}
+              />
+            }
+          </PrimaryButton>
+          <PrimaryButton
+            text="Net Asset Value"
+            onClick={() => setFlag('netAssetValue')}
+            variant={
+              flag === 'netAssetValue' ? 'clementine-toggled' : 'clementine'
+            }
+          >
+            {
+              <ToolTip
+                title={'Net Asset Value'}
+                details={TOOLTIP_DEFINITIONS.NET_ASSET_VAL}
+              />
+            }
+          </PrimaryButton>
+        </div>
         <div className="flex justify-center">
           <div className="w-3/4">
-            <EmissionTreeMap />
+            <EmissionTreeMap flag={flag} />
           </div>
         </div>
         <div>{documentToReactComponents(caption, mainParagraphStyle)}</div>
@@ -36,4 +72,5 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
     </div>
   )
 }
+
 export default UniversityInvestments

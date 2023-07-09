@@ -31,6 +31,7 @@ interface Props<TableRow> {
   originalRows: TableRow[]
   skip: number
   setSkip: (skip: number) => void
+  rowCount: number
 }
 
 interface MutationInput {
@@ -46,6 +47,7 @@ export const DynamicPaginatedAdminTable = <
   originalRows,
   skip,
   setSkip,
+  rowCount,
   ...tableProps
 }: Props<TableRow>) => {
   const convertTypes = (
@@ -214,9 +216,9 @@ export const DynamicPaginatedAdminTable = <
       <PaginatedDynamicTable
         paginated={{
           page: skip / PAGE_SIZE + 1,
-          pageCount: 10, // TODO: Get this from the API
+          pageCount: Math.ceil(rowCount / PAGE_SIZE),
           onPageChange: (page) => setSkip((page - 1) * PAGE_SIZE),
-          rowCount: rows.length,
+          rowCount: rowCount,
         }}
         capturePageChanges={(page) =>
           SetGlobalStateEntries(capturePageChanges(page))

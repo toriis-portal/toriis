@@ -19,8 +19,11 @@ export const energyRouter = createTRPCRouter({
         skip: skip,
       })
 
+      const count = await ctx.prisma.energy.count()
+
       return {
         items,
+        count,
       }
     }),
 })
