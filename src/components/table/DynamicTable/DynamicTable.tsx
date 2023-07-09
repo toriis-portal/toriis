@@ -1,6 +1,5 @@
 import clsx from 'classnames'
 import type { ReactNode } from 'react'
-import type { Sector } from '@prisma/client'
 
 import { TableCell } from './TableCell'
 
