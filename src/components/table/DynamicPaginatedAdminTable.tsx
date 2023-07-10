@@ -244,12 +244,17 @@ export const DynamicPaginatedAdminTable = <
         <input
           value={textBoxContent}
           disabled={isSelect}
+          type={typeof curRow?.[curColumn] === 'number' ? 'number' : 'text'}
           onChange={(e) => {
             setTextBoxContent(e.target.value)
             if (curRow) {
+              const targetType = typeof curRow[curColumn]
               handleChange(curRow, {
                 key: curColumn,
-                value: e.target.value as RowEntry,
+                value:
+                  targetType === 'number'
+                    ? Number(e.target.value)
+                    : e.target.value,
               })
             }
           }}
