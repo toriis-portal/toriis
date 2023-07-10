@@ -209,8 +209,8 @@ model Signatory {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   firstName   String
   lastName    String
-  title       Json[]
-  institution Json[]
+  title       String[]
+  institution String[]
   email       String   @unique
   createdAt   DateTime @default(now())
   city        String?
