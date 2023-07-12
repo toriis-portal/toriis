@@ -10,8 +10,10 @@ const AboutUs: FC<{ text: Document }> = ({ text }) => {
   return (
     <div className="px-12">
       <HighlightedTitle title="About Us" size="large" color="clementine" />
-      <div className="flex flex-col items-center justify-center">
-        {documentToReactComponents(text, mainParagraphStyle)}
+      <div className="flex justify-center">
+        <div className="flex w-2/4 flex-col gap-6 text-center">
+          {documentToReactComponents(text, mainParagraphStyle)}
+        </div>
       </div>
     </div>
   )
