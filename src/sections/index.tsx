@@ -1,5 +1,5 @@
 //Home
-import InstitutionalDivestment from './home/InstitutionalDivestments'
+import InstitutionalDivestment from './home/InstitutionalDivestment'
 import Landing from './home/Landing'
 import OurRequest from './home/OurRequests'
 import RefuteUISResponse from './home/RefuteUISResponse'
