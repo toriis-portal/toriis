@@ -3,7 +3,7 @@ import type { FC } from 'react'
 import {
   Landing,
   OurRequest,
-  InstitutionalDivestments,
+  InstitutionalDivestment,
   RefuteUISResponse,
   AboutUs,
   TimelineSection,
@@ -65,7 +65,7 @@ const Home: FC<HomeProps> = ({
   const navItems = [
     { path: 'ourRequests', text: 'Our Requests' },
     { path: 'institutionalDivestment', text: 'Institutional Divestment' },
-    { path: 'refuteUISReponse', text: 'Refute UIS Response' },
+    { path: 'refuteUISResponse', text: 'Refute UIS Response' },
     { path: 'aboutUs', text: 'About Us' },
     { path: 'divestmentHistory', text: 'Divestment History' },
   ]
@@ -80,12 +80,12 @@ const Home: FC<HomeProps> = ({
           <OurRequest entries={ourRequestsEntries} />
         </div>
         <div id="institutionalDivestment" className="pt-20">
-          <InstitutionalDivestments
+          <InstitutionalDivestment
             linkEntries={divestmentLinkEntries}
             listEntries={divestmentListEntries}
           />
         </div>
-        <div id="refuteUISReponse" className="pt-20">
+        <div id="refuteUISResponse" className="pt-20">
           <RefuteUISResponse
             leftText={info.refuteUisResponse}
             entries={refuteResponseEntries}

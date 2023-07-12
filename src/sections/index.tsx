@@ -1,5 +1,5 @@
 //Home
-import InstitutionalDivestments from './home/InstitutionalDivestments'
+import InstitutionalDivestment from './home/InstitutionalDivestments'
 import Landing from './home/Landing'
 import OurRequest from './home/OurRequests'
 import RefuteUISResponse from './home/RefuteUISResponse'
@@ -17,7 +17,7 @@ import SchoolsDivested from './fossil-fuel/SchoolsDivested'
 import UniversityInvestments from './fossil-fuel/UniversityInvestments'
 import WhatWarmingMeans from './fossil-fuel/WhatWarmingMeans'
 export {
-  InstitutionalDivestments,
+  InstitutionalDivestment,
   Landing,
   OurRequest,
   RefuteUISResponse,
