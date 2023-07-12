@@ -65,7 +65,7 @@ const Home: FC<HomeProps> = ({
   const navItems = [
     { path: 'ourRequests', text: 'Our Requests' },
     { path: 'institutionalDivestment', text: 'Institutional Divestment' },
-    { path: 'refuteUISResponse', text: 'Refute UIS Response' },
+    { path: 'refuteUISResponse', text: 'Responding to Pushback' },
     { path: 'aboutUs', text: 'About Us' },
     { path: 'divestmentHistory', text: 'Divestment History' },
   ]
