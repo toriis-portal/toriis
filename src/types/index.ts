@@ -7,7 +7,6 @@ import type {
   Investment,
 } from '@prisma/client'
 import type { Asset } from 'contentful'
-import { Doc } from 'prettier'
 
 /* API Types */
 
@@ -42,7 +41,8 @@ export interface ListEntry {
 
 export interface RefuteResponseEntry {
   order: number
-  details: Document
+  claim: Document
+  response: Document
 }
 
 export interface TimelineEntry {

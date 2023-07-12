@@ -63,3 +63,55 @@ export const orderedListStyle = {
     ),
   },
 }
+
+export const claimParagraphStyle = {
+  renderNode: {
+    [BLOCKS.PARAGRAPH]: (node: any, children: any) => (
+      <div>
+        <span className="font-black text-clementine">CLAIM:</span>
+        <p className="align-center">{children}</p>
+        <br></br>
+      </div>
+    ),
+    [BLOCKS.UL_LIST]: (node: any, children: any) => (
+      <ul className="list-disc">{children}</ul>
+    ),
+    [INLINES.HYPERLINK]: (node: Block | Inline, children: any) => {
+      return (
+        <Link
+          href={node.data.uri as string}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline"
+        >
+          {children}
+          <ArrowUpRightIcon className="align-self-start ml-0.5 inline h-[1em] w-[1em] stroke-current" />
+        </Link>
+      )
+    },
+  },
+}
+
+export const responseParagraphStyle = {
+  renderNode: {
+    [BLOCKS.PARAGRAPH]: (node: any, children: any) => (
+      <div>
+        <span className="font-black text-cobalt">RESPONSE:</span>
+        <p className="align-center">{children}</p>
+      </div>
+    ),
+    [INLINES.HYPERLINK]: (node: Block | Inline, children: any) => {
+      return (
+        <Link
+          href={node.data.uri as string}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline"
+        >
+          {children}
+          <ArrowUpRightIcon className="align-self-start ml-0.5 inline h-[1em] w-[1em] stroke-current" />
+        </Link>
+      )
+    },
+  },
+}
