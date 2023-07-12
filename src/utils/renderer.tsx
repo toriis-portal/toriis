@@ -68,7 +68,7 @@ export const claimParagraphStyle = {
   renderNode: {
     [BLOCKS.PARAGRAPH]: (node: any, children: any) => (
       <div>
-        <span className="font-black text-clementine">CLAIM:</span>
+        <span className="subheader-1 text-clementine">CLAIM:</span>
         <p className="align-center">{children}</p>
         <br></br>
       </div>
@@ -96,7 +96,7 @@ export const responseParagraphStyle = {
   renderNode: {
     [BLOCKS.PARAGRAPH]: (node: any, children: any) => (
       <div>
-        <span className="font-black text-cobalt">RESPONSE:</span>
+        <span className="subheader-1 text-cobalt">RESPONSE:</span>
         <p className="align-center">{children}</p>
       </div>
     ),
