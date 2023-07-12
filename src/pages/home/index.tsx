@@ -5,6 +5,7 @@ import {
   OurRequest,
   InstitutionalDivestments,
   RefuteUISResponse,
+  AboutUs,
   TimelineSection,
 } from '../../sections'
 import {
@@ -65,6 +66,7 @@ const Home: FC<HomeProps> = ({
     { path: 'ourRequests', text: 'Our Requests' },
     { path: 'institutionalDivestment', text: 'Institutional Divestment' },
     { path: 'refuteUISReponse', text: 'Refute UIS Response' },
+    { path: 'aboutUs', text: 'About Us' },
     { path: 'divestmentHistory', text: 'Divestment History' },
   ]
 
@@ -88,6 +90,9 @@ const Home: FC<HomeProps> = ({
             leftText={info.refuteUisResponse}
             entries={refuteResponseEntries}
           />
+        </div>
+        <div id="aboutUs" className="pt-20">
+          <AboutUs text={info.aboutUs} />
         </div>
         <div id="divestmentHistory" className="pt-20">
           <TimelineSection entries={timelineEntries} />

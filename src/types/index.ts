@@ -7,6 +7,7 @@ import type {
   Investment,
 } from '@prisma/client'
 import type { Asset } from 'contentful'
+import { Doc } from 'prettier'
 
 /* API Types */
 
@@ -52,6 +53,7 @@ export interface TimelineEntry {
 export interface HomePageInfo {
   landing: Document
   refuteUisResponse: Document
+  aboutUs: Document
 }
 
 export interface CaseEntry {
