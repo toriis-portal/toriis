@@ -31,39 +31,41 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
         color="clementine"
       />
       <div className="px-12">
-        <div className="flex flex-col md:flex-row">
-          <PrimaryButton
-            text="Financed Emissions"
-            onClick={() => setFlag('financedEmissions')}
-            variant={
-              flag === 'financedEmissions' ? 'clementine-toggled' : 'clementine'
-            }
-            className="z-1 relative"
-          >
-            {
-              <ToolTip
-                title={'Financed Emission'}
-                details={TOOLTIP_DEFINITIONS.FINANCED_EMISSIONS}
-              />
-            }
-          </PrimaryButton>
-          <PrimaryButton
-            text="Net Asset Value"
-            onClick={() => setFlag('netAssetValue')}
-            variant={
-              flag === 'netAssetValue' ? 'clementine-toggled' : 'clementine'
-            }
-          >
-            {
-              <ToolTip
-                title={'Net Asset Value'}
-                details={TOOLTIP_DEFINITIONS.NET_ASSET_VAL}
-              />
-            }
-          </PrimaryButton>
-        </div>
-        <div className="flex justify-center">
-          <div className="w-3/4">
+        <div className="lg:px-20">
+          <div className="mb-8 flex flex-col justify-start gap-4 md:flex-row lg:gap-10">
+            <PrimaryButton
+              text="Financed Emissions"
+              onClick={() => setFlag('financedEmissions')}
+              variant={
+                flag === 'financedEmissions'
+                  ? 'clementine-toggled'
+                  : 'clementine'
+              }
+              className="z-1 relative"
+            >
+              {
+                <ToolTip
+                  title={'Financed Emission'}
+                  details={TOOLTIP_DEFINITIONS.FINANCED_EMISSIONS}
+                />
+              }
+            </PrimaryButton>
+            <PrimaryButton
+              text="Net Asset Value"
+              onClick={() => setFlag('netAssetValue')}
+              variant={
+                flag === 'netAssetValue' ? 'clementine-toggled' : 'clementine'
+              }
+            >
+              {
+                <ToolTip
+                  title={'Net Asset Value'}
+                  details={TOOLTIP_DEFINITIONS.NET_ASSET_VAL}
+                />
+              }
+            </PrimaryButton>
+          </div>
+          <div>
             <EmissionTreeMap flag={flag} />
           </div>
         </div>
