@@ -106,7 +106,7 @@ We utilize [Github Discussions](https://github.com/toriis-portal/toriis/discussi
 
 ### Issues
 
-If you recognize a bug in the code, or would have an idea for an enhancement or feature, you can file an [Github Issue](https://github.com/toriis-portal/toriis/issues)! Issues let the toriis team track our work on GitHub and help contributors manage an open and healthy community.
+If you recognize a bug in the code, or have an idea for an enhancement or feature, you can file an [Github Issue](https://github.com/toriis-portal/toriis/issues)! Issues let the toriis team track our work on GitHub and help contributors manage an open and healthy community.
 
 ### Pull Request
 
@@ -115,7 +115,7 @@ After participating in discussions and filing an issue, you may be interested in
 - Fork this project. If already forked, remember to `Sync fork`
 - Implement your change in your fork, ideally in a specific branch
 - Create a Pull Request, from your fork to this project. If addressing an Issue, link to it with the `Closing` keyword.
-- Follow our communities [commit message standards](https://gist.github.com/tonibardina/9290fbc7d605b4f86919426e614fe692).
+- Follow our community's [commit message standards](https://gist.github.com/tonibardina/9290fbc7d605b4f86919426e614fe692).
 
 ## License
 
