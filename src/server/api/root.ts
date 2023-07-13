@@ -4,6 +4,7 @@ import { companyRouter } from './routers/company'
 import { esgRouter } from './routers/esg'
 import { userRouter } from './routers/user'
 import { signatoryRouter } from './routers/signatory'
+import { aggregationRouter } from './routers/aggregation'
 
 /**
  * This is the primary router for your server.
@@ -16,6 +17,7 @@ export const appRouter = createTRPCRouter({
   cronjob: esgRouter,
   request: requestRouter,
   signatory: signatoryRouter,
+  aggregation: aggregationRouter,
 })
 
 // export type definition of API
