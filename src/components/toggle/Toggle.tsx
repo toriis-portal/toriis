@@ -22,7 +22,7 @@ const Toggle: FC<ToggleProps> = ({
 }) => {
   const buttonStyle = clsx(
     'flex flex-row justify-center ',
-    'rounded border-2 border-solid',
+    'border',
     'rounded-full',
     {
       'bg-lightBlue border-cobalt': variant === 'cobalt' && toggled === true,
