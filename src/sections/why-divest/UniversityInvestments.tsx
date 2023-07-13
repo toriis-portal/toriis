@@ -64,7 +64,9 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
             <EmissionTreeMap flag={flag} />
           </div>
         </div>
-        <div>{documentToReactComponents(caption, mainParagraphStyle)}</div>
+        <div className="flex flex-col gap-3">
+          {documentToReactComponents(caption, mainParagraphStyle)}
+        </div>
       </div>
     </div>
   )
