@@ -48,7 +48,7 @@ const PrimaryNavBar: FC = () => {
         <Navbar.Toggle />
         <Navbar.Collapse>
           <NavButton title="Home" link="/home" />
-          <NavButton title="Fossil Fuels" link="/fossil-fuel" />
+          <NavButton title="Why Divest?" link="/why-divest" />
           <NavButton title="Learn about Investments" link="/investments" />
           <div className="hidden w-fit flex-col justify-center md:flex">
             <AuthButton />

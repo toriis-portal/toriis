@@ -69,11 +69,7 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
       <PrimaryNavBar />
       <ToTopButton />
       <div className="flex justify-center">
-        <HighlightedTitle
-          title="Fossil Fuels"
-          size="large"
-          color="clementine"
-        />
+        <HighlightedTitle title="Why Divest?" size="large" color="clementine" />
       </div>
       <SecondaryNavBar navItems={navItems} />
 
