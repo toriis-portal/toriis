@@ -9,7 +9,7 @@ interface PrimaryButtonProps
   link?: string
   onClick?: () => void
   className?: string
-  variant?: 'cobalt' | 'clementine' | 'clementine-toggled'
+  variant?: 'cobalt' | 'clementine'
   children?: React.ReactNode
 }
 
@@ -33,8 +33,6 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
         variant === 'cobalt',
       'bg-white border-clementine shadow-clementine hover:shadow-clementine':
         variant === 'clementine',
-      'bg-lightClementine border-clementine shadow-clementine hover:shadow-clementine':
-        variant === 'clementine-toggled',
     },
     className,
   )

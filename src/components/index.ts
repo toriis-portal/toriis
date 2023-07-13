@@ -58,6 +58,8 @@ import LeaveConfirmationModal from './modal/LeaveConfirmationModal'
 import Toast from './toast/Toast'
 // Footer
 import Footer from './footer/Footer'
+// Toggle
+import Toggle from './toggle/Toggle'
 export {
   AuthButton,
   ListItem,
@@ -105,4 +107,5 @@ export {
   ImageWithCaption,
   Toast,
   Footer,
+  Toggle,
 }

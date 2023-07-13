@@ -7,7 +7,7 @@ import { mainParagraphStyle } from '../../utils/renderer'
 import {
   HighlightedTitle,
   EmissionTreeMap,
-  PrimaryButton,
+  Toggle,
   ToolTip,
 } from '../../components'
 import { TOOLTIP_DEFINITIONS } from '../../utils/constants'
@@ -33,15 +33,11 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
       <div className="px-12">
         <div className="lg:px-20">
           <div className="mb-8 flex flex-col justify-start gap-4 md:flex-row lg:gap-10">
-            <PrimaryButton
+            <Toggle
               text="Financed Emissions"
               onClick={() => setFlag('financedEmissions')}
-              variant={
-                flag === 'financedEmissions'
-                  ? 'clementine-toggled'
-                  : 'clementine'
-              }
-              className="z-1 relative"
+              toggled={flag === 'financedEmissions' ? true : false}
+              variant="cobalt"
             >
               {
                 <ToolTip
@@ -49,13 +45,12 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
                   details={TOOLTIP_DEFINITIONS.FINANCED_EMISSIONS}
                 />
               }
-            </PrimaryButton>
-            <PrimaryButton
+            </Toggle>
+            <Toggle
               text="Net Asset Value"
               onClick={() => setFlag('netAssetValue')}
-              variant={
-                flag === 'netAssetValue' ? 'clementine-toggled' : 'clementine'
-              }
+              toggled={flag === 'netAssetValue' ? true : false}
+              variant="cobalt"
             >
               {
                 <ToolTip
@@ -63,7 +58,7 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
                   details={TOOLTIP_DEFINITIONS.NET_ASSET_VAL}
                 />
               }
-            </PrimaryButton>
+            </Toggle>
           </div>
           <div>
             <EmissionTreeMap flag={flag} />
