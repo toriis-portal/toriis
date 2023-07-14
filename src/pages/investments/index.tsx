@@ -193,7 +193,9 @@ const InvestmentPage: FC = () => {
                   })
                 },
               }}
-              shouldClearChecked={lastSearchIsEmpty}
+              shouldClearChecked={
+                lastSearchIsEmpty && previousDataLength.current == 0
+              }
             />
             <ToolTip title="Definition" details={TOOLTIP_DEFINITIONS.SECTOR} />
           </div>
@@ -213,7 +215,9 @@ const InvestmentPage: FC = () => {
                   })
                 },
               }}
-              shouldClearChecked={lastSearchIsEmpty}
+              shouldClearChecked={
+                lastSearchIsEmpty && previousDataLength.current == 0
+              }
             />
             <ToolTip
               title="Definition"
@@ -235,7 +239,9 @@ const InvestmentPage: FC = () => {
                   })
                 },
               }}
-              shouldClearChecked={lastSearchIsEmpty}
+              shouldClearChecked={
+                lastSearchIsEmpty && previousDataLength.current == 0
+              }
             />
             <ToolTip
               title="Definition"
@@ -275,7 +281,9 @@ const InvestmentPage: FC = () => {
                   })
                 },
               }}
-              shouldClearChecked={lastSearchIsEmpty}
+              shouldClearChecked={
+                lastSearchIsEmpty && previousDataLength.current == 0
+              }
             />
             <ToolTip
               title="Definition"
