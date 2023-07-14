@@ -1,9 +1,12 @@
-import { HighlightedTitle } from '../../components'
+import { HighlightedTitle, Carousel } from '../../components'
 
 const Signatories = () => {
   return (
     <div>
-      <HighlightedTitle title="Signatories" size="large" color="clementine" />
+      <div className="flex justify-center">
+        <HighlightedTitle title="Signatories" size="large" color="clementine" />
+      </div>
+      <Carousel carouselChildren={[]} controlSize="sm" variant="lightBlue" />
     </div>
   )
 }

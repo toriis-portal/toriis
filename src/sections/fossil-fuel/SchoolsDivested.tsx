@@ -43,23 +43,26 @@ const parseHREFStringToHTML = (str: string): React.ReactNode => {
 }
 
 /**
- * Parse string of divested entities into an array of React nodes for Carousel
+ * Parse string of entities into an array of React nodes for Carousel
  *
  * @param entry Divested entities as a string, separated by new line
+ * @param entryType Entry's can either be passed in as a newline seperated text string or HTML string
  * @param numRows  Number of rows per column
  * @param numCols  Number of columns per carousel child
  * @returns React nodes array for Carousel
  */
 export const parseEntryToColumns = (
   entry: string,
+  entryType: 'text' | 'html',
   numRows: number,
   numCols: number,
 ): React.ReactNode[] => {
   /*
-   * Segment string by new line. We slice by (3, -4) because the documentToHtmlString function from contentful wraps <a> ... </a> classes,
+   * Segment string by new line. If the entryType is 'html' We slice by (3, -4) because the documentToHtmlString function from contentful wraps <a> ... </a> classes,
    * which we want, in a <p> </p> class, which we do not want. So we cut out <p> (3 characters) from the front and </p> (4 characters) from the back.
    */
-  const list = entry.slice(3, -4).split('\n')
+  const list =
+    entryType === 'text' ? entry.split('\n') : entry.slice(3, -4).split('\n')
 
   // Parse into a 2D array by numRows
   const segmentedList: string[][] = []
@@ -78,7 +81,7 @@ export const parseEntryToColumns = (
             <ul key={i}>
               {column.map((item, j) => (
                 <li className="py-2" key={j}>
-                  {parseHREFStringToHTML(item)}
+                  {entryType === 'text' ? item : parseHREFStringToHTML(item)}
                 </li>
               ))}
             </ul>
@@ -105,6 +108,7 @@ const SchoolsDivested: FC<schoolsDivestedProps> = ({
       <Carousel
         carouselChildren={parseEntryToColumns(
           documentToHtmlString(schoolEntries),
+          'html',
           6,
           3,
         )}
