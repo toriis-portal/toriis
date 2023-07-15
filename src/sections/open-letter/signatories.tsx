@@ -76,7 +76,7 @@ const Signatories = () => {
         <HighlightedTitle title="Signatories" size="large" color="clementine" />
       </div>
       <Carousel
-        carouselChildren={parseSignatoriesToColumns(data, 'text', 10, 1)}
+        carouselChildren={parseSignatoriesToColumns(data, 'text', 20, 1)}
         controlSize="sm"
         variant="lightBlue"
       />
