@@ -72,9 +72,10 @@ export const parseEntryToColumns = (
 
   // Parse into an array of React nodes by numCols
   const carouselChildren: React.ReactNode[] = []
+  const grid = `grid w-full grid-cols-${numCols} text-center`
   for (let i = 0; i < segmentedList.length / numCols; i += 1) {
     carouselChildren.push(
-      <div className="grid w-full grid-cols-3 text-center">
+      <div className={grid}>
         {segmentedList
           .slice(i * numCols, (i + 1) * numCols)
           .map((column, i) => (
