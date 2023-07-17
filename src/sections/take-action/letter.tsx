@@ -1,5 +1,6 @@
 import type { FC } from 'react'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import { ArrowRightIcon } from '@heroicons/react/24/solid'
 import type { Document } from '@contentful/rich-text-types'
 
 import { mainParagraphStyle } from '../../utils/renderer'
@@ -31,7 +32,9 @@ const OpenLetter: FC<LetterProps> = ({ openLetter, scrollToForm }) => {
         variant="clementine"
         className="mb-12 mt-9 py-2 !px-14"
         onClick={scrollToForm}
-      />
+      >
+        <ArrowRightIcon className="ml-3 h-9 w-5 stroke-2" />
+      </PrimaryButton>
       {/* TODO: add arrow to button */}
       <div className="space-y-4 px-60">
         {documentToReactComponents(openLetter, mainParagraphStyle)}
