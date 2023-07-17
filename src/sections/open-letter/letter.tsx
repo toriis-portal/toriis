@@ -1,15 +1,15 @@
 import type { FC } from 'react'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import type { Document } from '@contentful/rich-text-types'
 
-import type { TakeActionPage } from '../../types'
 import { mainParagraphStyle } from '../../utils/renderer'
 import { HighlightedTitle } from '../../components'
 
 interface LetterProps {
-  takeActionPageEntries: TakeActionPage
+  openLetter: Document
 }
 
-const Letter: FC<LetterProps> = ({ takeActionPageEntries }) => {
+const Letter: FC<LetterProps> = ({ openLetter }) => {
   return (
     <div className="flex flex-col justify-center">
       {/* TODO: fix page centering */}
@@ -27,10 +27,7 @@ const Letter: FC<LetterProps> = ({ takeActionPageEntries }) => {
         </div>
       </div>
       <div className="space-y-4 px-60">
-        {documentToReactComponents(
-          takeActionPageEntries.openLetter,
-          mainParagraphStyle,
-        )}
+        {documentToReactComponents(openLetter, mainParagraphStyle)}
       </div>
     </div>
   )

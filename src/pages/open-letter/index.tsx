@@ -30,15 +30,13 @@ const LetterPage: FC<TakeActionPageProps> = ({ takeActionPageEntries }) => {
     { path: 'signatories', text: 'Signatories' },
     { path: 'momentum', text: 'Continue the Momentum' },
   ]
-  console.log(takeActionPageEntries.openLetter)
   return (
     <>
       <PrimaryNavBar />
       <SecondaryNavBar navItems={navItems} />
 
       <div id="openLetter" className="pt-10">
-        <Letter takeActionPageEntries={takeActionPageEntries} />
-        {/* TODO: change for that to just take the letter */}
+        <Letter openLetter={takeActionPageEntries.openLetter} />
       </div>
       <div id="signLetter" className="pt-10">
         <SignLetter />
