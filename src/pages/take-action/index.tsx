@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 
-import type { TakeActionPage } from '../../types'
+import { TakeActionPage } from '../../types'
 import { PrimaryNavBar, SecondaryNavBar } from '../../components'
 import { ContentWrapper } from '../../utils/content'
 import { Letter, SignLetter, Signatories, Momentum } from '../../sections'
@@ -22,8 +22,7 @@ interface TakeActionPageProps {
   takeActionPageEntries: TakeActionPage
 }
 
-// TODO: rename
-const LetterPage: FC<TakeActionPageProps> = ({ takeActionPageEntries }) => {
+const TakeActionPage: FC<TakeActionPageProps> = ({ takeActionPageEntries }) => {
   const navItems = [
     { path: 'openLetter', text: 'Open Letter' },
     { path: 'signLetter', text: 'Sign the Letter' },
@@ -51,4 +50,4 @@ const LetterPage: FC<TakeActionPageProps> = ({ takeActionPageEntries }) => {
   )
 }
 
-export default LetterPage
+export default TakeActionPage

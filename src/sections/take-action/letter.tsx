@@ -9,22 +9,15 @@ interface LetterProps {
   openLetter: Document
 }
 
-const Letter: FC<LetterProps> = ({ openLetter }) => {
+const OpenLetter: FC<LetterProps> = ({ openLetter }) => {
   return (
-    <div className="flex flex-col justify-center">
-      {/* TODO: fix page centering */}
-      <div className="flex justify-center px-80">
+    <div className="flex flex-col items-center">
+      <div>
         <HighlightedTitle
           title="An Open Letter"
           size="large"
           color="clementine"
         />
-        <div className="flex flex-row">
-          <p>Join our</p>
-          {/* TODO: get this number from contentful */}
-          <p>709</p>
-          <p>signatories</p>
-        </div>
       </div>
       <div className="space-y-4 px-60">
         {documentToReactComponents(openLetter, mainParagraphStyle)}
@@ -33,4 +26,4 @@ const Letter: FC<LetterProps> = ({ openLetter }) => {
   )
 }
 
-export default Letter
+export default OpenLetter
