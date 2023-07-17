@@ -1,4 +1,5 @@
 import type { FC } from 'react'
+import { scroller } from 'react-scroll'
 
 import { TakeActionPage } from '../../types'
 import { PrimaryNavBar, SecondaryNavBar } from '../../components'
@@ -35,7 +36,15 @@ const TakeActionPage: FC<TakeActionPageProps> = ({ takeActionPageEntries }) => {
       <SecondaryNavBar navItems={navItems} />
 
       <div id="openLetter" className="pt-10">
-        <Letter openLetter={takeActionPageEntries.openLetter} />
+        <Letter
+          openLetter={takeActionPageEntries.openLetter}
+          scrollToForm={() =>
+            scroller.scrollTo('signLetter', {
+              smooth: true,
+              duration: 500,
+            })
+          }
+        />
       </div>
       <div id="signLetter" className="pt-10">
         <SignLetter />
