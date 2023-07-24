@@ -1,6 +1,9 @@
 import { Formik, Field, Form } from 'formik'
 import clsx from 'clsx'
 import type { FormikHelpers } from 'formik'
+
+import { PrimaryButton } from '..'
+
 interface Values {
   firstName: string
   lastName: string
@@ -19,10 +22,12 @@ const LetterForm = () => {
     field:
       'border border-black bg-lightBlue px-6 py-2.5 text-base font-light mb-5',
     label: 'text-base font-light mb-1.5',
-    checkbox: 'mr-7 ml-1 rounded-sm border border-black bg-clementine/20',
+    checkbox:
+      'mr-7 ml-1 rounded-sm border border-black bg-clementine/20 mb-2.5',
   }
   return (
-    <div className="flex flex-col  bg-slate-400">
+    <div className="flex flex-col">
+      {/* TODO: check if this flex is nec */}
       <Formik
         initialValues={{
           firstName: '',
@@ -136,7 +141,12 @@ const LetterForm = () => {
               NO
             </label>
           </div>
-          <button type="submit">Submit</button>
+          <PrimaryButton
+            text="Add Your Name"
+            variant="clementine"
+            className="mx-auto mt-2.5 py-2 !px-14"
+            type="submit"
+          />
         </Form>
       </Formik>
     </div>

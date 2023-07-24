@@ -41,7 +41,7 @@ const SignLetter = () => {
               </p>
             </div>
           </div>
-          <div className="h-[800px] w-1/2">
+          <div className="w-1/2">
             <LetterForm />
           </div>
         </div>
