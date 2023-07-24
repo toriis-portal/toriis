@@ -184,8 +184,8 @@ export class ContentWrapper {
   }
 
   /**
-   * Get all entries from Contentful for the fossil fuel page
-   * @returns Fossil fuel page entries in a map
+   * Get all entries from Contentful for the take action page
+   * @returns Take action page entries in a map
    */
   getAllTakeActionEntries = async () => {
     const takeActionPageEntryMap: Record<

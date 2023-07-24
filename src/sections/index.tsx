@@ -16,7 +16,7 @@ import InstitutionsDivested from './fossil-fuel/InstitutionsDivested'
 import SchoolsDivested from './fossil-fuel/SchoolsDivested'
 import UniversityInvestments from './fossil-fuel/UniversityInvestments'
 import WhatWarmingMeans from './fossil-fuel/WhatWarmingMeans'
-// Open Letter Page
+// Take Action Page
 import OpenLetter from './take-action/letter'
 import SignLetter from './take-action/sign-letter'
 import Signatories from './take-action/signatories'
