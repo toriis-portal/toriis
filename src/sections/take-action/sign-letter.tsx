@@ -12,7 +12,7 @@ const SignLetter = () => {
       </div>
       <div className="w-[calc(100%-120px)] rounded-lg py-9 px-20 outline outline-1">
         {/* TODO: need Graph FF Condensed font */}
-        <p className="header-3 text-center font-semibold">
+        <p className="header-3 pb-12 text-center font-semibold">
           FOSSIL FREE UIUC OPEN LETTER
         </p>
         <div className="flex">
@@ -41,7 +41,7 @@ const SignLetter = () => {
               </p>
             </div>
           </div>
-          <div className="h-[800px] w-1/2 bg-slate-100">
+          <div className="h-[800px] w-1/2">
             <LetterForm />
           </div>
         </div>
