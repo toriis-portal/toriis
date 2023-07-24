@@ -15,6 +15,8 @@ interface Values {
   zip: string
   bio: string
   twitter: string
+  agree: string
+  emailUpdates: boolean
 }
 
 const LetterForm = () => {
@@ -40,6 +42,8 @@ const LetterForm = () => {
           zip: '',
           bio: '',
           twitter: '',
+          agree: '',
+          emailUpdates: true,
         }}
         onSubmit={(values: Values) => {
           console.log(values)
@@ -124,8 +128,8 @@ const LetterForm = () => {
             </p>
             <label className="block text-base">
               <Field
-                type="checkbox"
-                name="checked"
+                type="radio"
+                name="agree"
                 value="YES"
                 className={styles.checkbox}
               />
@@ -133,8 +137,8 @@ const LetterForm = () => {
             </label>
             <label className="block text-base">
               <Field
-                type="checkbox"
-                name="checked"
+                type="radio"
+                name="agree"
                 value="NO"
                 className={styles.checkbox}
               />
@@ -151,8 +155,7 @@ const LetterForm = () => {
             <label className="text-base">
               <Field
                 type="checkbox"
-                name="checked"
-                value="NO"
+                name="emailUpdates"
                 className="mr-4 rounded-sm border border-black bg-clementine/20"
               />
               Opt in to email updates from TORIIS
