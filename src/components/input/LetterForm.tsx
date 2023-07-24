@@ -25,7 +25,7 @@ const LetterForm = () => {
       'border border-black bg-lightBlue px-6 py-2.5 text-base font-light mb-5',
     label: 'text-base font-light mb-1.5',
     checkbox:
-      'mr-7 ml-1 rounded-sm border border-black bg-clementine/20 mb-2.5',
+      'rounded-sm border border-black checked:bg-black bg-clementine/20',
   }
   return (
     <div className="flex flex-col">
@@ -126,21 +126,21 @@ const LetterForm = () => {
               TRUE AND ACCURATELY REFLECTS MY IDENTITY, AS WELL AS DESIRE TO
               SIGN THE FOSSIL FREE UIUC LETTER.
             </p>
-            <label className="block text-base">
+            <label className="mb-2.5 block text-base">
               <Field
                 type="radio"
                 name="agree"
                 value="YES"
-                className={styles.checkbox}
+                className={clsx('mr-7 ml-1 ', styles.checkbox)}
               />
               YES
             </label>
-            <label className="block text-base">
+            <label className="mb-2.5 block text-base">
               <Field
                 type="radio"
                 name="agree"
                 value="NO"
-                className={styles.checkbox}
+                className={clsx('mr-7 ml-1 ', styles.checkbox)}
               />
               NO
             </label>
@@ -156,7 +156,7 @@ const LetterForm = () => {
               <Field
                 type="checkbox"
                 name="emailUpdates"
-                className="mr-4 rounded-sm border border-black bg-clementine/20"
+                className={clsx('mr-4', styles.checkbox)}
               />
               Opt in to email updates from TORIIS
             </label>

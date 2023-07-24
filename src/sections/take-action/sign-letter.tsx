@@ -16,7 +16,7 @@ const SignLetter = () => {
           FOSSIL FREE UIUC OPEN LETTER
         </p>
         <div className="flex">
-          <div className="flex w-1/2 flex-col items-center justify-center">
+          <div className="mr-10 flex w-1/2 flex-col items-center justify-center">
             <p className="">
               <span className="underline decoration-clementine">
                 Support Fossil Fuel Divestment
