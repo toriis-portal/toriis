@@ -25,9 +25,9 @@ interface TakeActionPageProps {
 const TakeActionPage: FC<TakeActionPageProps> = ({ takeActionPageEntries }) => {
   const navItems = [
     { path: 'openLetter', text: 'Open Letter' },
-    { path: 'signLetter', text: 'Sign the Letter' },
-    { path: 'signatories', text: 'Signatories' },
-    { path: 'momentum', text: 'Continue the Momentum' },
+    // { path: 'signLetter', text: 'Sign the Letter' },
+    // { path: 'signatories', text: 'Signatories' },
+    // { path: 'momentum', text: 'Continue the Momentum' },
   ]
   return (
     <>
@@ -37,7 +37,7 @@ const TakeActionPage: FC<TakeActionPageProps> = ({ takeActionPageEntries }) => {
       <div id="openLetter" className="pt-10">
         <Letter openLetter={takeActionPageEntries.openLetter} />
       </div>
-      <div id="signLetter" className="pt-10">
+      {/* <div id="signLetter" className="pt-10">
         <SignLetter />
       </div>
       <div id="signatories" className="pt-10">
@@ -45,7 +45,7 @@ const TakeActionPage: FC<TakeActionPageProps> = ({ takeActionPageEntries }) => {
       </div>
       <div id="momentum" className="pt-10">
         <Momentum />
-      </div>
+      </div> */}
     </>
   )
 }
