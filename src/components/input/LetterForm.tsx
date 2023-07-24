@@ -141,12 +141,23 @@ const LetterForm = () => {
               NO
             </label>
           </div>
-          <PrimaryButton
-            text="Add Your Name"
-            variant="clementine"
-            className="mx-auto mt-2.5 py-2 !px-14"
-            type="submit"
-          />
+          <div className="flex flex-col items-center">
+            <PrimaryButton
+              text="Add Your Name"
+              variant="clementine"
+              className="mt-2.5 mb-5 py-2 !px-14"
+              type="submit"
+            />
+            <label className="text-base">
+              <Field
+                type="checkbox"
+                name="checked"
+                value="NO"
+                className="mr-4 rounded-sm border border-black bg-clementine/20"
+              />
+              Opt in to email updates from TORIIS
+            </label>
+          </div>
         </Form>
       </Formik>
     </div>
