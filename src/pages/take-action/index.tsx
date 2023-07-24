@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 
 import { TakeActionPage } from '../../types'
-import { PrimaryNavBar, SecondaryNavBar } from '../../components'
+import { PrimaryNavBar, SecondaryNavBar, ToTopButton } from '../../components'
 import { ContentWrapper } from '../../utils/content'
 import { Letter, SignLetter, Signatories, Momentum } from '../../sections'
 
@@ -32,6 +32,7 @@ const TakeActionPage: FC<TakeActionPageProps> = ({ takeActionPageEntries }) => {
   return (
     <>
       <PrimaryNavBar />
+      <ToTopButton />
       <SecondaryNavBar navItems={navItems} />
 
       <div id="openLetter" className="pt-10">
