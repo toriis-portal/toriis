@@ -1,6 +1,5 @@
 import { Formik, Field, Form } from 'formik'
 import clsx from 'clsx'
-import type { FormikHelpers } from 'formik'
 
 import { PrimaryButton } from '..'
 
@@ -81,7 +80,7 @@ const LetterForm = () => {
             id="email"
             name="email"
             placeholder="Email*"
-            //    type="email"
+            type="email"
             className={clsx('block', styles.field)}
           />
           <Field
