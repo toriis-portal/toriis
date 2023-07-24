@@ -1,4 +1,4 @@
-import { HighlightedTitle } from '../../components'
+import { HighlightedTitle, LetterForm } from '../../components'
 
 const SignLetter = () => {
   return (
@@ -41,7 +41,9 @@ const SignLetter = () => {
               </p>
             </div>
           </div>
-          <div className="h-[800px] w-1/2 bg-slate-100">form!</div>
+          <div className="h-[800px] w-1/2 bg-slate-100">
+            <LetterForm />
+          </div>
         </div>
       </div>
     </div>
