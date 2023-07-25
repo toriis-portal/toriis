@@ -4,10 +4,7 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
 import { Carousel, HighlightedTitle } from '../../components'
 import type { RefuteResponseEntry } from '../../types'
-import {
-  claimParagraphStyle,
-  responseParagraphStyle,
-} from '../../utils/renderer'
+import { mainParagraphStyle } from '../../utils/renderer'
 
 interface RefuteUISResponseProps {
   leftText: Document
@@ -19,8 +16,15 @@ const RefuteUISResponse: FC<RefuteUISResponseProps> = ({
   entries,
 }) => {
   const carouselChildren = entries.map((entry) => [
-    documentToReactComponents(entry.claim, claimParagraphStyle),
-    documentToReactComponents(entry.response, responseParagraphStyle),
+    <div key={`claim-${entry.order}`}>
+      <span className="subheader-1 text-clementine">CLAIM:</span>
+      {documentToReactComponents(entry.claim, mainParagraphStyle)}
+      <br></br>
+    </div>,
+    <div key={`response-${entry.order}`}>
+      <span className="subheader-1 text-cobalt">RESPONSE:</span>
+      {documentToReactComponents(entry.response, mainParagraphStyle)}
+    </div>,
   ])
   return (
     <div className="bg-clementine/20 p-12">
