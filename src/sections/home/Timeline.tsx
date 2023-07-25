@@ -94,7 +94,7 @@ const TimelineSection: FC<{ entries: TimelineEntry[] }> = ({ entries }) => {
   const splitRight = splitData[1]
 
   return (
-    <div className="bg-lightBlue px-12">
+    <div className="bg-lightBlue p-12">
       <HighlightedTitle
         title="Divestment History"
         size="large"
