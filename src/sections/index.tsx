@@ -1,9 +1,9 @@
 //Home
-import InstitutionalDivestments from './home/InstitutionalDivestments'
+import InstitutionalDivestment from './home/InstitutionalDivestment'
 import Landing from './home/Landing'
 import OurRequest from './home/OurRequests'
 import RefuteUISResponse from './home/RefuteUISResponse'
-import SampleSection from './home/SampleSection'
+import AboutUs from './home/AboutUs'
 import TimelineSection from './home/Timeline'
 // Company Details Page
 import ChartGroup from './company/ChartGroup'
@@ -17,11 +17,11 @@ import SchoolsDivested from './fossil-fuel/SchoolsDivested'
 import UniversityInvestments from './fossil-fuel/UniversityInvestments'
 import WhatWarmingMeans from './fossil-fuel/WhatWarmingMeans'
 export {
-  InstitutionalDivestments,
+  InstitutionalDivestment,
   Landing,
   OurRequest,
   RefuteUISResponse,
-  SampleSection,
+  AboutUs,
   TimelineSection,
   DivestmentCase,
   ChartGroup,

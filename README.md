@@ -1,8 +1,8 @@
 <h1 align="center">
-  <a href="https://uiuc.hack4impact.org"><img src="https://raw.githubusercontent.com/hack4impact-uiuc/uiuc.hack4impact.org/master/public/images/colored-logo.svg" alt="hack4impact logo" width="150"></a>
   <br/>
-  TORIIS
+  <img href="https://www.toriis.earth/home" src="public/toriis.png" alt="hack4impact logo" width="150"></a>
   </br>
+  <a href="https://uiuc.hack4impact.org"><img src="https://raw.githubusercontent.com/hack4impact-uiuc/uiuc.hack4impact.org/master/public/images/colored-logo.svg" alt="hack4impact logo" width="150"></a>
 </h1>
 
 <p align="center">
@@ -17,18 +17,23 @@
   <a href="#technologies">Technologies</a> •
   <a href="#team">Team</a> •
   <a href="#usage">Usage</a> •
+  <a href="#contribute">Contribute</a> •
   <a href="#license">License</a>
 </p>
 
 ## Background
 
-TORIIS (Transparent and Open Resource for Institutional Investments) is an interactive and dynamic web interface to visualize the University of Illinois Systems’ investment portfolio, with a focus on assets invested in corporations that profit from the extraction, transportation, or combustion of coal, petroleum, or natural gas.
+TORIIS (Transparent and Open Resource for Institutional Investments) is an interactive and dynamic web interface to visualize the University of Illinois Systems’ investment portfolio, with a focus on assets invested in corporations that profit from the extraction, transportation, or combustion of coal, petroleum, or natural gas. With [toriis.earth ](https://www.toriis.earth/home), we aim to promote environmental awareness and inspire action for the preservation of our planet by use of user-friendly & interactive data visualizations of institutional investments through an environmental lens.
+
+TORIIS was created by as a result of a grant from the Illinois Green Fund awarded by the [University of Illinois Student Sustainability Committee](https://www.studentaffairs.illinois.edu/about/committees/student-sustainability-committee).
 
 ## Technologies
 
 This application is built with the [T3 Stack](https://create.t3.gg/): React, NextJs, TypeScript, tRPC, Prisma, Tailwind CSS, NextAuth.
 
 ## Team
+
+### Hack4Impact
 
 <table align="center">
   <tr>
@@ -43,9 +48,15 @@ This application is built with the [T3 Stack](https://create.t3.gg/): React, Nex
     <td align="center"><a href="https://www.linkedin.com/in/alex-masgras/"><img src="./photos/alex-masgras.jpg" width="75px;" alt="Alex Masgras"/><br /><b>Alex Masgras</b></a><br /><sub>Software Developer</sub></td>
     <td align="center"><a href="https://www.linkedin.com/in/eesha-barua/"><img src="./photos/eesha-barua.jpg" width="75px;" alt="Eesha Barua"/><br /><b>Eesha Barua</b></a><br /><sub>Software Developer</sub></td>
     <td align="center"><a href="https://www.linkedin.com/in/xiaofan-li/"><img src="./photos/xiaofan-li.jpeg" width="75px;" alt="Chatty Pusheen"/><br /><b>Xiaofan Li</b></a><br /><sub>Software Developer</sub></td>
+  </table>
 
-  </tr>
-</table>
+### Maintainers
+
+<table align="center">
+  <tr>
+    <td align="center"><a href="https://www.linkedin.com/in/gabriel-kosmacher-9b2ba7148/"><img src="./photos/gabriel-kosmacher.jpg" width="75px;" alt="Gabriel Kosmacher"/><br /><b>Gabriel Kosmacher</b></a><br /><sub>Technology & Data</sub></td>
+    <td align="center"><a href="https://www.linkedin.com/in/faith-losbanes-527a97196/"><img src="./photos/faith-losbanes.jpg" width="75px;" alt="Faith Marie Losbañes"/><br /><b>Faith Marie Losbañes</b></a><br /><sub>Management, Design & Outreach</sub></td>
+  </table>
 
 ## Usage
 
@@ -61,7 +72,6 @@ Create a `.env` file
 
 ```
 DATABASE_URL=
-DATABASE_DUMP_URL=
 NEXTAUTH_SECRET=
 NEXTAUTH_URL=
 GOOGLE_CLIENT_ID=
@@ -70,6 +80,7 @@ CRONJOB_KEY=
 ESG_API_KEY=
 CONTENTFUL_SPACE_ID=
 CONTENTFUL_ACCESS_TOKEN=
+DATABASE_DUMP_URL=
 ```
 
 ### Running the App
@@ -81,6 +92,30 @@ yarn && yarn run dev
 ```
 
 Then go to [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Contribute
+
+### Discussion
+
+We utilize [Github Discussions](https://github.com/toriis-portal/toriis/discussions) as a message board to communicate and connect with other members of the toriis community. You can use Github Discussions to
+
+- Ask questions you’re wondering about.
+- Share ideas.
+- Engage with other community members.
+  Remember, toriis is community we build together, so please be welcoming others and open open-minded.
+
+### Issues
+
+If you recognize a bug in the code, or have an idea for an enhancement or feature, you can file an [Github Issue](https://github.com/toriis-portal/toriis/issues)! Issues let the toriis team track our work on GitHub and help contributors manage an open and healthy community.
+
+### Pull Request
+
+After participating in discussions and filing an issue, you may be interested in contributing code to the toriis repository. If this is the case, you should
+
+- Fork this project. If already forked, remember to `Sync fork`
+- Implement your change in your fork, ideally in a specific branch
+- Create a Pull Request, from your fork to this project. If addressing an Issue, link to it with the `Closing` keyword.
+- Follow our community's [commit message standards](https://gist.github.com/tonibardina/9290fbc7d605b4f86919426e614fe692).
 
 ## License
 

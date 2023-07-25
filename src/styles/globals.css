@@ -22,6 +22,10 @@
     @apply font-klima text-[22px] font-medium;
   }
 
+  .subheader-1 {
+    @apply font-graph text-[32px] font-normal;
+  }
+
   .body-bold {
     @apply font-inter text-base font-medium;
   }
@@ -36,6 +40,11 @@
 }
 
 @layer base {
+  @font-face {
+    font-family: 'GRAPH FF CONDENSED BLACK';
+    src: url('../../public/Fonts/graph-ff-condensed-black-web.ttf');
+    font-size: normal;
+  }
   @font-face {
     font-family: 'Klima';
     src: url('../../public/Fonts/klima-ultralight-web.woff') format('woff');

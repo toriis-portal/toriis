@@ -3,12 +3,12 @@ import type { FC } from 'react'
 import { HighlightedTitle, ListItem, LinkBox } from '../../components'
 import type { LinkEntry, ListEntry } from '../../types'
 
-interface InstitutionalDivestmentsProps {
+interface InstitutionalDivestmentProps {
   linkEntries: LinkEntry[]
   listEntries: ListEntry[]
 }
 
-const InstitutionalDivestments: FC<InstitutionalDivestmentsProps> = ({
+const InstitutionalDivestment: FC<InstitutionalDivestmentProps> = ({
   linkEntries,
   listEntries,
 }) => {
@@ -38,4 +38,4 @@ const InstitutionalDivestments: FC<InstitutionalDivestmentsProps> = ({
   )
 }
 
-export default InstitutionalDivestments
+export default InstitutionalDivestment
