@@ -39,6 +39,7 @@ module.exports = {
     fontFamily: {
       klima: ['Klima', 'Arial', 'Roboto'],
       inter: ['Inter', 'sans-serif'],
+      graph: ['Graph FF Condensed Black'],
     },
   },
   plugins: [require('flowbite/plugin')],

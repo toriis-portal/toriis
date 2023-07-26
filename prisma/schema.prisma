@@ -1,6 +1,5 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["clientExtensions", "orderByNulls"]
+  provider = "prisma-client-js"
 }
 
 generator json {

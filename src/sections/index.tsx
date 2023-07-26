@@ -1,9 +1,9 @@
 //Home
-import InstitutionalDivestments from './home/InstitutionalDivestments'
+import InstitutionalDivestment from './home/InstitutionalDivestment'
 import Landing from './home/Landing'
 import OurRequest from './home/OurRequests'
 import RefuteUISResponse from './home/RefuteUISResponse'
-import SampleSection from './home/SampleSection'
+import AboutUs from './home/AboutUs'
 import TimelineSection from './home/Timeline'
 // Company Details Page
 import ChartGroup from './company/ChartGroup'
@@ -23,11 +23,11 @@ import Signatories from './open-letter/signatories'
 import Momentum from './open-letter/momentum'
 
 export {
-  InstitutionalDivestments,
+  InstitutionalDivestment,
   Landing,
   OurRequest,
   RefuteUISResponse,
-  SampleSection,
+  AboutUs,
   TimelineSection,
   DivestmentCase,
   ChartGroup,
