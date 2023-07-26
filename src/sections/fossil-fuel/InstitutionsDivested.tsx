@@ -28,7 +28,6 @@ const InstitutionsDivested: FC<institutionsDivestedProps> = ({
       <Carousel
         carouselChildren={parseEntryToColumns(
           documentToHtmlString(institutionEntries),
-          'html',
           6,
           3,
         )}
