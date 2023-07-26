@@ -42,13 +42,14 @@ export const parseSignatoriesToColumns = (
         {segmentedList
           .slice(i * numCols, (i + 1) * numCols)
           .map((column, i) => (
-            <ul key={i} className="list-none">
+            <ul key={i} className="list-disc">
               {column.map((item, j) => (
-                <li className="relative flex flex-row pl-6" key={j}>
-                  <div className="py-2 font-bold">
+                <li className="flex items-center py-2" key={j}>
+                  <span className="mr-2 text-xs">&#8226;</span>
+                  <div className="font-bold">
                     {item.firstName + ' ' + item.lastName}
                   </div>
-                  <div className="py-2">
+                  <div className="ml-2">
                     {item.title.length > 0
                       ? ', ' + item.title.reduce((x, y) => x + '; ' + y)
                       : ' '}
@@ -56,7 +57,6 @@ export const parseSignatoriesToColumns = (
                       ? ', ' + item.institution.reduce((x, y) => x + '; ' + y)
                       : ''}
                   </div>
-                  <div className="absolute left-0 top-4 h-2 w-2 rounded-full bg-black"></div>
                 </li>
               ))}
             </ul>
