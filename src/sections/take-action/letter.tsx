@@ -19,7 +19,7 @@ const OpenLetter: FC<LetterProps> = ({ openLetter }) => {
           color="clementine"
         />
       </div>
-      <div className="space-y-4 px-60">
+      <div className="w-2/4 space-y-6">
         {documentToReactComponents(openLetter, mainParagraphStyle)}
       </div>
     </div>
