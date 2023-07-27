@@ -31,7 +31,7 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
           size="large"
           color="white"
         />
-        <UnderlinedTitle title="FY 2020" size="large" color="clementine" />
+        <UnderlinedTitle title="FY 2022" size="large" color="clementine" />
       </div>
       <div className="px-12">
         <div className="flex justify-center">
