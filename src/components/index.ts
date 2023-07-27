@@ -43,6 +43,7 @@ import HighlightedTitle from './text/HighlightedTitle'
 import CapitalizedTitle from './text/CapitalizedTitle'
 import StatusTag from './text/StatusTag'
 import Tag from './text/Tag'
+import UnderlinedTitle from './text/UnderlinedTitle'
 // Tables
 import AdminListTable from './table/AdminListTable'
 import InvestmentTable from './table/InvestmentTable'
@@ -65,6 +66,7 @@ export {
   ListItem,
   NumberCircle,
   HighlightedTitle,
+  UnderlinedTitle,
   TabButton,
   PrimaryNavBar,
   PrimaryButton,

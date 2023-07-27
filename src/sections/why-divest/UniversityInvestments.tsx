@@ -5,7 +5,7 @@ import type { Document } from '@contentful/rich-text-types'
 
 import { mainParagraphStyle } from '../../utils/renderer'
 import {
-  HighlightedTitle,
+  UnderlinedTitle,
   EmissionTreeMap,
   Toggle,
   ToolTip,
@@ -25,14 +25,17 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
 
   return (
     <div className="bg-white px-12">
-      <HighlightedTitle
-        title="University of Illinois Investments"
-        size="large"
-        color="clementine"
-      />
+      <div className="flex justify-center">
+        <UnderlinedTitle
+          title="UI System Investments&nbsp;"
+          size="large"
+          color="white"
+        />
+        <UnderlinedTitle title="FY 2020" size="large" color="clementine" />
+      </div>
       <div className="px-12">
         <div className="lg:px-20">
-          <div className="mb-8 flex flex-col justify-start gap-4 md:flex-row lg:gap-10">
+          <div className="flex flex-col justify-start gap-4 md:flex-row">
             <Toggle
               text="Financed Emissions"
               onClick={() => setFlag('financedEmissions')}
@@ -60,8 +63,10 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
               }
             </Toggle>
           </div>
-          <div>
-            <EmissionTreeMap flag={flag} />
+          <div className="flex justify-center">
+            <div className="w-full">
+              <EmissionTreeMap flag={flag} />
+            </div>
           </div>
         </div>
         <div className="flex flex-col gap-3">
