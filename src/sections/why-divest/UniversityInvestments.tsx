@@ -34,38 +34,40 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
         <UnderlinedTitle title="FY 2020" size="large" color="clementine" />
       </div>
       <div className="px-12">
-        <div className="lg:px-20">
-          <div className="flex flex-col justify-start gap-4 md:flex-row">
-            <Toggle
-              text="Financed Emissions"
-              onClick={() => setFlag('financedEmissions')}
-              toggled={flag === 'financedEmissions' ? true : false}
-              variant="cobalt"
-            >
-              {
-                <ToolTip
-                  title={'Financed Emission'}
-                  details={TOOLTIP_DEFINITIONS.FINANCED_EMISSIONS}
-                />
-              }
-            </Toggle>
-            <Toggle
-              text="Net Asset Value"
-              onClick={() => setFlag('netAssetValue')}
-              toggled={flag === 'netAssetValue' ? true : false}
-              variant="cobalt"
-            >
-              {
-                <ToolTip
-                  title={'Net Asset Value'}
-                  details={TOOLTIP_DEFINITIONS.NET_ASSET_VAL}
-                />
-              }
-            </Toggle>
-          </div>
-          <div className="flex justify-center">
-            <div className="w-full">
-              <EmissionTreeMap flag={flag} />
+        <div className="flex justify-center">
+          <div className="w-3/4">
+            <div className="flex flex-col  justify-start gap-4 md:flex-row">
+              <Toggle
+                text="Financed Emissions"
+                onClick={() => setFlag('financedEmissions')}
+                toggled={flag === 'financedEmissions' ? true : false}
+                variant="cobalt"
+              >
+                {
+                  <ToolTip
+                    title={'Financed Emission'}
+                    details={TOOLTIP_DEFINITIONS.FINANCED_EMISSIONS}
+                  />
+                }
+              </Toggle>
+              <Toggle
+                text="Net Asset Value"
+                onClick={() => setFlag('netAssetValue')}
+                toggled={flag === 'netAssetValue' ? true : false}
+                variant="cobalt"
+              >
+                {
+                  <ToolTip
+                    title={'Net Asset Value'}
+                    details={TOOLTIP_DEFINITIONS.NET_ASSET_VAL}
+                  />
+                }
+              </Toggle>
+            </div>
+            <div className="flex justify-center">
+              <div className="w-full">
+                <EmissionTreeMap flag={flag} />
+              </div>
             </div>
           </div>
         </div>
