@@ -37,7 +37,7 @@ interface Props<TableRow> {
 interface MutationInput {
   id: string
   key: string
-  value: string | number
+  value: string | number | Date
 }
 
 const DynamicPaginatedAdminTable = <
@@ -59,7 +59,7 @@ const DynamicPaginatedAdminTable = <
       convertedItems.push({
         key: entry.key as string,
         id: entry.id,
-        value: entry.value as string | number,
+        value: entry.value as string | number | Date,
       })
     })
 
