@@ -168,7 +168,7 @@ const DynamicPaginatedAdminTable = <
     row: TableRow,
     updatedEntry: {
       key: keyof TableRow
-      value: RowEntry
+      value: RowEntry | Date
     },
   ) => {
     setRows((prevRows) => {
