@@ -122,10 +122,10 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
       {
         key: 'maturityDate',
         label: 'Maturity Date',
-        isEditable: false,
+        isEditable: true,
         ctrl: {
-          type: 'text',
-          render: (row) => row.maturityDate?.toISOString() ?? '',
+          type: 'date',
+          render: (row) => row?.maturityDate?.toISOString().split('T')[0] ?? '',
           applyStyle: (row: Investment) =>
             row.maturityDate?.toISOString() ? '' : errorStyle,
         },
@@ -291,10 +291,10 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
       {
         key: 'date',
         label: 'Date',
-        isEditable: false,
+        isEditable: true,
         ctrl: {
-          type: 'text',
-          render: (row) => row?.date?.toISOString() ?? '',
+          type: 'date',
+          render: (row) => row?.date?.toISOString().split('T')[0] ?? '',
         },
       },
       {

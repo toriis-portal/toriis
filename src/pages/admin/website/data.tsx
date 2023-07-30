@@ -2,23 +2,29 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
-import { Dataset, Emission, Energy, Fuel, Investment } from '@prisma/client'
-import type { Company } from '@prisma/client'
+import { Dataset } from '@prisma/client'
+import type {
+  Company,
+  Emission,
+  Energy,
+  Fuel,
+  Investment,
+} from '@prisma/client'
 
-import { AdminNavBar, TabButton } from '../../../components'
+import {
+  AdminNavBar,
+  TabButton,
+  DynamicPaginatedAdminTable,
+} from '../../../components'
 import { api } from '../../../utils/api'
 import type { Column } from '../../../components/table/DynamicTable/DynamicTable'
 import { getColumns } from '../../../components/table/DynamicTable/Columns'
-import { DynamicPaginatedAdminTable } from '../../../components/table/DynamicPaginatedAdminTable'
-
-interface baseChangedEntries {
-  id: string
-  changedEntries: (keyof (Company | Investment))[]
-}
 
 type DataSetTypes = Company | Investment | Fuel | Emission | Energy
 type DataSetColumns = Column<DataSetTypes>[]
-type UpdateTypesWithChangedEntries = DataSetTypes & baseChangedEntries
+type UpdateTypesWithChangedEntries = DataSetTypes & {
+  changedEntries: (keyof DataSetTypes)[]
+}
 
 const UpdateData: FC = () => {
   const BATCH_SIZE = 10
@@ -38,14 +44,22 @@ const UpdateData: FC = () => {
       skip: skip,
       take: BATCH_SIZE,
     },
-    { retry: false, keepPreviousData: true },
+    {
+      retry: false,
+      keepPreviousData: true,
+      enabled: dataset === Dataset.INVESTMENT,
+    },
   )
   const { data: company } = api.company.getCompaniesBySkipTake.useQuery(
     {
       skip: skip,
       take: BATCH_SIZE,
     },
-    { retry: false, keepPreviousData: true },
+    {
+      retry: false,
+      keepPreviousData: true,
+      enabled: dataset === Dataset.COMPANY,
+    },
   )
   const { data: fuel } = api.fuel.getFuelsBySkipTake.useQuery(
     {
@@ -59,14 +73,22 @@ const UpdateData: FC = () => {
       skip: skip,
       take: BATCH_SIZE,
     },
-    { retry: false, keepPreviousData: true },
+    {
+      retry: false,
+      keepPreviousData: true,
+      enabled: dataset === Dataset.EMISSION,
+    },
   )
   const { data: energy } = api.energy.getEnergyBySkipTake.useQuery(
     {
       skip: skip,
       take: BATCH_SIZE,
     },
-    { retry: false, keepPreviousData: true },
+    {
+      retry: false,
+      keepPreviousData: true,
+      enabled: dataset === Dataset.ENERGY,
+    },
   )
 
   useEffect(() => {
@@ -132,8 +154,11 @@ const UpdateData: FC = () => {
   }, [
     company,
     dataset,
+    emission?.count,
     emission?.items,
+    energy?.count,
     energy?.items,
+    fuel?.count,
     fuel?.items,
     investment,
   ])

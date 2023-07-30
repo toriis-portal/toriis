@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import type { Company, Dataset, Sector } from '@prisma/client'
+import type { Dataset } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 
 import { api } from '../../utils/api'
@@ -40,7 +40,7 @@ interface MutationInput {
   value: string | number
 }
 
-export const DynamicPaginatedAdminTable = <
+const DynamicPaginatedAdminTable = <
   TableRow extends BaseTableRowGeneric<TableRow>,
 >({
   dataset,
@@ -68,7 +68,7 @@ export const DynamicPaginatedAdminTable = <
   const [isSelect, setIsSelect] = useState(false)
   const [curColumn, setCurColumn] = useState<keyof TableRow>('id')
   const [curRow, setCurRow] = useState<TableRow | null>(null)
-  const [textBoxContent, setTextBoxContent] = useState('')
+  const [textBoxContent, setTextBoxContent] = useState<string | number>('')
   const [modalOpen, setModalOpen] = useState(false)
 
   const [globalStateEntries, SetGlobalStateEntries] = useState<
@@ -81,6 +81,7 @@ export const DynamicPaginatedAdminTable = <
   const [rows, setRows] =
     useState<TableRowWithChangedEntries<TableRow>[]>(originalRows)
 
+  // Collect all changes made for a specific page and add them to changed entries
   const capturePageChanges = (page: number) => {
     const newEntries = [] as GlobalStateEntry<TableRow>[]
 
@@ -96,6 +97,7 @@ export const DynamicPaginatedAdminTable = <
           })
         })
       })
+
     const mergedEntries = newEntries
     globalStateEntries.forEach((entry) => {
       const existingEntry = newEntries.find(
@@ -172,7 +174,7 @@ export const DynamicPaginatedAdminTable = <
     setRows((prevRows) => {
       const newRows = prevRows.map((prevRow) => {
         if (prevRow.id === row.id) {
-          // if the new data matches the data in copied, remove it from keys
+          // If the new data matches the data in copied, remove it from keys
           const updatedEntries = (
             originalRows
               ? originalRows.find(
@@ -181,6 +183,7 @@ export const DynamicPaginatedAdminTable = <
               : []
           ) as TableRow | []
 
+          // Handle removing the data that matches what it was previously
           if (
             updatedEntries &&
             !Array.isArray(updatedEntries) &&
@@ -211,6 +214,7 @@ export const DynamicPaginatedAdminTable = <
       return newRows
     })
   }
+
   return (
     <>
       <PaginatedDynamicTable
@@ -229,8 +233,19 @@ export const DynamicPaginatedAdminTable = <
         }}
         onSelectChange={(row, updatedEntry) => handleChange(row, updatedEntry)}
         onRowEntryClick={(row, col) => {
-          setTextBoxContent(row[col.key]?.toString() ?? '')
-          if (col.ctrl.type !== 'text') {
+          if (col.ctrl.type === 'date') {
+            const isValidDate =
+              row[col.key] && !isNaN(Date.parse(row[col.key]?.toString() ?? ''))
+            const date = new Date(row[col.key]?.toString() ?? '')
+
+            setTextBoxContent(
+              (isValidDate ? date.toISOString().split('T')[0] : '') ?? '',
+            )
+          } else {
+            setTextBoxContent(row[col.key]?.toString() ?? '')
+          }
+
+          if (col.ctrl.type !== 'text' && col.ctrl.type !== 'date') {
             setIsSelect(true)
           } else {
             setIsSelect(false)
@@ -244,22 +259,38 @@ export const DynamicPaginatedAdminTable = <
         <input
           value={textBoxContent}
           disabled={isSelect}
-          type={typeof curRow?.[curColumn] === 'number' ? 'number' : 'text'}
+          type={
+            typeof curRow?.[curColumn] !== 'object'
+              ? typeof curRow?.[curColumn]
+              : 'date'
+          }
           onChange={(e) => {
-            setTextBoxContent(e.target.value)
-            if (curRow) {
-              const targetType = typeof curRow[curColumn]
-              handleChange(curRow, {
-                key: curColumn,
-                value:
-                  targetType === 'number'
-                    ? Number(e.target.value)
-                    : e.target.value,
-              })
+            // Handle date input type
+            if (typeof curRow?.[curColumn] === 'object') {
+              setTextBoxContent(e.target.value)
+              const date = new Date(e.target.value)
+              if (date.toString() !== 'Invalid Date') {
+                handleChange(curRow, {
+                  key: curColumn,
+                  value: date,
+                })
+              }
+            } else {
+              setTextBoxContent(e.target.value)
+              if (curRow) {
+                const targetType = typeof curRow[curColumn]
+                handleChange(curRow, {
+                  key: curColumn,
+                  value:
+                    targetType === 'number'
+                      ? Number(e.target.value)
+                      : e.target.value,
+                })
+              }
             }
           }}
           className="my-2 w-full border-2 border-cobalt px-10 py-4"
-        ></input>
+        />
         <SubmitRequestModal
           isOpen={modalOpen}
           isOpenCallBack={setModalOpen}
@@ -273,3 +304,5 @@ export const DynamicPaginatedAdminTable = <
     </>
   )
 }
+
+export default DynamicPaginatedAdminTable

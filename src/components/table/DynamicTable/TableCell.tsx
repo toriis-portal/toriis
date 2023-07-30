@@ -152,6 +152,42 @@ const TextEntry = <TableRow extends BaseTableRowGeneric<TableRow>>({
   )
 }
 
+const DateEntry = <TableRow extends BaseTableRowGeneric<TableRow>>({
+  row,
+  col,
+  onClick,
+}: Props<TableRow>) => {
+  if (col.ctrl.type !== 'date') {
+    throw new Error('Invalid column type')
+  }
+  const changedStyles = row.changedEntries.includes(col.key)
+    ? 'bg-green-100'
+    : ''
+  const disabledStyles = !col.isEditable ? 'bg-gray-100' : ''
+
+  return (
+    <input
+      className={clsx(
+        col.ctrl.applyStyle?.(row),
+        'w-full',
+        changedStyles,
+        disabledStyles,
+      )}
+      type="date"
+      value={col.ctrl.render(row)}
+      disabled={!col.isEditable}
+      onClick={(e) => {
+        e.stopPropagation()
+
+        if (col.isEditable) {
+          onClick?.(row)
+        }
+      }}
+      readOnly
+    />
+  )
+}
+
 interface Props<TableRow extends BaseTableRowGeneric<TableRow>> {
   row: TableRow
   col: TableColumn<TableRow>
@@ -184,6 +220,8 @@ export const TableCell = <TableRow extends BaseTableRowGeneric<TableRow>>(
     return <TextEntry {...props} />
   } else if (col.ctrl.type === 'select') {
     return <SelectEntry {...props} />
+  } else if (col.ctrl.type === 'date') {
+    return <DateEntry {...props} />
   }
 
   return <>{col.ctrl.render(row)}</>

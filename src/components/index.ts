@@ -47,6 +47,7 @@ import Tag from './text/Tag'
 import AdminListTable from './table/AdminListTable'
 import InvestmentTable from './table/InvestmentTable'
 import RequestReviewTable from './table/ReviewRequestTable'
+import DynamicPaginatedAdminTable from './table/DynamicPaginatedAdminTable'
 //Tooltips
 import ToolTip from './tooltip/ToolTip'
 // Modals
@@ -105,4 +106,5 @@ export {
   ImageWithCaption,
   Toast,
   Footer,
+  DynamicPaginatedAdminTable,
 }
