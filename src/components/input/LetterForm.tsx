@@ -2,6 +2,7 @@ import { Formik, Field, Form } from 'formik'
 import clsx from 'clsx'
 
 import { PrimaryButton } from '..'
+import { api } from '../../utils/api'
 
 interface Values {
   firstName: string
@@ -11,7 +12,7 @@ interface Values {
   email: string
   city: string
   country: string
-  zip: string
+  zip: number
   bio: string
   twitter: string
   agree: string
@@ -19,6 +20,8 @@ interface Values {
 }
 
 const LetterForm = () => {
+  const addSignatoryMutation = api.signatory.addSignatory.useMutation()
+
   const styles = {
     field:
       'border border-black bg-lightBlue px-6 py-2.5 text-base font-light mb-5',
@@ -36,7 +39,7 @@ const LetterForm = () => {
         email: '',
         city: '',
         country: '',
-        zip: '',
+        zip: 0, // this looks bad, optional initial values??
         bio: '',
         twitter: '',
         agree: '',
@@ -44,6 +47,19 @@ const LetterForm = () => {
       }}
       onSubmit={(values: Values) => {
         console.log(values)
+        addSignatoryMutation.mutate({
+          firstName: values.firstName,
+          lastName: values.lastName,
+          title: [],
+          institution: [],
+          email: values.email,
+          city: values.city,
+          country: values.country,
+          zipCode: values.zip,
+          bioLink: values.bio,
+          twitter: values.twitter,
+          shouldEmail: true,
+        })
       }}
     >
       <Form>
