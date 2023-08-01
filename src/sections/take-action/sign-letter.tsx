@@ -1,6 +1,29 @@
-import { HighlightedTitle, LetterForm } from '../../components'
+import { Spinner } from 'flowbite-react'
+
+import { HighlightedTitle, LetterForm, Toast } from '../../components'
+import { api } from '../../utils/api'
 
 const SignLetter = () => {
+  const { data, isLoading, isError, error } =
+    api.signatory.getSignatoriesCount.useQuery()
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center px-12">
+        <Spinner color="info" />
+      </div>
+    )
+  }
+
+  if (isError || !data) {
+    return (
+      <Toast
+        type="error"
+        message={error ? error.message : 'Error retrieving signatories count'}
+      ></Toast>
+    )
+  }
+
   return (
     <div className="flex flex-col items-center bg-clementine/20 py-10">
       <div>
@@ -32,9 +55,8 @@ const SignLetter = () => {
             </p>
             <div className="flex flex-row items-end">
               <p className="font-semibold">Join our</p>
-              {/* TODO: get this number from contentful */}
               <p className="subheader-1 px-6 text-8xl font-bold text-clementine">
-                709
+                {data}
               </p>
               <p className="font-semibold">
                 signatories today<span className="text-clementine">.</span>
