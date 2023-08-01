@@ -11,8 +11,7 @@ const SignLetter = () => {
         />
       </div>
       <div className="w-[calc(100%-120px)] rounded-lg py-9 px-20 outline outline-1">
-        {/* TODO: need Graph FF Condensed font */}
-        <p className="header-3 pb-12 text-center font-semibold">
+        <p className="subheader-1 pb-12 text-center text-4xl font-semibold">
           FOSSIL FREE UIUC OPEN LETTER
         </p>
         <div className="flex">
@@ -32,10 +31,11 @@ const SignLetter = () => {
               .
             </p>
             <div className="flex flex-row items-end">
-              {/* TODO: need Graph FF Condensed font */}
               <p className="font-semibold">Join our</p>
               {/* TODO: get this number from contentful */}
-              <p className="px-6 text-8xl font-bold">709</p>
+              <p className="subheader-1 px-6 text-8xl font-bold text-clementine">
+                709
+              </p>
               <p className="font-semibold">
                 signatories today<span className="text-clementine">.</span>
               </p>

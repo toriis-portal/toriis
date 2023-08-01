@@ -22,10 +22,9 @@ const OpenLetter: FC<LetterProps> = ({ openLetter, scrollToForm }) => {
         />
       </div>
       <div className="flex flex-row items-center">
-        {/* TODO: need Graph FF Condensed font */}
-        <p className="font-semibold">Join our</p>
+        <p className="font-semibold ">Join our</p>
         {/* TODO: get this number from contentful */}
-        <p className="px-6 text-8xl font-bold">709</p>
+        <p className="subheader-1 px-6 text-8xl font-bold">709</p>
         <p className="font-semibold">signatories</p>
       </div>
       <PrimaryButton
