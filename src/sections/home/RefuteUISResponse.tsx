@@ -15,13 +15,21 @@ const RefuteUISResponse: FC<RefuteUISResponseProps> = ({
   leftText,
   entries,
 }) => {
-  const carouselChildren = entries.map((entry) =>
-    documentToReactComponents(entry.details, mainParagraphStyle),
-  )
+  const carouselChildren = entries.map((entry) => [
+    <div key={`claim-${entry.order}`}>
+      <span className="subheader-1 text-clementine">CLAIM:</span>
+      {documentToReactComponents(entry.claim, mainParagraphStyle)}
+      <br></br>
+    </div>,
+    <div key={`response-${entry.order}`}>
+      <span className="subheader-1 text-cobalt">RESPONSE:</span>
+      {documentToReactComponents(entry.response, mainParagraphStyle)}
+    </div>,
+  ])
   return (
     <div className="bg-clementine/20 p-12">
       <HighlightedTitle
-        title="Refute UIS Response"
+        title="Responding to Pushback"
         size="large"
         color="clementine"
       />
