@@ -1,9 +1,9 @@
 //Home
-import InstitutionalDivestments from './home/InstitutionalDivestments'
+import InstitutionalDivestment from './home/InstitutionalDivestment'
 import Landing from './home/Landing'
 import OurRequest from './home/OurRequests'
 import RefuteUISResponse from './home/RefuteUISResponse'
-import SampleSection from './home/SampleSection'
+import AboutUs from './home/AboutUs'
 import TimelineSection from './home/Timeline'
 // Company Details Page
 import ChartGroup from './company/ChartGroup'
@@ -16,12 +16,18 @@ import InstitutionsDivested from './why-divest/InstitutionsDivested'
 import SchoolsDivested from './why-divest/SchoolsDivested'
 import UniversityInvestments from './why-divest/UniversityInvestments'
 import WhatWarmingMeans from './why-divest/WhatWarmingMeans'
+// Take Action Page
+import OpenLetter from './take-action/letter'
+import SignLetter from './take-action/sign-letter'
+import Signatories from './take-action/signatories'
+import Momentum from './take-action/momentum'
+
 export {
-  InstitutionalDivestments,
+  InstitutionalDivestment,
   Landing,
   OurRequest,
   RefuteUISResponse,
-  SampleSection,
+  AboutUs,
   TimelineSection,
   DivestmentCase,
   ChartGroup,
@@ -32,4 +38,8 @@ export {
   SchoolsDivested,
   UniversityInvestments,
   WhatWarmingMeans,
+  OpenLetter as Letter,
+  SignLetter,
+  Signatories,
+  Momentum,
 }
