@@ -23,7 +23,7 @@ const Toast: FC<ToastProps> = ({ type, message }) => {
   }, [])
 
   return (
-    <div className="fixed right-5 bottom-5">
+    <div className="fixed bottom-5 right-5">
       <div
         className={clsx(
           'mb-4 flex w-fit flex-row items-center justify-center gap-2 rounded-lg border bg-white p-2',

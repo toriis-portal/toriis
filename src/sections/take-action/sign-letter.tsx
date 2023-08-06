@@ -10,7 +10,7 @@ const SignLetter = () => {
           color="clementine"
         />
       </div>
-      <div className="w-[calc(100%-120px)] rounded-lg py-9 px-20 outline outline-1">
+      <div className="w-[calc(100%-120px)] rounded-lg px-20 py-9 outline outline-1">
         <p className="subheader-1 pb-12 text-center text-4xl font-semibold">
           FOSSIL FREE UIUC OPEN LETTER
         </p>
