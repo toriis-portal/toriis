@@ -50,8 +50,9 @@ const LetterForm = () => {
         addSignatoryMutation.mutate({
           firstName: values.firstName,
           lastName: values.lastName,
-          title: [],
-          institution: [],
+          // TODO: use FieldArrays, conditional rendering for addtl fields and a max number of titles for this. temporarily just taking one title/institution pair
+          title: [values.title],
+          institution: [values.title],
           email: values.email,
           city: values.city,
           country: values.country,
