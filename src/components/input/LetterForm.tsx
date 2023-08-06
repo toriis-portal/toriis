@@ -12,7 +12,7 @@ interface Values {
   email: string
   city: string
   country: string
-  zip: number
+  zip?: number
   bio: string
   twitter: string
   agree: string
@@ -39,7 +39,6 @@ const LetterForm = () => {
         email: '',
         city: '',
         country: '',
-        zip: 0, // this looks bad, optional initial values??
         bio: '',
         twitter: '',
         agree: '',
@@ -59,7 +58,7 @@ const LetterForm = () => {
           zipCode: values.zip,
           bioLink: values.bio,
           twitter: values.twitter,
-          shouldEmail: true,
+          shouldEmail: values.emailUpdates,
         })
       }}
     >
