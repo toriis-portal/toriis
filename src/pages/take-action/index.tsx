@@ -26,7 +26,7 @@ const TakeActionPage: FC<TakeActionPageProps> = ({ takeActionPageEntries }) => {
   const navItems = [
     { path: 'openLetter', text: 'Open Letter' },
     // { path: 'signLetter', text: 'Sign the Letter' },
-    // { path: 'signatories', text: 'Signatories' },
+    { path: 'signatories', text: 'Signatories' },
     // { path: 'momentum', text: 'Continue the Momentum' },
   ]
   return (
@@ -40,11 +40,11 @@ const TakeActionPage: FC<TakeActionPageProps> = ({ takeActionPageEntries }) => {
       </div>
       {/* <div id="signLetter" className="pt-10">
         <SignLetter />
-      </div>
+      </div> */}
       <div id="signatories" className="pt-10">
         <Signatories />
       </div>
-      <div id="momentum" className="pt-10">
+      {/* <div id="momentum" className="pt-10">
         <Momentum />
       </div> */}
     </>
