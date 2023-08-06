@@ -16,11 +16,11 @@ import InstitutionsDivested from './fossil-fuel/InstitutionsDivested'
 import SchoolsDivested from './fossil-fuel/SchoolsDivested'
 import UniversityInvestments from './fossil-fuel/UniversityInvestments'
 import WhatWarmingMeans from './fossil-fuel/WhatWarmingMeans'
-// Open Letter Page
-import Letter from './open-letter/letter'
-import SignLetter from './open-letter/sign-letter'
-import Signatories from './open-letter/signatories'
-import Momentum from './open-letter/momentum'
+// Take Action Page
+import OpenLetter from './take-action/letter'
+import SignLetter from './take-action/sign-letter'
+import Signatories from './take-action/signatories'
+import Momentum from './take-action/momentum'
 
 export {
   InstitutionalDivestment,
@@ -38,7 +38,7 @@ export {
   SchoolsDivested,
   UniversityInvestments,
   WhatWarmingMeans,
-  Letter,
+  OpenLetter as Letter,
   SignLetter,
   Signatories,
   Momentum,

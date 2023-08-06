@@ -12,6 +12,7 @@ import type {
   CaseEntry,
   DirtyCompanyEntry,
   FossilFuelPage,
+  TakeActionPage,
 } from '../types/index.js'
 
 const homePageEntryNames = [
@@ -30,6 +31,8 @@ const fossilFuelPageEntryNames = [
   'link',
 ]
 
+const takeActionPageEntryNames = ['takeActionPage']
+
 type HomePageEntryType =
   | TimelineEntry
   | OurRequestsEntry
@@ -43,6 +46,8 @@ type FossilFuelPageEntryType =
   | CaseEntry
   | DirtyCompanyEntry
   | LinkEntry
+
+type TakeActionPageEntryType = TakeActionPage
 
 export class ContentWrapper {
   client: ContentfulClientApi
@@ -157,5 +162,46 @@ export class ContentWrapper {
       }),
     )
     return fossilFuelPageEntryMap
+  }
+
+  /**
+   * Handles type casting and filtering for take action page entries
+   *
+   * @param entries Take action page entries from Contentful
+   * @param entity Type of entry
+   * @returns Parsed take action page entries
+   */
+  parseTakeActionPageEntries = (
+    entries: TakeActionPageEntryType[],
+    entity: string,
+  ) => {
+    switch (entity) {
+      case 'takeActionPage':
+        return entries[0] as TakeActionPage
+      default:
+        return entries
+    }
+  }
+
+  /**
+   * Get all entries from Contentful for the take action page
+   * @returns Take action page entries in a map
+   */
+  getAllTakeActionEntries = async () => {
+    const takeActionPageEntryMap: Record<
+      string,
+      TakeActionPageEntryType | TakeActionPageEntryType[]
+    > = {}
+    await Promise.all(
+      takeActionPageEntryNames.map(async (entity) => {
+        const results = await this.get<TakeActionPageEntryType[]>(entity).then(
+          (entries) => {
+            return this.parseTakeActionPageEntries(entries, entity)
+          },
+        )
+        takeActionPageEntryMap[entity] = results
+      }),
+    )
+    return takeActionPageEntryMap
   }
 }
