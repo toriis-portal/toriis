@@ -25,15 +25,15 @@ const ToolTip: FC<TitleProps> = ({ title, details, children }) => {
         {isShown && (
           <div
             className={clsx(
-              'border-light absolute top-12 left-1/2 z-20',
+              'border-light absolute left-1/2 top-12 z-20',
               '-translate-x-1/2 rounded-xl border border-black bg-white',
               'body-normal w-60 p-5 leading-4',
             )}
           >
             <span
               className={clsx(
-                'absolute -top-4 left-1/2 bottom-7 h-8 w-8',
-                '-translate-x-1/2 rotate-45 rounded-sm border-t border-l',
+                'absolute -top-4 bottom-7 left-1/2 h-8 w-8',
+                '-translate-x-1/2 rotate-45 rounded-sm border-l border-t',
                 'body-small border-black bg-white',
               )}
             />

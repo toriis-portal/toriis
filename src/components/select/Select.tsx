@@ -260,7 +260,7 @@ export const Select: FC<SelectProps> = ({
                 )}
                 placeholder="Search"
               />
-              <MagnifyingGlassIcon className="absolute top-1.5 left-2 h-4 w-4 fill-darkGray" />
+              <MagnifyingGlassIcon className="absolute left-2 top-1.5 h-4 w-4 fill-darkGray" />
             </div>
           )}
           <div

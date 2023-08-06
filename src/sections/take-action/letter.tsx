@@ -30,7 +30,7 @@ const OpenLetter: FC<LetterProps> = ({ openLetter, scrollToForm }) => {
       <PrimaryButton
         text="Sign the Letter"
         variant="clementine"
-        className="mb-12 mt-9 py-2 !px-14"
+        className="mb-12 mt-9 !px-14 py-2"
         onClick={scrollToForm}
       >
         <ArrowRightIcon className="ml-3 h-9 w-5 stroke-2" />

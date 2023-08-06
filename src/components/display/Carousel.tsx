@@ -51,7 +51,7 @@ const Carousel: FC<CarouselProps> = ({
     <div
       className={clsx(
         'flex flex-col',
-        'gap-4  pt-12 pb-8',
+        'gap-4  pb-8 pt-12',
         { 'bg-white': variant === 'white' },
         { 'bg-lightBlue': variant === 'lightBlue' },
         { 'bg-clementine/20': variant === 'clementine' },

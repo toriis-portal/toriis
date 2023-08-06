@@ -39,7 +39,7 @@ const CompanyCard: FC<CardProps> = ({ companyInfo }) => {
     <Link href={`/company/${companyInfo.company.id}`}>
       <div
         className={clsx(
-          'flex flex-col gap-[1.5vw] rounded-xl bg-white px-[2.6vw] pt-[2vw] pb-[1.3vw]',
+          'flex flex-col gap-[1.5vw] rounded-xl bg-white px-[2.6vw] pb-[1.3vw] pt-[2vw]',
           'border-[0.5px] border-darkTeal shadow-[0_4px_4px_0] shadow-lightShadow',
           'hover:-m-[3.2px] hover:border-4 hover:border-cobalt',
           'overflow-x-scroll',
