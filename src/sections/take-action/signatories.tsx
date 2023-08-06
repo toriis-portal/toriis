@@ -49,7 +49,7 @@ export const parseSignatoriesToColumns = (
                   <div className="font-bold">
                     {item.firstName + ' ' + item.lastName}
                   </div>
-                  <div className="ml-2">
+                  <div>
                     {item.title.length > 0
                       ? ', ' + item.title.reduce((x, y) => x + '; ' + y)
                       : ' '}
