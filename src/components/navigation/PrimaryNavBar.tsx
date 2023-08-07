@@ -50,7 +50,7 @@ const PrimaryNavBar: FC = () => {
           <NavButton title="Home" link="/home" />
           <NavButton title="Take Action" link="/take-action" />
           <NavButton title="Why Divest?" link="/why-divest" />
-          <NavButton title="Learn about Investments" link="/investments" />
+          <NavButton title="Investment Database" link="/investments" />
           <div className="hidden w-fit flex-col justify-center md:flex">
             <AuthButton />
           </div>
