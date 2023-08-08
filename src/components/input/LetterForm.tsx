@@ -33,6 +33,9 @@ const LetterForm = () => {
 
   const ValidationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email required'),
+    agree: Yup.string()
+      .oneOf(['YES'], 'Please agree to sign the letter')
+      .required('Please agree to sign the letter'),
   })
 
   return (
@@ -149,11 +152,20 @@ const LetterForm = () => {
             className={clsx('block', styles.field)}
           />
           <div>
-            <p className="mb-2 w-3/4 text-base">
+            <p
+              className={clsx(
+                'mb-2 w-3/4 text-base',
+                errors.agree && touched.agree && '!mb-1 ',
+                // TODO: haha
+              )}
+            >
               I TESTIFY THAT THE INFORMATION I HAVE SUPPLIED ON THIS FORM IS
               TRUE AND ACCURATELY REFLECTS MY IDENTITY, AS WELL AS DESIRE TO
               SIGN THE FOSSIL FREE UIUC LETTER.
             </p>
+            {errors.agree && touched.agree ? (
+              <div className="mb-5 text-red-700">{errors.agree}</div>
+            ) : null}
             <label className="mb-2.5 block text-base">
               <Field
                 type="radio"
