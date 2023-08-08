@@ -30,7 +30,7 @@ export const signatoryRouter = createTRPCRouter({
       if (existingSignatory) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
-          message: 'There is already a signatory with this email',
+          message: 'There is already a signatory with this email.',
         })
       }
 

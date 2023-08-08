@@ -211,6 +211,14 @@ const LetterForm = () => {
               Opt in to email updates from TORIIS
             </label>
           </div>
+          {addSignatoryMutation.error && (
+            <p className="mt-5 text-red-700">
+              {addSignatoryMutation.error.message ===
+              'There is already a signatory with this email.'
+                ? addSignatoryMutation.error.message
+                : 'Sorry, there was an error submitting your signature - please contact info@toriis.earth.'}
+            </p>
+          )}
         </Form>
       )}
     </Formik>
