@@ -2,6 +2,7 @@ import type { FC } from 'react'
 
 import {
   Landing,
+  LandingBanner,
   OurRequest,
   InstitutionalDivestment,
   RefuteUISResponse,
@@ -74,6 +75,7 @@ const Home: FC<HomeProps> = ({
     <>
       <PrimaryNavBar />
       <SecondaryNavBar navItems={navItems} />
+      <LandingBanner />
       <Landing text={info.landing} />
       <main>
         <div id="ourRequests" className="pt-20">
