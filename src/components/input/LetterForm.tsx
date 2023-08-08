@@ -36,6 +36,8 @@ const LetterForm = () => {
     agree: Yup.string()
       .oneOf(['YES'], 'Please agree to sign the letter')
       .required('Please agree to sign the letter'),
+    firstName: Yup.string().required('First and last name required'),
+    lastName: Yup.string().required('First and last name required'),
   })
 
   return (
@@ -80,15 +82,29 @@ const LetterForm = () => {
               id="firstName"
               name="firstName"
               placeholder="First"
-              className={clsx('w-full', styles.field)}
+              className={clsx(
+                'w-full',
+                styles.field,
+                errors.email && touched.email && '!mb-2 ',
+              )}
             />
             <Field
               id="lastName"
               name="lastName"
               placeholder="Last"
-              className={clsx('w-full', styles.field)}
+              className={clsx(
+                'w-full',
+                styles.field,
+                errors.email && touched.email && '!mb-2 ',
+              )}
             />
           </div>
+          {(errors.firstName && touched.firstName) ||
+          (errors.lastName && touched.lastName) ? (
+            <div className="mb-5 text-red-700">
+              {errors.firstName ?? errors.lastName}
+            </div>
+          ) : null}
           <Field
             id="title"
             name="tile"
@@ -109,7 +125,7 @@ const LetterForm = () => {
             className={clsx(
               'block',
               styles.field,
-              errors.email && touched.email && '!mb-1 ',
+              errors.email && touched.email && '!mb-2 ',
             )}
           />
           {errors.email && touched.email ? (
@@ -152,13 +168,7 @@ const LetterForm = () => {
             className={clsx('block', styles.field)}
           />
           <div>
-            <p
-              className={clsx(
-                'mb-2 w-3/4 text-base',
-                errors.agree && touched.agree && '!mb-1 ',
-                // TODO: haha
-              )}
-            >
+            <p className="mb-2 w-3/4 text-base">
               I TESTIFY THAT THE INFORMATION I HAVE SUPPLIED ON THIS FORM IS
               TRUE AND ACCURATELY REFLECTS MY IDENTITY, AS WELL AS DESIRE TO
               SIGN THE FOSSIL FREE UIUC LETTER.
