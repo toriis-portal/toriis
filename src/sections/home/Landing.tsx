@@ -28,10 +28,7 @@ const Landing: FC<{ text: Document }> = ({ text }) => {
               {documentToReactComponents(text, mainParagraphStyle)}
             </div>
             <div className="flex flex-col gap-12 md:flex-row">
-              <PrimaryButton
-                text="More About Fossil Fuels"
-                link="/fossil-fuel"
-              />
+              <PrimaryButton text="Why Divest?" link="/why-divest" />
               <PrimaryButton
                 text="Learn About Investment"
                 link="/investments"
