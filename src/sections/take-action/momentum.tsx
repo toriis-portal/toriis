@@ -1,13 +1,32 @@
-import { HighlightedTitle } from '../../components'
+import type { FC } from 'react'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
-const Momentum = () => {
+import { HighlightedTitle, ListItem } from '../../components'
+import type { ListEntryDocument } from '../../types'
+import { mainParagraphStyle } from '../../utils/renderer'
+
+const Momentum: FC<{ entries: ListEntryDocument[] }> = ({ entries }) => {
   return (
-    <div>
+    <div className="px-12">
       <HighlightedTitle
         title="Continue the Momentum"
         size="large"
         color="clementine"
       />
+      <div className="my-6 w-full md:px-12">
+        <div className="ml-[3%] space-y-6">
+          {entries.map((entry, index) => (
+            <ListItem
+              key={index}
+              listIndex={entry.order}
+              listContent={documentToReactComponents(
+                entry.details,
+                mainParagraphStyle,
+              )}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   )
 }

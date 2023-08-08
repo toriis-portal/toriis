@@ -39,6 +39,11 @@ export interface ListEntry {
   details: string
 }
 
+export interface ListEntryDocument {
+  order: number
+  details: Document
+}
+
 export interface RefuteResponseEntry {
   order: number
   claim: Document
