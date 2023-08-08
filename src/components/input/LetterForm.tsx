@@ -67,14 +67,14 @@ const LetterForm = () => {
           email: values.email,
           city: values.city,
           country: values.country,
-          zipCode: values.zip,
+          zipCode: values.zip ?? 0,
           bioLink: values.bio,
           twitter: values.twitter,
           shouldEmail: values.emailUpdates,
         })
       }}
     >
-      {({ errors, touched }) => (
+      {({ errors, touched, setFieldValue }) => (
         <Form>
           {/* TODO: accessibility concerns of no label */}
           <div className="flex space-x-4">
@@ -147,7 +147,13 @@ const LetterForm = () => {
             id="zip"
             name="zip"
             placeholder="Zip/Postal Code"
+            type="number"
             className={clsx('block', styles.field)}
+            // This additional logic is required for zipcode field in order
+            // to display string placeholder in a number field safely.
+            onChangeText={(value: string) =>
+              setFieldValue('zip', parseInt(value))
+            }
           />
           <label className={styles.label} htmlFor="bio">
             Link to Bio, University Webpage, Etc.
