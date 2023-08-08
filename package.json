@@ -39,6 +39,7 @@
     "react-scroll": "^1.8.9",
     "superjson": "1.9.1",
     "yahoo-finance2": "^2.3.10",
+    "yup": "^1.2.0",
     "zod": "^3.20.2"
   },
   "devDependencies": {
