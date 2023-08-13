@@ -6,7 +6,6 @@ import { api } from '../../utils/api'
 const SignLetter = () => {
   const { data, isLoading, isError, error } =
     api.signatory.getSignatoriesCount.useQuery()
-
   if (isLoading) {
     return (
       <div className="flex flex-col items-center px-12">
@@ -14,7 +13,6 @@ const SignLetter = () => {
       </div>
     )
   }
-
   if (isError || !data) {
     return (
       <Toast
