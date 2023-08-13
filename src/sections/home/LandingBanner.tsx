@@ -5,19 +5,28 @@ import { CapitalizedTitle } from '../../components'
 
 const LandingBanner = () => {
   return (
-    <div className="relative flex w-full overflow-hidden bg-black">
+    <div className="relative flex w-full overflow-hidden bg-black text-white">
       <Image
         src={bannerimage as HTMLImageElement}
         alt="Hero Image"
         className="object-cover"
         fill
       />
-      <div className="z-10 ml-8 mt-16 w-fit bg-cobalt px-4 pt-6 pb-4 text-white">
-        <p className="text-[40px] font-[900]">
-          Welcome to{' '}
-          <span className="underline decoration-clementine">TORIIS:</span>
-        </p>
-        <CapitalizedTitle className="pt-6" />
+      <div className="z-10  w-full">
+        <div className="ml-8 mt-16 w-fit bg-cobalt px-4 pt-6 pb-4">
+          <p className="text-[40px] font-[900]">
+            Welcome to{' '}
+            <span className="underline decoration-clementine">TORIIS:</span>
+          </p>
+          <CapitalizedTitle className="pt-6" />
+        </div>
+
+        <div className="mt-8 h-fit space-y-6 font-graph ">
+          <p className="mx-auto w-fit pt-12 pb-16 text-[200px]">DIVEST NOW.</p>
+          <p className="mx-auto w-fit py-7 text-[128px]">
+            FOSSIL FREE ILLINOIS
+          </p>
+        </div>
       </div>
     </div>
   )
