@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 
 import {
-  Landing,
+  ToriisAtAGlance,
   LandingBanner,
   OurRequest,
   InstitutionalDivestment,
@@ -76,7 +76,7 @@ const Home: FC<HomeProps> = ({
       <PrimaryNavBar />
       <SecondaryNavBar navItems={navItems} />
       <LandingBanner />
-      <Landing text={info.landing} />
+      <ToriisAtAGlance text={info.landing} />
       <main>
         <div id="ourRequests" className="pt-20">
           <OurRequest entries={ourRequestsEntries} />

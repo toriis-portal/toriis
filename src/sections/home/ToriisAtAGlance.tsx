@@ -11,7 +11,7 @@ import {
 } from '../../components'
 import { mainParagraphStyle } from '../../utils/renderer'
 
-const Landing: FC<{ text: Document }> = ({ text }) => {
+const ToriisAtAGlance: FC<{ text: Document }> = ({ text }) => {
   return (
     <div className="flex flex-col items-center justify-center">
       <CapitalizedTitle className="mt-10 place-content-center text-lg sm:text-lg md:space-x-2 md:text-2xl lg:space-x-3 lg:text-4xl" />
@@ -44,4 +44,4 @@ const Landing: FC<{ text: Document }> = ({ text }) => {
   )
 }
 
-export default Landing
+export default ToriisAtAGlance
