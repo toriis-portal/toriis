@@ -13,35 +13,22 @@ import { mainParagraphStyle } from '../../utils/renderer'
 
 const ToriisAtAGlance: FC<{ text: Document }> = ({ text }) => {
   return (
-    <div className="flex flex-col items-center justify-center">
-      <HighlightedTitle
-        title="TORIIS at a glance"
-        size="large"
-        color="clementine"
-      />
-      <div className="flex flex-col items-center justify-center px-14 py-8 lg:flex-row">
-        <div className="basis-2/5">
-          <LandingDonutChart />
-          <div className={clsx('flex justify-center pt-2')}>
-            Assets Per Sector
-          </div>
+    <div className="mx-16 flex flex-row py-8">
+      <div className="basis-3/5">
+        <HighlightedTitle
+          title="TORIIS at a glance"
+          size="large"
+          color="clementine"
+        />
+        <div className="mb-8 ml-8 flex flex-col gap-6">
+          {documentToReactComponents(text, mainParagraphStyle)}
         </div>
-        <div className="basis-4/7">
-          <div className="mb-6 p-4 lg:pr-14">
-            <div className="mb-8 flex flex-col gap-6">
-              {documentToReactComponents(text, mainParagraphStyle)}
-            </div>
-            <div className="flex flex-col gap-12 md:flex-row">
-              <PrimaryButton
-                text="More About Fossil Fuels"
-                link="/fossil-fuel"
-              />
-              <PrimaryButton
-                text="Learn About Investment"
-                link="/investments"
-              />
-            </div>
-          </div>
+      </div>
+      <div className="mt-10 ml-4 basis-2/5">
+        <LandingDonutChart />
+        <div className={clsx('flex justify-center pt-2')}>
+          Assets Per Sector
+          {/* TODO: make p */}
         </div>
       </div>
     </div>
