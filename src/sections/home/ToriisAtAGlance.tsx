@@ -4,16 +4,12 @@ import type { Document } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import clsx from 'clsx'
 
-import {
-  PrimaryButton,
-  LandingDonutChart,
-  HighlightedTitle,
-} from '../../components'
+import { LandingDonutChart, HighlightedTitle } from '../../components'
 import { mainParagraphStyle } from '../../utils/renderer'
 
 const ToriisAtAGlance: FC<{ text: Document }> = ({ text }) => {
   return (
-    <div className="mx-16 flex flex-row py-8">
+    <div className="mx-16 mt-10 flex flex-row">
       <div className="basis-3/5">
         <HighlightedTitle
           title="TORIIS at a glance"
@@ -27,8 +23,7 @@ const ToriisAtAGlance: FC<{ text: Document }> = ({ text }) => {
       <div className="mt-10 ml-4 basis-2/5">
         <LandingDonutChart />
         <div className={clsx('flex justify-center pt-2')}>
-          Assets Per Sector
-          {/* TODO: make p */}
+          <p className="header-2">Assets Per Sector</p>
         </div>
       </div>
     </div>
