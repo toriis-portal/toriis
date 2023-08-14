@@ -10,6 +10,7 @@ import TabButton from './button/TabButton'
 import CompanyCard from './card/CompanyCard'
 import AdminSelectCard from './card/AdminSelectCard'
 import ChartDetailsCard from './card/ChartDetailsCard'
+import EmissionsCard from './card/EmissionsCard'
 // Charts
 import EnergyRadialChart from './chart/EnergyRadialChart'
 import LandingDonutChart from './chart/LandingDonutChart'
@@ -105,4 +106,5 @@ export {
   ImageWithCaption,
   Toast,
   Footer,
+  EmissionsCard,
 }

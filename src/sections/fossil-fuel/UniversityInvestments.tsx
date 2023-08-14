@@ -68,6 +68,14 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
           </div>
         </div>
         <div>{documentToReactComponents(caption, mainParagraphStyle)}</div>
+        <div className="justify-center">
+          <HighlightedTitle
+            title="66,299 Metric Tons of CO2 is Equivalent to"
+            size="medium"
+            color="clementine"
+            padded={false}
+          ></HighlightedTitle>
+        </div>
       </div>
     </div>
   )
