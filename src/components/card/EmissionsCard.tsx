@@ -48,7 +48,7 @@ const EmissionsCard: FC<CardProps> = ({
   type,
 }) => {
   return (
-    <div className="py-8">
+    <div className="py-4">
       <h2 className="subheader-1 py-6">{title}:</h2>
       <div className={clsx('rounded-md border-2', `border-${color}`)}>
         <div className="flex items-center space-x-4 py-4">
