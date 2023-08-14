@@ -54,7 +54,7 @@ const EmissionsCard: FC<CardProps> = ({
       <h2 className="p-2">{title}:</h2>
       <div className={clsx('rounded-md border-2 ', `border-${color}`)}>
         <div className="flex place-content-evenly p-4">
-          <text className={clsx('w-24', `bg-${color}/20`)}>{metric}</text>
+          <text className={clsx('w-24', ` bg-${color}/20`)}>{metric}</text>
           <text className="w-64">{description}</text>
           <Icon type={type} />
         </div>
