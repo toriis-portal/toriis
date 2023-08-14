@@ -50,7 +50,12 @@ const EmissionsCard: FC<CardProps> = ({
   return (
     <div className="py-4">
       <h2 className="subheader-1 py-6">{title}:</h2>
-      <div className={clsx('rounded-md border-2', `border-${color}`)}>
+      <div
+        className={clsx('rounded-md border-2', {
+          'border-pumpkin': color === 'pumpkin',
+          'border-brightTeal': color === 'brightTeal',
+        })}
+      >
         <div className="flex items-center space-x-4 py-4">
           <div
             className={clsx('ml-4 flex items-center justify-center', {
