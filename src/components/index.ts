@@ -38,6 +38,15 @@ import Select from './select/Select'
 // Inputs
 import SearchBar from './input/SearchBar'
 import InviteAdminBar from './input/InviteAdminBar'
+// Icons
+import CarIcon from './icon/CarIcon'
+import FacebookIcon from './icon/FacebookIcon'
+import GitHubIcon from './icon/GitHubIcon'
+import InstagramIcon from './icon/InstagramIcon'
+import PlugIcon from './icon/PlugIcon'
+import TrashIcon from './icon/TrashIcon'
+import TreeIcon from './icon/TreeIcon'
+import TwitterIcon from './icon/TwitterIcon'
 // Text
 import NumberCircle from './text/NumberCircle'
 import HighlightedTitle from './text/HighlightedTitle'
@@ -107,4 +116,12 @@ export {
   Toast,
   Footer,
   EmissionsCard,
+  CarIcon,
+  FacebookIcon,
+  GitHubIcon,
+  InstagramIcon,
+  PlugIcon,
+  TrashIcon,
+  TreeIcon,
+  TwitterIcon,
 }

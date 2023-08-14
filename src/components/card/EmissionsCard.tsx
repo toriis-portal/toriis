@@ -1,11 +1,11 @@
 import type { FC } from 'react'
-import {
-  TruckIcon,
-  TrashIcon,
-  BoltIcon,
-  GlobeAmericasIcon,
-} from '@heroicons/react/24/outline'
+import React from 'react'
 import clsx from 'clsx'
+
+import CarIcon from '../icon/CarIcon'
+import PlugIcon from '../icon/PlugIcon'
+import TreeIcon from '../icon/TreeIcon'
+import TrashIcon from '../icon/TrashIcon'
 
 export interface CardProps {
   title: string
@@ -24,22 +24,20 @@ const Icon: FC<IconProps> = ({ type }) => {
 
   switch (type) {
     case 'gasoline':
-      icon = <TruckIcon />
+      icon = <CarIcon />
       break
     case 'trashbag':
       icon = <TrashIcon />
       break
     case 'home':
-      icon = <BoltIcon />
+      icon = <PlugIcon />
       break
     case 'tree':
-      icon = <GlobeAmericasIcon />
+      icon = <TreeIcon />
       break
-    default:
-      icon = <GlobeAmericasIcon />
   }
 
-  return <div className="w-8"> {icon}</div>
+  return <div className="pr-4"> {icon}</div>
 }
 
 const EmissionsCard: FC<CardProps> = ({
@@ -50,24 +48,21 @@ const EmissionsCard: FC<CardProps> = ({
   type,
 }) => {
   return (
-    <div className="p-8">
-      <h2 className="p-2 font-bold">{title}:</h2>
-      <div className={clsx('rounded-md border-2 ', `border-${color}`)}>
-        <div className="flex place-content-evenly p-4">
-          <text
-            className={clsx(
-              'h-6 w-24 px-2 text-center font-bold',
-              {
-                'bg-clementine/20': color == 'pumpkin',
-              },
-              {
-                'bg-lightBlue': color == 'brightTeal',
-              },
-            )}
+    <div className="py-8">
+      <h2 className="subheader-1 py-6">{title}:</h2>
+      <div className={clsx('rounded-md border-2', `border-${color}`)}>
+        <div className="flex items-center space-x-4 py-4">
+          <div
+            className={clsx('ml-4 flex items-center justify-center', {
+              'bg-clementine/20': color === 'pumpkin',
+              'bg-lightBlue': color === 'brightTeal',
+            })}
           >
-            {metric}
-          </text>
-          <text className=" w-64 px-2">{description}</text>
+            <text className="h-6 min-w-[120px] text-center text-xl font-black">
+              {metric}
+            </text>
+          </div>
+          <div className="text-lg leading-5">{description}</div>
           <Icon type={type} />
         </div>
       </div>
