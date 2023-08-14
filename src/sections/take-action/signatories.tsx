@@ -1,3 +1,5 @@
+import type { Signatory } from '@prisma/client'
+
 import { HighlightedTitle, Carousel } from '../../components'
 import { api } from '../../utils/api'
 
@@ -35,10 +37,9 @@ export const parseSignatoriesToColumns = (
 
   // Parse into an array of React nodes by numCols
   const carouselChildren: React.ReactNode[] = []
-  const grid = `p-12 grid w-full grid-cols-${numCols}`
   for (let i = 0; i < segmentedList.length / numCols; i += 1) {
     carouselChildren.push(
-      <div className={grid}>
+      <div className={`grid w-full p-16 grid-cols-${numCols}`}>
         {segmentedList
           .slice(i * numCols, (i + 1) * numCols)
           .map((column, i) => (
@@ -68,9 +69,12 @@ export const parseSignatoriesToColumns = (
 }
 
 const Signatories = () => {
-  const { data } = api.signatory.getSignatories.useQuery<string[]>(undefined, {
-    refetchOnWindowFocus: false,
-  })
+  const { data } = api.signatory.getSignatories.useQuery<Signatory[]>(
+    undefined,
+    {
+      refetchOnWindowFocus: false,
+    },
+  )
   return (
     <div>
       <div className="flex justify-center">
