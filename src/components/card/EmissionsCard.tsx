@@ -11,12 +11,12 @@ export interface CardProps {
   title: string
   metric: string
   description: string
-  color: 'clementine' | 'brightTeal'
-  type: 'gasoline' | 'trashbag' | 'home' | 'tree'
+  color: string
+  type: string
 }
 
 interface IconProps {
-  type: 'gasoline' | 'trashbag' | 'home' | 'tree'
+  type: string
 }
 
 const Icon: FC<IconProps> = ({ type }) => {
@@ -51,11 +51,23 @@ const EmissionsCard: FC<CardProps> = ({
 }) => {
   return (
     <div className="p-8">
-      <h2 className="p-2">{title}:</h2>
+      <h2 className="p-2 font-bold">{title}:</h2>
       <div className={clsx('rounded-md border-2 ', `border-${color}`)}>
         <div className="flex place-content-evenly p-4">
-          <text className={clsx('w-24', ` bg-${color}/20`)}>{metric}</text>
-          <text className="w-64">{description}</text>
+          <text
+            className={clsx(
+              'h-6 w-24 px-2 text-center font-bold',
+              {
+                'bg-clementine/20': color == 'pumpkin',
+              },
+              {
+                'bg-lightBlue': color == 'brightTeal',
+              },
+            )}
+          >
+            {metric}
+          </text>
+          <text className=" w-64 px-2">{description}</text>
           <Icon type={type} />
         </div>
       </div>
