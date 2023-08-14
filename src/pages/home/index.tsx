@@ -64,6 +64,7 @@ const Home: FC<HomeProps> = ({
   refuteResponseEntries,
 }) => {
   const navItems = [
+    { path: 'toriisAtAGlance', text: 'TORIIS At A Glance' },
     { path: 'ourRequests', text: 'Our Requests' },
     { path: 'institutionalDivestment', text: 'Institutional Divestment' },
     { path: 'refuteUISResponse', text: 'Responding to Pushback' },
@@ -76,8 +77,10 @@ const Home: FC<HomeProps> = ({
       <PrimaryNavBar />
       <SecondaryNavBar navItems={navItems} />
       <LandingBanner />
-      <ToriisAtAGlance text={info.landing} />
       <main>
+        <div id="toriisAtAGlance" className="pt-20">
+          <ToriisAtAGlance text={info.landing} />
+        </div>
         <div id="ourRequests" className="pt-20">
           <OurRequest entries={ourRequestsEntries} />
         </div>

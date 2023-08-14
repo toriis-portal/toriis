@@ -9,7 +9,7 @@ import { mainParagraphStyle } from '../../utils/renderer'
 
 const ToriisAtAGlance: FC<{ text: Document }> = ({ text }) => {
   return (
-    <div className="mx-16 mt-10 flex flex-row">
+    <div className="mx-16 flex flex-row">
       <div className="basis-3/5">
         <HighlightedTitle
           title="TORIIS at a glance"
