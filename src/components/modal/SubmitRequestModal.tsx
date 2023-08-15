@@ -25,7 +25,7 @@ export const SubmitRequestModal: FC<SubmitRequestModalProps> = ({
       isOpenCallBack={isOpenCallBack}
       closeOnOutsideClick={true}
       className={clsx(
-        'justify-evenly gap-2 px-12 pt-8 pb-10 sm:flex-[0_0_35%]',
+        'justify-evenly gap-2 px-12 pb-10 pt-8 sm:flex-[0_0_35%]',
         flexStyles,
       )}
     >

@@ -1,6 +1,7 @@
 //Home
 import InstitutionalDivestment from './home/InstitutionalDivestment'
-import Landing from './home/Landing'
+import ToriisAtAGlance from './home/ToriisAtAGlance'
+import LandingBanner from './home/LandingBanner'
 import OurRequest from './home/OurRequests'
 import RefuteUISResponse from './home/RefuteUISResponse'
 import AboutUs from './home/AboutUs'
@@ -24,7 +25,8 @@ import Momentum from './take-action/momentum'
 
 export {
   InstitutionalDivestment,
-  Landing,
+  ToriisAtAGlance,
+  LandingBanner,
   OurRequest,
   RefuteUISResponse,
   AboutUs,

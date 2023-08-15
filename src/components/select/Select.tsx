@@ -206,7 +206,7 @@ export const Select: FC<SelectProps> = ({
         className={clsx(
           'flex w-full items-center overflow-hidden rounded-full border border-solid',
           {
-            'float-right h-10 w-fit justify-center border-darkTeal border-black':
+            'float-right h-10 w-fit justify-center border-black border-darkTeal':
               !isFilter,
             'h-8 border-cobalt': isFilter,
           },
@@ -260,7 +260,7 @@ export const Select: FC<SelectProps> = ({
                 )}
                 placeholder="Search"
               />
-              <MagnifyingGlassIcon className="absolute top-1.5 left-2 h-4 w-4 fill-darkGray" />
+              <MagnifyingGlassIcon className="absolute left-2 top-1.5 h-4 w-4 fill-darkGray" />
             </div>
           )}
           <div

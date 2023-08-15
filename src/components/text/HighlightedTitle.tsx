@@ -26,8 +26,8 @@ const HighlightedTitle: FC<TitleProps> = ({
           className={clsx(
             'relative z-0',
             `bg-${color}`,
-            { 'right-[.6rem] -bottom-[1.7rem] h-2 w-11/12': size == 'medium' },
-            { 'right-[1.3rem] -bottom-[1.9rem] h-3.5': size == 'large' },
+            { '-bottom-[1.7rem] right-[.6rem] h-2 w-11/12': size == 'medium' },
+            { '-bottom-[1.9rem] right-[1.3rem] h-3.5': size == 'large' },
           )}
         />
         <p
