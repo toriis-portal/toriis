@@ -105,4 +105,5 @@ export interface CompanyDetailsEntry {
 export interface TakeActionPage {
   name: string
   openLetter: Document
+  conclusion: Document
 }

@@ -21,6 +21,7 @@ import WhatWarmingMeans from './fossil-fuel/WhatWarmingMeans'
 import OpenLetter from './take-action/letter'
 import LetterOurRequest from './take-action/our-requests'
 import RespondingToPushback from './take-action/responding-to-pushback'
+import OpenLetterConclusion from './take-action/conclusion'
 import SignLetter from './take-action/sign-letter'
 import Signatories from './take-action/signatories'
 import Momentum from './take-action/momentum'
@@ -45,6 +46,7 @@ export {
   OpenLetter as Letter,
   LetterOurRequest as LetterRequests,
   RespondingToPushback,
+  OpenLetterConclusion as Conclusion,
   SignLetter,
   Signatories,
   Momentum,

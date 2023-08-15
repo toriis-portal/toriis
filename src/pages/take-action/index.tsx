@@ -11,6 +11,7 @@ import {
   RespondingToPushback,
   Signatories,
   Momentum,
+  Conclusion,
 } from '../../sections'
 import type {
   OurRequestsEntry,
@@ -85,6 +86,9 @@ const TakeActionPage: FC<TakeActionPageProps> = ({
           leftText={info.refuteUisResponse}
           entries={respondingToPushbackEntries}
         />
+      </div>
+      <div id="openLetter" className="pt-10">
+        <Conclusion openLetter={takeActionPageEntries.conclusion} />
       </div>
       <div id="signLetter" className="pt-10">
         <SignLetter />
