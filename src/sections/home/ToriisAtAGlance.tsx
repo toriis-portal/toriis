@@ -20,7 +20,7 @@ const ToriisAtAGlance: FC<{ text: Document }> = ({ text }) => {
           {documentToReactComponents(text, mainParagraphStyle)}
         </div>
       </div>
-      <div className="mt-10 ml-4 basis-2/5">
+      <div className="ml-4 mt-10 basis-2/5">
         <LandingDonutChart />
         <div className={clsx('flex justify-center pt-2')}>
           <p className="header-2">Assets Per Sector</p>

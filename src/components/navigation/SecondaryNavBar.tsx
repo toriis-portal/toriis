@@ -16,7 +16,7 @@ const SecondaryNavBar: FC<{ navItems: NavItem[] }> = ({ navItems }) => {
       <ul className="flex cursor-pointer flex-col flex-wrap items-center justify-center px-5 pb-2 pt-5 text-white md:flex-row md:space-x-8">
         {navItems.map((dataKey: { path: string; text: string }, i: number) => {
           return (
-            <li key={i} className="pb-3">
+            <li key={i} className="pb-3 text-center">
               <Link
                 activeClass="active"
                 to={dataKey.path}

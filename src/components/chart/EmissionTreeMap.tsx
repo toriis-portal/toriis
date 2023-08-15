@@ -157,18 +157,16 @@ const EmissionTreeMap: FC<TreemapProps> = ({ flag }) => {
     },
   }
 
-  const series: FossilFuelSeries[] = formatSeries(data, flag)
+  const series = formatSeries(data, flag)
 
   return (
-    <>
-      <Chart
-        options={options}
-        series={selectedData}
-        type="treemap"
-        width="100%"
-        height="460"
-      />
-    </>
+    <Chart
+      options={options}
+      series={selectedData}
+      type="treemap"
+      width="100%"
+      height="460"
+    />
   )
 }
 

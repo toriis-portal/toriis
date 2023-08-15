@@ -30,7 +30,7 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
         size="large"
         color="clementine"
       />
-      <div className="px-12">
+      <div className="sm:px-12">
         <div className="flex flex-col md:flex-row">
           <PrimaryButton
             text="Financed Emissions"
@@ -38,12 +38,13 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
             variant={
               flag === 'financedEmissions' ? 'clementine-toggled' : 'clementine'
             }
-            className="z-1 relative"
+            className="z-1 relative mb-5 w-full sm:mb-0 sm:w-fit"
           >
             {
               <ToolTip
-                title={'Financed Emission'}
+                title="Financed Emission"
                 details={TOOLTIP_DEFINITIONS.FINANCED_EMISSIONS}
+                className="ml-1"
               />
             }
           </PrimaryButton>
@@ -53,11 +54,13 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
             variant={
               flag === 'netAssetValue' ? 'clementine-toggled' : 'clementine'
             }
+            className="mb-5 w-full sm:mb-0 sm:w-fit"
           >
             {
               <ToolTip
-                title={'Net Asset Value'}
+                title="Net Asset Value"
                 details={TOOLTIP_DEFINITIONS.NET_ASSET_VAL}
+                className="ml-1"
               />
             }
           </PrimaryButton>

@@ -111,7 +111,7 @@ const SchoolsDivested: FC<schoolsDivestedProps> = ({
         controlSize="sm"
         variant="lightBlue"
       />
-      <div className="body-small pl-16 pt-2 text-footnoteGray">
+      <div className="body-small mx-6 break-words pt-2 text-footnoteGray sm:mx-0 sm:pl-16">
         {documentToReactComponents(footnote)}
       </div>
     </>

@@ -17,14 +17,15 @@ const WhatWarmingMeans: FC<WarmingProps> = ({
   text,
 }) => {
   return (
-    <div className="bg-clementine/20 p-12">
+    <div className="bg-clementine/20 p-6 sm:p-12">
       <HighlightedTitle
         title="What 1.5C Warming Means"
         size="large"
         color="clementine"
+        fillWidthOnMobile
       />
       <div className="flex flex-col items-center justify-center ">
-        <ReadMoreAccordion className="bg-white">
+        <ReadMoreAccordion className="bg-white" centerReadMoreButton>
           {documentToReactComponents(text)}
         </ReadMoreAccordion>
         <LinkBox

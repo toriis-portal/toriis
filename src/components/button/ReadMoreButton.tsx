@@ -17,7 +17,7 @@ const ReadMoreButton: FC<ReadMoreButtonProps> = ({
   return (
     <div
       className={clsx(
-        'body-normal ml-auto flex flex-row items-center rounded-full bg-clementine text-center',
+        'body-normal mt-4 flex flex-row items-center rounded-full bg-clementine text-center sm:ml-auto sm:mt-0',
         {
           'px-4 py-[1px] not-italic': link,
           'px-4 py-1 italic': !link,
