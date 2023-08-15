@@ -20,9 +20,9 @@ import { api } from '../../../utils/api'
 import type { Column } from '../../../components/table/DynamicTable/DynamicTable'
 import { getColumns } from '../../../components/table/DynamicTable/Columns'
 
-type DataSetTypes = Company | Investment | Fuel | Emission | Energy
+export type DataSetTypes = Company | Investment | Fuel | Emission | Energy
 type DataSetColumns = Column<DataSetTypes>[]
-type UpdateTypesWithChangedEntries = DataSetTypes & {
+export type UpdateTypesWithChangedEntries = DataSetTypes & {
   changedEntries: (keyof DataSetTypes)[]
 }
 

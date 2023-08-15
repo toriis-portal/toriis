@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import type { Dataset } from '@prisma/client'
+import { RequestStatus, type Dataset } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 
 import { api } from '../../utils/api'
@@ -62,7 +62,6 @@ const DynamicPaginatedAdminTable = <
         value: entry.value as string | number | Date,
       })
     })
-
     return convertedItems
   }
   const [isSelect, setIsSelect] = useState(false)
@@ -74,7 +73,7 @@ const DynamicPaginatedAdminTable = <
   const [globalStateEntries, SetGlobalStateEntries] = useState<
     GlobalStateEntry<TableRow>[]
   >([])
-  const { data: session, status } = useSession()
+  const { data: session, status: _status } = useSession()
 
   const mutation = api.request.createRequest.useMutation()
 
@@ -118,7 +117,7 @@ const DynamicPaginatedAdminTable = <
     mutation.mutate({
       dataset: dataset,
       updates: convertTypes(currentMergedChanges),
-      status: 'PENDING',
+      status: RequestStatus.PENDING,
       userId: session?.user.id ?? '',
       comment: comment,
       createdAt: new Date().toISOString(),

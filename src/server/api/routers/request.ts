@@ -1,16 +1,11 @@
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
-import { Company, Dataset, RequestStatus, Sector } from '@prisma/client'
+import { type Company, Dataset, RequestStatus, Sector } from '@prisma/client'
 import type { JSONObject } from 'superjson/dist/types'
 
 import { createTRPCRouter, protectedProcedure } from '../trpc'
-import type { UpdateType, StrictUpdateType } from '../../../types'
+import type { StrictUpdateType } from '../../../types'
 import { IndustryEnum, datasetEnum } from '../../../utils/enums'
-
-type UpdateQuery = Omit<UpdateType, 'maturityDate' | 'date'> & {
-  maturityDate?: object
-  date?: object
-}
 
 export const requestRouter = createTRPCRouter({
   getAllRequests: protectedProcedure.query(async ({ ctx }) => {
@@ -146,7 +141,7 @@ export const requestRouter = createTRPCRouter({
       // Approve the request and update corresponding entries
       if (input.updateAction === 'approve') {
         const tableToUpdate = datasetEnum[request.dataset]
-        const allUpdateItems = request.updates
+        const allUpdateItems = request.updates as StrictUpdateType[]
 
         const updateAll = await Promise.all(
           allUpdateItems.map(async (updateItem) => {
@@ -218,12 +213,17 @@ export const requestRouter = createTRPCRouter({
       })
 
       if (originalData && originalData.cursor) {
-        const parsedOriginalData = (originalData.cursor as JSONObject)
-          .firstBatch
+        const parsedOriginalData = (
+          (originalData.cursor as JSONObject).firstBatch as JSONObject[]
+        ).map((item) => {
+          item.id = (item._id as JSONObject)?.$oid as string
+          return item
+        }) as Company[]
+
         return {
           request: request,
           old: parsedOriginalData,
-          new: request.updates,
+          new: request.updates as StrictUpdateType[],
         }
       } else {
         throw new TRPCError({
