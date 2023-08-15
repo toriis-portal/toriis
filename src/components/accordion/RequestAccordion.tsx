@@ -7,7 +7,10 @@ import { NumberCircle, ReadMoreButton } from '../index'
 import type { OurRequestsEntry } from '../../types'
 import { orderedListStyle } from '../../utils/renderer'
 
-const RequestAccordion: FC<{ content: OurRequestsEntry }> = ({ content }) => {
+const RequestAccordion: FC<{
+  content: OurRequestsEntry
+  color?: 'lightBlue'
+}> = ({ content, color = 'white' }) => {
   const [isOpen, setIsOpen] = useState(false)
   const handleOpen = () => {
     setIsOpen(!isOpen)
@@ -15,7 +18,7 @@ const RequestAccordion: FC<{ content: OurRequestsEntry }> = ({ content }) => {
 
   return (
     <div
-      className={clsx('mb-6 content-center rounded-xl bg-white md:mx-20', {
+      className={clsx(`mb-6 content-center rounded-xl bg-${color} md:mx-20`, {
         'border-4 border-cobalt': isOpen,
       })}
     >

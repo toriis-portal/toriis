@@ -187,7 +187,7 @@ const LetterForm = () => {
                 type="radio"
                 name="agree"
                 value="YES"
-                className={clsx('mr-7 ml-1 ', styles.checkbox)}
+                className={clsx('ml-1 mr-7 ', styles.checkbox)}
               />
               YES
             </label>
@@ -196,7 +196,7 @@ const LetterForm = () => {
                 type="radio"
                 name="agree"
                 value="NO"
-                className={clsx('mr-7 ml-1 ', styles.checkbox)}
+                className={clsx('ml-1 mr-7 ', styles.checkbox)}
               />
               NO
             </label>
@@ -205,7 +205,7 @@ const LetterForm = () => {
             <PrimaryButton
               text="Add Your Name"
               variant="clementine"
-              className="mt-2.5 mb-5 py-2 !px-14"
+              className="mb-5 mt-2.5 !px-14 py-2"
               type="submit"
             />
             <label className="text-base">

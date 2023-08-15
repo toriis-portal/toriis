@@ -4,7 +4,14 @@ import { scroller } from 'react-scroll'
 import { TakeActionPage } from '../../types'
 import { PrimaryNavBar, SecondaryNavBar, ToTopButton } from '../../components'
 import { ContentWrapper } from '../../utils/content'
-import { Letter, SignLetter, Signatories, Momentum } from '../../sections'
+import {
+  Letter,
+  LetterRequests,
+  SignLetter,
+  Signatories,
+  Momentum,
+} from '../../sections'
+import type { OurRequestsEntry } from '../../types'
 
 export const getServerSideProps = async () => {
   const contentClient = new ContentWrapper()
@@ -12,20 +19,29 @@ export const getServerSideProps = async () => {
   const takeActionEntries = await contentClient.getAllTakeActionEntries()
   const takeActionPageEntries = takeActionEntries['takeActionPage']
 
+  const homeEntries = await contentClient.getAllHomePageEntries()
+  const ourRequestsEntries = homeEntries['request']
+
   return {
     props: {
       takeActionPageEntries,
+      ourRequestsEntries,
     },
   }
 }
 
 interface TakeActionPageProps {
   takeActionPageEntries: TakeActionPage
+  ourRequestsEntries: OurRequestsEntry[]
 }
 
-const TakeActionPage: FC<TakeActionPageProps> = ({ takeActionPageEntries }) => {
+const TakeActionPage: FC<TakeActionPageProps> = ({
+  takeActionPageEntries,
+  ourRequestsEntries,
+}) => {
   const navItems = [
     { path: 'openLetter', text: 'Open Letter' },
+    { path: 'ourRequests', text: 'Our Requests' },
     { path: 'signLetter', text: 'Sign the Letter' },
     // { path: 'signatories', text: 'Signatories' },
     // { path: 'momentum', text: 'Continue the Momentum' },
@@ -47,9 +63,13 @@ const TakeActionPage: FC<TakeActionPageProps> = ({ takeActionPageEntries }) => {
           }
         />
       </div>
+      <div id="ourRequests" className="pt-20">
+        <LetterRequests entries={ourRequestsEntries} />
+      </div>
       <div id="signLetter" className="pt-10">
         <SignLetter />
       </div>
+
       {/* 
       <div id="signatories" className="pt-10">
         <Signatories />

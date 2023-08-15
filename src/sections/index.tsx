@@ -19,6 +19,7 @@ import UniversityInvestments from './fossil-fuel/UniversityInvestments'
 import WhatWarmingMeans from './fossil-fuel/WhatWarmingMeans'
 // Take Action Page
 import OpenLetter from './take-action/letter'
+import LetterOurRequest from './take-action/our-requests'
 import SignLetter from './take-action/sign-letter'
 import Signatories from './take-action/signatories'
 import Momentum from './take-action/momentum'
@@ -41,6 +42,7 @@ export {
   UniversityInvestments,
   WhatWarmingMeans,
   OpenLetter as Letter,
+  LetterOurRequest as LetterRequests,
   SignLetter,
   Signatories,
   Momentum,
