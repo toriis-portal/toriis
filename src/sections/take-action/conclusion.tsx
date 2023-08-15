@@ -21,8 +21,8 @@ const OpenLetterConclusion: FC<LetterProps> = ({ openLetter }) => {
   }
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="w-2/4 space-y-6">
+    <div className="flex flex-col items-center pb-24">
+      <div className="space-y-6 px-12 lg:px-80">
         {documentToReactComponents(openLetter, mainParagraphStyle)}
       </div>
     </div>

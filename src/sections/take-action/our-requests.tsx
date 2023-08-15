@@ -5,7 +5,7 @@ import type { OurRequestsEntry } from '../../types'
 
 const LetterRequests: FC<{ entries: OurRequestsEntry[] }> = ({ entries }) => {
   return (
-    <div className=" p-12">
+    <div className="p-12">
       <HighlightedTitle title="Our Requests" size="large" color="clementine" />
       {entries.map((entry, index) => (
         <div key={index}>

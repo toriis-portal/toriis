@@ -27,17 +27,19 @@ const RespondingToPushback: FC<RespondingToPushbackProps> = ({
     </div>,
   ])
   return (
-    <div className="p-12">
-      <HighlightedTitle
-        title="Responding to Pushback"
-        size="large"
-        color="clementine"
-      />
-      <div className="flex flex-col items-center">
-        <div className="w-2/4 space-y-6">
+    <div>
+      <div className="px-12">
+        <HighlightedTitle
+          title="Responding to Pushback"
+          size="large"
+          color="clementine"
+        />
+      </div>
+      <div className="flex flex-col items-center px-12">
+        <div className="space-y-6 lg:px-80">
           {documentToReactComponents(leftText)}
         </div>
-        <div className="w-5/12 pt-12">
+        <div className="space-y-6 px-96 pb-12 pt-12">
           <Carousel
             carouselChildren={carouselChildren}
             controlSize="lg"

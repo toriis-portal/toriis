@@ -54,7 +54,7 @@ const OpenLetter: FC<LetterProps> = ({ openLetter, scrollToForm }) => {
       >
         <ArrowRightIcon className="ml-3 h-9 w-5 stroke-2" />
       </PrimaryButton>
-      <div className="w-2/4 space-y-6">
+      <div className="space-y-6 px-12 lg:px-80">
         {documentToReactComponents(openLetter, mainParagraphStyle)}
       </div>
     </div>
