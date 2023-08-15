@@ -39,7 +39,7 @@ const AuthButton: FC = () => {
       )}
       <div
         className={clsx(
-          'rounded-lg border border-black bg-white py-6 px-2 lg:px-2',
+          'rounded-lg border border-black bg-white px-2 py-6 lg:px-2',
           'body-normal text-black',
           'absolute right-8 top-[5.5rem] inline-block',
           'z-[100] w-[40%] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.3)] transition-opacity duration-200 lg:w-[28%]',

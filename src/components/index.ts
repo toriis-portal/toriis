@@ -37,6 +37,7 @@ import Select from './select/Select'
 // Inputs
 import SearchBar from './input/SearchBar'
 import InviteAdminBar from './input/InviteAdminBar'
+import LetterForm from './input/LetterForm'
 // Text
 import NumberCircle from './text/NumberCircle'
 import HighlightedTitle from './text/HighlightedTitle'
@@ -97,6 +98,7 @@ export {
   AdminSelectCard,
   AdminListTable,
   InviteAdminBar,
+  LetterForm,
   RequestReviewTable,
   CommentModal,
   SubmitRequestModal,
