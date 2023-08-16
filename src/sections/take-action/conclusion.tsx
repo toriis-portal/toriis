@@ -11,15 +11,6 @@ interface LetterProps {
 }
 
 const OpenLetterConclusion: FC<LetterProps> = ({ openLetter }) => {
-  const { isLoading } = api.signatory.getSignatoriesCount.useQuery()
-  if (isLoading) {
-    return (
-      <div className="flex flex-col items-center px-12">
-        <Spinner color="info" />
-      </div>
-    )
-  }
-
   return (
     <div className="flex flex-col items-center pb-24">
       <div className="space-y-6 px-12 lg:px-80">

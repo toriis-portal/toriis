@@ -6,12 +6,12 @@ import { PrimaryNavBar, SecondaryNavBar, ToTopButton } from '../../components'
 import { ContentWrapper } from '../../utils/content'
 import {
   Letter,
-  LetterRequests,
+  LetterOurRequest,
   SignLetter,
   RespondingToPushback,
   Signatories,
   Momentum,
-  Conclusion,
+  OpenLetterConclusion,
 } from '../../sections'
 import type {
   OurRequestsEntry,
@@ -58,8 +58,8 @@ const TakeActionPage: FC<TakeActionPageProps> = ({
     { path: 'ourRequests', text: 'Our Requests' },
     { path: 'respondingToPushback', text: 'Responding to Pushback' },
     { path: 'signLetter', text: 'Sign the Letter' },
-    // { path: 'signatories', text: 'Signatories' },
-    // { path: 'momentum', text: 'Continue the Momentum' },
+    // TODO: { path: 'signatories', text: 'Signatories' },
+    // TODO: { path: 'momentum', text: 'Continue the Momentum' },
   ]
   return (
     <>
@@ -79,7 +79,7 @@ const TakeActionPage: FC<TakeActionPageProps> = ({
         />
       </div>
       <div id="ourRequests" className="pt-20">
-        <LetterRequests entries={ourRequestsEntries} />
+        <LetterOurRequest entries={ourRequestsEntries} />
       </div>
       <div id="respondingToPushback" className="pt-20">
         <RespondingToPushback
@@ -88,13 +88,14 @@ const TakeActionPage: FC<TakeActionPageProps> = ({
         />
       </div>
       <div id="openLetter" className="pt-10">
-        <Conclusion openLetter={takeActionPageEntries.conclusion} />
+        <OpenLetterConclusion openLetter={takeActionPageEntries.conclusion} />
       </div>
       <div id="signLetter" className="pt-10">
         <SignLetter />
       </div>
 
       {/* 
+      TODO: 
       <div id="signatories" className="pt-10">
         <Signatories />
       </div>
