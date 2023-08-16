@@ -79,7 +79,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
         label: 'Net Asset Value',
         isEditable: isEditable,
         ctrl: {
-          type: 'text',
+          type: 'number',
           render: (row) => row.netAssetVal,
           applyStyle: (row: Company) => (row.netAssetVal ? '' : errorStyle),
         },

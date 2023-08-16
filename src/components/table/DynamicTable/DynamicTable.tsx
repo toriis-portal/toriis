@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 import { TableCell } from './TableCell'
 
 // Describes the type of key-value, value types that can be in the table data passed in
-export type RowEntry = string | number | Date
+export type RowEntry = string | number
 
 interface BaseColumnCtrl<TableRow> {
   applyStyle?: (row: TableRow) => string
