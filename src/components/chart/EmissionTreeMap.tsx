@@ -155,6 +155,16 @@ const EmissionTreeMap: FC<TreemapProps> = ({ flag }) => {
         show: false,
       },
     },
+    responsive: [
+      {
+        breakpoint: 768,
+        options: {
+          chart: {
+            height: 600,
+          },
+        },
+      },
+    ],
   }
 
   const series: FossilFuelSeries[] = formatSeries(data, flag)

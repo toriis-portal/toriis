@@ -33,10 +33,10 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
         />
         <UnderlinedTitle title="FY 2022" size="large" color="clementine" />
       </div>
-      <div className="px-12">
+      <div className="md:px-12">
         <div className="flex justify-center">
-          <div className="w-3/4">
-            <div className="flex flex-col  justify-start gap-4 md:flex-row">
+          <div className="w-full md:px-20 xl:px-40 2xl:px-64">
+            <div className="flex flex-col items-center gap-4 md:flex-row md:justify-start">
               <Toggle
                 text="Financed Emissions"
                 onClick={() => setFlag('financedEmissions')}
