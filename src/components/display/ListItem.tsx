@@ -4,7 +4,7 @@ import NumberCircle from '../text/NumberCircle'
 
 interface ListItemProps {
   listIndex: number
-  listContent: string
+  listContent: string | React.ReactNode
 }
 
 const ListItem: FC<ListItemProps> = ({ listIndex, listContent }) => {

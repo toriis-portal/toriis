@@ -31,7 +31,10 @@ const fossilFuelPageEntryNames = [
   'link',
 ]
 
-const takeActionPageEntryNames = ['takeActionPage']
+const takeActionPageEntryNames = [
+  'takeActionPage',
+  'continueTheMomentumEntries',
+]
 
 type HomePageEntryType =
   | TimelineEntry
@@ -47,7 +50,7 @@ type FossilFuelPageEntryType =
   | DirtyCompanyEntry
   | LinkEntry
 
-type TakeActionPageEntryType = TakeActionPage
+type TakeActionPageEntryType = TakeActionPage | ListEntry
 
 export class ContentWrapper {
   client: ContentfulClientApi
@@ -178,6 +181,8 @@ export class ContentWrapper {
     switch (entity) {
       case 'takeActionPage':
         return entries[0] as TakeActionPage
+      case 'continueTheMomentumEntries':
+        return (entries as ListEntry[]).sort((a, b) => a.order - b.order)
       default:
         return entries
     }
