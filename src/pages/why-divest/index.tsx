@@ -55,8 +55,8 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
   const navItems = [
     { path: 'uofiInvestments', text: 'University of Illinois Investments' },
     { path: 'dirtyIndustries', text: 'Examining UIS Investments' },
-    { path: 'whyFossilFuelsAreBad', text: 'Why Are Fossil Fuels Bad' },
-    { path: 'warming', text: 'What 1.5C Warming Means' },
+    { path: 'whyFossilFuelsAreBad', text: 'What Are Fossil Fuels?' },
+    { path: 'warming', text: 'What Does 1.5C Warming Mean?' },
     { path: 'divestmentCase', text: 'The Case For Institutional Divestment' },
     { path: 'divestedSchools', text: 'Schools That Have Divested ' },
     {
