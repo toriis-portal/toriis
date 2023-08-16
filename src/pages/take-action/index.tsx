@@ -16,6 +16,7 @@ import type {
   OurRequestsEntry,
   HomePageInfo,
   RefuteResponseEntry,
+  ListEntryDocument,
 } from '../../types'
 
 export const getServerSideProps = async () => {
@@ -23,6 +24,7 @@ export const getServerSideProps = async () => {
 
   const takeActionEntries = await contentClient.getAllTakeActionEntries()
   const takeActionPageEntries = takeActionEntries['takeActionPage']
+  const momentumEntries = takeActionEntries['continueTheMomentumEntries']
 
   const homeEntries = await contentClient.getAllHomePageEntries()
   const info = homeEntries['info']
@@ -35,6 +37,7 @@ export const getServerSideProps = async () => {
       takeActionPageEntries,
       ourRequestsEntries,
       respondingToPushbackEntries,
+      momentumEntries,
     },
   }
 }
@@ -44,6 +47,7 @@ interface TakeActionPageProps {
   takeActionPageEntries: TakeActionPage
   ourRequestsEntries: OurRequestsEntry[]
   respondingToPushbackEntries: RefuteResponseEntry[]
+  momentumEntries: ListEntryDocument[]
 }
 
 const TakeActionPage: FC<TakeActionPageProps> = ({
@@ -51,14 +55,15 @@ const TakeActionPage: FC<TakeActionPageProps> = ({
   takeActionPageEntries,
   ourRequestsEntries,
   respondingToPushbackEntries,
+  momentumEntries,
 }) => {
   const navItems = [
     { path: 'openLetter', text: 'Open Letter' },
     { path: 'ourRequests', text: 'Our Requests' },
     { path: 'respondingToPushback', text: 'Responding to Pushback' },
     { path: 'signLetter', text: 'Sign the Letter' },
-    // TODO: { path: 'signatories', text: 'Signatories' },
-    // TODO: { path: 'momentum', text: 'Continue the Momentum' },
+    // { path: 'signatories', text: 'Signatories' },
+    { path: 'momentum', text: 'Continue the Momentum' },
   ]
   return (
     <>
@@ -101,10 +106,10 @@ const TakeActionPage: FC<TakeActionPageProps> = ({
       TODO: 
       <div id="signatories" className="pt-10">
         <Signatories />
-      </div>
-      <div id="momentum" className="pt-10">
-        <Momentum />
       </div> */}
+      <div id="momentum" className="pt-10">
+        <Momentum entries={momentumEntries} />
+      </div>
     </>
   )
 }
