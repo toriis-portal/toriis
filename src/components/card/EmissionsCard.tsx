@@ -37,7 +37,7 @@ const Icon: FC<IconProps> = ({ type }) => {
       break
   }
 
-  return <div className="pr-4"> {icon}</div>
+  return <div className="px-3"> {icon}</div>
 }
 
 const EmissionsCard: FC<CardProps> = ({

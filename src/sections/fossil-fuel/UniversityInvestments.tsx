@@ -109,7 +109,7 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
           ></HighlightedTitle>
         </div>
         <div className="flex justify-center">
-          <div className="grid w-5/6 grid-cols-2 gap-x-12">
+          <div className="grid w-5/6 md:grid-cols-2 md:gap-x-12">
             {emissionsData.map((data, index) => (
               <EmissionsCard
                 key={index}
