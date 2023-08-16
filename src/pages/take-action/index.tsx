@@ -11,7 +11,6 @@ import {
   RespondingToPushback,
   Signatories,
   Momentum,
-  OpenLetterConclusion,
 } from '../../sections'
 import type {
   OurRequestsEntry,
@@ -87,8 +86,12 @@ const TakeActionPage: FC<TakeActionPageProps> = ({
           entries={respondingToPushbackEntries}
         />
       </div>
-      <div id="openLetter" className="pt-10">
-        <OpenLetterConclusion openLetter={takeActionPageEntries.conclusion} />
+      <div id="conclusion" className="pt-10">
+        <Letter
+          openLetter={takeActionPageEntries.conclusion}
+          scrollToForm={() => ({})}
+          conclusion={true}
+        />
       </div>
       <div id="signLetter" className="pt-10">
         <SignLetter />
