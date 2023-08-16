@@ -56,18 +56,20 @@ const EmissionsCard: FC<CardProps> = ({
           'border-brightTeal': color === 'brightTeal',
         })}
       >
-        <div className="flex items-center space-x-4 py-4">
-          <div
-            className={clsx('ml-4 flex items-center justify-center', {
-              'bg-clementine/20': color === 'pumpkin',
-              'bg-lightBlue': color === 'brightTeal',
-            })}
-          >
-            <text className="h-6 min-w-[120px] text-center text-xl font-black">
-              {metric}
-            </text>
+        <div className="flex items-center justify-between py-4">
+          <div className="flex items-center">
+            <div
+              className={clsx('ml-4 flex items-center justify-center', {
+                'bg-clementine/20': color === 'pumpkin',
+                'bg-lightBlue': color === 'brightTeal',
+              })}
+            >
+              <text className="h-6 min-w-[120px] text-center text-xl font-black">
+                {metric}
+              </text>
+            </div>
+            <div className="ml-4 text-lg leading-5">{description}</div>
           </div>
-          <div className="text-lg leading-5">{description}</div>
           <Icon type={type} />
         </div>
       </div>
