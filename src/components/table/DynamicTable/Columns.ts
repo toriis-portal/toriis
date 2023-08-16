@@ -116,7 +116,6 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
         ctrl: {
           type: 'number',
           render: (row) => row.coupon,
-          applyStyle: (row: Investment) => (row.coupon ? '' : errorStyle),
         },
       },
       {
