@@ -6,11 +6,44 @@ import type { Document } from '@contentful/rich-text-types'
 import { mainParagraphStyle } from '../../utils/renderer'
 import {
   UnderlinedTitle,
+  HighlightedTitle,
   EmissionTreeMap,
   Toggle,
   ToolTip,
+  EmissionsCard,
 } from '../../components'
 import { TOOLTIP_DEFINITIONS } from '../../utils/constants'
+
+const emissionsData = [
+  {
+    title: 'GREENHOUSE GAS EMISSIONS FROM',
+    metric: '14,754',
+    description: 'gasoline powered vehicles driven for one year',
+    color: 'pumpkin',
+    type: 'gasoline',
+  },
+  {
+    title: 'GREENHOUSE GAS EMISSIONS AVOIDED BY',
+    metric: '2,869,795',
+    description: 'trashbags of waste recycled instead of landfilled',
+    color: 'pumpkin',
+    type: 'trashbag',
+  },
+  {
+    title: 'CO2 EMISSIONS FROM',
+    metric: '12,900',
+    description: "homes' electricity use for one year",
+    color: 'brightTeal',
+    type: 'home',
+  },
+  {
+    title: 'CARBON SEQUESTERED BY',
+    metric: '1,096,260',
+    description: 'tree seedlings grown for 10 years',
+    color: 'brightTeal',
+    type: 'tree',
+  },
+]
 
 interface UniversityInvestmentsProps {
   flag: 'financedEmissions' | 'netAssetValue'
@@ -73,6 +106,28 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
         </div>
         <div className="flex flex-col gap-3">
           {documentToReactComponents(caption, mainParagraphStyle)}
+        </div>
+        <div className="flex justify-center py-10">
+          <HighlightedTitle
+            title="66,299 Metric Tons of CO2 is Equivalent to"
+            size="medium"
+            color="clementine"
+            padded={false}
+          ></HighlightedTitle>
+        </div>
+        <div className="flex justify-center">
+          <div className="grid w-5/6 xl:grid-cols-2 xl:gap-x-12">
+            {emissionsData.map((data, index) => (
+              <EmissionsCard
+                key={index}
+                title={data.title}
+                metric={data.metric}
+                description={data.description}
+                color={data.color}
+                type={data.type}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>

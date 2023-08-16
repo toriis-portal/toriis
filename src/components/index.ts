@@ -10,6 +10,7 @@ import TabButton from './button/TabButton'
 import CompanyCard from './card/CompanyCard'
 import AdminSelectCard from './card/AdminSelectCard'
 import ChartDetailsCard from './card/ChartDetailsCard'
+import EmissionsCard from './card/EmissionsCard'
 // Charts
 import EnergyRadialChart from './chart/EnergyRadialChart'
 import LandingDonutChart from './chart/LandingDonutChart'
@@ -62,6 +63,15 @@ import Toast from './toast/Toast'
 import Footer from './footer/Footer'
 // Toggle
 import Toggle from './toggle/Toggle'
+// Icons
+import CarIcon from './icon/CarIcon'
+import FacebookIcon from './icon/FacebookIcon'
+import GitHubIcon from './icon/GitHubIcon'
+import InstagramIcon from './icon/InstagramIcon'
+import PlugIcon from './icon/PlugIcon'
+import TrashIcon from './icon/TrashIcon'
+import TreeIcon from './icon/TreeIcon'
+import TwitterIcon from './icon/TwitterIcon'
 export {
   AuthButton,
   ListItem,
@@ -112,4 +122,13 @@ export {
   Toast,
   Footer,
   Toggle,
+  EmissionsCard,
+  CarIcon,
+  FacebookIcon,
+  GitHubIcon,
+  InstagramIcon,
+  PlugIcon,
+  TrashIcon,
+  TreeIcon,
+  TwitterIcon,
 }
