@@ -122,7 +122,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
       {
         key: 'maturityDate',
         label: 'Maturity Date',
-        isEditable: true,
+        isEditable: false,
         ctrl: {
           type: 'date',
           render: (row) => row?.maturityDate?.toISOString().split('T')[0] ?? '',
@@ -163,7 +163,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
       {
         key: 'year',
         label: 'Year',
-        isEditable: isEditable,
+        isEditable: false,
         ctrl: {
           type: 'text',
           render: (row) => row.year,
@@ -178,7 +178,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
       {
         key: 'year',
         label: 'Year',
-        isEditable: isEditable,
+        isEditable: false,
         ctrl: {
           type: 'text',
           render: (row) => row.year,
@@ -291,7 +291,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
       {
         key: 'date',
         label: 'Date',
-        isEditable: true,
+        isEditable: false,
         ctrl: {
           type: 'date',
           render: (row) => row?.date?.toISOString().split('T')[0] ?? '',
@@ -341,7 +341,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
       {
         key: 'year',
         label: 'Year',
-        isEditable: isEditable,
+        isEditable: false,
         ctrl: {
           type: 'text',
           render: (row) => row.year ?? 0,

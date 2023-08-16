@@ -185,29 +185,29 @@ const UpdateData: FC = () => {
         <div className="p-12">
           <div className="flex flex-row gap-4 pb-10">
             <TabButton
-              active={dataset == 'INVESTMENT'}
+              active={dataset == Dataset.INVESTMENT}
               text="Investment"
-              onClick={() => setDataSet('INVESTMENT')}
+              onClick={() => setDataSet(Dataset.INVESTMENT)}
             />
             <TabButton
               active={dataset == 'COMPANY'}
               text="Company"
-              onClick={() => setDataSet('COMPANY')}
+              onClick={() => setDataSet(Dataset.COMPANY)}
             />
             <TabButton
-              active={dataset == 'FUEL'}
+              active={dataset == Dataset.FUEL}
               text="Fuel"
-              onClick={() => setDataSet('FUEL')}
+              onClick={() => setDataSet(Dataset.FUEL)}
             />
             <TabButton
-              active={dataset == 'EMISSION'}
+              active={dataset == Dataset.EMISSION}
               text="Emission"
-              onClick={() => setDataSet('EMISSION')}
+              onClick={() => setDataSet(Dataset.EMISSION)}
             />
             <TabButton
-              active={dataset == 'ENERGY'}
+              active={dataset == Dataset.ENERGY}
               text="Energy"
-              onClick={() => setDataSet('ENERGY')}
+              onClick={() => setDataSet(Dataset.ENERGY)}
             />
           </div>
           <DynamicPaginatedAdminTable
