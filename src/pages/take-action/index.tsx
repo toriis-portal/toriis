@@ -62,7 +62,7 @@ const TakeActionPage: FC<TakeActionPageProps> = ({
     { path: 'ourRequests', text: 'Our Requests' },
     { path: 'respondingToPushback', text: 'Responding to Pushback' },
     { path: 'signLetter', text: 'Sign the Letter' },
-    // { path: 'signatories', text: 'Signatories' },
+    // TODO: { path: 'signatories', text: 'Signatories' },
     { path: 'momentum', text: 'Continue the Momentum' },
   ]
   return (
