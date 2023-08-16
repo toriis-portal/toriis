@@ -33,7 +33,7 @@ const SignLetter = () => {
       </div>
       <div className="w-[calc(100%-120px)] rounded-lg px-20 py-9 outline outline-1">
         <p className="subheader-1 pb-12 text-center text-4xl font-semibold">
-          FOSSIL FREE UIUC OPEN LETTER
+          FOSSIL FREE ILLINOIS OPEN LETTER
         </p>
         <div className="flex">
           <div className="mr-10 flex w-1/2 flex-col items-center justify-center">
@@ -43,11 +43,11 @@ const SignLetter = () => {
               </span>{' '}
               at the{' '}
               <span className="underline decoration-clementine">
-                University of Illinois Urbana-Champaign
+                University of Illinois
               </span>{' '}
               by signing the{' '}
               <span className="underline decoration-clementine">
-                Fossil Free UIUC Open Letter
+                Fossil Free Illinois Open Letter
               </span>
               .
             </p>
