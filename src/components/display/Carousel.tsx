@@ -95,7 +95,7 @@ const Carousel: FC<CarouselProps> = ({
             })}
           />
         </button>
-        <div className={`flex flex-row gap-3`}>
+        <div className="flex flex-row gap-3">
           {carouselChildren.map((_, index) => {
             return (
               <CarouselDot
