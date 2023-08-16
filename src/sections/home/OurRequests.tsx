@@ -1,6 +1,10 @@
 import type { FC } from 'react'
 
-import { RequestAccordion, HighlightedTitle } from '../../components'
+import {
+  RequestAccordion,
+  HighlightedTitle,
+  PrimaryButton,
+} from '../../components'
 import type { OurRequestsEntry } from '../../types'
 
 const OurRequest: FC<{ entries: OurRequestsEntry[] }> = ({ entries }) => {
@@ -12,6 +16,14 @@ const OurRequest: FC<{ entries: OurRequestsEntry[] }> = ({ entries }) => {
           <RequestAccordion content={entry} />
         </div>
       ))}
+      <div className="flex flex-col items-center">
+        <div className="subheader-1 mb-6 text-8xl">TAKE ACTION</div>
+        <PrimaryButton
+          text="Sign the Open Letter"
+          link="/take-action"
+          variant="clementine"
+        />
+      </div>
     </div>
   )
 }
