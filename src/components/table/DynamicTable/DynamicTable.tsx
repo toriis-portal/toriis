@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 import { TableCell } from './TableCell'
 
 // Describes the type of key-value, value types that can be in the table data passed in
-export type RowEntry = string | number
+export type RowEntry = string | number | Date
 
 interface BaseColumnCtrl<TableRow> {
   applyStyle?: (row: TableRow) => string
@@ -63,11 +63,17 @@ export interface ColumnDateCtrl<TableRow> extends BaseColumnCtrl<TableRow> {
   render: (row: TableRow) => RowEntry
 }
 
+export interface ColumnNumberCtrl<TableRow> extends BaseColumnCtrl<TableRow> {
+  type: 'number'
+  render: (row: TableRow) => RowEntry
+}
+
 export type TableColumnCtrl<TableRow> =
   | ColumnTextCtrl<TableRow>
   | ColumnSelectCtrl<TableRow>
   | ColumnFreeCtrl<TableRow>
   | ColumnDateCtrl<TableRow>
+  | ColumnNumberCtrl<TableRow>
 
 /**
  * Generic Column interface that describes the properties of a column for the DynamicTable

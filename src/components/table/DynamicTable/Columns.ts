@@ -114,7 +114,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
         label: 'Coupon',
         isEditable: isEditable,
         ctrl: {
-          type: 'text',
+          type: 'number',
           render: (row) => row.coupon,
           applyStyle: (row: Investment) => (row.coupon ? '' : errorStyle),
         },
@@ -135,7 +135,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
         label: 'Quantity',
         isEditable: isEditable,
         ctrl: {
-          type: 'text',
+          type: 'number',
           render: (row) => row.quantity,
           applyStyle: (row: Investment) => (row.quantity ? '' : errorStyle),
         },
@@ -145,7 +145,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
         label: 'Cost Value',
         isEditable: isEditable,
         ctrl: {
-          type: 'text',
+          type: 'number',
           render: (row) => row.costVal,
           applyStyle: (row: Investment) => (row.costVal ? '' : errorStyle),
         },
@@ -155,7 +155,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
         label: 'Market Value',
         isEditable: isEditable,
         ctrl: {
-          type: 'text',
+          type: 'number',
           render: (row) => row.marketVal,
           applyStyle: (row: Investment) => (row.marketVal ? '' : errorStyle),
         },
@@ -189,7 +189,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
         label: 'Total Consumption',
         isEditable: isEditable,
         ctrl: {
-          type: 'text',
+          type: 'number',
           render: (row) => row.totalConsumption ?? 0,
         },
       },
@@ -198,7 +198,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
         label: 'Biodiesels',
         isEditable: isEditable,
         ctrl: {
-          type: 'text',
+          type: 'number',
           render: (row) => row.biodiesels ?? 0,
         },
       },
@@ -207,7 +207,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
         label: 'Biogases',
         isEditable: isEditable,
         ctrl: {
-          type: 'text',
+          type: 'number',
           render: (row) => row.biogases ?? 0,
         },
       },
@@ -216,7 +216,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
         label: 'Crude Oil',
         isEditable: isEditable,
         ctrl: {
-          type: 'text',
+          type: 'number',
           render: (row) => row.crudeOil ?? 0,
         },
       },
@@ -225,7 +225,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
         label: 'Coal',
         isEditable: isEditable,
         ctrl: {
-          type: 'text',
+          type: 'number',
           render: (row) => row.coal ?? 0,
         },
       },
@@ -234,7 +234,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
         label: 'Oil',
         isEditable: isEditable,
         ctrl: {
-          type: 'text',
+          type: 'number',
           render: (row) => row.oil ?? 0,
         },
       },
@@ -243,7 +243,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
         label: 'Gas',
         isEditable: isEditable,
         ctrl: {
-          type: 'text',
+          type: 'number',
           render: (row) => row.gas ?? 0,
         },
       },
@@ -252,7 +252,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
         label: 'Other Biomass',
         isEditable: isEditable,
         ctrl: {
-          type: 'text',
+          type: 'number',
           render: (row) => row.otherBiomass ?? 0,
         },
       },
@@ -261,7 +261,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
         label: 'Sustainable Biomass',
         isEditable: isEditable,
         ctrl: {
-          type: 'text',
+          type: 'number',
           render: (row) => row.sustainableBiomass ?? 0,
         },
       },
@@ -270,7 +270,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
         label: 'Other Renewable',
         isEditable: isEditable,
         ctrl: {
-          type: 'text',
+          type: 'number',
           render: (row) => row.otherRenewable ?? 0,
         },
       },
@@ -279,7 +279,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
         label: 'Other Non-Renewable',
         isEditable: isEditable,
         ctrl: {
-          type: 'text',
+          type: 'number',
           render: (row) => row.otherNonRenewable ?? 0,
         },
       },
@@ -302,7 +302,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
         label: 'Version',
         isEditable: isEditable,
         ctrl: {
-          type: 'text',
+          type: 'number',
           render: (row) => row.version ?? 0,
         },
       },
@@ -311,7 +311,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
         label: 'Scope One',
         isEditable: isEditable,
         ctrl: {
-          type: 'text',
+          type: 'number',
           render: (row) => row.scopeOne ?? 0,
         },
       },
@@ -320,7 +320,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
         label: 'Scope Two',
         isEditable: isEditable,
         ctrl: {
-          type: 'text',
+          type: 'number',
           render: (row) => row.scopeTwo ?? 0,
         },
       },
@@ -329,7 +329,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
         label: 'Scope Three',
         isEditable: isEditable,
         ctrl: {
-          type: 'text',
+          type: 'number',
           render: (row) => row.scopeThree ?? 0,
         },
       },
@@ -352,7 +352,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
         label: 'Total Consumption',
         isEditable: isEditable,
         ctrl: {
-          type: 'text',
+          type: 'number',
           render: (row) => row.totalConsumption ?? 0,
         },
       },
@@ -361,7 +361,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
         label: 'Total Renewable Consumption',
         isEditable: isEditable,
         ctrl: {
-          type: 'text',
+          type: 'number',
           render: (row) => row.totalRenewableConsumption ?? 0,
         },
       },
@@ -370,7 +370,7 @@ export const getColumns = (key: Dataset, isEditable: boolean) => {
         label: 'Total Non-Renewable Consumption',
         isEditable: isEditable,
         ctrl: {
-          type: 'text',
+          type: 'number',
           render: (row) => row.totalNonRenewableConsumption ?? 0,
         },
       },

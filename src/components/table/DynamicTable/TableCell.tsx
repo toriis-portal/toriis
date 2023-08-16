@@ -55,7 +55,7 @@ const SelectEntry = <TableRow extends BaseTableRowGeneric<TableRow>>({
   const [selected, setSelected] = useState(col.ctrl.render(row))
 
   const changedStyles = row.changedEntries.includes(col.key)
-    ? 'bg-green-100'
+    ? 'bg-pumpkin/20'
     : ''
   const disabledStyles = !col.isEditable ? 'bg-gray-100' : ''
 
@@ -125,7 +125,7 @@ const TextEntry = <TableRow extends BaseTableRowGeneric<TableRow>>({
   }
 
   const changedStyles = row.changedEntries.includes(col.key)
-    ? 'bg-green-100'
+    ? 'bg-pumpkin/20'
     : ''
   const disabledStyles = !col.isEditable ? 'bg-gray-100' : ''
 
@@ -161,7 +161,7 @@ const DateEntry = <TableRow extends BaseTableRowGeneric<TableRow>>({
     throw new Error('Invalid column type')
   }
   const changedStyles = row.changedEntries.includes(col.key)
-    ? 'bg-green-100'
+    ? 'bg-pumpkin/20'
     : ''
   const disabledStyles = !col.isEditable ? 'bg-gray-100' : ''
 
@@ -188,6 +188,42 @@ const DateEntry = <TableRow extends BaseTableRowGeneric<TableRow>>({
   )
 }
 
+const NumberEntry = <TableRow extends BaseTableRowGeneric<TableRow>>({
+  row,
+  col,
+  onClick,
+}: Props<TableRow>) => {
+  if (col.ctrl.type !== 'number') {
+    throw new Error('Invalid column type')
+  }
+
+  const changedStyles = row.changedEntries.includes(col.key)
+    ? 'bg-pumpkin/20'
+    : ''
+  const disabledStyles = !col.isEditable ? 'bg-gray-100' : ''
+
+  return (
+    <input
+      className={clsx(
+        col.ctrl.applyStyle?.(row),
+        'w-full',
+        changedStyles,
+        disabledStyles,
+      )}
+      type="number"
+      value={col.ctrl.render(row)}
+      disabled={!col.isEditable}
+      onClick={(e) => {
+        e.stopPropagation()
+
+        if (col.isEditable) {
+          onClick?.(row)
+        }
+      }}
+      readOnly
+    />
+  )
+}
 interface Props<TableRow extends BaseTableRowGeneric<TableRow>> {
   row: TableRow
   col: TableColumn<TableRow>
@@ -222,6 +258,8 @@ export const TableCell = <TableRow extends BaseTableRowGeneric<TableRow>>(
     return <SelectEntry {...props} />
   } else if (col.ctrl.type === 'date') {
     return <DateEntry {...props} />
+  } else if (col.ctrl.type === 'number') {
+    return <NumberEntry {...props} />
   }
 
   return <>{col.ctrl.render(row)}</>

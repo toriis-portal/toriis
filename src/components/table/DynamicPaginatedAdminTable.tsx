@@ -3,7 +3,7 @@ import { RequestStatus, type Dataset } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 
 import { api } from '../../utils/api'
-import { SubmitRequestModal, PrimaryButton } from '../index'
+import { SubmitRequestModal, PrimaryButton, Toast } from '../index'
 
 import { PaginatedDynamicTable } from './DynamicTable'
 import type {
@@ -64,9 +64,11 @@ const DynamicPaginatedAdminTable = <
     })
     return convertedItems
   }
-  const [isSelect, setIsSelect] = useState(false)
   const [curColumn, setCurColumn] = useState<keyof TableRow>('id')
   const [curRow, setCurRow] = useState<TableRow | null>(null)
+  const [curType, setCurType] = useState<
+    'text' | 'date' | 'number' | 'free' | 'select'
+  >('text')
   const [textBoxContent, setTextBoxContent] = useState<string | number>('')
   const [modalOpen, setModalOpen] = useState(false)
 
@@ -167,7 +169,7 @@ const DynamicPaginatedAdminTable = <
     row: TableRow,
     updatedEntry: {
       key: keyof TableRow
-      value: RowEntry | Date
+      value: RowEntry
     },
   ) => {
     setRows((prevRows) => {
@@ -236,36 +238,26 @@ const DynamicPaginatedAdminTable = <
             const isValidDate =
               row[col.key] && !isNaN(Date.parse(row[col.key]?.toString() ?? ''))
             const date = new Date(row[col.key]?.toString() ?? '')
-
             setTextBoxContent(
               (isValidDate ? date.toISOString().split('T')[0] : '') ?? '',
             )
           } else {
             setTextBoxContent(row[col.key]?.toString() ?? '')
           }
-
-          if (col.ctrl.type !== 'text' && col.ctrl.type !== 'date') {
-            setIsSelect(true)
-          } else {
-            setIsSelect(false)
-            setCurRow(row)
-            setCurColumn(col.key)
-          }
+          setCurRow(row)
+          setCurColumn(col.key)
+          setCurType(col.ctrl.type)
         }}
         {...tableProps}
       />
       <div className="flex w-full flex-col items-center">
         <input
           value={textBoxContent}
-          disabled={isSelect}
-          type={
-            typeof curRow?.[curColumn] !== 'object'
-              ? typeof curRow?.[curColumn]
-              : 'date'
-          }
+          disabled={curType === 'select'}
+          type={curType}
           onChange={(e) => {
             // Handle date input type
-            if (typeof curRow?.[curColumn] === 'object') {
+            if (curType === 'date' && curRow) {
               setTextBoxContent(e.target.value)
               const date = new Date(e.target.value)
               if (date.toString() !== 'Invalid Date') {
@@ -299,6 +291,15 @@ const DynamicPaginatedAdminTable = <
           text="Request Review"
           onClick={() => setModalOpen(true)}
         />
+        {mutation.isSuccess && (
+          <Toast type="success" message="Successfully submitted request!" />
+        )}
+        {mutation.isError && (
+          <Toast
+            type="error"
+            message="Something went wrong, please try again."
+          />
+        )}
       </div>
     </>
   )
