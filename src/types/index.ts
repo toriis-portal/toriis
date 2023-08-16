@@ -47,7 +47,8 @@ export interface ListEntry {
 
 export interface RefuteResponseEntry {
   order: number
-  details: Document
+  claim: Document
+  response: Document
 }
 
 export interface TimelineEntry {
@@ -58,6 +59,7 @@ export interface TimelineEntry {
 export interface HomePageInfo {
   landing: Document
   refuteUisResponse: Document
+  aboutUs: Document
 }
 
 export interface CaseEntry {
@@ -104,4 +106,9 @@ export interface FossilFuelPage {
 export interface CompanyDetailsEntry {
   name: string
   description: Document
+}
+
+export interface TakeActionPage {
+  name: string
+  openLetter: Document
 }

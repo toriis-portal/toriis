@@ -32,7 +32,7 @@ const LinkBox: FC<LinkBoxProps> = ({ linkEntries, footnote, title }) => {
     <div
       className={clsx(
         'flex w-fit flex-col items-center rounded-xl bg-darkTeal text-white',
-        'mt-16 pt-6 pb-10 md:mx-12 md:px-20',
+        'mt-16 pb-10 pt-6 md:mx-12 md:px-20',
       )}
     >
       <div className="relative -top-12 ">

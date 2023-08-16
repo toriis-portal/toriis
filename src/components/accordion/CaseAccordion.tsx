@@ -41,7 +41,7 @@ const CaseAccordion: FC<{ content: CaseEntry }> = ({ content }) => {
       </button>
       <div
         className={clsx(
-          'body-normal flex flex-col gap-2 border-t-[0.125rem] border-cobalt pt-6 pb-9 text-black',
+          'body-normal flex flex-col gap-2 border-t-[0.125rem] border-cobalt pb-9 pt-6 text-black',
           {
             'mx-[47px]': isOpen,
             'mx-12': !isOpen,

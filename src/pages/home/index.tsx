@@ -1,10 +1,12 @@
 import type { FC } from 'react'
 
 import {
-  Landing,
+  ToriisAtAGlance,
+  LandingBanner,
   OurRequest,
-  InstitutionalDivestments,
+  InstitutionalDivestment,
   RefuteUISResponse,
+  AboutUs,
   TimelineSection,
 } from '../../sections'
 import {
@@ -62,9 +64,11 @@ const Home: FC<HomeProps> = ({
   refuteResponseEntries,
 }) => {
   const navItems = [
+    { path: 'toriisAtAGlance', text: 'TORIIS At A Glance' },
     { path: 'ourRequests', text: 'Our Requests' },
     { path: 'institutionalDivestment', text: 'Institutional Divestment' },
-    { path: 'refuteUISReponse', text: 'Refute UIS Response' },
+    { path: 'refuteUISResponse', text: 'Responding to Pushback' },
+    { path: 'aboutUs', text: 'About Us' },
     { path: 'divestmentHistory', text: 'Divestment History' },
   ]
 
@@ -72,22 +76,28 @@ const Home: FC<HomeProps> = ({
     <>
       <PrimaryNavBar />
       <SecondaryNavBar navItems={navItems} />
-      <Landing text={info.landing} />
+      <LandingBanner />
       <main>
+        <div id="toriisAtAGlance" className="pt-20">
+          <ToriisAtAGlance text={info.landing} />
+        </div>
         <div id="ourRequests" className="pt-20">
           <OurRequest entries={ourRequestsEntries} />
         </div>
         <div id="institutionalDivestment" className="pt-20">
-          <InstitutionalDivestments
+          <InstitutionalDivestment
             linkEntries={divestmentLinkEntries}
             listEntries={divestmentListEntries}
           />
         </div>
-        <div id="refuteUISReponse" className="pt-20">
+        <div id="refuteUISResponse" className="pt-20">
           <RefuteUISResponse
             leftText={info.refuteUisResponse}
             entries={refuteResponseEntries}
           />
+        </div>
+        <div id="aboutUs" className="pt-20">
+          <AboutUs text={info.aboutUs} />
         </div>
         <div id="divestmentHistory" className="pt-20">
           <TimelineSection entries={timelineEntries} />

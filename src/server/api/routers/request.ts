@@ -26,7 +26,7 @@ export const requestRouter = createTRPCRouter({
               .or(z.number())
               .or(z.date())
               .or(z.nativeEnum(Sector))
-              .or(z.nativeEnum(IndustryEnum)), // TODO: Check this again so and see if there's a way we can have more narrow types on this
+              .or(z.nativeEnum(IndustryEnum)),
             page: z.number().nullish(),
           }),
         ),

@@ -74,7 +74,7 @@ const RequestPage: FC = () => {
             <RequestReviewTable
               requests={parseData(data)}
               isMyRequests={showOnlyUserRequests}
-              className={'w-5/6 pt-16 pb-4'}
+              className={'w-5/6 pb-4 pt-16'}
             />
             {(isLoading || !data || isFetchingNextPage) && <Spinner />}
             <LoadMoreButton
