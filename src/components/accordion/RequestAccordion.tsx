@@ -9,7 +9,7 @@ import { orderedListStyle } from '../../utils/renderer'
 
 const RequestAccordion: FC<{
   content: OurRequestsEntry
-  color?: 'lightBlue'
+  color?: string
 }> = ({ content, color = 'white' }) => {
   const [isOpen, setIsOpen] = useState(false)
   const handleOpen = () => {
