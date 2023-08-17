@@ -2,6 +2,8 @@ import type { FC } from 'react'
 import dynamic from 'next/dynamic'
 import type { Emission } from '@prisma/client'
 
+import { assetAmountToString } from '../../utils/helpers'
+
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 interface EmissionBarChartProps {
@@ -38,7 +40,8 @@ const EmissionBarChart: FC<EmissionBarChartProps> = ({ emissionData }) => {
   const options = {
     tooltip: {
       y: {
-        formatter: (value: number) => `${value}k metric tons CO2`,
+        formatter: (value: number) =>
+          `${assetAmountToString(value * 1000)} metric tons CO2`,
       },
     },
     plotOptions: {
