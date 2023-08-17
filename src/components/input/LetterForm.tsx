@@ -77,7 +77,7 @@ const LetterForm = () => {
       {({ errors, touched, setFieldValue }) => (
         <Form>
           {/* TODO: accessibility concerns of no label */}
-          <div className="flex space-x-4">
+          <div className="sm:flex sm:space-x-4">
             <Field
               id="firstName"
               name="firstName"
@@ -123,7 +123,7 @@ const LetterForm = () => {
             placeholder="Email*"
             type="email"
             className={clsx(
-              'block',
+              'w-full sm:block',
               styles.field,
               errors.email && touched.email && '!mb-2 ',
             )}
@@ -135,20 +135,20 @@ const LetterForm = () => {
             id="city"
             name="city"
             placeholder="City"
-            className={clsx('block', styles.field)}
+            className={clsx('w-full sm:block', styles.field)}
           />
           <Field
             id="country"
             name="country"
             placeholder="Country"
-            className={clsx('block', styles.field)}
+            className={clsx('w-full sm:block', styles.field)}
           />
           <Field
             id="zip"
             name="zip"
             placeholder="Zip/Postal Code"
             type="number"
-            className={clsx('block', styles.field)}
+            className={clsx('w-full sm:block', styles.field)}
             // This additional logic is required for zipcode field in order
             // to display string placeholder in a number field safely.
             onChangeText={(value: string) =>
@@ -162,7 +162,7 @@ const LetterForm = () => {
             id="bio"
             name="bio"
             placeholder="Link Here"
-            className={clsx('block', styles.field)}
+            className={clsx('w-full sm:block', styles.field)}
           />
           <label className={styles.label} htmlFor="bio">
             Twitter Handle
@@ -171,10 +171,10 @@ const LetterForm = () => {
             id="twitter"
             name="twitter"
             placeholder="Link Here"
-            className={clsx('block', styles.field)}
+            className={clsx('w-full sm:block', styles.field)}
           />
           <div>
-            <p className="mb-2 w-3/4 text-base">
+            <p className="mb-2 w-full text-base sm:w-3/4">
               I TESTIFY THAT THE INFORMATION I HAVE SUPPLIED ON THIS FORM IS
               TRUE AND ACCURATELY REFLECTS MY IDENTITY, AS WELL AS DESIRE TO
               SIGN THE FOSSIL FREE UIUC LETTER.
@@ -187,7 +187,7 @@ const LetterForm = () => {
                 type="radio"
                 name="agree"
                 value="YES"
-                className={clsx('mr-7 ml-1 ', styles.checkbox)}
+                className={clsx('ml-1 mr-7 ', styles.checkbox)}
               />
               YES
             </label>
@@ -196,7 +196,7 @@ const LetterForm = () => {
                 type="radio"
                 name="agree"
                 value="NO"
-                className={clsx('mr-7 ml-1 ', styles.checkbox)}
+                className={clsx('ml-1 mr-7 ', styles.checkbox)}
               />
               NO
             </label>
@@ -205,7 +205,7 @@ const LetterForm = () => {
             <PrimaryButton
               text="Add Your Name"
               variant="clementine"
-              className="mt-2.5 mb-5 py-2 !px-14"
+              className="mb-5 mt-2.5 !px-14 py-2"
               type="submit"
             />
             <label className="text-base">
