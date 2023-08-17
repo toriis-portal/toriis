@@ -18,10 +18,12 @@ const FossilFuelsBad: FC<FossilFuelsBadProps> = ({ text, caption }) => {
         size="large"
         color="clementine"
       />
-      <div className="px-12 pb-6">
+      <div className="pb-6 sm:px-12">
         {documentToReactComponents(text, mainParagraphStyle)}
-        <ClimateClock />
-        <div className="rounded-md bg-white p-6">
+        <div className="hidden sm:block">
+          <ClimateClock />
+        </div>
+        <div className="mt-5 rounded-md bg-white p-6 sm:mt-0">
           {documentToReactComponents(caption, mainParagraphStyle)}
         </div>
       </div>

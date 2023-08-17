@@ -58,7 +58,7 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
 
   return (
     <div className="bg-white px-12">
-      <div className="flex justify-center">
+      <div className="mb-12 flex flex-wrap justify-center sm:mb-0">
         <UnderlinedTitle
           title="UI System Investments&nbsp;"
           size="large"

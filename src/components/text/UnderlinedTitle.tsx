@@ -15,7 +15,7 @@ const UnderlinedTitle: FC<TitleProps> = ({
 }) => {
   return (
     <>
-      <div className={clsx('w-fit', padded && 'mb-12')}>
+      <div className={clsx('w-fit', padded && 'sm:mb-12')}>
         <div
           className={clsx(
             'relative z-0',

@@ -1,46 +1,33 @@
 import type { FC } from 'react'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import clsx from 'clsx'
 
 import ReadMoreButton from '../button/ReadMoreButton'
-import { useMediaBreakPoint } from '../../utils/hooks'
 
 const TabHeader: FC<{ title: string; active: boolean }> = ({
   title,
   active,
 }) => {
-  const [truncatedTitle, setTruncatedTitle] = useState(title)
-  const [maxTitleLength, setMaxTitleLength] = useState(5)
-
-  useEffect(() => {
-    setTruncatedTitle(
-      title.length > maxTitleLength
-        ? title.substring(0, maxTitleLength) + '...'
-        : title,
-    )
-  }, [title, truncatedTitle, maxTitleLength])
-
-  useMediaBreakPoint(
-    1000,
-    () => setMaxTitleLength(2),
-    () => setMaxTitleLength(5),
-  )
-
   return (
     <div
       className={clsx(
-        'rounded-t-lg  px-4 ',
+        'px-4 sm:rounded-t-lg ',
         { 'bg-lightBlue': !active },
         { 'bg-clementine/20': active },
+        'border-x-2 border-t-2 border-gray-100 sm:border-0',
       )}
     >
       <p
-        className={clsx('whitespace-nowrap border-b-2 px-4 py-3.5', {
-          'border-lightBlue': !active,
-          'border-clementine': active,
-        })}
+        className={clsx(
+          'whitespace-nowrap border-b-2 px-4 py-3.5',
+          {
+            'border-lightBlue': !active,
+            'border-clementine': active,
+          },
+          `overflow-hidden text-ellipsis ${active ? '' : 'sm:max-w-[4.5rem]'}`,
+        )}
       >
-        {active ? title : truncatedTitle}
+        {title}
       </p>
     </div>
   )
@@ -58,18 +45,21 @@ const Tabs: FC<{ tabDetails: TabDetails[] }> = ({ tabDetails }) => {
   return (
     <div className="md:px-12">
       {/* Tab headers:*/}
-      <div className="flex flex-row space-x-1.5">
+      <div className="mb-2 flex w-full flex-col sm:mb-0 sm:flex-row sm:flex-wrap sm:space-x-1.5">
+        {/* TODO: This is a react anti-pattern. Should remove */}
         {tabDetails.map((details, idx) => {
           return (
             <button key={idx} onClick={() => setActiveIndx(idx)}>
-              <TabHeader title={details.title} active={activeIdx == idx} />
+              <TabHeader title={details.title} active={activeIdx === idx} />
             </button>
           )
         })}
       </div>
       {/* Tab body: */}
-      <div className="flex flex-col items-center justify-center rounded-lg bg-clementine/20 p-8 px-16">
-        <p className="header-3 pb-8">{tabDetails[activeIdx]?.title}</p>
+      <div className="flex flex-col items-center justify-center rounded-lg bg-clementine/20 p-8 sm:px-16">
+        <p className="header-3 pb-8 text-center">
+          {tabDetails[activeIdx]?.title}
+        </p>
         {tabDetails[activeIdx]?.content}
         {tabDetails[activeIdx]?.url && (
           <ReadMoreButton isOpen={false} link={tabDetails[activeIdx]?.url} />
