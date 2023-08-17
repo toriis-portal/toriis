@@ -8,13 +8,16 @@ interface TitleProps {
   title?: string
   details?: string | React.ReactNode
   children?: React.ReactNode
+  className?: string
 }
 
-const ToolTip: FC<TitleProps> = ({ title, details, children }) => {
+const ToolTip: FC<TitleProps> = ({ title, details, children, className }) => {
   const [isShown, setIsShown] = useState(false)
 
   return (
-    <div className="group relative flex w-fit justify-center">
+    <div
+      className={clsx('group relative flex w-fit justify-center', className)}
+    >
       <div
         onMouseEnter={() => setIsShown(true)}
         onMouseLeave={() => setIsShown(false)}

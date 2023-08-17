@@ -34,7 +34,7 @@ const InstitutionsDivested: FC<institutionsDivestedProps> = ({
         controlSize="sm"
         variant="clementine"
       />
-      <div className="body-small pb-8 pl-16 pt-2 text-footnoteGray">
+      <div className="body-small mx-6 break-words pb-8 pt-2 text-footnoteGray sm:mx-0 sm:pl-16">
         {documentToReactComponents(footnote)}
       </div>
     </>

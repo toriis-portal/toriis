@@ -9,12 +9,14 @@ interface ReadMoreAccordionProps {
   content?: string
   className?: string
   children?: React.ReactNode
+  centerReadMoreButton?: boolean
 }
 
 const ReadMoreAccordion: FC<ReadMoreAccordionProps> = ({
   content = '',
   className,
   children,
+  centerReadMoreButton = false,
 }) => {
   const [folded, setFolded] = useState(true)
   const MAX_WORD_COUNT = 75
@@ -53,7 +55,7 @@ const ReadMoreAccordion: FC<ReadMoreAccordionProps> = ({
       <div
         className={`flex px-6 ${
           content ? (shouldTruncate ? '' : 'hidden') : ''
-        }`}
+        } ${centerReadMoreButton ? 'justify-center' : ''}`}
       >
         <ReadMoreButton
           isOpen={!folded}
