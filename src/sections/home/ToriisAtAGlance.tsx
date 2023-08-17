@@ -9,18 +9,18 @@ import { mainParagraphStyle } from '../../utils/renderer'
 
 const ToriisAtAGlance: FC<{ text: Document }> = ({ text }) => {
   return (
-    <div className="mx-16 flex flex-row">
+    <div className="mx-12 flex flex-col md:mx-16 lg:flex-row">
       <div className="basis-3/5">
         <HighlightedTitle
           title="TORIIS at a glance"
           size="large"
           color="clementine"
         />
-        <div className="mb-8 ml-8 flex flex-col gap-6">
+        <div className="mb-8 flex flex-col gap-6 md:ml-8">
           {documentToReactComponents(text, mainParagraphStyle)}
         </div>
       </div>
-      <div className="ml-4 mt-10 basis-2/5">
+      <div className="basis-2/5 md:ml-4 md:mt-10">
         <LandingDonutChart />
         <div className={clsx('flex justify-center pt-2')}>
           <p className="header-2">Assets Per Sector</p>
