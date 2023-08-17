@@ -13,8 +13,8 @@ const LandingBanner = () => {
         fill
       />
       <div className="z-10 w-full">
-        <div className="ml-8 mt-8 w-fit bg-cobalt px-4 pb-4 pt-6 md:mt-16">
-          <p className="text-[40px] font-[900] leading-none">
+        <div className="w-full bg-cobalt px-4 pb-4 pt-6 md:ml-8 md:mt-16 md:w-fit">
+          <p className="text-[30px] font-[900] leading-none md:text-[40px]">
             Welcome to{' '}
             <span className="underline decoration-clementine">TORIIS:</span>
           </p>

@@ -13,9 +13,9 @@ const CapitalizedTitle = ({
   return (
     <span
       className={clsx(
-        'space-x-1 leading-7',
+        'space-x-1 leading-none',
         className,
-        'header-1 flex max-w-full flex-wrap font-medium',
+        'header-3 md:header-1 flex max-w-full flex-wrap font-medium',
       )}
       {...props}
     >
