@@ -25,13 +25,14 @@ const DivestmentCase: FC<FinancialCaseProps> = ({
   footnote,
 }) => {
   return (
-    <div className="bg-white px-12">
+    <div className="bg-white px-6 sm:px-12">
       <HighlightedTitle
         title="The Case for Fossil Fuel Divestment"
         size="large"
         color="clementine"
+        fillWidthOnMobile
       />
-      <div className="px-12">
+      <div className="sm:px-12">
         <div className="flex flex-col gap-3">
           {documentToReactComponents(text, mainParagraphStyle)}
         </div>
@@ -40,6 +41,7 @@ const DivestmentCase: FC<FinancialCaseProps> = ({
             title="Cases for Divestment"
             size="medium"
             color="brightTeal"
+            fillWidthOnMobile
           />
         </div>
         <ImageWithCaption img={img} />
@@ -49,7 +51,7 @@ const DivestmentCase: FC<FinancialCaseProps> = ({
               <CaseAccordion content={entry} />
             </div>
           ))}
-          <div className="body-small text-footnoteGray">
+          <div className="body-small break-words text-footnoteGray">
             {documentToReactComponents(footnote)}
           </div>
         </div>

@@ -143,7 +143,7 @@ export const Footer: FC = () => (
       </div>
     </div>
 
-    <div className="flex bg-lightBlue py-3 text-sm md:pl-10 lg:pl-24">
+    <div className="flex bg-lightBlue px-6 py-3 text-sm sm:px-0 md:pl-10 lg:pl-24">
       Made with <HeartIcon className="mx-2 w-5" /> by the Hack4Impact UIUC &
       SECS teams!
     </div>
