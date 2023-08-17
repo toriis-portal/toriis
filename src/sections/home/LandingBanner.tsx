@@ -13,22 +13,24 @@ const LandingBanner = () => {
         fill
       />
       <div className="z-10 w-full">
-        <div className="ml-8 mt-16 w-fit bg-cobalt px-4 pb-4 pt-6">
-          <p className="text-[40px] font-[900]">
+        <div className="ml-8 mt-8 w-fit bg-cobalt px-4 pb-4 pt-6 md:mt-16">
+          <p className="text-[40px] font-[900] leading-none">
             Welcome to{' '}
             <span className="underline decoration-clementine">TORIIS:</span>
           </p>
           <CapitalizedTitle className="pt-6" />
         </div>
 
-        <div className="mt-12 h-fit space-y-6 font-graph ">
-          <p className="mx-auto w-fit pb-16 pt-12 text-[200px]">DIVEST NOW.</p>
-          <p className="mx-auto w-fit pb-16 pt-7 text-[128px]">
+        <div className="mt-12 h-fit font-graph leading-none">
+          <p className="mx-auto w-fit text-center text-[120px] md:text-[200px]">
+            DIVEST NOW.
+          </p>
+          <p className="mx-auto w-fit text-center text-[60px] md:text-[128px]">
             FOSSIL FREE ILLINOIS
           </p>
         </div>
 
-        <div className="mx-auto mb-32 mt-16 flex w-fit flex-row space-x-12 text-black">
+        <div className="mb-16 mt-16 flex w-full flex-col items-center justify-center space-y-4 text-black md:mb-32 md:flex-row md:space-x-12 md:space-y-0">
           <PrimaryButton
             text="Investment Database"
             link="/investments"

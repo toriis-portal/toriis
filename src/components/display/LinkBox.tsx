@@ -17,7 +17,7 @@ const ShadowTitle: FC<{ text: string }> = ({ text }) => {
       className={clsx(
         'header-3 w-fit rounded-full bg-white text-center',
         'border-4 border-cobalt',
-        'px-14 py-4',
+        'px-2 py-4 md:px-14',
         'shadow-[-8px_8px_0px_0px] shadow-cobalt',
         'first-line:z-10',
       )}
