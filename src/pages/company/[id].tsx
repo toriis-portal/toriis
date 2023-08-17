@@ -2,8 +2,9 @@ import { Spinner } from 'flowbite-react'
 import { useRouter } from 'next/router'
 import { Company } from '@prisma/client'
 import type { FC } from 'react'
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { useState } from 'react'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import { BLOCKS } from '@contentful/rich-text-types'
 
 import { FuelEnum } from '../../utils/enums'
 import { ContentWrapper } from '../../utils/content'
@@ -31,6 +32,8 @@ export const getServerSideProps = async () => {
   const names = [
     'Yahoo Finance',
     'Carbon Accounting',
+    'Carbon Accounting Citation',
+    'Carbon Accounting Exxon Citation',
     'Renewable Energy',
     'ESG Explanation',
     ...Object.values(FuelEnum),
@@ -44,6 +47,9 @@ export const getServerSideProps = async () => {
     props: {
       yahooFinanceDetails: detailsMap['Yahoo Finance'],
       carbonAccountingDetails: detailsMap['Carbon Accounting'],
+      carbonAccountingCitationDetails: detailsMap['Carbon Accounting Citation'],
+      carbonAccountingExxonCitationDetails:
+        detailsMap['Carbon Accounting Exxon Citation'],
       renewableEnergyDetails: detailsMap['Renewable Energy'],
       esgExplanation: detailsMap['ESG Explanation'],
       fuelDetails: Object.values(FuelEnum).map(
@@ -56,6 +62,8 @@ export const getServerSideProps = async () => {
 interface CompanyDetailsProps {
   yahooFinanceDetails: CompanyDetailsEntry
   carbonAccountingDetails: CompanyDetailsEntry
+  carbonAccountingCitationDetails: CompanyDetailsEntry
+  carbonAccountingExxonCitationDetails: CompanyDetailsEntry
   renewableEnergyDetails: CompanyDetailsEntry
   esgExplanation: CompanyDetailsEntry
   fuelDetails: CompanyDetailsEntry[]
@@ -83,6 +91,8 @@ const getChartDirections = (company: Company) => {
 const Company: FC<CompanyDetailsProps> = ({
   yahooFinanceDetails,
   carbonAccountingDetails,
+  carbonAccountingCitationDetails,
+  carbonAccountingExxonCitationDetails,
   renewableEnergyDetails,
   esgExplanation,
   fuelDetails,
@@ -123,8 +133,57 @@ const Company: FC<CompanyDetailsProps> = ({
   const { company, sectorEntry, industryEntry } = data
   const chartDirections = getChartDirections(company)
 
-  console.log('Test')
-  console.log(company.name)
+  /* For all companies excluding Exxon, this function
+   * 1. fetches Carbon Accounting info and general Carbon Accouting citation
+   * 2. concatenates the rich text
+   * 3. renders rich text formatting with styling
+   */
+  function renderCarbonAccountingContent() {
+    const combinedContent = [
+      ...(carbonAccountingDetails.description.content || []),
+      ...(carbonAccountingCitationDetails.description.content || []),
+    ]
+
+    const renderedCombinedContent = documentToReactComponents(
+      {
+        nodeType: BLOCKS.DOCUMENT,
+        content: combinedContent,
+        data: {},
+      },
+      {
+        renderNode: {
+          [BLOCKS.PARAGRAPH]: (node, children) => <p>{children}</p>,
+        },
+      },
+    )
+
+    return renderedCombinedContent
+  }
+
+  /* For company Exxon with unique citation, this function distinctly
+   * fetches Carbon Accounting info and unique Exxon Carbon Accouting citation
+   */
+  function renderExxonCarbonAccountingContent() {
+    const combinedContent = [
+      ...(carbonAccountingDetails.description.content || []),
+      ...(carbonAccountingExxonCitationDetails.description.content || []),
+    ]
+
+    const renderedCombinedContent = documentToReactComponents(
+      {
+        nodeType: BLOCKS.DOCUMENT,
+        content: combinedContent,
+        data: {},
+      },
+      {
+        renderNode: {
+          [BLOCKS.PARAGRAPH]: (node, children) => <p>{children}</p>,
+        },
+      },
+    )
+
+    return renderedCombinedContent
+  }
 
   return (
     <>
@@ -169,10 +228,9 @@ const Company: FC<CompanyDetailsProps> = ({
               chart={<EmissionBarChart emissionData={company.emission} />}
               interpretation={
                 <ChartDetailsCard>
-                  {documentToReactComponents(
-                    carbonAccountingDetails.description,
-                    mainParagraphStyle,
-                  )}
+                  {companyId == '64a7f565a71c4cecb911ecb0'
+                    ? renderExxonCarbonAccountingContent()
+                    : renderCarbonAccountingContent()}
                 </ChartDetailsCard>
               }
               chartOnLeft={chartDirections['emission']}
