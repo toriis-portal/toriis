@@ -47,7 +47,9 @@ const SignLetter = () => {
           color="clementine"
         />
       </div>
-      <div className="flex w-[calc(100%-120px)] pb-10">{infoParagraph}</div>
+      <div className="visible flex w-[calc(100%-120px)] pb-10 sm:invisible sm:pb-0">
+        {infoParagraph}
+      </div>
       <div className="w-[calc(100%-120px)] rounded-lg px-4 py-9 outline outline-1 sm:px-20">
         <p className="subheader-1 pb-12 text-center text-4xl font-semibold">
           FOSSIL FREE ILLINOIS OPEN LETTER
