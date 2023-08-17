@@ -34,17 +34,17 @@ const LandingBanner = () => {
           <PrimaryButton
             text="Investment Database"
             link="/investments"
-            className="w-64 !px-8"
+            className="w-64"
           />
           <PrimaryButton
             text="Why Divest?"
             link="/fossil-fuel"
-            className="w-64 !px-16"
+            className="w-64"
           />
           <PrimaryButton
             text="Sign the Letter"
             link="/take-action"
-            className="w-64 !px-12"
+            className="w-64"
           />
         </div>
       </div>
