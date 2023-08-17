@@ -60,7 +60,6 @@ const TakeActionPage: FC<TakeActionPageProps> = ({
   const navItems = [
     { path: 'openLetter', text: 'Open Letter' },
     { path: 'ourRequests', text: 'Our Requests' },
-    { path: 'respondingToPushback', text: 'Responding to Pushback' },
     { path: 'signLetter', text: 'Sign the Letter' },
     // TODO: { path: 'signatories', text: 'Signatories' },
     { path: 'momentum', text: 'Continue the Momentum' },
@@ -84,12 +83,6 @@ const TakeActionPage: FC<TakeActionPageProps> = ({
       </div>
       <div id="ourRequests" className="pt-20">
         <LetterOurRequest entries={ourRequestsEntries} />
-      </div>
-      <div id="respondingToPushback" className="pt-20">
-        <RespondingToPushback
-          leftText={info.refuteUisResponse}
-          entries={respondingToPushbackEntries}
-        />
       </div>
       <div id="signLetter" className="pt-10">
         <SignLetter />
