@@ -38,8 +38,7 @@ const EmissionBarChart: FC<EmissionBarChartProps> = ({ emissionData }) => {
   const options = {
     tooltip: {
       y: {
-        formatter: (value: number) =>
-          `${(value / 1000).toFixed(3)} Thousands of metric tons CO2e`,
+        formatter: (value: number) => `${value}k metric tons CO2e`,
       },
     },
     plotOptions: {
