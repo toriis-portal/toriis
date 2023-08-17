@@ -123,6 +123,9 @@ const Company: FC<CompanyDetailsProps> = ({
   const { company, sectorEntry, industryEntry } = data
   const chartDirections = getChartDirections(company)
 
+  console.log('Test')
+  console.log(company.name)
+
   return (
     <>
       <div className="mt-6 ml-8">
