@@ -1,4 +1,5 @@
 import type { FC } from 'react'
+import clsx from 'clsx'
 
 interface NumberCircleProps {
   val: number
@@ -7,8 +8,15 @@ interface NumberCircleProps {
 const NumberCircle: FC<NumberCircleProps> = ({ val }) => {
   return (
     <>
-      <div className="flex h-[3rem] min-h-[3rem] w-[3rem] min-w-[3rem] items-center justify-center rounded-full border-2 border-cobalt bg-white shadow-[-6px_6px] shadow-cobalt">
-        <p className="header-2 text-cobalt">{val}</p>
+      <div
+        className={clsx(
+          'flex items-center justify-center rounded-full border-2 border-cobalt bg-white shadow-[-6px_6px] shadow-cobalt',
+          'h-[2.5rem] min-h-[2.5rem] w-[2.5rem] min-w-[2.5rem]',
+          'md:h-[3rem] md:min-h-[3rem] md:w-[3rem] md:min-w-[3rem]',
+          'header-2 text-cobalt',
+        )}
+      >
+        <p className="header-3 md:header-2 text-cobalt">{val}</p>
       </div>
     </>
   )

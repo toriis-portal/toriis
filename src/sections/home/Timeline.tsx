@@ -19,7 +19,7 @@ const TimelineTick: FC<TimelineTickProps> = ({ isLeft }) => {
       <div className={clsx({ 'mr-10': !isLeft, 'ml-10': isLeft })}>
         <div
           className={clsx(
-            'relative top-1/2 w-16 border-t-4 border-clementine',
+            'relative top-1/2 border-t-4 border-clementine md:w-16',
             {
               'float-right': !isLeft,
               'float-left': isLeft,
@@ -59,8 +59,8 @@ const TimelineItem: FC<TimlineItemProps> = ({ data, isLeft }) => {
               >
                 <p
                   className={clsx('text-black', {
-                    'mr-6 pr-10 text-right': isLeft,
-                    'ml-6 pl-10 text-left': !isLeft,
+                    'text-right md:pr-16': isLeft,
+                    'text-left md:pl-16': !isLeft,
                   })}
                 >
                   {item.details}

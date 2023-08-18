@@ -189,7 +189,7 @@ model Emission {
 model Request {
   id        String        @id @default(auto()) @map("_id") @db.ObjectId
   dataset   Dataset
-  /// [UpdateTypes]
+  /// [StrictUpdateType]
   updates   Json[]
   status    RequestStatus @default(PENDING)
   comment   String?

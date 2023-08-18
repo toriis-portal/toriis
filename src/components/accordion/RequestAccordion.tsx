@@ -38,7 +38,7 @@ const RequestAccordion: FC<{
           {documentToReactComponents(content.details, orderedListStyle)}
         </div>
       )}
-      <div className="body-normal flex px-6 pb-6">
+      <div className="body-normal flex w-full justify-center px-6 pb-6">
         <ReadMoreButton isOpen={isOpen} handleOpen={handleOpen} />
       </div>
     </div>
