@@ -63,7 +63,7 @@ export const signatoryRouter = createTRPCRouter({
 
   getSignatories: publicProcedure.query(async ({ ctx }) => {
     const items = await ctx.prisma.signatory.findMany({
-      orderBy: { createdAt: 'asc' },
+      orderBy: { createdAt: 'desc' },
     })
     return items
   }),

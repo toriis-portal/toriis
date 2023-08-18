@@ -2,7 +2,12 @@ import type { FC } from 'react'
 import { scroller } from 'react-scroll'
 
 import { TakeActionPage } from '../../types'
-import { PrimaryNavBar, SecondaryNavBar, ToTopButton } from '../../components'
+import {
+  PrimaryNavBar,
+  SecondaryNavBar,
+  ToTopButton,
+  Footer,
+} from '../../components'
 import { ContentWrapper } from '../../utils/content'
 import { Letter, SignLetter, Signatories, Momentum } from '../../sections'
 import type { ListEntryDocument } from '../../types'
@@ -34,7 +39,7 @@ const TakeActionPage: FC<TakeActionPageProps> = ({
   const navItems = [
     { path: 'openLetter', text: 'Open Letter' },
     { path: 'signLetter', text: 'Sign the Letter' },
-    // { path: 'signatories', text: 'Signatories' },
+    { path: 'signatories', text: 'Signatories' },
     { path: 'momentum', text: 'Continue the Momentum' },
   ]
   return (
@@ -57,13 +62,13 @@ const TakeActionPage: FC<TakeActionPageProps> = ({
       <div id="signLetter" className="pt-10">
         <SignLetter />
       </div>
-      {/* 
       <div id="signatories" className="pt-10">
         <Signatories />
-      </div> */}
+      </div>
       <div id="momentum" className="pt-10">
         <Momentum entries={momentumEntries} />
       </div>
+      <Footer />
     </>
   )
 }
