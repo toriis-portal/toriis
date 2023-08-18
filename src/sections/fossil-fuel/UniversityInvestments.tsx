@@ -94,10 +94,8 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
                 />
               </div>
             </div>
-            <div className="flex justify-center">
-              <div className="w-full">
-                <EmissionTreeMap flag={flag} />
-              </div>
+            <div className="w-full">
+              <EmissionTreeMap flag={flag} />
             </div>
           </div>
         </div>
