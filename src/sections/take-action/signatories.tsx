@@ -19,9 +19,17 @@ interface SourceData {
   shouldEmail: boolean
 }
 
+export const reduceArray = (array: string[]): string => {
+  if (array.length > 0) {
+    if (array[0] != '') {
+      return ', ' + array.reduce((x, y) => x + '; ' + y)
+    }
+  }
+  return ''
+}
+
 export const parseSignatoriesToColumns = (
   data: SourceData[] | undefined,
-  entryType: 'text' | 'html',
   numRows: number,
   numCols: number,
 ): React.ReactNode[] => {
@@ -47,16 +55,8 @@ export const parseSignatoriesToColumns = (
               {column.map((item, j) => (
                 <li className="list-item list-outside" key={j}>
                   <strong>{item.firstName + ' ' + item.lastName}</strong>
-                  {item.title.length > 0
-                    ? item.title[0] != ''
-                      ? ', ' + item.title.reduce((x, y) => x + '; ' + y)
-                      : ' '
-                    : ' '}
-                  {item.institution.length > 0
-                    ? item.institution[0] != ''
-                      ? ', ' + item.title.reduce((x, y) => x + '; ' + y)
-                      : ' '
-                    : ''}
+                  {reduceArray(item.title)}
+                  {reduceArray(item.institution)}
                 </li>
               ))}
             </ol>
@@ -80,7 +80,7 @@ const Signatories = () => {
         <HighlightedTitle title="Signatories" size="large" color="clementine" />
       </div>
       <Carousel
-        carouselChildren={parseSignatoriesToColumns(data, 'text', 20, 1)}
+        carouselChildren={parseSignatoriesToColumns(data, 20, 1)}
         controlSize="sm"
         variant="lightBlue"
       />
