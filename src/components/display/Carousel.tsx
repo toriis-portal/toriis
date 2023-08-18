@@ -51,7 +51,7 @@ const Carousel: FC<CarouselProps> = ({
     <div
       className={clsx(
         'flex flex-col',
-        'gap-4  pb-8 pt-12',
+        'gap-4 pb-8 pt-12',
         { 'bg-white': variant === 'white' },
         { 'bg-lightBlue': variant === 'lightBlue' },
         { 'bg-clementine/20': variant === 'clementine' },
@@ -60,7 +60,7 @@ const Carousel: FC<CarouselProps> = ({
     >
       <div className="overflow-hidden">
         <div
-          className="flex flex-row whitespace-normal transition-transform"
+          className="flex max-h-[50vh] flex-row justify-center overflow-y-scroll whitespace-normal transition-transform"
           style={{
             transform: `translateX(-${
               activeIndex * (100 / carouselChildren.length)

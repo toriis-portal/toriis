@@ -15,9 +15,9 @@ const ShadowTitle: FC<{ text: string }> = ({ text }) => {
   return (
     <div
       className={clsx(
-        'header-3 w-fit rounded-full bg-white text-center',
+        'md:header-3 w-fit rounded-full bg-white text-center font-bold',
         'border-4 border-cobalt',
-        'px-14 py-4',
+        'px-2 py-4 md:px-14',
         'shadow-[-8px_8px_0px_0px] shadow-cobalt',
         'first-line:z-10',
       )}
@@ -31,14 +31,14 @@ const LinkBox: FC<LinkBoxProps> = ({ linkEntries, footnote, title }) => {
   return (
     <div
       className={clsx(
-        'flex w-fit flex-col items-center rounded-xl bg-darkTeal text-white',
+        'flex w-full flex-col items-center rounded-xl bg-darkTeal text-white sm:w-fit',
         'mt-16 pb-10 pt-6 md:mx-12 md:px-20',
       )}
     >
-      <div className="relative -top-12 ">
+      <div className="relative -top-12">
         <ShadowTitle text={title} />
       </div>
-      <div className="flex flex-col ">
+      <div className="-p-3 flex w-full flex-col sm:p-0">
         <div className="flex flex-wrap justify-center">
           {linkEntries.map((entry, index) => (
             <div key={index} className="inline-block p-2 text-center underline">
@@ -49,7 +49,7 @@ const LinkBox: FC<LinkBoxProps> = ({ linkEntries, footnote, title }) => {
             </div>
           ))}
         </div>
-        <div className="body-small p-2 lg:p-4">{footnote}</div>
+        <div className="body-small break-words p-2 lg:p-4">{footnote}</div>
       </div>
     </div>
   )

@@ -42,10 +42,7 @@ const CaseAccordion: FC<{ content: CaseEntry }> = ({ content }) => {
       <div
         className={clsx(
           'body-normal flex flex-col gap-2 border-t-[0.125rem] border-cobalt pb-9 pt-6 text-black',
-          {
-            'mx-[47px]': isOpen,
-            'mx-12': !isOpen,
-          },
+          'mx-6 sm:mx-12',
         )}
       >
         {documentToReactComponents(

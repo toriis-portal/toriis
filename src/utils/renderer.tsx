@@ -18,7 +18,7 @@ export const mainParagraphStyle = {
   },
   renderNode: {
     [BLOCKS.PARAGRAPH]: (node: any, children: any) => (
-      <p className="align-center">{children}</p>
+      <p className="align-center break-words">{children}</p>
     ),
     [BLOCKS.UL_LIST]: (node: any, children: any) => (
       <ul className="list-disc">{children}</ul>

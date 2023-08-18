@@ -49,27 +49,29 @@ const EmissionsCard: FC<CardProps> = ({
 }) => {
   return (
     <div className="py-4">
-      <h2 className="subheader-1 py-6">{title}:</h2>
+      <h2 className="subheader-1 py-2 leading-none md:py-6">{title}:</h2>
       <div
-        className={clsx('rounded-md border-2', {
-          'border-pumpkin': color === 'pumpkin',
-          'border-brightTeal': color === 'brightTeal',
-        })}
+        className={clsx(
+          'flex flex-col items-center rounded-md border-2 py-4 md:flex-row md:px-4',
+          {
+            'border-pumpkin': color === 'pumpkin',
+            'border-brightTeal': color === 'brightTeal',
+          },
+        )}
       >
-        <div className="flex items-center justify-between py-4">
-          <div className="flex items-center">
-            <div
-              className={clsx('ml-4 flex items-center justify-center', {
-                'bg-clementine/20': color === 'pumpkin',
-                'bg-lightBlue': color === 'brightTeal',
-              })}
-            >
-              <text className="h-6 min-w-[120px] text-center text-xl font-black">
-                {metric}
-              </text>
-            </div>
-            <div className="ml-4 text-lg leading-5">{description}</div>
-          </div>
+        <div
+          className={clsx(
+            'mb-2 min-w-[120px] basis-1/4 text-center text-xl font-black md:mb-0',
+            {
+              'bg-clementine/20': color === 'pumpkin',
+              'bg-lightBlue': color === 'brightTeal',
+            },
+          )}
+        >
+          {metric}
+        </div>
+        <div className="flex basis-3/4 flex-row items-center md:justify-between">
+          <div className="ml-4 text-lg leading-5">{description}</div>
           <Icon type={type} />
         </div>
       </div>
