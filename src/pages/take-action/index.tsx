@@ -19,7 +19,6 @@ import {
 import type {
   OurRequestsEntry,
   HomePageInfo,
-  RefuteResponseEntry,
   ListEntryDocument,
 } from '../../types'
 
@@ -48,7 +47,6 @@ interface TakeActionPageProps {
   info: HomePageInfo
   takeActionPageEntries: TakeActionPage
   ourRequestsEntries: OurRequestsEntry[]
-  respondingToPushbackEntries: RefuteResponseEntry[]
   momentumEntries: ListEntryDocument[]
 }
 
