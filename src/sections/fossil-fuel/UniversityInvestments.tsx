@@ -6,7 +6,6 @@ import { clsx } from 'clsx'
 
 import { mainParagraphStyle } from '../../utils/renderer'
 import {
-  HighlightedTitle,
   EmissionTreeMap,
   TabButton,
   ToolTip,
@@ -56,7 +55,8 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
 }) => {
   const [flag, setFlag] = useState(initialFlag)
 
-  const TabButtonGroupStyle = clsx('flex flex-row gap-2 items-center')
+  const TabButtonGroupStyle = clsx('flex flex-row gap-1 lg:w-1/2')
+
   return (
     <div className="bg-white px-12">
       <div className="flex flex-wrap justify-center py-12">
@@ -70,7 +70,7 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
       <div className="md:px-12">
         <div className="flex justify-center">
           <div className="w-full md:px-20 xl:px-40 2xl:px-64">
-            <div className="flex basis-1/2 flex-col justify-start gap-4 md:flex-row">
+            <div className="flex max-w-md flex-col justify-start gap-y-2 lg:flex-row ">
               <div className={TabButtonGroupStyle}>
                 <TabButton
                   text="Financed Emissions"
