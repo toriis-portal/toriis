@@ -69,7 +69,7 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
       </div>
       <div className="md:px-12">
         <div className="flex justify-center">
-          <div className="w-full md:px-20 xl:px-40 2xl:px-64">
+          <div className="w-full md:px-10 lg:px-20 xl:px-40 2xl:px-80">
             <div className="flex max-w-md flex-col justify-start gap-y-2 lg:flex-row ">
               <div className={TabButtonGroupStyle}>
                 <TabButton
@@ -78,8 +78,8 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
                   active={flag == 'financedEmissions'}
                 />
                 <ToolTip
-                  title="Net Asset Value"
-                  details={TOOLTIP_DEFINITIONS.NET_ASSET_VAL}
+                  title="Financed Emissions"
+                  details={TOOLTIP_DEFINITIONS.FINANCED_EMISSIONS}
                 />
               </div>
               <div className={TabButtonGroupStyle}>
