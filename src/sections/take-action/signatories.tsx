@@ -3,22 +3,6 @@ import type { Signatory } from '@prisma/client'
 import { HighlightedTitle, Carousel } from '../../components'
 import { api } from '../../utils/api'
 
-interface SourceData {
-  id: string
-  firstName: string
-  lastName: string
-  title: string[]
-  institution: string[]
-  email: string
-  createdAt: Date
-  city: string | null
-  country: string | null
-  zipCode: number | null
-  bioLink: string | null
-  twitter: string | null
-  shouldEmail: boolean
-}
-
 export const reduceArray = (array: string[]): string => {
   if (array.length > 0) {
     if (array[0] != '') {
@@ -29,7 +13,7 @@ export const reduceArray = (array: string[]): string => {
 }
 
 export const parseSignatoriesToColumns = (
-  data: SourceData[] | undefined,
+  data: Signatory[] | undefined,
   numRows: number,
   numCols: number,
 ): React.ReactNode[] => {
@@ -38,7 +22,7 @@ export const parseSignatoriesToColumns = (
   }
 
   // Parse into a 2D array by numRows
-  const segmentedList: SourceData[][] = []
+  const segmentedList: Signatory[][] = []
   for (let i = 0; i < data.length / numRows; i += 1) {
     segmentedList.push(data.slice(i * numRows, (i + 1) * numRows))
   }
