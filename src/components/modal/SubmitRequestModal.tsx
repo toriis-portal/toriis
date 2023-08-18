@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import type { FC } from 'react'
 import clsx from 'clsx'
 
@@ -9,7 +9,7 @@ import GeneralModal from './GeneralModal'
 interface SubmitRequestModalProps {
   isOpen: boolean
   isOpenCallBack?: (isOpen: boolean) => void
-  onSubmit: () => void
+  onSubmit: (comment: string) => void
 }
 
 export const SubmitRequestModal: FC<SubmitRequestModalProps> = ({
@@ -18,6 +18,7 @@ export const SubmitRequestModal: FC<SubmitRequestModalProps> = ({
   onSubmit,
 }) => {
   const flexStyles = clsx('flex flex-col items-center')
+  const [comment, setComment] = useState('')
 
   return (
     <GeneralModal
@@ -42,6 +43,7 @@ export const SubmitRequestModal: FC<SubmitRequestModalProps> = ({
           name="comments"
           id="comments"
           className="mb-4 block h-32 w-[507px] rounded"
+          onChange={(e) => setComment(e.target.value)}
         />
       </label>
 
@@ -49,7 +51,7 @@ export const SubmitRequestModal: FC<SubmitRequestModalProps> = ({
         text="Submit Request"
         className="mt-4 flex items-center justify-center !px-12 !py-2"
         onClick={() => {
-          onSubmit()
+          onSubmit(comment)
           isOpenCallBack && isOpenCallBack(false)
         }}
       />

@@ -18,8 +18,13 @@ import {
   Toast,
 } from '../../components'
 import { api } from '../../utils/api'
-import { sectorEnum, envGradeEnum, netAssetValEnum } from '../../utils/enums'
-import { INDUSTRIES, TOOLTIP_DEFINITIONS } from '../../utils/constants'
+import {
+  sectorEnum,
+  envGradeEnum,
+  netAssetValEnum,
+  IndustryEnum,
+} from '../../utils/enums'
+import { TOOLTIP_DEFINITIONS } from '../../utils/constants'
 
 interface FilterOptions {
   sectors: Sector[]
@@ -206,7 +211,7 @@ const InvestmentPage: FC = () => {
               text="Industry"
               isFilter={true}
               isSearchable={true}
-              options={INDUSTRIES}
+              options={Object.values(IndustryEnum)}
               containerHeight="1/4"
               updateControl={{
                 type: 'on-change',

@@ -60,7 +60,7 @@ const Carousel: FC<CarouselProps> = ({
     >
       <div className="overflow-hidden">
         <div
-          className="flex flex-row justify-center whitespace-normal transition-transform"
+          className="flex max-h-[50vh] flex-row justify-center overflow-y-scroll whitespace-normal transition-transform"
           style={{
             transform: `translateX(-${
               activeIndex * (100 / carouselChildren.length)

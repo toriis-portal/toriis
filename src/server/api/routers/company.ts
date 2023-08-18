@@ -199,7 +199,7 @@ export const companyRouter = createTRPCRouter({
       const items = await ctx.prisma.company.findMany({
         where: {
           name: {
-            contains: input.searchByCompanyName,
+            contains: input?.searchByCompanyName ?? '',
             mode: 'insensitive',
           },
           sector: {
@@ -291,7 +291,29 @@ export const companyRouter = createTRPCRouter({
         nextCursor,
       }
     }),
+  getCompaniesBySkipTake: publicProcedure
+    .input(
+      z.object({
+        skip: z.number().min(0).nullish(),
+        take: z.number().min(1).max(100).nullish(),
+      }),
+    )
+    .query(async ({ input, ctx }) => {
+      const skip = input.skip ?? 0
+      const take = input.take ?? 10
 
+      const items = await ctx.prisma.company.findMany({
+        take: take,
+        skip: skip,
+      })
+
+      const count = await ctx.prisma.company.count()
+
+      return {
+        items: items,
+        count: count,
+      }
+    }),
   getEmissionsAndFFClass: publicProcedure.query(async ({ ctx }) => {
     const companies = await ctx.prisma.company.findMany({
       include: {

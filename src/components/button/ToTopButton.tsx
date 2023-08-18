@@ -24,7 +24,7 @@ const ToTopButton: FC = () => {
   return (
     <button
       onClick={typedAnimateScroll.scrollToTop}
-      className="fixed bottom-6 right-6 h-12 w-12 rounded-full bg-white p-3 shadow-md"
+      className="fixed bottom-6 right-6 z-50 h-12 w-12 rounded-full bg-white p-3 shadow-md"
     >
       <ArrowUpIcon className="stroke-current stroke-1" />
     </button>

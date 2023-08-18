@@ -17,7 +17,7 @@ const OurRequest: FC<{ entries: OurRequestsEntry[] }> = ({ entries }) => {
         </div>
       ))}
       <div className="flex flex-col items-center">
-        <div className="subheader-1 mb-6 text-8xl">TAKE ACTION</div>
+        <div className="subheader-1 mb-6 text-center text-8xl">TAKE ACTION</div>
         <PrimaryButton
           text="Sign the Open Letter"
           link="/take-action"

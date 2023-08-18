@@ -23,7 +23,7 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
   ...props
 }) => {
   const buttonStyle = clsx(
-    'flex flex-row items-center',
+    'flex flex-row items-center justify-center',
     'rounded border-2 border-solid',
     'rounded px-5 py-1',
     'shadow-[-8px_8px_0px_0px]',
