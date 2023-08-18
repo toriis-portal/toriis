@@ -60,8 +60,6 @@ import LeaveConfirmationModal from './modal/LeaveConfirmationModal'
 import Toast from './toast/Toast'
 // Footer
 import Footer from './footer/Footer'
-// Toggle
-import Toggle from './toggle/Toggle'
 // Icons
 import CarIcon from './icon/CarIcon'
 import FacebookIcon from './icon/FacebookIcon'
@@ -119,7 +117,6 @@ export {
   ImageWithCaption,
   Toast,
   Footer,
-  Toggle,
   EmissionsCard,
   CarIcon,
   FacebookIcon,

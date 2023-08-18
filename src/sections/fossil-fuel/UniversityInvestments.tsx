@@ -2,12 +2,13 @@ import type { FC } from 'react'
 import { useState } from 'react'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import type { Document } from '@contentful/rich-text-types'
+import { clsx } from 'clsx'
 
 import { mainParagraphStyle } from '../../utils/renderer'
 import {
   HighlightedTitle,
   EmissionTreeMap,
-  Toggle,
+  TabButton,
   ToolTip,
   EmissionsCard,
 } from '../../components'
@@ -55,6 +56,7 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
 }) => {
   const [flag, setFlag] = useState(initialFlag)
 
+  const TabButtonGroupStyle = clsx('flex flex-row gap-2 basis-1/2 items-center')
   return (
     <div className="bg-white px-12">
       <div className="flex flex-wrap justify-center py-12">
@@ -68,33 +70,29 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
       <div className="md:px-12">
         <div className="flex justify-center">
           <div className="w-full md:px-20 xl:px-40 2xl:px-64">
-            <div className="flex flex-col items-center gap-4 md:flex-row md:justify-start">
-              <Toggle
-                text="Financed Emissions"
-                onClick={() => setFlag('financedEmissions')}
-                toggled={flag === 'financedEmissions' ? true : false}
-                variant="cobalt"
-              >
-                {
-                  <ToolTip
-                    title={'Financed Emission'}
-                    details={TOOLTIP_DEFINITIONS.FINANCED_EMISSIONS}
-                  />
-                }
-              </Toggle>
-              <Toggle
-                text="Net Asset Value"
-                onClick={() => setFlag('netAssetValue')}
-                toggled={flag === 'netAssetValue' ? true : false}
-                variant="cobalt"
-              >
-                {
-                  <ToolTip
-                    title={'Net Asset Value'}
-                    details={TOOLTIP_DEFINITIONS.NET_ASSET_VAL}
-                  />
-                }
-              </Toggle>
+            <div className="flex basis-1/2 flex-col justify-start gap-4 md:flex-row">
+              <div className={TabButtonGroupStyle}>
+                <TabButton
+                  text="Financed Emissions"
+                  onClick={() => setFlag('financedEmissions')}
+                  active={flag == 'financedEmissions'}
+                />
+                <ToolTip
+                  title="Net Asset Value"
+                  details={TOOLTIP_DEFINITIONS.NET_ASSET_VAL}
+                />
+              </div>
+              <div className={TabButtonGroupStyle}>
+                <TabButton
+                  text="Net Asset Value"
+                  onClick={() => setFlag('netAssetValue')}
+                  active={flag == 'netAssetValue'}
+                />
+                <ToolTip
+                  title="Net Asset Value"
+                  details={TOOLTIP_DEFINITIONS.NET_ASSET_VAL}
+                />
+              </div>
             </div>
             <div className="flex justify-center">
               <div className="w-full">
