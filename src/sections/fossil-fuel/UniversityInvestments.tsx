@@ -5,7 +5,6 @@ import type { Document } from '@contentful/rich-text-types'
 
 import { mainParagraphStyle } from '../../utils/renderer'
 import {
-  UnderlinedTitle,
   HighlightedTitle,
   EmissionTreeMap,
   Toggle,
@@ -58,13 +57,13 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
 
   return (
     <div className="bg-white px-12">
-      <div className="mb-12 flex flex-wrap justify-center sm:mb-0">
-        <UnderlinedTitle
-          title="UI System Investments&nbsp;"
-          size="large"
-          color="white"
-        />
-        <UnderlinedTitle title="FY 2022" size="large" color="clementine" />
+      <div className="flex flex-wrap justify-center py-12">
+        <p className="header-2 md:header1 break-words text-center leading-8">
+          UI System Investments{' '}
+          <a className="underline decoration-clementine decoration-8">
+            FY 2022
+          </a>
+        </p>
       </div>
       <div className="md:px-12">
         <div className="flex justify-center">
