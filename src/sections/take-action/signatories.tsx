@@ -48,10 +48,14 @@ export const parseSignatoriesToColumns = (
                 <li className="list-item list-outside" key={j}>
                   <strong>{item.firstName + ' ' + item.lastName}</strong>
                   {item.title.length > 0
-                    ? ', ' + item.title.reduce((x, y) => x + '; ' + y)
+                    ? item.title[0] != ''
+                      ? ', ' + item.title.reduce((x, y) => x + '; ' + y)
+                      : ' '
                     : ' '}
                   {item.institution.length > 0
-                    ? ', ' + item.institution.reduce((x, y) => x + '; ' + y)
+                    ? item.institution[0] != ''
+                      ? ', ' + item.title.reduce((x, y) => x + '; ' + y)
+                      : ' '
                     : ''}
                 </li>
               ))}
