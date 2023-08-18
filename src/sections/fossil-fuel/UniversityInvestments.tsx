@@ -56,7 +56,7 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
 }) => {
   const [flag, setFlag] = useState(initialFlag)
 
-  const TabButtonGroupStyle = clsx('flex flex-row gap-2 basis-1/2 items-center')
+  const TabButtonGroupStyle = clsx('flex flex-row gap-2 items-center')
   return (
     <div className="bg-white px-12">
       <div className="flex flex-wrap justify-center py-12">
