@@ -60,7 +60,7 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
   return (
     <div className="bg-white px-12">
       <div className="flex flex-wrap justify-center py-12">
-        <p className="header-2 md:header1 break-words text-center leading-8">
+        <p className="header-2 md:header-1 break-words text-center leading-8">
           UI System Investments{' '}
           <a className="underline decoration-clementine decoration-8">
             FY 2022
@@ -103,12 +103,12 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
           {documentToReactComponents(caption, mainParagraphStyle)}
         </div>
         <div className="flex justify-center py-10">
-          <HighlightedTitle
-            title="66,299 Metric Tons of CO2 is Equivalent to"
-            size="medium"
-            color="clementine"
-            padded={false}
-          ></HighlightedTitle>
+          <p className="subheader-1 break-words text-center text-4xl leading-10">
+            <a className="underline decoration-clementine decoration-8">
+              66,299 Metric Tons of CO2
+            </a>{' '}
+            is Equivalent to
+          </p>
         </div>
         <div className="flex justify-center">
           <div className="grid md:w-5/6 xl:grid-cols-2 xl:gap-x-12">
