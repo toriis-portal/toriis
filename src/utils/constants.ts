@@ -111,7 +111,7 @@ export const TOOLTIP_DEFINITIONS = {
     'An industry is comprised of companies that are closely related in their business activities and is used to describe nuanced components of a larger sector (eg, Oil & Gas).',
   ESG: 'An Environmental, Social, and Governance (ESG) rating that aims to measure how sustainably a company is conducting business and managing ESG risk factors.',
   NET_ASSET_VAL:
-    "The total market value of all of a company's corporate bonds.",
+    'The Net Asset Value treemap employs nested rectangles to display investment distribution by net asset values. The largest rectangle signifies the total fund value, containing smaller rectangles representing diverse investment categories. Their sizes reflect proportional values, and colors differentiate categories.',
   FINANCED_EMISSIONS:
-    'Greenhouse gas (GHG) emissions indirectly caused by financial activities, investments, or lending practices of individuals, organizations, or institutions that support projects or activities contributing to climate change.',
+    "The Financed Emissions treemap uses nested rectangles to display how investments contribute to greenhouse gas emissions. It visualizes the distribution of emissions linked to an investor's portfolio, with the size of rectangles reflecting proportional emissions. Colors differentiate sectors or investments, providing a quick view of associated environmental impacts.",
 }
