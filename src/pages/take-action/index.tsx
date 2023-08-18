@@ -8,7 +8,6 @@ import {
   Letter,
   LetterOurRequest,
   SignLetter,
-  RespondingToPushback,
   Signatories,
   Momentum,
 } from '../../sections'
@@ -51,10 +50,8 @@ interface TakeActionPageProps {
 }
 
 const TakeActionPage: FC<TakeActionPageProps> = ({
-  info,
   takeActionPageEntries,
   ourRequestsEntries,
-  respondingToPushbackEntries,
   momentumEntries,
 }) => {
   const navItems = [
