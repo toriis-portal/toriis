@@ -1,17 +1,58 @@
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
-import { RequestStatus } from '@prisma/client'
+import { type Company, Dataset, RequestStatus, Sector } from '@prisma/client'
+import type { JSONObject } from 'superjson/dist/types'
 
 import { createTRPCRouter, protectedProcedure } from '../trpc'
-import type { UpdateType } from '../../../types'
-import { datasetEnum } from '../../../utils/enums'
-
-type UpdateQuery = Omit<UpdateType, 'maturityDate' | 'date'> & {
-  maturityDate?: object
-  date?: object
-}
+import type { StrictUpdateType } from '../../../types'
+import { IndustryEnum, datasetEnum } from '../../../utils/enums'
 
 export const requestRouter = createTRPCRouter({
+  getAllRequests: protectedProcedure.query(async ({ ctx }) => {
+    const requests = await ctx.prisma.request.findMany({})
+    return requests
+  }),
+
+  createRequest: protectedProcedure
+    .input(
+      z.object({
+        dataset: z.nativeEnum(Dataset),
+        updates: z.array(
+          z.object({
+            id: z.string(),
+            key: z.string(),
+            value: z
+              .string()
+              .or(z.number())
+              .or(z.date())
+              .or(z.nativeEnum(Sector))
+              .or(z.nativeEnum(IndustryEnum)),
+            page: z.number().nullish(),
+          }),
+        ),
+        status: z.nativeEnum(RequestStatus),
+        comment: z.string().nullish(),
+        userId: z.string(),
+        createdAt: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const request = await ctx.prisma.request.create({
+        data: {
+          dataset: input.dataset,
+          updates: input.updates,
+          status: input.status,
+          comment: input.comment,
+          user: {
+            connect: {
+              id: input.userId,
+            },
+          },
+        },
+      })
+      return request
+    }),
+
   getRequests: protectedProcedure
     .input(
       z.object({
@@ -100,25 +141,20 @@ export const requestRouter = createTRPCRouter({
       // Approve the request and update corresponding entries
       if (input.updateAction === 'approve') {
         const tableToUpdate = datasetEnum[request.dataset]
-        const allUpdateItems = request.updates
+        const allUpdateItems = request.updates as StrictUpdateType[]
 
         const updateAll = await Promise.all(
           allUpdateItems.map(async (updateItem) => {
-            const { id: _id, ...fieldsToUpdate } = updateItem
-
-            // Cast Date to object for MongoDB query
-            const fieldsToUpdateQuery: UpdateQuery = {
-              ...fieldsToUpdate,
-              maturityDate: fieldsToUpdate.maturityDate,
-              date: fieldsToUpdate.date ? fieldsToUpdate.date : undefined,
-            }
+            const { id, ...updateKeyValuePair } = updateItem
+            const { key, value } = updateKeyValuePair
+            const updateQuery: { [key: string]: any } = { [key]: value }
 
             await ctx.prisma.$runCommandRaw({
               update: tableToUpdate,
               updates: [
                 {
-                  q: { _id: { $oid: updateItem.id } },
-                  u: { $set: fieldsToUpdateQuery },
+                  q: { _id: { $oid: id } },
+                  u: { $set: updateQuery },
                 },
               ],
             })
@@ -149,6 +185,51 @@ export const requestRouter = createTRPCRouter({
         }
 
         return 'Successfully approved request'
+      }
+    }),
+
+  getRequestDataDiff: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const request = await ctx.prisma.request.findUnique({
+        where: {
+          id: input.id,
+        },
+      })
+      if (!request) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Error fetching request',
+        })
+      }
+      const targetDataset = datasetEnum[request.dataset]
+      const targetItems = request.updates.map((update) => update.id)
+
+      const originalData = await ctx.prisma.$runCommandRaw({
+        find: targetDataset,
+        filter: {
+          _id: { $in: targetItems.map((id) => ({ $oid: id })) },
+        },
+      })
+
+      if (originalData && originalData.cursor) {
+        const parsedOriginalData = (
+          (originalData.cursor as JSONObject).firstBatch as JSONObject[]
+        ).map((item) => {
+          item.id = (item._id as JSONObject)?.$oid as string
+          return item
+        }) as Company[]
+
+        return {
+          request: request,
+          old: parsedOriginalData,
+          new: request.updates as StrictUpdateType[],
+        }
+      } else {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Error fetching original data',
+        })
       }
     }),
 })
