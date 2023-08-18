@@ -28,14 +28,12 @@ export const getServerSideProps = async () => {
   const homeEntries = await contentClient.getAllHomePageEntries()
   const info = homeEntries['info']
   const ourRequestsEntries = homeEntries['request']
-  const respondingToPushbackEntries = homeEntries['response']
 
   return {
     props: {
       info,
       takeActionPageEntries,
       ourRequestsEntries,
-      respondingToPushbackEntries,
       momentumEntries,
     },
   }
