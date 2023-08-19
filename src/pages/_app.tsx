@@ -22,7 +22,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <SessionProvider session={session}>
-        <main className="body-bold flex flex-col">
+        <main className="body-bold flex w-screen flex-col">
           <Component {...pageProps} />
           <Analytics />
         </main>

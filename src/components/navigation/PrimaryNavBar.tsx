@@ -21,7 +21,7 @@ const NavButton: FC<NavButtonProps> = ({ title, link }) => {
     <Link
       href={link}
       className={clsx(
-        'bg-darkTeal py-2 pl-4 text-white md:border-b-4 md:bg-white md:pl-0 md:text-center md:text-black',
+        'bg-darkTeal py-2 pl-6 text-white md:border-b-4 md:bg-white md:pl-0 md:text-center md:text-black',
         {
           'underline decoration-clementine underline-offset-4 md:border-cobalt md:no-underline':
             isActive,
@@ -46,8 +46,8 @@ const PrimaryNavBar: FC = () => {
             alt="TORIIS Logo"
           />
         </Link>
-        <Navbar.Toggle />
-        <Navbar.Collapse className="bg-darkTeal md:bg-white">
+        <Navbar.Toggle className="z-50" />
+        <Navbar.Collapse className="absolute top-0 left-20 h-[130vh] bg-darkTeal pt-24 md:static md:h-fit md:bg-white md:pt-0">
           <NavButton title="Home" link="/home" />
           <NavButton title="Take Action" link="/take-action" />
           <NavButton title="Fossil Fuels" link="/fossil-fuel" />
