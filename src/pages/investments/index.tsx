@@ -171,14 +171,12 @@ const InvestmentPage: FC = () => {
       <PrimaryNavBar />
       <div className="mx-8 lg:mx-14">
         <div className="mb-6 flex w-full flex-col items-center">
-          <div className="flex justify-center">
-            <p className="header-2 md:header-1 break-words pb-12 pt-4 text-center leading-8">
-              Investment Database{' '}
-              <a className="underline decoration-clementine decoration-8">
-                FY 2022
-              </a>
-            </p>
-          </div>
+          <p className="header-2 md:header-1 break-words pb-12 pt-4 text-center leading-8">
+            Investment Database{' '}
+            <a className="underline decoration-clementine decoration-8">
+              FY 2022
+            </a>
+          </p>
           <div className="w-full md:w-9/12">
             <SearchBar setCompanySearchQuery={setCompanySearchQuery} />
           </div>
