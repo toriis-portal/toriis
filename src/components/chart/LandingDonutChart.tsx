@@ -20,10 +20,13 @@ interface companySectorCount {
  * @returns - Donut chart of company net asset value by sector
  */
 const LandingDonutChart: FC = () => {
-  const source = api.company.getNetAssetValBySector.useQuery(undefined, {
-    refetchOnWindowFocus: false,
-    staleTime: Infinity,
-  })
+  const source = api.aggregation.getTotalMarketValBySector.useQuery(
+    { year: null },
+    {
+      refetchOnWindowFocus: false,
+      staleTime: Infinity,
+    },
+  )
 
   if (!source.data)
     return (
@@ -32,12 +35,10 @@ const LandingDonutChart: FC = () => {
       </div>
     )
 
-  const pairs: companySectorCount[] = source.data
-    .filter((data) => data._sum.netAssetVal !== null)
-    .map((data) => ({
-      label: data.sector as Sector,
-      count: data._sum.netAssetVal as number,
-    }))
+  const pairs: companySectorCount[] = source.data.map((data) => ({
+    label: data.sector,
+    count: data.totalMarketVal,
+  }))
 
   /**
    * Aggregates all sectors under a threshold, including any none-type sectors, into a category labeled "OTHER"
