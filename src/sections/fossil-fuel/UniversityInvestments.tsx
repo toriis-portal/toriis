@@ -62,55 +62,49 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
 
   return (
     <div className="bg-white px-12">
-      <div className="flex flex-wrap justify-center py-12">
+      <div className="flex flex-wrap justify-center py-6">
         <p className={UNDERLINED_TITLE_STYLING.PARAGRAPH}>
           UI System Investments{' '}
           <a className={UNDERLINED_TITLE_STYLING.UNDERLINE}>FY 2022</a>
         </p>
       </div>
       <div className="md:px-12">
-        <div className="flex justify-center">
-          <div className="w-full md:px-10 lg:px-20 xl:px-40 2xl:px-80">
-            <div className="flex max-w-md flex-col justify-start gap-y-2 lg:flex-row ">
-              <div className={TabButtonGroupStyle}>
-                <TabButton
-                  text="Financed Emissions"
-                  onClick={() => setFlag('financedEmissions')}
-                  active={flag == 'financedEmissions'}
-                />
-                <ToolTip
-                  title="Financed Emissions"
-                  details={TOOLTIP_DEFINITIONS.FINANCED_EMISSIONS}
-                />
-              </div>
-              <div className={TabButtonGroupStyle}>
-                <TabButton
-                  text="Net Asset Value"
-                  onClick={() => setFlag('netAssetValue')}
-                  active={flag == 'netAssetValue'}
-                />
-                <ToolTip
-                  title="Net Asset Value"
-                  details={TOOLTIP_DEFINITIONS.NET_ASSET_VAL}
-                />
-              </div>
+        <div className="w-full flex-col md:px-10 lg:px-20 xl:px-40 2xl:px-80">
+          <div className="flex max-w-md flex-col justify-start gap-y-2 lg:flex-row ">
+            <div className={TabButtonGroupStyle}>
+              <TabButton
+                text="Financed Emissions"
+                onClick={() => setFlag('financedEmissions')}
+                active={flag == 'financedEmissions'}
+              />
+              <ToolTip
+                title="Financed Emissions"
+                details={TOOLTIP_DEFINITIONS.FINANCED_EMISSIONS}
+              />
             </div>
-            <div className="w-full">
-              <EmissionTreeMap flag={flag} />
+            <div className={TabButtonGroupStyle}>
+              <TabButton
+                text="Net Asset Value"
+                onClick={() => setFlag('netAssetValue')}
+                active={flag == 'netAssetValue'}
+              />
+              <ToolTip
+                title="Net Asset Value"
+                details={TOOLTIP_DEFINITIONS.NET_ASSET_VAL}
+              />
             </div>
           </div>
+          <EmissionTreeMap flag={flag} />
         </div>
         <div className="flex flex-col gap-3">
           {documentToReactComponents(caption, mainParagraphStyle)}
         </div>
-        <div className="flex justify-center py-10">
-          <p className="subheader-1 break-words text-center text-4xl leading-10">
-            <a className={UNDERLINED_TITLE_STYLING.UNDERLINE}>
-              66,299 Metric Tons of CO2
-            </a>{' '}
-            is Equivalent to
-          </p>
-        </div>
+        <p className="subheader-1 justify-center break-words py-10 text-center text-4xl leading-10">
+          <a className={UNDERLINED_TITLE_STYLING.UNDERLINE}>
+            66,299 Metric Tons of CO2
+          </a>{' '}
+          is Equivalent to
+        </p>
         <div className="flex justify-center">
           <div className="grid md:w-5/6 xl:grid-cols-2 xl:gap-x-12">
             {emissionsData.map((data, index) => (
