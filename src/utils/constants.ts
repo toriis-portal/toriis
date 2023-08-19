@@ -115,3 +115,9 @@ export const TOOLTIP_DEFINITIONS = {
   FINANCED_EMISSIONS:
     "The Financed Emissions treemap uses nested rectangles to display how investments contribute to greenhouse gas emissions. It visualizes the distribution of emissions linked to an investor's portfolio, with the size of rectangles reflecting proportional emissions. Colors differentiate sectors or investments, providing a quick view of associated environmental impacts.",
 }
+
+export const UNDERLINED_TITLE_STYLING = {
+  PARAGRAPH:
+    'header-2 md:header-1 break-words pb-12 pt-4 text-center leading-8',
+  UNDERLINE: 'underline decoration-clementine decoration-8',
+}

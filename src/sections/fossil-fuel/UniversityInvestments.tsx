@@ -11,7 +11,10 @@ import {
   ToolTip,
   EmissionsCard,
 } from '../../components'
-import { TOOLTIP_DEFINITIONS } from '../../utils/constants'
+import {
+  TOOLTIP_DEFINITIONS,
+  UNDERLINED_TITLE_STYLING,
+} from '../../utils/constants'
 
 const emissionsData = [
   {
@@ -60,11 +63,9 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
   return (
     <div className="bg-white px-12">
       <div className="flex flex-wrap justify-center py-12">
-        <p className="header-2 md:header-1 break-words text-center leading-8">
+        <p className={UNDERLINED_TITLE_STYLING.PARAGRAPH}>
           UI System Investments{' '}
-          <a className="underline decoration-clementine decoration-8">
-            FY 2022
-          </a>
+          <a className={UNDERLINED_TITLE_STYLING.UNDERLINE}>FY 2022</a>
         </p>
       </div>
       <div className="md:px-12">
@@ -104,7 +105,7 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
         </div>
         <div className="flex justify-center py-10">
           <p className="subheader-1 break-words text-center text-4xl leading-10">
-            <a className="underline decoration-clementine decoration-8">
+            <a className={UNDERLINED_TITLE_STYLING.UNDERLINE}>
               66,299 Metric Tons of CO2
             </a>{' '}
             is Equivalent to
