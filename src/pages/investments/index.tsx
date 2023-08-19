@@ -24,10 +24,7 @@ import {
   netAssetValEnum,
   IndustryEnum,
 } from '../../utils/enums'
-import {
-  TOOLTIP_DEFINITIONS,
-  UNDERLINED_TITLE_STYLING,
-} from '../../utils/constants'
+import { TOOLTIP_DEFINITIONS } from '../../utils/constants'
 
 interface FilterOptions {
   sectors: Sector[]
@@ -174,9 +171,8 @@ const InvestmentPage: FC = () => {
       <PrimaryNavBar />
       <div className="mx-8 lg:mx-14">
         <div className="mb-6 flex w-full flex-col items-center">
-          <p className={UNDERLINED_TITLE_STYLING.PARAGRAPH}>
-            Investment Database{' '}
-            <a className={UNDERLINED_TITLE_STYLING.UNDERLINE}>FY 2022</a>
+          <p className="title">
+            Investment Database <a className="title-underline">FY 2022</a>
           </p>
           <div className="w-full md:w-9/12">
             <SearchBar setCompanySearchQuery={setCompanySearchQuery} />

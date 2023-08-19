@@ -11,10 +11,7 @@ import {
   ToolTip,
   EmissionsCard,
 } from '../../components'
-import {
-  TOOLTIP_DEFINITIONS,
-  UNDERLINED_TITLE_STYLING,
-} from '../../utils/constants'
+import { TOOLTIP_DEFINITIONS } from '../../utils/constants'
 
 const emissionsData = [
   {
@@ -63,14 +60,13 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
   return (
     <div className="bg-white px-12">
       <div className="flex flex-wrap justify-center py-6">
-        <p className={UNDERLINED_TITLE_STYLING.PARAGRAPH}>
-          UI System Investments{' '}
-          <a className={UNDERLINED_TITLE_STYLING.UNDERLINE}>FY 2022</a>
+        <p className="title">
+          UI System Investments <a className="title-underline">FY 2022</a>
         </p>
       </div>
       <div className="md:px-12">
         <div className="w-full flex-col md:px-10 lg:px-20 xl:px-40 2xl:px-80">
-          <div className="flex max-w-md flex-col justify-start gap-y-2 lg:flex-row ">
+          <div className="flex max-w-md flex-col justify-start gap-y-2 lg:flex-row">
             <div className={TabButtonGroupStyle}>
               <TabButton
                 text="Financed Emissions"
@@ -100,10 +96,8 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
           {documentToReactComponents(caption, mainParagraphStyle)}
         </div>
         <p className="subheader-1 justify-center break-words py-10 text-center text-4xl leading-10">
-          <a className={UNDERLINED_TITLE_STYLING.UNDERLINE}>
-            66,299 Metric Tons of CO2
-          </a>{' '}
-          is Equivalent to
+          <a className="title-underline">66,299 Metric Tons of CO2</a> is
+          Equivalent to
         </p>
         <div className="flex justify-center">
           <div className="grid md:w-5/6 xl:grid-cols-2 xl:gap-x-12">
