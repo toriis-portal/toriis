@@ -36,7 +36,7 @@ const NavButton: FC<NavButtonProps> = ({ title, link }) => {
 
 const PrimaryNavBar: FC = () => {
   return (
-    <div className="px-4">
+    <div className="sticky top-0 z-40 px-4 md:static">
       <Navbar fluid={true} rounded={true}>
         <Link href="/home">
           <Image
