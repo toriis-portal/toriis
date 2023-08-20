@@ -230,7 +230,7 @@ const LetterForm = () => {
         )}
       </Formik>
       {addSignatoryMutation.isSuccess && (
-        <Toast type="success" message="Thank you for signing!" />
+        <Toast type="success" message="Thank you for your support! Refresh the page to see your name on the signatories list." />
       )}
     </>
   )
