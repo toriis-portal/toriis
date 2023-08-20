@@ -63,7 +63,7 @@ const LetterForm = () => {
             lastName: values.lastName,
             // TODO: use FieldArrays, conditional rendering for addtl fields and a max number of titles for this. temporarily just taking one title/institution pair
             title: [values.title],
-            institution: [values.title],
+            institution: [values.institution],
             email: values.email,
             city: values.city,
             country: values.country,
@@ -108,7 +108,7 @@ const LetterForm = () => {
             ) : null}
             <Field
               id="title"
-              name="tile"
+              name="title"
               placeholder="Title"
               className={clsx('w-full', styles.field)}
             />
@@ -230,7 +230,10 @@ const LetterForm = () => {
         )}
       </Formik>
       {addSignatoryMutation.isSuccess && (
-        <Toast type="success" message="Thank you for your support! Refresh the page to see your name on the signatories list." />
+        <Toast
+          type="success"
+          message="Thank you for your support! Refresh the page to see your name on the signatories list."
+        />
       )}
     </>
   )
