@@ -54,10 +54,10 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
 }) => {
   const navItems = [
     { path: 'uofiInvestments', text: 'University of Illinois Investments' },
-    { path: 'dirtyIndustries', text: 'The Dirty Industry UIUC Supports' },
-    { path: 'whyFossilFuelsAreBad', text: 'Why Are Fossil Fuels Bad' },
-    { path: 'warming', text: 'What 1.5C Warming Means' },
-    { path: 'divestmentCase', text: 'The Case For Institutional Divestments' },
+    { path: 'dirtyIndustries', text: 'Examining UIS Investments' },
+    { path: 'whyFossilFuelsAreBad', text: 'What Are Fossil Fuels?' },
+    { path: 'warming', text: 'What Does 1.5C Warming Mean?' },
+    { path: 'divestmentCase', text: 'The Case For Institutional Divestment' },
     { path: 'divestedSchools', text: 'Schools That Have Divested ' },
     {
       path: 'divestedInstitutions',
@@ -69,11 +69,7 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
       <PrimaryNavBar />
       <ToTopButton />
       <div className="flex justify-center">
-        <HighlightedTitle
-          title="Fossil Fuels"
-          size="large"
-          color="clementine"
-        />
+        <HighlightedTitle title="Why Divest?" size="large" color="clementine" />
       </div>
       <SecondaryNavBar navItems={navItems} />
 

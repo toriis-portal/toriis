@@ -206,7 +206,7 @@ export const Select: FC<SelectProps> = ({
         className={clsx(
           'flex w-full items-center overflow-hidden rounded-full border border-solid',
           {
-            'justify-centerborder-darkTeal float-right h-10 w-fit border-black':
+            'float-right h-10 w-fit justify-center border-black border-darkTeal':
               !isFilter,
             'h-8 border-cobalt': isFilter,
           },
