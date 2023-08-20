@@ -11,7 +11,7 @@ const AboutUs: FC<{ text: Document }> = ({ text }) => {
     <div className="px-12">
       <HighlightedTitle title="About Us" size="large" color="clementine" />
       <div className="flex justify-center">
-        <div className="flex flex-col gap-6 text-center md:w-2/4">
+        <div className="flex w-full flex-col gap-6 text-start md:px-10 lg:px-20 xl:px-40 2xl:px-80">
           {documentToReactComponents(text, mainParagraphStyle)}
         </div>
       </div>

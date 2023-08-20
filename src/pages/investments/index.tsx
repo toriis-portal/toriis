@@ -7,7 +7,6 @@ import { clsx } from 'clsx'
 
 import {
   Select,
-  HighlightedTitle,
   ToTopButton,
   PrimaryNavBar,
   SearchBar,
@@ -172,11 +171,9 @@ const InvestmentPage: FC = () => {
       <PrimaryNavBar />
       <div className="mx-8 lg:mx-14">
         <div className="mb-6 flex w-full flex-col items-center">
-          <HighlightedTitle
-            title="Learn About Investments"
-            size="large"
-            color="clementine"
-          />
+          <p className="title">
+            Investment Database <a className="title-underline">FY 2022</a>
+          </p>
           <div className="w-full md:w-9/12">
             <SearchBar setCompanySearchQuery={setCompanySearchQuery} />
           </div>

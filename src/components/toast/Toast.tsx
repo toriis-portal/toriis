@@ -23,39 +23,38 @@ const Toast: FC<ToastProps> = ({ type, message }) => {
   }, [])
 
   return (
-    <div className="fixed bottom-5 right-5">
-      <div
-        className={clsx(
-          'mb-4 flex w-fit flex-row items-center justify-center gap-2 rounded-lg border bg-white p-2',
-          {
-            'border-clementine': type === 'error',
-            'border-cobalt': type === 'success',
-          },
-          {
-            'opacity-0 transition duration-300 ease-in': !show,
-            'opacity-100': show,
-          },
-        )}
+    <div
+      className={clsx(
+        'fixed bottom-5 left-5 right-5 z-50 md:left-auto',
+        'mb-4 flex flex-row items-center justify-center gap-2 rounded-lg border bg-white p-2',
+        {
+          'border-clementine': type === 'error',
+          'border-cobalt': type === 'success',
+        },
+        {
+          'opacity-0 transition duration-300 ease-in': !show,
+          'opacity-100': show,
+        },
+      )}
+    >
+      <p
+        className={clsx({
+          'text-cobalt': type === 'success',
+          'text-pumpkin': type === 'error',
+        })}
       >
-        <p
-          className={clsx({
-            'text-cobalt': type === 'success',
-            'text-pumpkin': type === 'error',
-          })}
-        >
-          {type === 'success' && <CheckCircleIcon className="h-6 w-6" />}
-          {type === 'error' && <ExclamationCircleIcon className="h-6 w-6" />}
-        </p>
-        <p>{message}</p>
-        <button
-          className="ml-10 text-medGray"
-          onClick={() => {
-            setShow(!show)
-          }}
-        >
-          <XMarkIcon className="h-5 w-5" />
-        </button>
-      </div>
+        {type === 'success' && <CheckCircleIcon className="h-6 w-6" />}
+        {type === 'error' && <ExclamationCircleIcon className="h-6 w-6" />}
+      </p>
+      <p>{message}</p>
+      <button
+        className="ml-10 text-medGray"
+        onClick={() => {
+          setShow(!show)
+        }}
+      >
+        <XMarkIcon className="h-5 w-5" />
+      </button>
     </div>
   )
 }

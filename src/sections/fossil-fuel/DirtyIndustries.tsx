@@ -17,7 +17,7 @@ const DirtyIndustries: FC<{ companies: DirtyCompanyEntry[] }> = ({
   return (
     <div className="bg-white px-12">
       <HighlightedTitle
-        title="The Dirty Industry UIUC Supports"
+        title="Examining UIS Investments"
         size="large"
         color="clementine"
       />

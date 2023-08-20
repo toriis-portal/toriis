@@ -2,12 +2,12 @@ import type { FC } from 'react'
 import { useState } from 'react'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import type { Document } from '@contentful/rich-text-types'
+import { clsx } from 'clsx'
 
 import { mainParagraphStyle } from '../../utils/renderer'
 import {
-  HighlightedTitle,
   EmissionTreeMap,
-  PrimaryButton,
+  TabButton,
   ToolTip,
   EmissionsCard,
 } from '../../components'
@@ -55,62 +55,50 @@ const UniversityInvestments: FC<UniversityInvestmentsProps> = ({
 }) => {
   const [flag, setFlag] = useState(initialFlag)
 
+  const TabButtonGroupStyle = clsx('flex flex-row gap-1 lg:w-1/2')
+
   return (
     <div className="bg-white px-12">
-      <HighlightedTitle
-        title="University of Illinois Investments"
-        size="large"
-        color="clementine"
-      />
-      <div className="sm:px-12">
-        <div className="flex flex-col md:flex-row">
-          <PrimaryButton
-            text="Financed Emissions"
-            onClick={() => setFlag('financedEmissions')}
-            variant={
-              flag === 'financedEmissions' ? 'clementine-toggled' : 'clementine'
-            }
-            className="z-1 relative mb-5 w-full sm:mb-0 sm:w-fit"
-          >
-            {
-              <ToolTip
-                title="Financed Emission"
-                details={TOOLTIP_DEFINITIONS.FINANCED_EMISSIONS}
-                className="ml-1"
+      <div className="flex flex-wrap justify-center py-6">
+        <p className="title">
+          UI System Investments <a className="title-underline">FY 2022</a>
+        </p>
+      </div>
+      <div className="md:px-12">
+        <div className="w-full flex-col md:px-10 lg:px-20 xl:px-40 2xl:px-80">
+          <div className="flex max-w-md flex-col justify-start gap-y-2 lg:flex-row">
+            <div className={TabButtonGroupStyle}>
+              <TabButton
+                text="Financed Emissions"
+                onClick={() => setFlag('financedEmissions')}
+                active={flag == 'financedEmissions'}
               />
-            }
-          </PrimaryButton>
-          <PrimaryButton
-            text="Net Asset Value"
-            onClick={() => setFlag('netAssetValue')}
-            variant={
-              flag === 'netAssetValue' ? 'clementine-toggled' : 'clementine'
-            }
-            className="mb-5 w-full sm:mb-0 sm:w-fit"
-          >
-            {
+              <ToolTip
+                title="Financed Emissions"
+                details={TOOLTIP_DEFINITIONS.FINANCED_EMISSIONS}
+              />
+            </div>
+            <div className={TabButtonGroupStyle}>
+              <TabButton
+                text="Net Asset Value"
+                onClick={() => setFlag('netAssetValue')}
+                active={flag == 'netAssetValue'}
+              />
               <ToolTip
                 title="Net Asset Value"
                 details={TOOLTIP_DEFINITIONS.NET_ASSET_VAL}
-                className="ml-1"
               />
-            }
-          </PrimaryButton>
-        </div>
-        <div className="flex justify-center">
-          <div className="w-3/4">
-            <EmissionTreeMap flag={flag} />
+            </div>
           </div>
+          <EmissionTreeMap flag={flag} />
         </div>
-        <div>{documentToReactComponents(caption, mainParagraphStyle)}</div>
-        <div className="flex justify-center py-10">
-          <HighlightedTitle
-            title="66,299 Metric Tons of CO2 is Equivalent to"
-            size="medium"
-            color="clementine"
-            padded={false}
-          ></HighlightedTitle>
+        <div className="flex flex-col gap-3">
+          {documentToReactComponents(caption, mainParagraphStyle)}
         </div>
+        <p className="subheader-1 justify-center break-words py-10 text-center text-4xl leading-10">
+          <a className="title-underline">66,299 Metric Tons of CO2</a> is
+          Equivalent to
+        </p>
         <div className="flex justify-center">
           <div className="grid md:w-5/6 xl:grid-cols-2 xl:gap-x-12">
             {emissionsData.map((data, index) => (

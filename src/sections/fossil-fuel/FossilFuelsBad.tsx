@@ -14,7 +14,7 @@ const FossilFuelsBad: FC<FossilFuelsBadProps> = ({ text, caption }) => {
   return (
     <div className="bg-lightBlue p-12">
       <HighlightedTitle
-        title="Why Are Fossil Fuels Bad"
+        title="What are Fossil Fuels?"
         size="large"
         color="clementine"
       />

@@ -26,6 +26,14 @@
     @apply font-graph text-[32px] font-normal;
   }
 
+  .title {
+    @apply header-2 md:header-1 break-words pb-12 pt-4 text-center leading-8;
+  }
+
+  .title-underline {
+    @apply underline decoration-clementine decoration-8;
+  }
+
   .body-bold {
     @apply font-inter text-base font-medium;
   }
