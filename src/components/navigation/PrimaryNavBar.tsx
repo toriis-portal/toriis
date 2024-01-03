@@ -37,7 +37,7 @@ const NavButton: FC<NavButtonProps> = ({ title, link }) => {
 
 const PrimaryNavBar: FC = () => {
   return (
-    <div className="sticky top-0 z-40 px-4 md:static">
+    <div className="sticky top-0 z-[60] px-4 md:static">
       <Navbar fluid={true} rounded={true}>
         <Link href="/home">
           <Image
@@ -46,7 +46,7 @@ const PrimaryNavBar: FC = () => {
             alt="TORIIS Logo"
           />
         </Link>
-        <Navbar.Toggle className="z-50" />
+        <Navbar.Toggle className="z-[70]" />
         <Navbar.Collapse className="absolute top-0 left-20 h-[130vh] bg-darkTeal pt-24 md:static md:h-fit md:bg-white md:pt-0">
           <NavButton title="Home" link="/home" />
           <NavButton title="Take Action" link="/take-action" />
