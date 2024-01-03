@@ -54,7 +54,7 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
 }) => {
   const navItems = [
     { path: 'uofiInvestments', text: 'University of Illinois Investments' },
-    { path: 'dirtyIndustries', text: 'Examining UIS Investments' },
+    // FIXME: { path: 'dirtyIndustries', text: 'Examining UIS Investments' },
     { path: 'whyFossilFuelsAreBad', text: 'What Are Fossil Fuels?' },
     { path: 'warming', text: 'What Does 1.5C Warming Mean?' },
     { path: 'divestmentCase', text: 'The Case For Institutional Divestment' },
@@ -79,9 +79,11 @@ const FossilFuelPage: FC<FossilFuelProps> = ({
           caption={fossilFuelPageEntries['uofIInvestments']}
         />
       </div>
-      <div id="dirtyIndustries" className="pt-20">
+      {/* FIXME:
+       <div id="dirtyIndustries" className="pt-20">
         <DirtyIndustries companies={companyEntries} />
-      </div>
+      </div> 
+      */}
       <div id="whyFossilFuelsAreBad" className="pt-20">
         <FossilFuelsBad
           text={fossilFuelPageEntries['whyAreFossilFuelsBad']}
