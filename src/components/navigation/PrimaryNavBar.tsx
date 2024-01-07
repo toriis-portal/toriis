@@ -37,8 +37,8 @@ const NavButton: FC<NavButtonProps> = ({ title, link }) => {
 
 const PrimaryNavBar: FC = () => {
   return (
-    <div className="sticky top-0 z-[60] px-4 md:static">
-      <Navbar fluid={true} rounded={true}>
+    <div className="sticky top-0 z-[60] bg-white px-4 md:static">
+      <Navbar fluid={true}>
         <Link href="/home">
           <Image
             src={toriisLogo as HTMLImageElement}
