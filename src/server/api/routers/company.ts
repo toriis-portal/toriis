@@ -7,7 +7,7 @@ import yahooFinance from 'yahoo-finance2'
 import { sectorEnum } from '../../../utils/enums'
 import { FOSSIL_FUEL_INDUSTRIES } from '../../../utils/constants'
 import { ContentWrapper } from '../../../utils/content'
-import { createTRPCRouter, publicProcedure } from '../trpc'
+import { createTRPCRouter, publicProcedure, cachedProcedure } from '../trpc'
 import type { IndustryEntry, SectorEntry } from '../../../types'
 
 interface SortOrder {
@@ -243,7 +243,7 @@ export const companyRouter = createTRPCRouter({
       }
     }),
 
-  getNetAssetValBySector: publicProcedure.query(({ ctx }) => {
+  getNetAssetValBySector: cachedProcedure.query(({ ctx }) => {
     return ctx.prisma.company.groupBy({
       by: ['sector'],
       _sum: {
