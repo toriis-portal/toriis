@@ -5,7 +5,7 @@ import Link from 'next/link'
 import CapitalizedTitle from '../text/CapitalizedTitle'
 import InstagramIcon from '../icon/InstagramIcon'
 import FacebookIcon from '../icon/FacebookIcon'
-import TwitterIcon from '../icon/TwitterIcon'
+import TwitterIcon from '../icon/TwitterIcon' // TODO: update to X
 import GitHubIcon from '../icon/GitHubIcon'
 
 interface LinkSubsectionProps {
@@ -72,7 +72,7 @@ export const Footer: FC = () => (
 
           <div className="mb-4">
             <p className="mt-8 text-sm">Can’t find what you are looking for?</p>
-            <p className="text-sm">Contact us through email to get in touch!</p>
+            <p className="text-sm">Get in touch!</p>
           </div>
 
           <Link
@@ -85,7 +85,7 @@ export const Footer: FC = () => (
 
         <div className="flex w-full flex-wrap lg:w-1/2">
           <LinkSubsection
-            title="About us"
+            title="About Our Collaborators"
             links={[
               {
                 href: 'https://secsatuiuc.web.illinois.edu',
