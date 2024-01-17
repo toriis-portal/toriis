@@ -5,7 +5,7 @@ import Link from 'next/link'
 import CapitalizedTitle from '../text/CapitalizedTitle'
 import InstagramIcon from '../icon/InstagramIcon'
 import FacebookIcon from '../icon/FacebookIcon'
-import TwitterIcon from '../icon/TwitterIcon' // TODO: update to X
+import XIcon from '../icon/XIcon'
 import GitHubIcon from '../icon/GitHubIcon'
 
 interface LinkSubsectionProps {
@@ -37,21 +37,21 @@ const LinkSubsection = ({ title, links }: LinkSubsectionProps) => {
 }
 
 interface SocialLinkProps {
-  type: 'instagram' | 'facebook' | 'twitter' | 'github'
+  type: 'instagram' | 'facebook' | 'X' | 'github'
 }
 
 const SocialLink = ({ type }: SocialLinkProps) => {
   const icon = {
     instagram: <InstagramIcon className="mr-2" />,
     facebook: <FacebookIcon className="mr-2" />,
-    twitter: <TwitterIcon className="mr-2" />,
+    X: <XIcon className="mr-2" />,
     github: <GitHubIcon className="mr-2" />,
   }
 
   const displayText = {
     instagram: 'Instagram',
     facebook: 'Facebook',
-    twitter: 'Twitter',
+    X: 'X',
     github: 'GitHub',
   }
 
@@ -113,8 +113,8 @@ export const Footer: FC = () => (
                 text: <SocialLink type="instagram" />,
               },
               {
-                href: 'https://twitter.com/secsuiuc',
-                text: <SocialLink type="twitter" />,
+                href: 'https://X.com/secsuiuc',
+                text: <SocialLink type="X" />,
               },
               {
                 href: 'https://www.facebook.com/SECSUIUC',
