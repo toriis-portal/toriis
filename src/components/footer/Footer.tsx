@@ -45,19 +45,17 @@ const LinkSubsection = ({ title, links }: LinkSubsectionProps) => {
 
 const LinkCondensedList = ({ links }: LinkCondensedListProps) => {
   return (
-    <div className="mb-10 w-full flex-1 text-center lg:text-left">
-      <div className="mt-8 flex flex-col items-center lg:items-start">
-        {links.map(({ href, socialType }) => (
-          <Link
-            key={href}
-            className="mb-5 w-fit text-sm transition duration-500 hover:text-clementine"
-            href={href}
-            target="_blank"
-          >
-            <SocialLink type={socialType} displayText={false} />
-          </Link>
-        ))}
-      </div>
+    <div className="mt-4 flex items-center lg:items-start">
+      {links.map(({ href, socialType }) => (
+        <Link
+          key={href}
+          className="mr-4 w-fit transition duration-500 hover:text-clementine"
+          href={href}
+          target="_blank"
+        >
+          <SocialLink type={socialType} displayText={false} />
+        </Link>
+      ))}
     </div>
   )
 }
@@ -95,7 +93,6 @@ const SocialLink = ({ type, displayText }: SocialLinkProps) => {
     linkedin: 'Linkedin', // TODO
   }
 
-  console.log(type, displayText)
   return (
     <span className="group flex items-center">
       {icon[type]}
