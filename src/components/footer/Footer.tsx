@@ -16,6 +16,13 @@ interface LinkSubsectionProps {
   }[]
 }
 
+interface LinkCondensedListProps {
+  links: {
+    href: string
+    socialType: SocialType
+  }[]
+}
+
 const LinkSubsection = ({ title, links }: LinkSubsectionProps) => {
   return (
     <div className="mb-10 w-full flex-1 text-center lg:text-left">
@@ -36,29 +43,67 @@ const LinkSubsection = ({ title, links }: LinkSubsectionProps) => {
   )
 }
 
-interface SocialLinkProps {
-  type: 'instagram' | 'facebook' | 'X' | 'github'
+const LinkCondensedList = ({ links }: LinkCondensedListProps) => {
+  return (
+    <div className="mb-10 w-full flex-1 text-center lg:text-left">
+      <div className="mt-8 flex flex-col items-center lg:items-start">
+        {links.map(({ href, socialType }) => (
+          <Link
+            key={href}
+            className="mb-5 w-fit text-sm transition duration-500 hover:text-clementine"
+            href={href}
+            target="_blank"
+          >
+            <SocialLink type={socialType} displayText={false} />
+          </Link>
+        ))}
+      </div>
+    </div>
+  )
 }
 
-const SocialLink = ({ type }: SocialLinkProps) => {
+enum SocialType {
+  Instagram = 'instagram',
+  Facebook = 'facebook',
+  X = 'X',
+  Github = 'github',
+  Mail = 'mail',
+  LinkedIn = 'linkedin',
+}
+
+interface SocialLinkProps {
+  type: SocialType
+  displayText: boolean
+}
+
+const SocialLink = ({ type, displayText }: SocialLinkProps) => {
   const icon = {
     instagram: <InstagramIcon className="mr-2" />,
     facebook: <FacebookIcon className="mr-2" />,
     X: <XIcon className="mr-2" />,
     github: <GitHubIcon className="mr-2" />,
+    mail: <GitHubIcon className="mr-2" />, // TODO
+    linkedin: <GitHubIcon className="mr-2" />, // TODO
   }
 
-  const displayText = {
+  const textToDisplay = {
     instagram: 'Instagram',
     facebook: 'Facebook',
     X: 'X',
     github: 'GitHub',
+    mail: 'Mail',
+    linkedin: 'Linkedin', // TODO
   }
 
+  console.log(type, displayText)
   return (
     <span className="group flex items-center">
       {icon[type]}
-      <span className="group-hover:fill-clementine">{displayText[type]}</span>
+      {displayText && (
+        <span className="group-hover:fill-clementine">
+          {textToDisplay[type]}
+        </span>
+      )}
     </span>
   )
 }
@@ -69,18 +114,34 @@ export const Footer: FC = () => (
       <div className="flex flex-wrap">
         <div className="mb-5 w-full text-center md:mb-0 lg:w-1/2 lg:pl-14 lg:text-left">
           <CapitalizedTitle className="justify-center pr-2 text-sm sm:text-base md:m-0 md:text-base lg:justify-start lg:text-xl" />
-
           <div className="mb-4">
             <p className="mt-8 text-sm">Can’t find what you are looking for?</p>
             <p className="text-sm">Get in touch!</p>
           </div>
-
-          <Link
-            className="bg-red text-clementine"
-            href="mailto:info@toriis.earth"
-          >
-            info@toriis.earth
-          </Link>
+          <LinkCondensedList
+            links={[
+              {
+                href: 'mailto:info@toriis.earth',
+                socialType: SocialType.Mail,
+              },
+              {
+                href: 'mailto:info@toriis.earth', // TODO
+                socialType: SocialType.Github,
+              },
+              {
+                href: 'mailto:info@toriis.earth', // TODO
+                socialType: SocialType.LinkedIn,
+              },
+              {
+                href: 'mailto:info@toriis.earth', // TODO
+                socialType: SocialType.X,
+              },
+              {
+                href: 'mailto:info@toriis.earth', // TODO
+                socialType: SocialType.Instagram,
+              },
+            ]}
+          />
         </div>
 
         <div className="flex w-full flex-wrap lg:w-1/2">
@@ -110,15 +171,19 @@ export const Footer: FC = () => (
             links={[
               {
                 href: 'https://www.instagram.com/secsuiuc',
-                text: <SocialLink type="instagram" />,
+                text: (
+                  <SocialLink type={SocialType.Instagram} displayText={true} />
+                ),
               },
               {
                 href: 'https://X.com/secsuiuc',
-                text: <SocialLink type="X" />,
+                text: <SocialLink type={SocialType.X} displayText={true} />,
               },
               {
                 href: 'https://www.facebook.com/SECSUIUC',
-                text: <SocialLink type="facebook" />,
+                text: (
+                  <SocialLink type={SocialType.Facebook} displayText={true} />
+                ),
               },
             ]}
           />
@@ -127,15 +192,21 @@ export const Footer: FC = () => (
             links={[
               {
                 href: 'https://www.instagram.com/hack4impactuiuc/',
-                text: <SocialLink type="instagram" />,
+                text: (
+                  <SocialLink type={SocialType.Instagram} displayText={true} />
+                ),
               },
               {
                 href: 'https://github.com/hack4impact-uiuc',
-                text: <SocialLink type="github" />,
+                text: (
+                  <SocialLink type={SocialType.Github} displayText={true} />
+                ),
               },
               {
                 href: 'https://www.facebook.com/h4iuiuc/',
-                text: <SocialLink type="facebook" />,
+                text: (
+                  <SocialLink type={SocialType.Facebook} displayText={true} />
+                ),
               },
             ]}
           />
