@@ -21,12 +21,13 @@ const NavButton: FC<NavButtonProps> = ({ title, link }) => {
     <Link
       href={link}
       className={clsx(
-        'border-b-4 bg-white py-2 text-center text-black',
+        'bg-darkTeal py-2 pl-6 text-white md:border-b-4 md:bg-white md:pl-0 md:text-center md:text-black',
         {
-          'border-cobalt': isActive,
-          'border-white': !isActive,
+          'underline decoration-clementine underline-offset-4 md:border-cobalt md:no-underline':
+            isActive,
+          'md:border-white': !isActive,
         },
-        'header-3 text-[20px] hover:border-b-4 hover:border-cobalt hover:duration-100',
+        'header-3 text-[20px] md:hover:border-b-4 md:hover:border-cobalt md:hover:duration-100',
       )}
     >
       {title}
@@ -36,8 +37,8 @@ const NavButton: FC<NavButtonProps> = ({ title, link }) => {
 
 const PrimaryNavBar: FC = () => {
   return (
-    <div className="px-4">
-      <Navbar fluid={true} rounded={true}>
+    <div className="sticky top-0 z-[60] bg-white px-4 md:static">
+      <Navbar fluid={true}>
         <Link href="/home">
           <Image
             src={toriisLogo as HTMLImageElement}
@@ -45,8 +46,9 @@ const PrimaryNavBar: FC = () => {
             alt="TORIIS Logo"
           />
         </Link>
-        <Navbar.Toggle />
-        <Navbar.Collapse>
+        <Navbar.Toggle className="z-[70]" />
+        {/* Flowbite included styles has a w-full on mobile view that pushes whole page to the left, need to adjust for that */}
+        <Navbar.Collapse className="absolute top-0 right-0 h-[130vh] !w-4/5 bg-darkTeal pt-24 md:static md:h-fit md:!w-auto md:bg-white md:pt-0">
           <NavButton title="Home" link="/home" />
           <NavButton title="Take Action" link="/take-action" />
           <NavButton title="Why Divest?" link="/fossil-fuel" />
