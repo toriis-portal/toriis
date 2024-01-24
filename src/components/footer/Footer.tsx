@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import type { FC, ReactNode } from 'react'
 import { ArrowUpRightIcon, HeartIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
@@ -111,11 +112,35 @@ const SocialLink = ({ type, displayText }: SocialLinkProps) => {
   )
 }
 
-const FooterMobileHeader: FC<{ text: string }> = ({ text }) => {
+const FooterMobileHeader: FC<{ text: string; className?: string }> = ({
+  text,
+  className,
+}) => {
   return (
-    <p className="mb-2 pb-3 uppercase underline decoration-clementine  underline-offset-[14px]">
+    <p
+      className={clsx(
+        'mb-2 pb-3 uppercase underline decoration-clementine  underline-offset-[14px]',
+        className,
+      )}
+    >
       {text}
     </p>
+  )
+}
+
+const FooterExternalLink: FC<{ org: string }> = ({ org }) => {
+  return (
+    <a
+      className="mt-4 flex underline underline-offset-4"
+      href={
+        org == 'secs'
+          ? 'https://secsatuiuc.web.illinois.edu/'
+          : 'https://uiuc.hack4impact.org/'
+      }
+    >
+      {org == 'secs' ? 'SECS' : 'Hack4Impact UIUC'}{' '}
+      <ArrowUpRightIcon className="ml-1 w-5" />
+    </a>
   )
 }
 
@@ -123,93 +148,82 @@ export const Footer: FC = () => (
   <footer>
     <div className="bg-darkTeal p-10 text-white">
       <div className="flex flex-wrap">
-        <div className="flex-col space-y-8 md:hidden">
-          <div>
-            <FooterMobileHeader text="Contact Us" />
-            <p className="text-sm">Can’t find what you are looking for?</p>
-            <p className="text-sm">Get in touch!</p>
-            <LinkSubsection
-              title="Follow SECS"
-              links={[
-                {
-                  href: 'mailto:info@toriis.earth',
-                  text: (
-                    <SocialLink type={SocialType.Mail} displayText={true} />
-                  ),
-                },
-              ]}
-            />
-          </div>
-          <div>
-            <FooterMobileHeader text="Follow Us" />
-            <LinkCondensedList
-              links={[
-                {
-                  href: 'https://github.com/toriis-portal/toriis',
-                  socialType: SocialType.Github,
-                },
-                {
-                  href: 'https://www.linkedin.com/company/toriis/',
-                  socialType: SocialType.LinkedIn,
-                },
-                {
-                  href: 'https://twitter.com/toriis_earth',
-                  socialType: SocialType.X,
-                },
-                {
-                  href: 'https://www.instagram.com/toriis.earth',
-                  socialType: SocialType.Instagram,
-                },
-                {
-                  href: 'https://www.threads.net/@toriis.earth',
-                  socialType: SocialType.Threads,
-                },
-              ]}
-            />
-          </div>
-          <div>
-            <FooterMobileHeader text="About our collaborators" />
-            <span className="mt-4 flex underline underline-offset-4">
-              SECS <ArrowUpRightIcon className="ml-1 w-5" />
-            </span>
-            <LinkCondensedList
-              links={[
-                {
-                  href: 'https://www.instagram.com/toriis.earth', //TODO
-                  socialType: SocialType.Instagram,
-                },
-
-                {
-                  href: 'https://twitter.com/toriis_earth', //TODO
-                  socialType: SocialType.X,
-                },
-                {
-                  href: 'https://github.com/toriis-portal/toriis', //TODO
-                  socialType: SocialType.Facebook,
-                },
-              ]}
-            />
-            <span className="mt-4 flex underline underline-offset-4">
-              Hack4Impact UIUC <ArrowUpRightIcon className="ml-1 w-5" />
-            </span>
-            <LinkCondensedList
-              links={[
-                {
-                  href: 'https://www.instagram.com/toriis.earth', //TODO
-                  socialType: SocialType.Instagram,
-                },
-
-                {
-                  href: 'https://twitter.com/toriis_earth', //TODO
-                  socialType: SocialType.Github,
-                },
-                {
-                  href: 'https://github.com/toriis-portal/toriis', //TODO
-                  socialType: SocialType.Facebook,
-                },
-              ]}
-            />
-          </div>
+        <div className="flex-col md:hidden">
+          <FooterMobileHeader text="Contact Us" />
+          <p className="text-sm">Can’t find what you are looking for?</p>
+          <p className="text-sm">Get in touch!</p>
+          <LinkSubsection
+            title="Follow SECS"
+            links={[
+              {
+                href: 'mailto:info@toriis.earth',
+                text: <SocialLink type={SocialType.Mail} displayText={true} />,
+              },
+            ]}
+          />
+          <FooterMobileHeader text="Follow Us" className="mt-8" />
+          <LinkCondensedList
+            links={[
+              {
+                href: 'https://github.com/toriis-portal/toriis',
+                socialType: SocialType.Github,
+              },
+              {
+                href: 'https://www.linkedin.com/company/toriis/',
+                socialType: SocialType.LinkedIn,
+              },
+              {
+                href: 'https://twitter.com/toriis_earth',
+                socialType: SocialType.X,
+              },
+              {
+                href: 'https://www.instagram.com/toriis.earth',
+                socialType: SocialType.Instagram,
+              },
+              {
+                href: 'https://www.threads.net/@toriis.earth',
+                socialType: SocialType.Threads,
+              },
+            ]}
+          />
+          <FooterMobileHeader
+            text="About our collaborators"
+            className="mt-11"
+          />
+          <FooterExternalLink org="secs" />
+          <LinkCondensedList
+            links={[
+              {
+                href: 'https://instagram.com/secsuiuc',
+                socialType: SocialType.Instagram,
+              },
+              {
+                href: 'https://x.com/secsuiuc',
+                socialType: SocialType.X,
+              },
+              {
+                href: 'https://www.facebook.com/SECSUIUC',
+                socialType: SocialType.Facebook,
+              },
+            ]}
+          />
+          <FooterExternalLink org="hack" />
+          <LinkCondensedList
+            links={[
+              {
+                href: 'https://www.instagram.com/hack4impactuiuc/',
+                socialType: SocialType.Instagram,
+              },
+              {
+                href: 'https://github.com/hack4impact-uiuc',
+                socialType: SocialType.Github,
+              },
+              {
+                href: 'https://www.facebook.com/h4iuiuc',
+                socialType: SocialType.Facebook,
+              },
+            ]}
+          />
         </div>
         <div className="hidden md:flex">
           <div className="mb-5 w-full text-center md:mb-0 lg:w-1/2 lg:pl-14 lg:text-left">
@@ -256,19 +270,11 @@ export const Footer: FC = () => (
               links={[
                 {
                   href: 'https://secsatuiuc.web.illinois.edu',
-                  text: (
-                    <span className="flex underline underline-offset-4">
-                      SECS <ArrowUpRightIcon className="ml-1 w-5" />
-                    </span>
-                  ),
+                  text: <FooterExternalLink org="secs" />,
                 },
                 {
                   href: 'https://uiuc.hack4impact.org/',
-                  text: (
-                    <span className="flex underline underline-offset-4">
-                      Hack4Impact UIUC <ArrowUpRightIcon className="ml-1 w-5" />
-                    </span>
-                  ),
+                  text: <FooterExternalLink org="hack" />,
                 },
               ]}
             />
