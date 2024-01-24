@@ -9,7 +9,6 @@ const FacebookIcon = ({ className, ...props }: React.ComponentProps<'svg'>) => (
     className={clsx(
       'w',
       'transition duration-500 group-hover:fill-clementine',
-      'w-5',
       className,
     )}
     viewBox="-5.5 0 32 32"

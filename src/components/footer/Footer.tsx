@@ -48,11 +48,11 @@ const LinkSubsection = ({ title, links }: LinkSubsectionProps) => {
 
 const LinkCondensedList = ({ links }: LinkCondensedListProps) => {
   return (
-    <div className="mt-4 flex items-center lg:items-start">
+    <div className="mt-4 flex items-center">
       {links.map(({ href, socialType }) => (
         <Link
           key={href}
-          className="mr-4 w-fit transition duration-500 hover:text-clementine"
+          className="mr-3 w-fit transition duration-500 hover:text-clementine"
           href={href}
           target="_blank"
         >
@@ -80,13 +80,13 @@ interface SocialLinkProps {
 
 const SocialLink = ({ type, displayText }: SocialLinkProps) => {
   const icon = {
-    instagram: <InstagramIcon className="mr-2" />,
-    facebook: <FacebookIcon className="mr-2" />,
-    X: <XIcon className="mr-2" />,
-    github: <GitHubIcon className="mr-2" />,
-    mail: <MainIcon className="mr-2" />,
-    linkedin: <LinkedInIcon className="mr-2" />,
-    threads: <ThreadsIcon className="mr-2" />,
+    instagram: <InstagramIcon className="" />,
+    facebook: <FacebookIcon className="" />,
+    X: <XIcon className="" />,
+    github: <GitHubIcon className="" />,
+    mail: <MainIcon className="" />,
+    linkedin: <LinkedInIcon className="" />,
+    threads: <ThreadsIcon className="" />,
   }
 
   const textToDisplay = {
@@ -103,7 +103,7 @@ const SocialLink = ({ type, displayText }: SocialLinkProps) => {
     <span className="group flex items-center">
       {icon[type]}
       {displayText && (
-        <span className="group-hover:fill-clementine">
+        <span className="ml-2 group-hover:fill-clementine">
           {textToDisplay[type]}
         </span>
       )}

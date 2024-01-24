@@ -3,9 +3,9 @@ import clsx from 'clsx'
 const XIcon = ({ className, ...props }: React.ComponentProps<'svg'>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="28px"
-    height="28px"
-    viewBox="0 0 15 15"
+    width="32px"
+    height="32px"
+    viewBox="0 0 13 13"
     className={clsx('w', 'w-5', className)}
     {...props}
   >

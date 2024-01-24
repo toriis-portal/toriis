@@ -3,9 +3,9 @@ import clsx from 'clsx'
 const MainIcon = ({ className, ...props }: React.ComponentProps<'svg'>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="32px"
-    height="28px"
-    viewBox="0 0 15 10"
+    width="28px"
+    height="22px"
+    viewBox="-2 -1 15 10"
     className={clsx('w', className)}
     {...props}
   >

@@ -6,7 +6,7 @@ const TwitterIcon = ({ className, ...props }: React.ComponentProps<'svg'>) => (
     xmlnsXlink="http://www.w3.org/1999/xlink"
     width="28px"
     height="28px"
-    viewBox="0 -2 20 20"
+    viewBox="0 0 20 20"
     version="1.1"
     className={clsx('w', 'w-5', className)}
     {...props}

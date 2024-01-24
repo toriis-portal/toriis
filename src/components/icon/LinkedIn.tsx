@@ -5,7 +5,7 @@ const LinkedInIcon = ({ className, ...props }: React.ComponentProps<'svg'>) => (
     xmlns="http://www.w3.org/2000/svg"
     width="26"
     height="26"
-    viewBox="0 -2 15 15"
+    viewBox="-2 -1 16 14"
     fill="none"
     className={clsx('w', className)}
     {...props}
