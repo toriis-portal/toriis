@@ -7,6 +7,9 @@ import InstagramIcon from '../icon/InstagramIcon'
 import FacebookIcon from '../icon/FacebookIcon'
 import XIcon from '../icon/XIcon'
 import GitHubIcon from '../icon/GitHubIcon'
+import MainIcon from '../icon/MailIcon'
+import LinkedInIcon from '../icon/LinkedIn'
+import ThreadsIcon from '../icon/ThreadsIcon'
 
 interface LinkSubsectionProps {
   title: string
@@ -67,6 +70,7 @@ enum SocialType {
   Github = 'github',
   Mail = 'mail',
   LinkedIn = 'linkedin',
+  Threads = 'threads',
 }
 
 interface SocialLinkProps {
@@ -80,8 +84,9 @@ const SocialLink = ({ type, displayText }: SocialLinkProps) => {
     facebook: <FacebookIcon className="mr-2" />,
     X: <XIcon className="mr-2" />,
     github: <GitHubIcon className="mr-2" />,
-    mail: <GitHubIcon className="mr-2" />, // TODO
-    linkedin: <GitHubIcon className="mr-2" />, // TODO
+    mail: <MainIcon className="mr-2" />,
+    linkedin: <LinkedInIcon className="mr-2" />,
+    threads: <ThreadsIcon className="mr-2" />,
   }
 
   const textToDisplay = {
@@ -90,7 +95,8 @@ const SocialLink = ({ type, displayText }: SocialLinkProps) => {
     X: 'X',
     github: 'GitHub',
     mail: 'Mail',
-    linkedin: 'Linkedin', // TODO
+    linkedin: 'Linkedin',
+    threads: 'Threads',
   }
 
   return (
@@ -136,6 +142,10 @@ export const Footer: FC = () => (
               {
                 href: 'mailto:info@toriis.earth', // TODO
                 socialType: SocialType.Instagram,
+              },
+              {
+                href: 'mailto:info@toriis.earth', // TODO
+                socialType: SocialType.Threads,
               },
             ]}
           />

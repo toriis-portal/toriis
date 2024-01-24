@@ -1,9 +1,13 @@
-const MainIcon = () => (
+import clsx from 'clsx'
+
+const MainIcon = ({ className, ...props }: React.ComponentProps<'svg'>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="50"
-    height="50"
-    viewBox="0 0 24 24"
+    width="32px"
+    height="28px"
+    viewBox="0 0 15 10"
+    className={clsx('w', className)}
+    {...props}
   >
     <path
       fill="currentColor"
