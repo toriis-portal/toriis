@@ -4,7 +4,7 @@ const GitHubIcon = ({ className, ...props }: React.ComponentProps<'svg'>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
-    width="28px"
+    width="32px"
     height="28px"
     viewBox="0 0 20 20"
     version="1.1"

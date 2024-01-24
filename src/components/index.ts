@@ -70,6 +70,7 @@ import PlugIcon from './icon/PlugIcon'
 import TrashIcon from './icon/TrashIcon'
 import TreeIcon from './icon/TreeIcon'
 import TwitterIcon from './icon/TwitterIcon'
+import XIcon from './icon/XIcon'
 export {
   AuthButton,
   ListItem,
@@ -128,4 +129,5 @@ export {
   TrashIcon,
   TreeIcon,
   TwitterIcon,
+  XIcon,
 }
