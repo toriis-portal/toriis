@@ -128,23 +128,23 @@ export const Footer: FC = () => (
                 socialType: SocialType.Mail,
               },
               {
-                href: 'mailto:info@toriis.earth', // TODO
+                href: 'https://github.com/toriis-portal/toriis',
                 socialType: SocialType.Github,
               },
               {
-                href: 'mailto:info@toriis.earth', // TODO
+                href: 'https://www.linkedin.com/company/toriis/',
                 socialType: SocialType.LinkedIn,
               },
               {
-                href: 'mailto:info@toriis.earth', // TODO
+                href: 'https://twitter.com/toriis_earth',
                 socialType: SocialType.X,
               },
               {
-                href: 'mailto:info@toriis.earth', // TODO
+                href: 'https://www.instagram.com/toriis.earth',
                 socialType: SocialType.Instagram,
               },
               {
-                href: 'mailto:info@toriis.earth', // TODO
+                href: 'https://www.threads.net/@toriis.earth',
                 socialType: SocialType.Threads,
               },
             ]}
@@ -183,7 +183,7 @@ export const Footer: FC = () => (
                 ),
               },
               {
-                href: 'https://X.com/secsuiuc',
+                href: 'https://twitter.com/secsuiuc',
                 text: <SocialLink type={SocialType.X} displayText={true} />,
               },
               {
