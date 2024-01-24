@@ -81,13 +81,13 @@ interface SocialLinkProps {
 
 const SocialLink = ({ type, displayText }: SocialLinkProps) => {
   const icon = {
-    instagram: <InstagramIcon className="" />,
-    facebook: <FacebookIcon className="" />,
-    X: <XIcon className="" />,
-    github: <GitHubIcon className="" />,
-    mail: <MainIcon className="" />,
-    linkedin: <LinkedInIcon className="" />,
-    threads: <ThreadsIcon className="" />,
+    instagram: <InstagramIcon className="w-5 md:w-5" />,
+    facebook: <FacebookIcon className="w-7 md:w-7" />,
+    X: <XIcon className="w-5 md:w-5" />,
+    github: <GitHubIcon className="ml-0.5 w-3 md:w-5" />,
+    mail: <MainIcon className="w-5 md:w-7" />,
+    linkedin: <LinkedInIcon className="w-5 md:w-6" />,
+    threads: <ThreadsIcon className="w-5 md:w-6" />,
   }
 
   const textToDisplay = {
