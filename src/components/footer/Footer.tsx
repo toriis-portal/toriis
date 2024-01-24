@@ -111,6 +111,22 @@ const SocialLink = ({ type, displayText }: SocialLinkProps) => {
   )
 }
 
+const FooterExternalLink: FC<{ org: string }> = ({ org }) => {
+  return (
+    <a
+      className="mt-4 flex underline underline-offset-4"
+      href={
+        org == 'secs'
+          ? 'https://secsatuiuc.web.illinois.edu/'
+          : 'https://uiuc.hack4impact.org/'
+      }
+    >
+      {org == 'secs' ? 'SECS' : 'Hack4Impact UIUC'}{' '}
+      <ArrowUpRightIcon className="ml-1 w-5" />
+    </a>
+  )
+}
+
 export const Footer: FC = () => (
   <footer>
     <div className="bg-darkTeal p-10 text-white">
@@ -157,19 +173,11 @@ export const Footer: FC = () => (
             links={[
               {
                 href: 'https://secsatuiuc.web.illinois.edu',
-                text: (
-                  <span className="flex underline underline-offset-4">
-                    SECS <ArrowUpRightIcon className="ml-1 w-5" />
-                  </span>
-                ),
+                text: <FooterExternalLink org="secs" />,
               },
               {
                 href: 'https://uiuc.hack4impact.org/',
-                text: (
-                  <span className="flex underline underline-offset-4">
-                    Hack4Impact UIUC <ArrowUpRightIcon className="ml-1 w-5" />
-                  </span>
-                ),
+                text: <FooterExternalLink org="hack" />,
               },
             ]}
           />
