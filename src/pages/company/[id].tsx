@@ -190,7 +190,7 @@ const Company: FC<CompanyDetailsProps> = ({
       <div className="ml-8 mt-6">
         <BackButton link="/investments" />
       </div>
-      <div className="mb-20 flex flex-col flex-wrap px-12 lg:px-24">
+      <div className="mb-20 flex flex-col flex-wrap px-8 md:px-12 lg:px-24">
         <div className="flex flex-col items-center ">
           <HighlightedTitle
             title={company.name}
@@ -221,7 +221,7 @@ const Company: FC<CompanyDetailsProps> = ({
             color="brightTeal"
           />
         )}
-        <div className="mx-4 mb-4 max-w-full">
+        <div className="mb-4 max-w-full md:mx-4">
           {company.emission && (
             <ChartGroup
               title="Carbon Accounting"
