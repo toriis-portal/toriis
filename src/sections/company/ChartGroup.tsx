@@ -22,7 +22,7 @@ const ChartGroup: FC<ChartGroupProps> = ({
     <div>
       <Tag
         title={title}
-        className="mb-1 w-4 rounded-md bg-clementine text-white"
+        className="mb-1 w-4 rounded-md bg-clementine text-xl text-white "
       />
       <div
         className={clsx('mb-8 mt-4 flex items-center gap-4', {
