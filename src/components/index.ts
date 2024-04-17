@@ -25,6 +25,7 @@ import Tabs from './display/Tabs'
 import ClimateClock from './display/ClimateClock'
 import ImageWithCaption from './display/ImageWithCaption'
 import LinkBox from './display/LinkBox'
+import ActionNetworkWidget from './display/ActionNetwork'
 // Accordions
 import RequestAccordion from './accordion/RequestAccordion'
 import CaseAccordion from './accordion/CaseAccordion'
@@ -106,6 +107,7 @@ export {
   EnergyRadialChart,
   AdminNavBar,
   ClimateClock,
+  ActionNetworkWidget,
   AdminSelectCard,
   AdminListTable,
   InviteAdminBar,

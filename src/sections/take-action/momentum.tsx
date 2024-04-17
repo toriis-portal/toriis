@@ -1,7 +1,11 @@
 import type { FC } from 'react'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
-import { HighlightedTitle, ListItem } from '../../components'
+import {
+  HighlightedTitle,
+  ListItem,
+  ActionNetworkWidget,
+} from '../../components'
 import type { ListEntryDocument } from '../../types'
 import { mainParagraphStyle } from '../../utils/renderer'
 
@@ -26,6 +30,9 @@ const Momentum: FC<{ entries: ListEntryDocument[] }> = ({ entries }) => {
             />
           ))}
         </div>
+      </div>
+      <div id="actionNetwork" className="pt-10">
+        <ActionNetworkWidget />
       </div>
     </div>
   )
