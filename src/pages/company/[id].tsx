@@ -278,6 +278,7 @@ const Company: FC<CompanyDetailsProps> = ({
                     renewableEnergyDetails.description,
                     mainParagraphStyle,
                   )}
+                  {/* <ReadMoreAccordion content={renewableEnergyDetails.description} /> */}
                 </ChartDetailsCard>
               }
               chartOnLeft={chartDirections['energy']}

@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import type { FC } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import React from 'react'
 
 import { ReadMoreButton } from '../index'
@@ -19,13 +19,35 @@ const ReadMoreAccordion: FC<ReadMoreAccordionProps> = ({
   centerReadMoreButton = false,
 }) => {
   const [folded, setFolded] = useState(true)
-  const MAX_WORD_COUNT = 75
+  const MOBILE_MAX_WORD_COUNT = 15
+  const DESKTOP_MAX_WORD_COUNT = 75
+  // maxWordCount dynamically changes based on screen size
+  const [maxWordCount, setMaxWordCount] = useState(MOBILE_MAX_WORD_COUNT)
+
+  useEffect(() => {
+    const updateWordCount = () => {
+      if (window.innerWidth <= 768) {
+        setMaxWordCount(MOBILE_MAX_WORD_COUNT)
+      } else {
+        setMaxWordCount(DESKTOP_MAX_WORD_COUNT)
+      }
+    }
+
+    // Initial check
+    updateWordCount()
+
+    // Add resize event listener
+    window.addEventListener('resize', updateWordCount)
+    return () => {
+      window.removeEventListener('resize', updateWordCount)
+    }
+  }, [])
 
   let contentTruncated = content
   let childrenTruncated = children
 
   const shouldTruncate =
-    (content && content.split(' ').length > MAX_WORD_COUNT) ||
+    (content && content.split(' ').length > maxWordCount) ||
     (children && React.Children.toArray(children).length > 1)
 
   if (children && shouldTruncate) {
@@ -33,7 +55,7 @@ const ReadMoreAccordion: FC<ReadMoreAccordionProps> = ({
   }
 
   if (content && shouldTruncate) {
-    contentTruncated = content.split(' ').slice(0, MAX_WORD_COUNT).join(' ')
+    contentTruncated = content.split(' ').slice(0, maxWordCount).join(' ')
     contentTruncated += '...'
   }
 
