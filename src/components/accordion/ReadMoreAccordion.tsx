@@ -19,27 +19,32 @@ const ReadMoreAccordion: FC<ReadMoreAccordionProps> = ({
   centerReadMoreButton = false,
 }) => {
   const [folded, setFolded] = useState(true)
+
+  // maxWordCount dynamically changes based on screen size
   const MOBILE_MAX_WORD_COUNT = 15
   const DESKTOP_MAX_WORD_COUNT = 75
-  // maxWordCount dynamically changes based on screen size
   const [maxWordCount, setMaxWordCount] = useState(MOBILE_MAX_WORD_COUNT)
 
+  const [isMobile, setIsMobile] = useState(true)
+
   useEffect(() => {
-    const updateWordCount = () => {
+    const updateIsMobile = () => {
       if (window.innerWidth <= 768) {
         setMaxWordCount(MOBILE_MAX_WORD_COUNT)
+        setIsMobile(true)
       } else {
         setMaxWordCount(DESKTOP_MAX_WORD_COUNT)
+        setIsMobile(false)
       }
     }
 
     // Initial check
-    updateWordCount()
+    updateIsMobile()
 
     // Add resize event listener
-    window.addEventListener('resize', updateWordCount)
+    window.addEventListener('resize', updateIsMobile)
     return () => {
-      window.removeEventListener('resize', updateWordCount)
+      window.removeEventListener('resize', updateIsMobile)
     }
   }, [])
 
@@ -75,9 +80,13 @@ const ReadMoreAccordion: FC<ReadMoreAccordionProps> = ({
         </div>
       )}
       <div
-        className={`flex px-6 ${
+        className={`flex md:px-6 ${
           content ? (shouldTruncate ? '' : 'hidden') : ''
-        } ${centerReadMoreButton ? 'justify-center' : ''}`}
+        } ${
+          centerReadMoreButton
+            ? 'justify-center'
+            : 'justify-end md:justify-center'
+        }`}
       >
         <ReadMoreButton
           isOpen={!folded}
