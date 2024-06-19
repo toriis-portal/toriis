@@ -2,7 +2,6 @@ import clsx from 'clsx'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import React from 'react'
-import { ArrowDownIcon } from '@heroicons/react/24/solid'
 
 import { ReadMoreButton } from '../index'
 

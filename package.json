@@ -28,7 +28,7 @@
     "clsx": "^1.2.1",
     "contentful": "^9.3.5",
     "flowbite": "^1.6.4",
-    "flowbite-react": "^0.4.2",
+    "flowbite-react": "0.4.2",
     "formik": "^2.4.2",
     "next": "13.1.6",
     "next-auth": "^4.19.0",
