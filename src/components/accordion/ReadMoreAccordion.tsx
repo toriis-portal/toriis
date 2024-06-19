@@ -2,9 +2,11 @@ import clsx from 'clsx'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import React from 'react'
+import { ArrowDownIcon } from '@heroicons/react/24/solid'
 
 import { ReadMoreButton } from '../index'
 
+// When centerReadMoreButton is set, accordian will only have "Read More" in center bottom. Will not change to arrow in mobile view.
 interface ReadMoreAccordionProps {
   content?: string
   className?: string
@@ -93,6 +95,7 @@ const ReadMoreAccordion: FC<ReadMoreAccordionProps> = ({
           handleOpen={() => {
             setFolded(!folded)
           }}
+          arrowStyleButton={!centerReadMoreButton && isMobile}
         />
       </div>
     </div>
