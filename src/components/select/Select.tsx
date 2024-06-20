@@ -281,7 +281,7 @@ export const Select: FC<SelectProps> = ({
                 {options.filter(handleSearchFilter).map((option) => (
                   <li
                     key={option}
-                    className="mt-1 flex items-center text-black"
+                    className="mt-1 flex items-center justify-between	 text-black"
                   >
                     <span className={clsx({ 'body-small': isFilter })}>
                       {option}
