@@ -68,7 +68,7 @@ const CompanyCard: FC<CardProps> = ({ companyInfo }) => {
               <div className="col-span-1 col-start-1 row-span-1 row-start-3 self-center">
                 <Tag title="industry" className="bg-lightBlue text-black" />
               </div>
-              <p className="text-wrap col-span-1 col-start-2 row-span-1 row-start-3">
+              <p className="col-span-1 col-start-2 row-span-1 row-start-3 text-wrap">
                 {companyInfo.company.industry
                   ? companyInfo.company.industry
                   : 'None specified'}
