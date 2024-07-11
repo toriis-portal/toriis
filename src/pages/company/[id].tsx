@@ -303,13 +303,20 @@ const Company: FC<CompanyDetailsProps> = ({
           )}
         </div>
 
-        <HighlightedTitle
-          title="Investment Details"
-          size="medium"
-          color="brightTeal"
-        />
-        <div className="flex w-full flex-row items-center justify-center">
-          <InvestmentTable companyId={companyId} />
+        {/* Only show Investment Table on non-mobile view. On mobile, show short message instead */}
+        <div className="block font-normal italic md:hidden">
+          Please use a device with a larger screen to view details on individual
+          investments.
+        </div>
+        <div className="hidden md:block">
+          <HighlightedTitle
+            title="Investment Details"
+            size="medium"
+            color="brightTeal"
+          />
+          <div className="flex w-full flex-row items-center justify-center">
+            <InvestmentTable companyId={companyId} />
+          </div>
         </div>
       </div>
     </>
