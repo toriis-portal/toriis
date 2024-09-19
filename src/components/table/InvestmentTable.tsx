@@ -28,6 +28,7 @@ const ChevronFilter: FC<ChevronFilterProps> = ({
         <div className="flex flex-col">
           <button onClick={onClickUp}>
             <ChevronUpIcon
+              aria-label="Order Descending"
               className="stroke-current stroke-1 hover:fill-gray-500"
               width="20px"
               height="20px"
@@ -35,6 +36,7 @@ const ChevronFilter: FC<ChevronFilterProps> = ({
           </button>
           <button onClick={onClickDown}>
             <ChevronDownIcon
+              aria-label="Order Ascending"
               className="stroke-current stroke-1 hover:fill-gray-500"
               width="20px"
               height="20px"

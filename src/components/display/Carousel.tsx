@@ -83,6 +83,7 @@ const Carousel: FC<CarouselProps> = ({
         })}
       >
         <button
+          aria-label="Swipe left on carousel"
           onClick={() => updateIndex(activeIndex - 1)}
           disabled={activeIndex == 0}
         >
@@ -108,6 +109,7 @@ const Carousel: FC<CarouselProps> = ({
           })}
         </div>
         <button
+          aria-label="Swipe right on carousel"
           onClick={() => updateIndex(activeIndex + 1)}
           disabled={activeIndex == carouselChildren.length - 1}
         >

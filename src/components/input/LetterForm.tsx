@@ -156,19 +156,21 @@ const LetterForm = () => {
                 setFieldValue('zip', parseInt(value))
               }
             />
-            <label className={styles.label} htmlFor="bio">
+            <label className={styles.label} htmlFor="bio" aria-hidden="true">
               Link to Bio, University Webpage, Etc.
             </label>
             <Field
+              aria-label="Link to Bio, University Webpage, Etc."
               id="bio"
               name="bio"
               placeholder="Link Here"
               className={clsx('w-full sm:block', styles.field)}
             />
-            <label className={styles.label} htmlFor="bio">
+            <label className={styles.label} htmlFor="bio" aria-hidden="true">
               Twitter Handle
             </label>
             <Field
+              aria-label="Twitter Handle"
               id="twitter"
               name="twitter"
               placeholder="Link Here"

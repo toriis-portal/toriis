@@ -23,6 +23,7 @@ const ToTopButton: FC = () => {
   const typedAnimateScroll = animateScroll as AnimateScrollController
   return (
     <button
+      aria-label="Jump to top of page"
       onClick={typedAnimateScroll.scrollToTop}
       className="fixed bottom-6 right-6 z-50 h-12 w-12 rounded-full bg-white p-3 shadow-md"
     >

@@ -39,6 +39,7 @@ export const PaginatedDynamicTable = <
       <DynamicTable {...tableProps} />
       <div className="flex w-full flex-row justify-center">
         <ChevronLeftIcon
+          aria-label="Swipe left on table"
           onClick={() => handlePageChange(page, -1)}
           className="h-5 w-5"
         />
@@ -46,6 +47,7 @@ export const PaginatedDynamicTable = <
           {page} / {pageCount}
         </div>
         <ChevronRightIcon
+          aria-label="Swipe right on table"
           onClick={() => handlePageChange(page, 1)}
           className="h-5 w-5"
         />
