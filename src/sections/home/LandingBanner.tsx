@@ -7,10 +7,12 @@ const LandingBanner = () => {
   return (
     <div className="relative flex w-full overflow-hidden bg-black text-white">
       <Image
-        src={bannerimage as HTMLImageElement}
+        src={bannerimage}
         alt="Hero Image"
         className="object-cover"
         fill
+        priority
+        quality={75}
       />
       <div className="z-10 w-full">
         <div className="w-full bg-cobalt px-4 pb-4 pt-6 md:ml-8 md:mt-16 md:w-fit">

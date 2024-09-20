@@ -48,7 +48,7 @@ const PrimaryNavBar: FC = () => {
         </Link>
         <Navbar.Toggle className="z-[70]" />
         {/* Flowbite included styles has a w-full on mobile view that pushes whole page to the left, need to adjust for that */}
-        <Navbar.Collapse className="absolute top-0 right-0 h-[130vh] !w-4/5 bg-darkTeal pt-24 md:static md:h-fit md:!w-auto md:bg-white md:pt-0">
+        <Navbar.Collapse className="absolute right-0 top-0 h-[130vh] !w-4/5 bg-darkTeal pt-24 md:static md:h-fit md:!w-auto md:bg-white md:pt-0">
           <NavButton title="Home" link="/home" />
           <NavButton title="Take Action" link="/take-action" />
           <NavButton title="Why Divest?" link="/fossil-fuel" />
