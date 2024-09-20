@@ -20,6 +20,7 @@ import { type Session } from 'next-auth'
 import type { inferAsyncReturnType } from '@trpc/server'
 import { initTRPC, TRPCError } from '@trpc/server'
 import superjson from 'superjson'
+import NodeCache from 'node-cache'
 
 import { getServerAuthSession } from '../auth'
 import { prisma } from '../db'
@@ -27,6 +28,13 @@ import { prisma } from '../db'
 type CreateContextOptions = {
   session: Session | null
 }
+
+// Create Cache
+const cacheSingleton = new NodeCache()
+
+// A map of cached procedure names to a callable that gives a TTL in seconds
+const cachedProcedures: Map<string, (() => number) | undefined> = new Map()
+cachedProcedures.set('companyRouter.getNetAssetValBySector', () => 2 * 3600) // 2 hours
 
 /**
  * This helper generates the "internals" for a tRPC context. If you need to use
@@ -117,6 +125,49 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   })
 })
 
+const middlewareMarker = 'middlewareMarker' as 'middlewareMarker' & {
+  __brand: 'middlewareMarker'
+}
+
+/**
+ * Cache middleware that checks cache before running the procedure.
+ */
+const checkCache = t.middleware(async ({ ctx, next, path, type, rawInput }) => {
+  if (type !== 'query' || !cachedProcedures.has(path)) {
+    return next()
+  }
+  let key = path
+  if (rawInput) {
+    key += JSON.stringify(rawInput).replace(/\"/g, "'")
+  }
+
+  const cachedData = cacheSingleton.get(key)
+  if (cachedData) {
+    console.log('Previously cached!')
+    return {
+      ok: true,
+      data: cachedData,
+      ctx,
+      marker: middlewareMarker,
+    }
+  }
+  const result = await next()
+
+  console.log('USE CACHE!')
+  console.log(result)
+
+  // data is not defined in the type MiddlewareResult
+  const dataCopy = structuredClone(result)
+
+  const ttlSecondsCallable = cachedProcedures.get(path)
+  if (ttlSecondsCallable) {
+    cacheSingleton.set(key, dataCopy, ttlSecondsCallable())
+  } else {
+    cacheSingleton.set(key, dataCopy)
+  }
+  return result
+})
+
 /**
  * Protected (authenticated) procedure
  *
@@ -127,3 +178,13 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
  * @see https://trpc.io/docs/procedures
  */
 export const protectedProcedure = t.procedure.use(enforceUserIsAuthed)
+
+/**
+ * Cached procedure
+ *
+ * If you want a query or mutation to always check for cached response, use
+ * this. It checks
+ *
+ * @see https://trpc.io/docs/procedures
+ */
+export const cachedProcedure = t.procedure.use(checkCache)
