@@ -1,10 +1,11 @@
 import clsx from 'clsx'
 import type { FC } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import React from 'react'
 
 import { ReadMoreButton } from '../index'
 
+// When centerReadMoreButton is set, accordian will only have "Read More" in center bottom. Will not change to arrow in mobile view.
 interface ReadMoreAccordionProps {
   content?: string
   className?: string
@@ -19,13 +20,40 @@ const ReadMoreAccordion: FC<ReadMoreAccordionProps> = ({
   centerReadMoreButton = false,
 }) => {
   const [folded, setFolded] = useState(true)
-  const MAX_WORD_COUNT = 75
+
+  // maxWordCount dynamically changes based on screen size
+  const MOBILE_MAX_WORD_COUNT = 15
+  const DESKTOP_MAX_WORD_COUNT = 75
+  const [maxWordCount, setMaxWordCount] = useState(MOBILE_MAX_WORD_COUNT)
+
+  const [isMobile, setIsMobile] = useState(true)
+
+  useEffect(() => {
+    const updateIsMobile = () => {
+      if (window.innerWidth <= 768) {
+        setMaxWordCount(MOBILE_MAX_WORD_COUNT)
+        setIsMobile(true)
+      } else {
+        setMaxWordCount(DESKTOP_MAX_WORD_COUNT)
+        setIsMobile(false)
+      }
+    }
+
+    // Initial check
+    updateIsMobile()
+
+    // Add resize event listener
+    window.addEventListener('resize', updateIsMobile)
+    return () => {
+      window.removeEventListener('resize', updateIsMobile)
+    }
+  }, [])
 
   let contentTruncated = content
   let childrenTruncated = children
 
   const shouldTruncate =
-    (content && content.split(' ').length > MAX_WORD_COUNT) ||
+    (content && content.split(' ').length > maxWordCount) ||
     (children && React.Children.toArray(children).length > 1)
 
   if (children && shouldTruncate) {
@@ -33,7 +61,7 @@ const ReadMoreAccordion: FC<ReadMoreAccordionProps> = ({
   }
 
   if (content && shouldTruncate) {
-    contentTruncated = content.split(' ').slice(0, MAX_WORD_COUNT).join(' ')
+    contentTruncated = content.split(' ').slice(0, maxWordCount).join(' ')
     contentTruncated += '...'
   }
 
@@ -53,15 +81,20 @@ const ReadMoreAccordion: FC<ReadMoreAccordionProps> = ({
         </div>
       )}
       <div
-        className={`flex px-6 ${
+        className={`flex md:px-6 ${
           content ? (shouldTruncate ? '' : 'hidden') : ''
-        } ${centerReadMoreButton ? 'justify-center' : ''}`}
+        } ${
+          centerReadMoreButton
+            ? 'justify-center'
+            : 'justify-end md:justify-center'
+        }`}
       >
         <ReadMoreButton
           isOpen={!folded}
           handleOpen={() => {
             setFolded(!folded)
           }}
+          arrowStyleButton={!centerReadMoreButton && isMobile}
         />
       </div>
     </div>

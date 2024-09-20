@@ -18,14 +18,14 @@ const BackButton: FC<BackButtonProps> = ({ text = 'Back', link }) => {
       onClick={handleClick}
       className={clsx(
         clsx(
-          'flex w-fit place-content-center items-center justify-center truncate p-4',
+          'flex w-fit place-content-center items-center justify-center truncate px-2 md:p-4',
           'shadow-gray shadow-lg',
-          'rounded-3xl border-[0.05rem] border-black py-1',
+          'rounded-3xl border-[0.05rem] border-black py-2 md:py-1',
         ),
       )}
     >
-      <ArrowSmallLeftIcon className="mr-1.5 inline w-[1rem] stroke-current stroke-1" />
-      <p>{text}</p>
+      <ArrowSmallLeftIcon className="inline w-7 stroke-current stroke-1 md:mr-1.5 md:w-[1rem]" />
+      <p className="hidden md:block">{text}</p>
     </button>
   )
 }

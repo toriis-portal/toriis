@@ -8,8 +8,10 @@ import { Tag, ToolTip } from '../../components'
 import { envGradeToColor, assetAmountToString } from '../../utils/helpers'
 import type { SectorEntry, IndustryEntry } from '../../types'
 
-const tagGroupStyle = clsx('items-center flex-col lg:inline-flex lg:flex-row')
-const noteStyle = clsx('lg:px-2 truncate my-1')
+const tagGroupStyle = clsx(
+  'w-full flex space-x-2 flex-row md:flex-col md:w-fit md:items-center lg:inline-flex lg:flex-row md:space-x-0',
+)
+const noteStyle = clsx('lg:px-2 truncate my-1 w-fit')
 const tagStyle = clsx('bg-cobalt text-white')
 
 interface CompanyTooltipGroupProps {
@@ -30,7 +32,7 @@ const CompanyTooltipGroup: FC<CompanyTooltipGroupProps> = ({
   return (
     <div
       className={clsx(
-        'flex max-w-full flex-wrap items-center justify-between gap-y-2 px-8 md:gap-y-4',
+        'flex max-w-full flex-col flex-wrap items-center justify-between gap-y-4 md:flex-row md:px-8',
         className,
       )}
     >
