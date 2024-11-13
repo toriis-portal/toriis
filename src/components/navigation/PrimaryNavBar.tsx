@@ -6,7 +6,6 @@ import { Navbar } from 'flowbite-react'
 import { useRouter } from 'next/router'
 import clsx from 'clsx'
 
-import { AuthButton } from '../index'
 import toriisLogo from '../../../public/toriis.png'
 
 interface NavButtonProps {
