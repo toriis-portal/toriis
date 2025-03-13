@@ -55,6 +55,7 @@ const LinkCondensedList = ({ links }: LinkCondensedListProps) => {
           className="mr-3 w-fit transition duration-500 hover:text-clementine"
           href={href}
           target="_blank"
+          legacyBehavior
         >
           <SocialLink type={socialType} displayText={false} />
         </Link>
@@ -113,17 +114,10 @@ const SocialLink = ({ type, displayText }: SocialLinkProps) => {
 
 const FooterExternalLink: FC<{ org: string }> = ({ org }) => {
   return (
-    <a
-      className="mt-4 flex underline underline-offset-4"
-      href={
-        org == 'secs'
-          ? 'https://secsatuiuc.web.illinois.edu/'
-          : 'https://uiuc.hack4impact.org/'
-      }
-    >
+    <span className="mt-4 flex underline underline-offset-4">
       {org == 'secs' ? 'SECS' : 'Hack4Impact UIUC'}{' '}
       <ArrowUpRightIcon className="ml-1 w-5" />
-    </a>
+    </span>
   )
 }
 
