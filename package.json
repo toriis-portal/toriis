@@ -30,7 +30,7 @@
     "flowbite": "^1.6.4",
     "flowbite-react": "^0.4.2",
     "formik": "^2.4.2",
-    "next": "13.1.6",
+    "next": "^15.2.2",
     "next-auth": "^4.19.0",
     "prisma-json-types-generator": "^2.3.1",
     "react": "18.2.0",
