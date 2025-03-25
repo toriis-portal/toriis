@@ -130,17 +130,10 @@ const FooterMobileHeader: FC<{ text: string; className?: string }> = ({
 
 const FooterExternalLink: FC<{ org: string }> = ({ org }) => {
   return (
-    <a
-      className="mt-4 flex underline underline-offset-4"
-      href={
-        org == 'secs'
-          ? 'https://secsatuiuc.web.illinois.edu/'
-          : 'https://uiuc.hack4impact.org/'
-      }
-    >
+    <span className="mt-4 flex underline underline-offset-4">
       {org == 'secs' ? 'SECS' : 'Hack4Impact UIUC'}{' '}
       <ArrowUpRightIcon className="ml-1 w-5" />
-    </a>
+    </span>
   )
 }
 
