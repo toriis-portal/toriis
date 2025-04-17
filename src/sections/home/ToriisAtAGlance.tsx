@@ -12,7 +12,7 @@ const ToriisAtAGlance: FC<{ text: Document }> = ({ text }) => {
     <div className="mx-12 flex flex-col md:mx-16 lg:flex-row">
       <div className="basis-3/5">
         <HighlightedTitle
-          title="A lil TORIIS pie chart"
+          title="TORIIS at a glance"
           size="large"
           color="clementine"
         />
