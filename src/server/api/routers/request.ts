@@ -203,7 +203,9 @@ export const requestRouter = createTRPCRouter({
         })
       }
       const targetDataset = datasetEnum[request.dataset]
-      const targetItems = request.updates.map((update) => update.id)
+      const targetItems = (request.updates as { id: string }[]).map(
+        (update) => update.id,
+      )
 
       const originalData = await ctx.prisma.$runCommandRaw({
         find: targetDataset,
