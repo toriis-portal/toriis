@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { Link } from 'react-scroll'
+import Link from 'next/link'
 import clsx from 'clsx'
 
 interface NavItem {
@@ -18,12 +18,16 @@ const SecondaryNavBar: FC<{ navItems: NavItem[] }> = ({ navItems }) => {
           return (
             <li key={i} className="pb-3 text-center">
               <Link
-                activeClass="active"
-                to={dataKey.path}
-                spy={true}
-                smooth={true}
-                duration={500}
+                href={'#' + dataKey.path}
                 className={navStyle}
+                replace={true}
+                onNavigate={(e) => {
+                  e.preventDefault()
+                  const target = document.getElementById(dataKey.path)
+                  if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' })
+                  }
+                }}
               >
                 {dataKey.text}
               </Link>
