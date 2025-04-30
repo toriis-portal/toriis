@@ -6,7 +6,8 @@ const MainIcon = ({ className, ...props }: React.ComponentProps<'svg'>) => (
     width="28px"
     height="22px"
     viewBox="-2 -1 15 10"
-    className={clsx(className)}
+    className={clsx('w', className)}
+
     {...props}
   >
     <path

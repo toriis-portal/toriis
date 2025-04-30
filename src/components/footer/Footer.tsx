@@ -81,13 +81,13 @@ interface SocialLinkProps {
 
 const SocialLink = ({ type, displayText }: SocialLinkProps) => {
   const icon = {
-    instagram: <InstagramIcon className="w-5 md:w-5" />,
-    facebook: <FacebookIcon className="w-7 md:w-7" />,
-    X: <XIcon className="w-5 md:w-5" />,
-    github: <GitHubIcon className="ml-0.5 w-3 md:w-5" />,
-    mail: <MainIcon className="w-5 md:w-7" />,
-    linkedin: <LinkedInIcon className="w-5 md:w-6" />,
-    threads: <ThreadsIcon className="w-5 md:w-6" />,
+    instagram: <InstagramIcon className="" />,
+    facebook: <FacebookIcon className="" />,
+    X: <XIcon className="" />,
+    github: <GitHubIcon className="" />,
+    mail: <MainIcon className="" />,
+    linkedin: <LinkedInIcon className="" />,
+    threads: <ThreadsIcon className="" />,
   }
 
   const textToDisplay = {
@@ -95,7 +95,7 @@ const SocialLink = ({ type, displayText }: SocialLinkProps) => {
     facebook: 'Facebook',
     X: 'X',
     github: 'GitHub',
-    mail: 'info@toriis.earth',
+    mail: 'Mail',
     linkedin: 'Linkedin',
     threads: 'Threads',
   }
@@ -128,15 +128,23 @@ const FooterMobileHeader: FC<{ text: string; className?: string }> = ({
   )
 }
 
+
 const FooterExternalLink: FC<{ org: string }> = ({ org }) => {
   return (
-    <span className="mt-4 flex underline underline-offset-4">
+    <a
+      className="mt-4 flex underline underline-offset-4"
+      href={
+        org == 'secs'
+          ? 'https://secsatuiuc.web.illinois.edu/'
+          : 'https://uiuc.hack4impact.org/'
+      }
+    >
       {org == 'secs' ? 'SECS' : 'Hack4Impact UIUC'}{' '}
       <ArrowUpRightIcon className="ml-1 w-5" />
-    </span>
+    </a>
   )
 }
-
+        
 export const Footer: FC = () => (
   <footer>
     <div className="bg-darkTeal p-10 text-white">
@@ -334,3 +342,4 @@ export const Footer: FC = () => (
 )
 
 export default Footer
+
