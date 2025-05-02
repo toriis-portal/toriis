@@ -31,8 +31,7 @@ const HighlightedTitle: FC<TitleProps> = ({
             'relative z-0',
             `bg-${color}`,
             { '-bottom-[1.7rem] right-[.6rem] h-2 w-11/12': size == 'medium' },
-            { '-bottom-[1.9rem] right-[1.3rem] h-3.5': size == 'large' },
-            'hidden sm:block',
+            { '-bottom-[2rem] right-[1.3rem] h-3.5': size == 'large' },
           )}
         />
         <p

@@ -22,28 +22,28 @@ const ChartGroup: FC<ChartGroupProps> = ({
     <div>
       <Tag
         title={title}
-        className="mb-1 w-4 rounded-md bg-clementine text-white"
+        className="mb-1 w-4 rounded-md bg-clementine text-xl text-white "
       />
       <div
         className={clsx('mb-8 mt-4 flex items-center gap-4', {
-          'flex-row': chartOnLeft,
-          'flex-row-reverse': !chartOnLeft,
+          'flex-col md:flex-row': chartOnLeft,
+          'flex-col md:flex-row-reverse': !chartOnLeft,
         })}
       >
         <div
           className={clsx({
-            'w-2/5': chartSize === 'sm',
-            'w-1/2': chartSize === 'md',
-            'w-3/4': chartSize === 'lg',
+            'md:w-2/5': chartSize === 'sm',
+            'md:w-1/2': chartSize === 'md',
+            'md:w-3/4': chartSize === 'lg',
           })}
         >
           {chart}
         </div>
         <div
           className={clsx({
-            'w-3/5': chartSize === 'sm',
-            'w-1/2': chartSize === 'md',
-            'w-1/4': chartSize === 'lg',
+            'md:w-3/5': chartSize === 'sm',
+            'md:w-1/2': chartSize === 'md',
+            'md:w-1/4': chartSize === 'lg',
           })}
         >
           {interpretation}
