@@ -6,7 +6,6 @@ import { Navbar } from 'flowbite-react'
 import { useRouter } from 'next/router'
 import clsx from 'clsx'
 
-import { AuthButton } from '../index'
 import toriisLogo from '../../../public/toriis.png'
 
 interface NavButtonProps {
@@ -53,9 +52,6 @@ const PrimaryNavBar: FC = () => {
           <NavButton title="Take Action" link="/take-action" />
           <NavButton title="Why Divest?" link="/fossil-fuel" />
           <NavButton title="Investment Database" link="/investments" />
-          <div className="hidden w-fit flex-col justify-center md:flex">
-            <AuthButton />
-          </div>
         </Navbar.Collapse>
       </Navbar>
     </div>
