@@ -8,6 +8,7 @@ import { fuelRouter } from './routers/fuel'
 import { energyRouter } from './routers/energy'
 import { emissionRouter } from './routers/emission'
 import { signatoryRouter } from './routers/signatory'
+import { aggregationRouter } from './routers/aggregation'
 
 /**
  * This is the primary router for your server.
@@ -24,6 +25,7 @@ export const appRouter = createTRPCRouter({
   energy: energyRouter,
   emission: emissionRouter,
   signatory: signatoryRouter,
+  aggregation: aggregationRouter,
 })
 
 // export type definition of API

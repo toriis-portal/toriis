@@ -219,3 +219,10 @@ model Signatory {
   twitter     String?
   shouldEmail Boolean
 }
+
+model AggregatedTotalMarketVal {
+  id             String @id @default(auto()) @map("_id") @db.ObjectId
+  sector         Sector
+  totalMarketVal Float
+  year           Int?
+}
